@@ -455,12 +455,10 @@ elif st.session_state.page == "Profil & Pimpinan":
             </div>
             """, unsafe_allow_html=True)
     
-# SEBELUM (Error):
-st.markdown('<div style="margin-top: 48px; padding: 32px; background: var(--green-light); border-radius: 16px; border-left: 4px solid var(--green);">', unsafe_allow_html=True)
-st.markdown("### ️ Visi DPRK Aceh Jaya", unsafe_allow_html=True)
-st.markdown("**"Terwujudnya DPRK Aceh Jaya yang Profesional, Aspiratif, dan Berintegritas dalam Mewujudkan Masyarakat Aceh Jaya yang Sejahtera, Mandiri, dan Berakhlak Mulia.**", unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
-
+    st.markdown('<div style="margin-top: 48px; padding: 32px; background: var(--green-light); border-radius: 16px; border-left: 4px solid var(--green);">', unsafe_allow_html=True)
+    st.markdown("### 🏛️ Visi DPRK Aceh Jaya", unsafe_allow_html=True)
+    st.markdown('**"Terwujudnya DPRK Aceh Jaya yang Profesional, Aspiratif, dan Berintegritas dalam Mewujudkan Masyarakat Aceh Jaya yang Sejahtera, Mandiri, dan Berakhlak Mulia."**', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 # SESUDAH (Fixed):
 st.markdown('<div style="margin-top: 48px; padding: 32px; background: var(--green-light); border-radius: 16px; border-left: 4px solid var(--green);">', unsafe_allow_html=True)
 st.markdown("### 🏛️ Visi DPRK Aceh Jaya", unsafe_allow_html=True)
