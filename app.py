@@ -1,10 +1,14 @@
+from datetime import datetime
 from pathlib import Path
-import zipfile, textwrap, os
+import os
+import zipfile
+import streamlit as st
+import streamlit.components.v1 as components
 
 root = Path("/mnt/data/dprk_aceh_jaya_semarang_style")
 root.mkdir(exist_ok=True)
 
-app = r'''import streamlit as st
+app = r"""import streamlit as st
 import streamlit.components.v1 as components
 from datetime import datetime
 
@@ -14,6 +18,29 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed",
 )
+
+# ============================================================
+# DATA INTI (Didefinisikan di Scope Global)
+# ============================================================
+news_list = [
+    ("📝", "PARIPURNA", "15 September 2026", "Pembahasan Rancangan KUA-PPAS 2027",
+     "Rapat paripurna pembahasan kebijakan umum anggaran dan prioritas plafon anggaran sementara."),
+    ("📢", "RESES", "10 September 2026", "Penjaringan Aspirasi Masyarakat Melalui Reses",
+     "Anggota DPRK turun ke daerah pemilihan untuk menampung aspirasi masyarakat."),
+    ("⚖️", "LEGISLASI", "02 September 2026", "RDPU Qanun Ketertiban",
+     "Rapat dengar pendapat umum untuk penyempurnaan rancangan Qanun Daerah.")
+]
+
+pages = {
+    "Beranda": "Beranda",
+    "Profil": "Profil & Kelengkapan",
+    "Dewan": "Fungsi & Komisi",
+    "Berita": "Berita & Rapat",
+    "JDIH": "JDIH & Transparansi",
+    "Aspirasi": "Layanan & Pengaduan",
+    "PORA": "PORA XV 2026",
+    "Kontak": "Kontak & Peta"
+}
 
 # ============================================================
 # THEME
@@ -114,16 +141,6 @@ header[data-testid="stHeader"]{background:transparent!important}
     display:flex;
     align-items:center;
     gap:5px;
-}
-.nav-item{
-    color:#4D5861;
-    font-size:12px;
-    font-weight:600;
-    padding:13px 11px;
-}
-.nav-item.active{
-    color:var(--navy);
-    border-bottom:3px solid var(--green);
 }
 
 /* streamlit buttons as nav */
@@ -320,17 +337,6 @@ button[kind="primary"]{
 if "page" not in st.session_state:
     st.session_state.page = "Beranda"
 
-pages = {
-    "Beranda":"Beranda",
-    "Profil":"Profil & Kelengkapan",
-    "Dewan":"Fungsi & Komisi",
-    "Berita":"Berita & Rapat",
-    "JDIH":"JDIH & Transparansi",
-    "Aspirasi":"Layanan & Pengaduan",
-    "PORA":"PORA XV 2026",
-    "Kontak":"Kontak & Peta"
-}
-
 # ============================================================
 # HEADER
 # ============================================================
@@ -428,17 +434,8 @@ if st.session_state.page == "Beranda":
     </div>
     """, unsafe_allow_html=True)
 
-    news = [
-        ("📝","PARIPURNA","15 September 2026","Pembahasan Rancangan KUA-PPAS 2027",
-         "Rapat paripurna pembahasan kebijakan umum anggaran dan prioritas plafon anggaran sementara."),
-        ("📢","RESES","10 September 2026","Penjaringan Aspirasi Masyarakat Melalui Reses",
-         "Anggota DPRK turun ke daerah pemilihan untuk menampung aspirasi masyarakat."),
-        ("⚖️","LEGISLASI","02 September 2026","RDPU Qanun Ketertiban",
-         "Rapat dengar pendapat umum untuk penyempurnaan rancangan Qanun Daerah.")
-    ]
-
     cols = st.columns(3)
-    for col,(icon,tag,date,title,desc) in zip(cols,news):
+    for col,(icon,tag,date,title,desc) in zip(cols, news_list):
         with col:
             st.markdown(f"""
             <div class="news-card">
@@ -510,7 +507,7 @@ elif st.session_state.page == "Fungsi & Komisi":
 
 elif st.session_state.page == "Berita & Rapat":
     st.markdown('<div class="section"><div class="section-title">Berita & Rapat Paripurna</div><div class="section-desc">Publikasi kegiatan DPRK Aceh Jaya</div></div>',unsafe_allow_html=True)
-    for icon,tag,date,title,desc in news:
+    for icon,tag,date,title,desc in news_list:
         st.markdown(f'<div class="card"><span class="tag">{tag}</span> <span class="news-date">{date}</span><div class="card-title" style="margin-top:10px">{icon} {title}</div><div class="card-text">{desc}</div></div>',unsafe_allow_html=True)
 
 elif st.session_state.page == "JDIH & Transparansi":
@@ -559,7 +556,7 @@ elif st.session_state.page == "PORA XV 2026":
 elif st.session_state.page == "Kontak & Peta":
     st.markdown('<div class="section"><div class="section-title">Kontak & Peta Lokasi</div><div class="section-desc">Sekretariat DPRK Aceh Jaya</div></div>',unsafe_allow_html=True)
     st.markdown('<div class="card"><div class="card-title">📍 Sekretariat DPRK Aceh Jaya</div><div class="card-text"><b>Alamat:</b> Jl. Merdeka No. 01, Komplek Perkantoran Pemkab, Calang, Kabupaten Aceh Jaya, Provinsi Aceh.<br><b>Jam:</b> Senin–Jumat, 08.00–16.30 WIB<br><b>Telepon:</b> (0654) 221001<br><b>Email:</b> sekretariat@dprk.acehjaya.go.id</div></div>',unsafe_allow_html=True)
-    components.html("""<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127637.898456!2d95.5!3d4.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30403b0000000001%3A0x0!2sAceh+Jaya!5e0!3m2!1sid!2sid!4v1600000000000" width="100%" height="360" style="border:0;border-radius:18px" allowfullscreen loading="lazy"></iframe>""",height=370)
+    components.html(\"\"\"<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127637.898456!2d95.5!3d4.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30403b0000000001%3A0x0!2sAceh+Jaya!5e0!3m2!1sid!2sid!4v1600000000000" width="100%" height="360" style="border:0;border-radius:18px" allowfullscreen loading="lazy"></iframe>\"\"\",height=370)
 
 # ============================================================
 # FOOTER
@@ -574,15 +571,14 @@ st.markdown("""
   </div>
 </div>
 """, unsafe_allow_html=True)
-'''
+"""
 
 requirements = """streamlit>=1.40,<2.0
 """
 
 readme = """# DPRK Aceh Jaya — Portal Informasi
 
-Portal Streamlit dengan gaya portal pemerintahan modern, terinspirasi pola
-informasi/layanan portal pemerintah daerah.
+Portal Streamlit dengan gaya portal pemerintahan modern.
 
 ## Menjalankan lokal
 
