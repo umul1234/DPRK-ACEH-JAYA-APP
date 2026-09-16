@@ -1,11 +1,4 @@
-from pathlib import Path
-import zipfile
-
-root = Path("/mnt/data/dprk_aceh_jaya_app")
-root.mkdir(exist_ok=True)
-
-# 1. Kode Streamlit (app.py)
-app_code = r'''import streamlit as st
+import streamlit as st
 import streamlit.components.v1 as components
 from datetime import datetime
 
@@ -16,6 +9,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+# ============================================================
+# DATA GLOBAL
+# ============================================================
 news_list = [
     ("📝", "PARIPURNA", "15 September 2026", "Pembahasan Rancangan KUA-PPAS 2027",
      "Rapat paripurna pembahasan kebijakan umum anggaran dan prioritas plafon anggaran sementara."),
@@ -36,6 +32,9 @@ pages = {
     "Kontak": "Kontak & Peta"
 }
 
+# ============================================================
+# CSS STYLING
+# ============================================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -274,6 +273,9 @@ header[data-testid="stHeader"]{background:transparent!important}
 </style>
 """, unsafe_allow_html=True)
 
+# ============================================================
+# SESSION & HEADER
+# ============================================================
 if "page" not in st.session_state:
     st.session_state.page = "Beranda"
 
@@ -297,6 +299,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# Navigation
 st.markdown('<div class="nav-wrap"><div class="nav-inner">', unsafe_allow_html=True)
 cols = st.columns(len(pages))
 for col, (label, target) in zip(cols, pages.items()):
@@ -306,6 +309,9 @@ for col, (label, target) in zip(cols, pages.items()):
             st.rerun()
 st.markdown('</div></div>', unsafe_allow_html=True)
 
+# ============================================================
+# CONTENT ROUTING
+# ============================================================
 if st.session_state.page == "Beranda":
     st.markdown("""
     <div class="hero">
@@ -321,10 +327,24 @@ if st.session_state.page == "Beranda":
     </div>
     """, unsafe_allow_html=True)
 
+    st.markdown("""
+    <div class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Layanan Utama</div>
+          <div class="section-desc">Akses cepat informasi dan layanan DPRK Aceh Jaya</div>
+        </div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     services = [
         ("🏛️","Profil DPRK","Informasi kelembagaan, pimpinan, dan alat kelengkapan dewan.","Profil"),
         ("📜","Fungsi & Komisi","Informasi fungsi legislasi, anggaran, pengawasan, dan komisi.","Dewan"),
         ("📂","JDIH","Dokumen Qanun, APBK, perencanaan, dan informasi publik.","JDIH"),
+        ("📢","Aspirasi Publik","Sampaikan saran, keluhan, dan aspirasi masyarakat.","Aspirasi"),
+        ("📰","Berita & Agenda","Kabar terbaru, rapat paripurna, reses, dan kegiatan DPRK.","Berita"),
+        ("🏆","PORA XV 2026","Informasi Aceh Jaya sebagai tuan rumah PORA XV 2026.","PORA"),
     ]
 
     cols = st.columns(3)
@@ -341,6 +361,46 @@ if st.session_state.page == "Beranda":
                 st.session_state.page = pages[target]
                 st.rerun()
 
+    st.markdown("""
+    <div class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Berita & Informasi Terkini</div>
+          <div class="section-desc">Informasi kegiatan DPRK Aceh Jaya</div>
+        </div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    cols = st.columns(3)
+    for col,(icon,tag,date,title,desc) in zip(cols, news_list):
+        with col:
+            st.markdown(f"""
+            <div class="news-card">
+              <div class="news-image">{icon}</div>
+              <div class="news-body">
+                <span class="tag">{tag}</span>
+                <span class="news-date" style="float:right">{date}</span>
+                <div class="news-title">{title}</div>
+                <div class="news-desc">{desc}</div>
+              </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+elif st.session_state.page == "Profil & Kelengkapan":
+    st.markdown('<div class="section"><div class="section-title">Profil DPRK</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="card"><div class="card-title">Dewan Perwakilan Rakyat Kabupaten Aceh Jaya</div><div class="card-text">Lembaga perwakilan rakyat daerah unsur penyelenggara pemerintahan daerah di Kabupaten Aceh Jaya.</div></div>', unsafe_allow_html=True)
+
+elif st.session_state.page == "Berita & Rapat":
+    st.markdown('<div class="section"><div class="section-title">Berita & Agenda</div></div>', unsafe_allow_html=True)
+    for icon,tag,date,title,desc in news_list:
+        st.markdown(f'<div class="card"><span class="tag">{tag}</span> <span class="news-date">{date}</span><div class="card-title" style="margin-top:10px">{icon} {title}</div><div class="card-text">{desc}</div></div>', unsafe_allow_html=True)
+
+else:
+    st.markdown(f'<div class="section"><div class="section-title">{st.session_state.page}</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="card"><div class="card-text">Halaman sedang dalam pembaruan informasi.</div></div>', unsafe_allow_html=True)
+
+# Footer
 st.markdown("""
 <div class="footer">
   <div class="footer-title">DPRK ACEH JAYA</div>
@@ -350,28 +410,3 @@ st.markdown("""
   </div>
 </div>
 """, unsafe_allow_html=True)
-'''
-
-# 2. Pendefinisian file pendukung menggunakan string biasa
-requirements_code = "streamlit>=1.40,<2.0\n"
-
-readme_code = (
-    "# DPRK Aceh Jaya — Portal Informasi\n\n"
-    "Portal Streamlit dengan gaya portal pemerintahan modern.\n\n"
-    "## Menjalankan lokal\n\n"
-    "```bash\n"
-    "pip install -r requirements.txt\n"
-    "streamlit run app.py\n"
-    "```\n"
-)
-
-# 3. Penulisan ke Disk
-(root / "app.py").write_text(app_code, encoding="utf-8")
-(root / "requirements.txt").write_text(requirements_code, encoding="utf-8")
-(root / "README.md").write_text(readme_code, encoding="utf-8")
-
-# 4. Buat Arsip ZIP
-zip_path = Path("/mnt/data/dprk_aceh_jaya_app.zip")
-with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
-    for file in root.glob("*"):
-        zipf.write(file, arcname=file.name)
