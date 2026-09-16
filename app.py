@@ -1,7 +1,6 @@
-from pathlib import Path
-
-app_code = r'''import streamlit as st
+import streamlit as st
 from datetime import datetime
+import pandas as pd
 
 # =========================================================
 # KONFIGURASI HALAMAN
@@ -90,622 +89,165 @@ st.markdown(
     --shadow: 0 8px 28px rgba(12, 74, 62, .08);
 }
 
-* {
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-}
+* { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+#MainMenu, footer, header { visibility: hidden; height: 0; }
+.stApp { background: var(--bg); color: var(--text); }
+.block-container { max-width: 100%; padding: 0 !important; }
+section[data-testid="stSidebar"] { display: none; }
 
-html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
-}
-
-#MainMenu, footer, header {
-    visibility: hidden;
-    height: 0;
-}
-
-.stApp {
-    background: var(--bg);
-    color: var(--text);
-}
-
-.block-container {
-    max-width: 100%;
-    padding: 0 0 0 0 !important;
-}
-
-section[data-testid="stSidebar"] {
-    display: none;
-}
-
-/* ---------- TOP GOVERNMENT BAR ---------- */
 .govbar {
-    background: #083b32;
-    color: rgba(255,255,255,.88);
-    min-height: 38px;
-    padding: 0 6%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 12px;
+    background: #083b32; color: rgba(255,255,255,.88); min-height: 38px;
+    padding: 0 6%; display: flex; align-items: center; justify-content: space-between; font-size: 12px;
 }
+.govbar-left, .govbar-right { display: flex; gap: 20px; align-items: center; }
+.govbar strong { color: #fff; }
 
-.govbar-left, .govbar-right {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-.govbar strong {
-    color: #fff;
-}
-
-/* ---------- BRAND HEADER ---------- */
-.brand-wrap {
-    background: #fff;
-    border-bottom: 1px solid #e7ecea;
-    padding: 18px 6%;
-}
-
-.brand-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
+.brand-wrap { background: #fff; border-bottom: 1px solid #e7ecea; padding: 18px 6%; }
+.brand-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.brand { display: flex; align-items: center; gap: 14px; }
 .brand-logo {
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #0b5b4b, #0a3e35);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 27px;
+    width: 58px; height: 58px; border-radius: 50%;
+    background: linear-gradient(145deg, #0b5b4b, #0a3e35); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 27px;
     box-shadow: 0 4px 12px rgba(12,74,62,.18);
 }
-
 .brand-title {
-    color: #123b33;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 18px;
-    line-height: 1.2;
-    font-weight: 800;
-    text-transform: uppercase;
+    color: #123b33; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px; line-height: 1.2; font-weight: 800; text-transform: uppercase;
 }
+.brand-subtitle { margin-top: 4px; color: #788783; font-size: 11px; letter-spacing: .6px; }
 
-.brand-subtitle {
-    margin-top: 4px;
-    color: #788783;
-    font-size: 11px;
-    letter-spacing: .6px;
-}
+.nav-wrap { background: #fff; border-bottom: 1px solid var(--border); padding: 0 6%; }
+.nav-inner { min-height: 54px; display: flex; align-items: center; gap: 4px; }
 
-/* ---------- NAVIGATION ---------- */
-.nav-wrap {
-    background: #fff;
-    border-bottom: 1px solid var(--border);
-    padding: 0 6%;
-}
-
-.nav-inner {
-    min-height: 54px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.nav-item {
-    color: #52645f;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 17px 15px;
-    border-bottom: 3px solid transparent;
-    text-align: center;
-}
-
-.nav-item.active {
-    color: var(--primary);
-    border-bottom-color: var(--gold);
-}
-
-.nav-item:hover {
-    color: var(--primary);
-}
-
-/* Streamlit buttons used as invisible navigation */
 .nav-button .stButton > button {
-    background: transparent !important;
-    border: none !important;
-    color: #52645f !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    border-radius: 0 !important;
-    padding: 12px 8px !important;
-    min-height: 40px !important;
+    background: transparent !important; border: none !important; color: #52645f !important;
+    font-size: 13px !important; font-weight: 600 !important; border-radius: 0 !important;
+    padding: 12px 8px !important; min-height: 40px !important;
 }
-
-.nav-button .stButton > button:hover {
-    color: var(--primary) !important;
-    background: #f2f7f5 !important;
-}
-
+.nav-button .stButton > button:hover { color: var(--primary) !important; background: #f2f7f5 !important; }
 .nav-button-active .stButton > button {
-    color: var(--primary) !important;
-    border-bottom: 3px solid var(--gold) !important;
+    color: var(--primary) !important; border-bottom: 3px solid var(--gold) !important;
 }
 
-/* ---------- ALERT ---------- */
 .alert {
-    background: #fff9e9;
-    border-bottom: 1px solid #f0dfad;
-    color: #725719;
-    padding: 9px 6%;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    background: #fff9e9; border-bottom: 1px solid #f0dfad; color: #725719;
+    padding: 9px 6%; font-size: 12px; display: flex; align-items: center; gap: 8px;
 }
 
-/* ---------- HERO ---------- */
 .hero {
-    position: relative;
-    min-height: 440px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    background:
-        linear-gradient(90deg, rgba(4,43,36,.95) 0%, rgba(8,74,62,.78) 45%, rgba(8,74,62,.35) 100%),
-        url('https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1800&q=85')
-        center/cover no-repeat;
+    position: relative; min-height: 440px; display: flex; align-items: center; overflow: hidden;
+    background: linear-gradient(90deg, rgba(4,43,36,.95) 0%, rgba(8,74,62,.78) 45%, rgba(8,74,62,.35) 100%),
+    url('https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
 }
-
-.hero-content {
-    width: 88%;
-    max-width: 1250px;
-    margin: 0 auto;
-    padding: 70px 0;
-    color: white;
-}
-
+.hero-content { width: 88%; max-width: 1250px; margin: 0 auto; padding: 70px 0; color: white; }
 .hero-kicker {
-    display: inline-block;
-    color: #f8df87;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    margin-bottom: 14px;
+    display: inline-block; color: #f8df87; font-size: 12px; font-weight: 800;
+    letter-spacing: 1.5px; margin-bottom: 14px;
 }
-
 .hero h1 {
-    max-width: 720px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(34px, 5vw, 60px);
-    line-height: 1.08;
-    margin: 0 0 20px;
-    font-weight: 800;
+    max-width: 720px; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(34px, 5vw, 60px); line-height: 1.08; margin: 0 0 20px; font-weight: 800;
 }
-
-.hero p {
-    max-width: 650px;
-    color: rgba(255,255,255,.88);
-    font-size: 16px;
-    line-height: 1.75;
-    margin-bottom: 28px;
-}
-
-.hero-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
+.hero p { max-width: 650px; color: rgba(255,255,255,.88); font-size: 16px; line-height: 1.75; margin-bottom: 28px; }
+.hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
 .hero-btn {
-    display: inline-block;
-    padding: 12px 21px;
-    border-radius: 5px;
-    background: var(--gold);
-    color: #fff !important;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 13px;
+    display: inline-block; padding: 12px 21px; border-radius: 5px; background: var(--gold);
+    color: #fff !important; text-decoration: none; font-weight: 700; font-size: 13px;
 }
+.hero-btn.secondary { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.55); }
 
-.hero-btn.secondary {
-    background: rgba(255,255,255,.12);
-    border: 1px solid rgba(255,255,255,.55);
-}
-
-/* ---------- CONTENT ---------- */
-.content {
-    width: 88%;
-    max-width: 1250px;
-    margin: 0 auto;
-}
-
-.section {
-    padding: 48px 0;
-}
-
-.section-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 20px;
-    margin-bottom: 24px;
-}
-
+.content { width: 88%; max-width: 1250px; margin: 0 auto; }
+.section { padding: 48px 0; }
+.section-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 24px; }
 .section-kicker {
-    color: var(--primary-2);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
+    color: var(--primary-2); font-size: 11px; font-weight: 800;
+    letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 6px;
 }
+.section-title { color: #183d35; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 27px; font-weight: 800; margin: 0; }
+.section-desc { color: var(--muted); font-size: 13px; line-height: 1.6; margin-top: 7px; }
 
-.section-title {
-    color: #183d35;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 27px;
-    font-weight: 800;
-    margin: 0;
-}
-
-.section-desc {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.6;
-    margin-top: 7px;
-}
-
-/* ---------- SERVICES ---------- */
 .service-box {
-    background: #fff;
-    border: 1px solid var(--border);
-    min-height: 160px;
-    padding: 25px 20px;
-    text-align: center;
-    transition: .25s ease;
-    border-radius: 8px;
+    background: #fff; border: 1px solid var(--border); min-height: 160px; padding: 25px 20px;
+    text-align: center; transition: .25s ease; border-radius: 8px;
 }
-
-.service-box:hover {
-    transform: translateY(-4px);
-    border-color: #b9d6ce;
-    box-shadow: var(--shadow);
-}
-
+.service-box:hover { transform: translateY(-4px); border-color: #b9d6ce; box-shadow: var(--shadow); }
 .service-icon {
-    width: 54px;
-    height: 54px;
-    margin: 0 auto 14px;
-    border-radius: 50%;
-    background: var(--primary-3);
-    color: var(--primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
+    width: 54px; height: 54px; margin: 0 auto 14px; border-radius: 50%;
+    background: var(--primary-3); color: var(--primary);
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
 }
+.service-title { color: #183d35; font-size: 14px; font-weight: 800; margin-bottom: 7px; }
+.service-desc { color: #7a8884; font-size: 11px; line-height: 1.5; }
 
-.service-title {
-    color: #183d35;
-    font-size: 14px;
-    font-weight: 800;
-    margin-bottom: 7px;
-}
-
-.service-desc {
-    color: #7a8884;
-    font-size: 11px;
-    line-height: 1.5;
-}
-
-/* ---------- NEWS ---------- */
-.news-main {
-    background: #fff;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    border-radius: 8px;
-    height: 100%;
-}
-
-.news-main-img {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    display: block;
-}
-
-.news-main-body {
-    padding: 20px;
-}
-
-.news-tag {
-    display: inline-block;
-    color: var(--primary-2);
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: .8px;
-    margin-bottom: 9px;
-}
-
-.news-main h3 {
-    color: #173b33;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 21px;
-    line-height: 1.3;
-    margin: 0 0 9px;
-}
-
-.news-date {
-    color: #8a9894;
-    font-size: 11px;
-}
+.news-main { background: #fff; border: 1px solid var(--border); overflow: hidden; border-radius: 8px; height: 100%; }
+.news-main-img { width: 100%; height: 260px; object-fit: cover; display: block; }
+.news-main-body { padding: 20px; }
+.news-tag { display: inline-block; color: var(--primary-2); font-size: 10px; font-weight: 800; letter-spacing: .8px; margin-bottom: 9px; }
+.news-main h3 { color: #173b33; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 21px; line-height: 1.3; margin: 0 0 9px; }
+.news-date { color: #8a9894; font-size: 11px; }
 
 .news-side {
-    display: flex;
-    gap: 15px;
-    background: #fff;
-    border-bottom: 1px solid var(--border);
-    padding: 0 0 16px;
-    margin-bottom: 16px;
+    display: flex; gap: 15px; background: #fff; border-bottom: 1px solid var(--border);
+    padding: 0 0 16px; margin-bottom: 16px;
 }
+.news-side-img { width: 145px; height: 105px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+.news-side h4 { color: #1d4038; font-size: 14px; line-height: 1.35; margin: 5px 0 8px; }
+.news-side p { color: #7a8884; font-size: 11px; line-height: 1.5; margin: 0; }
 
-.news-side-img {
-    width: 145px;
-    height: 105px;
-    object-fit: cover;
-    border-radius: 6px;
-    flex-shrink: 0;
-}
-
-.news-side h4 {
-    color: #1d4038;
-    font-size: 14px;
-    line-height: 1.35;
-    margin: 5px 0 8px;
-}
-
-.news-side p {
-    color: #7a8884;
-    font-size: 11px;
-    line-height: 1.5;
-    margin: 0;
-}
-
-/* ---------- AGENDA ---------- */
-.agenda-wrap {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 22px;
-}
-
-.agenda-row {
-    display: flex;
-    gap: 16px;
-    padding: 15px 0;
-    border-bottom: 1px solid #edf1ef;
-}
-
-.agenda-row:last-child {
-    border-bottom: none;
-}
-
+.agenda-wrap { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 22px; }
+.agenda-row { display: flex; gap: 16px; padding: 15px 0; border-bottom: 1px solid #edf1ef; }
+.agenda-row:last-child { border-bottom: none; }
 .agenda-date {
-    width: 62px;
-    height: 66px;
-    background: var(--primary);
-    color: white;
-    border-radius: 5px;
-    text-align: center;
-    padding-top: 8px;
-    flex-shrink: 0;
+    width: 62px; height: 66px; background: var(--primary); color: white;
+    border-radius: 5px; text-align: center; padding-top: 8px; flex-shrink: 0;
 }
+.agenda-date strong { display: block; font-size: 24px; line-height: 1; }
+.agenda-date span { font-size: 9px; letter-spacing: 1px; }
+.agenda-title { color: #1b4138; font-weight: 800; font-size: 14px; margin-bottom: 5px; }
+.agenda-desc { color: #7a8884; font-size: 11px; line-height: 1.5; }
 
-.agenda-date strong {
-    display: block;
-    font-size: 24px;
-    line-height: 1;
-}
+.info-strip { background: var(--primary); color: white; padding: 34px 6%; }
+.info-inner { width: 88%; max-width: 1250px; margin: auto; }
+.info-item { text-align: center; padding: 5px 15px; }
+.info-number { color: #f4d873; font-size: 29px; font-weight: 800; }
+.info-label { color: rgba(255,255,255,.78); font-size: 11px; }
 
-.agenda-date span {
-    font-size: 9px;
-    letter-spacing: 1px;
-}
-
-.agenda-title {
-    color: #1b4138;
-    font-weight: 800;
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-.agenda-desc {
-    color: #7a8884;
-    font-size: 11px;
-    line-height: 1.5;
-}
-
-/* ---------- INFO STRIP ---------- */
-.info-strip {
-    background: var(--primary);
-    color: white;
-    padding: 34px 6%;
-}
-
-.info-inner {
-    width: 88%;
-    max-width: 1250px;
-    margin: auto;
-}
-
-.info-item {
-    text-align: center;
-    padding: 5px 15px;
-}
-
-.info-number {
-    color: #f4d873;
-    font-size: 29px;
-    font-weight: 800;
-}
-
-.info-label {
-    color: rgba(255,255,255,.78);
-    font-size: 11px;
-}
-
-/* ---------- PROFILE ---------- */
-.profile-card {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 28px 20px;
-    text-align: center;
-    height: 100%;
-}
-
+.profile-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 28px 20px; text-align: center; height: 100%; }
 .profile-photo {
-    width: 92px;
-    height: 92px;
-    border-radius: 50%;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(145deg, #0c5d4d, #0b4037);
-    color: #fff;
-    font-size: 30px;
-    font-weight: 800;
+    width: 92px; height: 92px; border-radius: 50%; margin: auto;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(145deg, #0c5d4d, #0b4037); color: #fff; font-size: 30px; font-weight: 800;
 }
+.profile-role { color: var(--primary-2); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; margin-top: 16px; }
+.profile-name { color: #183d35; font-size: 17px; font-weight: 800; margin: 6px 0; }
+.profile-desc { color: #7a8884; font-size: 11px; line-height: 1.55; }
 
-.profile-role {
-    color: var(--primary-2);
-    font-size: 10px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: .8px;
-    margin-top: 16px;
-}
-
-.profile-name {
-    color: #183d35;
-    font-size: 17px;
-    font-weight: 800;
-    margin: 6px 0;
-}
-
-.profile-desc {
-    color: #7a8884;
-    font-size: 11px;
-    line-height: 1.55;
-}
-
-/* ---------- FOOTER ---------- */
-.footer {
-    background: #092f29;
-    color: rgba(255,255,255,.75);
-    margin-top: 35px;
-    padding: 48px 6% 20px;
-}
-
-.footer-inner {
-    width: 88%;
-    max-width: 1250px;
-    margin: auto;
-}
-
-.footer-title {
-    color: white;
-    font-size: 15px;
-    font-weight: 800;
-    margin-bottom: 14px;
-}
-
-.footer p, .footer a {
-    color: rgba(255,255,255,.68);
-    font-size: 11px;
-    line-height: 1.8;
-    text-decoration: none;
-    margin: 0;
-}
-
+.footer { background: #092f29; color: rgba(255,255,255,.75); margin-top: 35px; padding: 48px 6% 20px; }
+.footer-inner { width: 88%; max-width: 1250px; margin: auto; }
+.footer-title { color: white; font-size: 15px; font-weight: 800; margin-bottom: 14px; }
+.footer p, .footer a { color: rgba(255,255,255,.68); font-size: 11px; line-height: 1.8; text-decoration: none; margin: 0; }
 .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,.12);
-    margin-top: 35px;
-    padding-top: 18px;
-    text-align: center;
-    color: rgba(255,255,255,.45);
-    font-size: 10px;
+    border-top: 1px solid rgba(255,255,255,.12); margin-top: 35px; padding-top: 18px;
+    text-align: center; color: rgba(255,255,255,.45); font-size: 10px;
 }
 
-/* ---------- STREAMLIT FORM ---------- */
-div[data-testid="stForm"] {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 25px !important;
+div[data-testid="stForm"] { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 25px !important; }
+.stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { border-radius: 5px !important; border-color: #d8e1de !important; }
+.stButton > button[kind="primary"], .stFormSubmitButton > button {
+    background: var(--primary) !important; border: none !important; color: white !important;
+    border-radius: 5px !important; font-weight: 700 !important;
 }
 
-.stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div {
-    border-radius: 5px !important;
-    border-color: #d8e1de !important;
-}
-
-.stButton > button[kind="primary"],
-.stFormSubmitButton > button {
-    background: var(--primary) !important;
-    border: none !important;
-    color: white !important;
-    border-radius: 5px !important;
-    font-weight: 700 !important;
-}
-
-.stButton > button:hover {
-    border-color: var(--primary) !important;
-}
-
-/* ---------- RESPONSIVE ---------- */
 @media (max-width: 850px) {
-    .govbar-left {
-        display: none;
-    }
-
-    .govbar {
-        justify-content: flex-end;
-    }
-
-    .brand-inner {
-        align-items: flex-start;
-    }
-
-    .brand-title {
-        font-size: 14px;
-    }
-
-    .hero {
-        min-height: 430px;
-    }
-
-    .content, .hero-content, .info-inner, .footer-inner {
-        width: 92%;
-    }
-
-    .nav-wrap {
-        padding: 0 4%;
-        overflow-x: auto;
-    }
+    .govbar-left { display: none; }
+    .govbar { justify-content: flex-end; }
+    .brand-inner { align-items: flex-start; }
+    .brand-title { font-size: 14px; }
+    .hero { min-height: 430px; }
+    .content, .hero-content, .info-inner, .footer-inner { width: 92%; }
+    .nav-wrap { padding: 0 4%; overflow-x: auto; }
 }
 </style>
 """,
@@ -767,20 +309,14 @@ st.markdown(
 # NAVIGATION
 # =========================================================
 st.markdown('<div class="nav-wrap"><div class="nav-inner">', unsafe_allow_html=True)
-
 nav_cols = st.columns([1.05, 1.05, 1.15, 1.2, 1.2, 1.05, 0.85])
-
 nav_keys = list(PAGES.keys())
 
 for i, key in enumerate(nav_keys):
     with nav_cols[i]:
         active_class = "nav-button-active" if st.session_state.page == PAGES[key] else "nav-button"
         st.markdown(f'<div class="{active_class}">', unsafe_allow_html=True)
-        if st.button(
-            PAGES[key].replace(" & ", " • "),
-            key=f"nav_{key}",
-            use_container_width=True,
-        ):
+        if st.button(PAGES[key].replace(" & ", " • "), key=f"nav_{key}", use_container_width=True):
             st.session_state.page = PAGES[key]
             st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
@@ -795,8 +331,7 @@ st.markdown(
 <div class="alert">
     <span>📢</span>
     <strong>Informasi:</strong>
-    <span>Portal DPRK Aceh Jaya menyediakan akses informasi publik, produk hukum,
-    agenda dewan, dan penyampaian aspirasi masyarakat.</span>
+    <span>Portal DPRK Aceh Jaya menyediakan akses informasi publik, produk hukum, agenda dewan, dan penyampaian aspirasi masyarakat.</span>
 </div>
 """,
     unsafe_allow_html=True,
@@ -806,18 +341,13 @@ st.markdown(
 # BERANDA
 # =========================================================
 if st.session_state.page == "Beranda":
-
     st.markdown(
         """
     <section class="hero">
         <div class="hero-content">
             <div class="hero-kicker">PORTAL RESMI DPRK ACEH JAYA</div>
             <h1>Suara Masyarakat,<br>Bagian dari Pembangunan Aceh Jaya</h1>
-            <p>
-                Akses informasi kegiatan DPRK, produk hukum, agenda persidangan,
-                layanan publik, serta sampaikan aspirasi masyarakat melalui satu
-                portal informasi yang mudah diakses.
-            </p>
+            <p>Akses informasi kegiatan DPRK, produk hukum, agenda persidangan, layanan publik, serta sampaikan aspirasi masyarakat melalui satu portal informasi yang mudah diakses.</p>
             <div class="hero-buttons">
                 <a class="hero-btn" href="#layanan">Sampaikan Aspirasi</a>
                 <a class="hero-btn secondary" href="#berita">Lihat Berita</a>
@@ -828,7 +358,6 @@ if st.session_state.page == "Beranda":
         unsafe_allow_html=True,
     )
 
-    # ---------- LAYANAN ----------
     st.markdown('<div class="content" id="layanan">', unsafe_allow_html=True)
     st.markdown(
         """
@@ -837,9 +366,7 @@ if st.session_state.page == "Beranda":
             <div>
                 <div class="section-kicker">Akses Cepat</div>
                 <h2 class="section-title">Layanan Publik</h2>
-                <div class="section-desc">
-                    Akses layanan dan informasi DPRK Aceh Jaya secara lebih mudah.
-                </div>
+                <div class="section-desc">Akses layanan dan informasi DPRK Aceh Jaya secara lebih mudah.</div>
             </div>
         </div>
     """,
@@ -856,7 +383,6 @@ if st.session_state.page == "Beranda":
     ]
 
     service_cols = st.columns(6)
-
     for i, (icon, title, desc, target) in enumerate(services):
         with service_cols[i]:
             st.markdown(
@@ -870,12 +396,10 @@ if st.session_state.page == "Beranda":
                 unsafe_allow_html=True,
             )
 
-    st.markdown("</section>", unsafe_allow_html=True)
+    st.markdown("</section></div>", unsafe_allow_html=True)
 
-    # ---------- STATISTICS ----------
     st.markdown(
         """
-    </div>
     <div class="info-strip">
         <div class="info-inner">
     """,
@@ -883,13 +407,7 @@ if st.session_state.page == "Beranda":
     )
 
     stat_cols = st.columns(4)
-    stats = [
-        ("2024–2029", "Masa Jabatan"),
-        ("3", "Pimpinan DPRK"),
-        ("5", "Komisi / Alat Kelengkapan"),
-        ("24/7", "Akses Informasi"),
-    ]
-
+    stats = [("2024–2029", "Masa Jabatan"), ("3", "Pimpinan DPRK"), ("5", "Komisi / Alat Kelengkapan"), ("24/7", "Akses Informasi")]
     for i, (number, label) in enumerate(stats):
         with stat_cols[i]:
             st.markdown(
@@ -911,7 +429,6 @@ if st.session_state.page == "Beranda":
         unsafe_allow_html=True,
     )
 
-    # ---------- BERITA + AGENDA ----------
     st.markdown(
         """
     <section class="section">
@@ -919,9 +436,7 @@ if st.session_state.page == "Beranda":
             <div>
                 <div class="section-kicker">Informasi Terbaru</div>
                 <h2 class="section-title">Berita & Agenda</h2>
-                <div class="section-desc">
-                    Informasi kegiatan dan agenda DPRK Aceh Jaya.
-                </div>
+                <div class="section-desc">Informasi kegiatan dan agenda DPRK Aceh Jaya.</div>
             </div>
         </div>
     """,
@@ -939,9 +454,7 @@ if st.session_state.page == "Beranda":
             <div class="news-main-body">
                 <div class="news-tag">{main_news['tag']}</div>
                 <h3>{main_news['title']}</h3>
-                <p style="color:#71817d;font-size:12px;line-height:1.65;">
-                    {main_news['desc']}
-                </p>
+                <p style="color:#71817d;font-size:12px;line-height:1.65;">{main_news['desc']}</p>
                 <div class="news-date">🕒 {main_news['date']}</div>
             </div>
         </div>
@@ -970,9 +483,7 @@ if st.session_state.page == "Beranda":
         st.markdown(
             """
             <div class="section-kicker">Jadwal</div>
-            <div style="font-family:'Plus Jakarta Sans';font-size:20px;font-weight:800;color:#183d35;margin-bottom:5px;">
-                Agenda Terdekat
-            </div>
+            <div style="font-family:'Plus Jakarta Sans';font-size:20px;font-weight:800;color:#183d35;margin-bottom:5px;">Agenda Terdekat</div>
             """,
             unsafe_allow_html=True,
         )
@@ -993,48 +504,7 @@ if st.session_state.page == "Beranda":
             """,
                 unsafe_allow_html=True,
             )
-
         st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown("</section>", unsafe_allow_html=True)
-
-    # ---------- PUBLIC INFORMATION ----------
-    st.markdown(
-        """
-    <section class="section" style="padding-top:5px;">
-        <div class="section-head">
-            <div>
-                <div class="section-kicker">Keterbukaan Informasi</div>
-                <h2 class="section-title">Informasi Publik</h2>
-                <div class="section-desc">
-                    Akses berbagai informasi publik yang tersedia melalui portal DPRK Aceh Jaya.
-                </div>
-            </div>
-        </div>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    info_cols = st.columns(4)
-    public_info = [
-        ("📑", "Informasi Berkala", "Informasi yang disampaikan secara berkala."),
-        ("📂", "Informasi Setiap Saat", "Dokumen dan informasi yang tersedia setiap saat."),
-        ("🚨", "Informasi Serta Merta", "Informasi yang berkaitan dengan kepentingan masyarakat luas."),
-        ("⚖️", "Produk Hukum", "Qanun, peraturan, dan dokumen hukum daerah."),
-    ]
-
-    for i, (icon, title, desc) in enumerate(public_info):
-        with info_cols[i]:
-            st.markdown(
-                f"""
-            <div class="service-box" style="text-align:left;min-height:145px;">
-                <div class="service-icon" style="margin:0 0 13px;">{icon}</div>
-                <div class="service-title">{title}</div>
-                <div class="service-desc">{desc}</div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
 
     st.markdown("</section></div>", unsafe_allow_html=True)
 
@@ -1042,18 +512,13 @@ if st.session_state.page == "Beranda":
 # PROFIL
 # =========================================================
 elif st.session_state.page == "Profil & Pimpinan":
-
     st.markdown('<div class="content">', unsafe_allow_html=True)
     st.markdown(
         """
     <section class="section">
         <div class="section-kicker">Tentang DPRK</div>
         <h2 class="section-title">Profil DPRK Aceh Jaya</h2>
-        <p class="section-desc">
-            Dewan Perwakilan Rakyat Kabupaten Aceh Jaya sebagai unsur penyelenggara
-            pemerintahan daerah bersama pemerintah daerah menjalankan fungsi legislasi,
-            anggaran, dan pengawasan sesuai ketentuan peraturan perundang-undangan.
-        </p>
+        <p class="section-desc">Dewan Perwakilan Rakyat Kabupaten Aceh Jaya sebagai unsur penyelenggara pemerintahan daerah bersama pemerintah daerah menjalankan fungsi legislasi, anggaran, dan pengawasan sesuai ketentuan peraturan perundang-undangan.</p>
     </section>
     """,
         unsafe_allow_html=True,
@@ -1071,7 +536,6 @@ elif st.session_state.page == "Profil & Pimpinan":
     )
 
     cols = st.columns(3)
-
     for i, (role, name, desc) in enumerate(PIMPINAN):
         with cols[i]:
             initials = "".join([word[0] for word in name.split()[:2]])
@@ -1086,23 +550,19 @@ elif st.session_state.page == "Profil & Pimpinan":
             """,
                 unsafe_allow_html=True,
             )
-
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
 # BERITA & AGENDA
 # =========================================================
 elif st.session_state.page == "Berita & Agenda":
-
     st.markdown('<div class="content">', unsafe_allow_html=True)
     st.markdown(
         """
     <section class="section">
         <div class="section-kicker">Publikasi</div>
         <h2 class="section-title">Berita & Agenda DPRK</h2>
-        <p class="section-desc">
-            Informasi kegiatan, rapat, agenda, dan aktivitas DPRK Aceh Jaya.
-        </p>
+        <p class="section-desc">Informasi kegiatan, rapat, agenda, dan aktivitas DPRK Aceh Jaya.</p>
     </section>
     """,
         unsafe_allow_html=True,
@@ -1111,14 +571,11 @@ elif st.session_state.page == "Berita & Agenda":
     for item in NEWS:
         st.markdown(
             f"""
-        <div style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;
-                    padding:18px;margin-bottom:18px;display:flex;gap:22px;">
-            <img src="{item['image']}"
-                 style="width:270px;height:165px;object-fit:cover;border-radius:6px;">
+        <div style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:18px;margin-bottom:18px;display:flex;gap:22px;">
+            <img src="{item['image']}" style="width:270px;height:165px;object-fit:cover;border-radius:6px;">
             <div style="padding:6px 0;">
                 <div class="news-tag">{item['tag']}</div>
-                <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';
-                           font-size:21px;margin:0 0 8px;">{item['title']}</h3>
+                <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';font-size:21px;margin:0 0 8px;">{item['title']}</h3>
                 <p style="color:#71817d;font-size:12px;line-height:1.7;">{item['desc']}</p>
                 <div class="news-date">🕒 {item['date']}</div>
             </div>
@@ -1136,7 +593,6 @@ elif st.session_state.page == "Berita & Agenda":
     )
 
     agenda_cols = st.columns(3)
-
     for i, (day, month, title, desc) in enumerate(AGENDA):
         with agenda_cols[i]:
             st.markdown(
@@ -1151,23 +607,19 @@ elif st.session_state.page == "Berita & Agenda":
             """,
                 unsafe_allow_html=True,
             )
-
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
 # LAYANAN & PENGADUAN
 # =========================================================
 elif st.session_state.page == "Layanan & Pengaduan":
-
     st.markdown('<div class="content">', unsafe_allow_html=True)
     st.markdown(
         """
     <section class="section">
         <div class="section-kicker">Pelayanan Masyarakat</div>
         <h2 class="section-title">Layanan Aspirasi & Pengaduan</h2>
-        <p class="section-desc">
-            Sampaikan aspirasi, laporan, atau pengaduan kepada DPRK Aceh Jaya.
-        </p>
+        <p class="section-desc">Sampaikan aspirasi, laporan, atau pengaduan kepada DPRK Aceh Jaya.</p>
     </section>
     """,
         unsafe_allow_html=True,
@@ -1179,59 +631,31 @@ elif st.session_state.page == "Layanan & Pengaduan":
         st.markdown(
             """
         <div class="section-kicker">Formulir</div>
-        <h3 style="color:#183d35;font-family:'Plus Jakarta Sans;font-size:21px;margin-bottom:15px;">
-            Sampaikan Aspirasi Anda
-        </h3>
+        <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';font-size:21px;margin-bottom:15px;">Sampaikan Aspirasi Anda</h3>
         """,
             unsafe_allow_html=True,
         )
 
         with st.form("form_aduan"):
             c1, c2 = st.columns(2)
-
             with c1:
                 nama = st.text_input("Nama Lengkap *", placeholder="Masukkan nama lengkap")
                 nik = st.text_input("NIK (Opsional)", placeholder="16 digit")
-
             with c2:
                 kategori = st.selectbox(
                     "Kategori Pengaduan *",
-                    [
-                        "Pengaduan Masyarakat",
-                        "Infrastruktur & Jalan",
-                        "Pelayanan Publik",
-                        "Legislasi & Qanun",
-                        "Lingkungan & Bencana",
-                        "Lainnya",
-                    ],
+                    ["Pengaduan Masyarakat", "Infrastruktur & Jalan", "Pelayanan Publik", "Legislasi & Qanun", "Lingkungan & Bencana", "Lainnya"],
                 )
+            lokasi = st.text_input("Lokasi Kejadian (Opsional)", placeholder="Desa / Kecamatan / lokasi")
+            isi = st.text_area("Isi Laporan / Aspirasi *", height=150, placeholder="Jelaskan aspirasi atau laporan secara jelas...")
 
-            lokasi = st.text_input(
-                "Lokasi Kejadian (Opsional)",
-                placeholder="Desa / Kecamatan / lokasi",
-            )
-
-            isi = st.text_area(
-                "Isi Laporan / Aspirasi *",
-                height=150,
-                placeholder="Jelaskan aspirasi atau laporan secara jelas...",
-            )
-
-            submitted = st.form_submit_button(
-                "Kirim Aspirasi",
-                type="primary",
-                use_container_width=True,
-            )
+            submitted = st.form_submit_button("Kirim Aspirasi", type="primary", use_container_width=True)
 
             if submitted:
                 if nama.strip() and isi.strip():
                     nomor = datetime.now().strftime("%Y%m%d%H%M%S")
-                    st.success(
-                        f"✅ Laporan berhasil dicatat. Nomor tiket: ADU-{nomor}"
-                    )
-                    st.info(
-                        "Simpan nomor tiket untuk keperluan pengecekan tindak lanjut."
-                    )
+                    st.success(f"✅ Laporan berhasil dicatat. Nomor tiket: ADU-{nomor}")
+                    st.info("Simpan nomor tiket untuk keperluan pengecekan tindak lanjut.")
                 else:
                     st.error("Mohon lengkapi Nama Lengkap dan Isi Laporan.")
 
@@ -1240,53 +664,41 @@ elif st.session_state.page == "Layanan & Pengaduan":
             """
         <div class="agenda-wrap">
             <div class="section-kicker">Kontak</div>
-            <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';font-size:20px;margin-top:0;">
-                Hubungi Kami
-            </h3>
+            <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';font-size:20px;margin-top:0;">Hubungi Kami</h3>
             <p style="font-size:12px;color:#71817d;line-height:1.8;">
-                <strong>📞 Telepon</strong><br>
-                (0655) 12345
+                <strong>📞 Telepon</strong><br>(0655) 12345
             </p>
             <p style="font-size:12px;color:#71817d;line-height:1.8;">
-                <strong>✉️ Email</strong><br>
-                sekretariat@dprk.acehjaya.go.id
+                <strong>✉️ Email</strong><br>sekretariat@dprk.acehjaya.go.id
             </p>
             <p style="font-size:12px;color:#71817d;line-height:1.8;">
-                <strong>📍 Alamat</strong><br>
-                Jl. Merdeka No. 01, Calang, Aceh Jaya
+                <strong>📍 Alamat</strong><br>Jl. Merdeka No. 01, Calang, Aceh Jaya
             </p>
             <hr style="border:none;border-top:1px solid #edf1ef;">
-            <p style="font-size:11px;color:#71817d;line-height:1.7;">
-                Jam layanan: Senin–Jumat, 08.00–16.00 WIB.
-            </p>
+            <p style="font-size:11px;color:#71817d;line-height:1.7;">Jam layanan: Senin–Jumat, 08.00–16.00 WIB.</p>
         </div>
         """,
             unsafe_allow_html=True,
         )
-
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
 # JDIH & TRANSPARANSI
 # =========================================================
 elif st.session_state.page == "JDIH & Transparansi":
-
     st.markdown('<div class="content">', unsafe_allow_html=True)
     st.markdown(
         """
     <section class="section">
         <div class="section-kicker">Dokumentasi Hukum</div>
         <h2 class="section-title">JDIH & Transparansi</h2>
-        <p class="section-desc">
-            Akses daftar produk hukum dan informasi publik DPRK Aceh Jaya.
-        </p>
+        <p class="section-desc">Akses daftar produk hukum dan informasi publik DPRK Aceh Jaya.</p>
     </section>
     """,
         unsafe_allow_html=True,
     )
 
     info_cols = st.columns(4)
-
     cards = [
         ("⚖️", "Produk Hukum", "Qanun dan dokumen hukum daerah."),
         ("📊", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
@@ -1311,21 +723,13 @@ elif st.session_state.page == "JDIH & Transparansi":
         """
     <div style="margin-top:45px;">
         <div class="section-kicker">Database</div>
-        <h2 class="section-title" style="font-size:23px;margin-bottom:18px;">
-            Produk Hukum Daerah
-        </h2>
+        <h2 class="section-title" style="font-size:23px;margin-bottom:18px;">Produk Hukum Daerah</h2>
     </div>
     """,
         unsafe_allow_html=True,
     )
 
-    import pandas as pd
-
-    df = pd.DataFrame(
-        JDIH_DATA,
-        columns=["No", "Nomor & Tahun", "Tentang", "Status"],
-    )
-
+    df = pd.DataFrame(JDIH_DATA, columns=["No", "Nomor & Tahun", "Tentang", "Status"])
     st.dataframe(
         df,
         use_container_width=True,
@@ -1337,31 +741,25 @@ elif st.session_state.page == "JDIH & Transparansi":
             "Status": st.column_config.TextColumn("Status"),
         },
     )
-
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
 # KONTAK
 # =========================================================
 else:
-
     st.markdown('<div class="content">', unsafe_allow_html=True)
     st.markdown(
         """
     <section class="section">
         <div class="section-kicker">Informasi Kontak</div>
         <h2 class="section-title">Hubungi DPRK Aceh Jaya</h2>
-        <p class="section-desc">
-            Gunakan informasi berikut untuk mendapatkan layanan dan informasi
-            dari Sekretariat DPRK Aceh Jaya.
-        </p>
+        <p class="section-desc">Gunakan informasi berikut untuk mendapatkan layanan dan informasi dari Sekretariat DPRK Aceh Jaya.</p>
     </section>
     """,
         unsafe_allow_html=True,
     )
 
     cols = st.columns(3)
-
     contacts = [
         ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya"),
         ("📞", "Telepon", "(0655) 12345"),
@@ -1383,12 +781,9 @@ else:
 
     st.markdown(
         """
-    <div style="margin-top:35px;background:#fff;border:1px solid #e1e8e5;
-                border-radius:8px;padding:30px;">
+    <div style="margin-top:35px;background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:30px;">
         <div class="section-kicker">Sekretariat</div>
-        <h3 style="font-family:'Plus Jakarta Sans';color:#183d35;font-size:21px;">
-            Jam Pelayanan
-        </h3>
+        <h3 style="font-family:'Plus Jakarta Sans';color:#183d35;font-size:21px;">Jam Pelayanan</h3>
         <p style="font-size:12px;color:#71817d;line-height:1.8;">
             Senin–Kamis: 08.00–16.30 WIB<br>
             Jumat: 08.00–16.30 WIB<br>
@@ -1398,7 +793,6 @@ else:
     """,
         unsafe_allow_html=True,
     )
-
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
@@ -1411,25 +805,16 @@ st.markdown(
         <div class="brand" style="margin-bottom:30px;">
             <div class="brand-logo">🏛️</div>
             <div>
-                <div class="brand-title" style="color:#fff;font-size:16px;">
-                    DPRK ACEH JAYA
-                </div>
-                <div class="brand-subtitle" style="color:rgba(255,255,255,.5);">
-                    PORTAL INFORMASI PUBLIK
-                </div>
+                <div class="brand-title" style="color:#fff;font-size:16px;">DPRK ACEH JAYA</div>
+                <div class="brand-subtitle" style="color:rgba(255,255,255,.5);">PORTAL INFORMASI PUBLIK</div>
             </div>
         </div>
 
         <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:35px;">
             <div>
                 <div class="footer-title">Tentang Portal</div>
-                <p>
-                    Portal informasi DPRK Aceh Jaya menyediakan akses informasi
-                    kelembagaan, berita, agenda, produk hukum, layanan publik,
-                    dan aspirasi masyarakat.
-                </p>
+                <p>Portal informasi DPRK Aceh Jaya menyediakan akses informasi kelembagaan, berita, agenda, produk hukum, layanan publik, dan aspirasi masyarakat.</p>
             </div>
-
             <div>
                 <div class="footer-title">Navigasi</div>
                 <p>Beranda</p>
@@ -1437,7 +822,6 @@ st.markdown(
                 <p>Berita & Agenda</p>
                 <p>JDIH</p>
             </div>
-
             <div>
                 <div class="footer-title">Layanan</div>
                 <p>Pengaduan Masyarakat</p>
@@ -1445,7 +829,6 @@ st.markdown(
                 <p>Produk Hukum</p>
                 <p>Transparansi</p>
             </div>
-
             <div>
                 <div class="footer-title">Kontak</div>
                 <p>Jl. Merdeka No. 01</p>
@@ -1463,9 +846,3 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
-'''
-
-path = Path("/mnt/data/app_redesign_dprk_aceh_jaya.py")
-path.write_text(app_code, encoding="utf-8")
-print(f"File berhasil dibuat: {path}")
-print(f"Jumlah baris: {len(app_code.splitlines())}")
