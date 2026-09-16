@@ -14,7 +14,502 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed",
 )
+from pathlib import Path
+import zipfile
 
+root = Path("/mnt/data/dprk_aceh_jaya_semarang_style")
+root.mkdir(exist_ok=True)
+
+# 1. Definisi Kode Utama Streamlit (app.py)
+app = r'''import streamlit as st
+import streamlit.components.v1 as components
+from datetime import datetime
+
+st.set_page_config(
+    page_title="DPRK Aceh Jaya",
+    page_icon="🏛️",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
+
+# DATA GLOBAL
+news_list = [
+    ("📝", "PARIPURNA", "15 September 2026", "Pembahasan Rancangan KUA-PPAS 2027",
+     "Rapat paripurna pembahasan kebijakan umum anggaran dan prioritas plafon anggaran sementara."),
+    ("📢", "RESES", "10 September 2026", "Penjaringan Aspirasi Masyarakat Melalui Reses",
+     "Anggota DPRK turun ke daerah pemilihan untuk menampung aspirasi masyarakat."),
+    ("⚖️", "LEGISLASI", "02 September 2026", "RDPU Qanun Ketertiban",
+     "Rapat dengar pendapat umum untuk penyempurnaan rancangan Qanun Daerah.")
+]
+
+pages = {
+    "Beranda": "Beranda",
+    "Profil": "Profil & Kelengkapan",
+    "Dewan": "Fungsi & Komisi",
+    "Berita": "Berita & Rapat",
+    "JDIH": "JDIH & Transparansi",
+    "Aspirasi": "Layanan & Pengaduan",
+    "PORA": "PORA XV 2026",
+    "Kontak": "Kontak & Peta"
+}
+
+# STYLING CSS
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+    --navy:#0B3C5D;
+    --navy2:#08324d;
+    --green:#1D7A46;
+    --gold:#D9A05B;
+    --orange:#E67E22;
+    --bg:#F6F8FA;
+    --text:#212529;
+    --muted:#68737D;
+    --line:#E5E9ED;
+}
+
+*{font-family:'Inter',sans-serif}
+.stApp{background:var(--bg)!important;color:var(--text)!important}
+#MainMenu,footer{visibility:hidden}
+header[data-testid="stHeader"]{background:transparent!important}
+
+.block-container{
+    max-width:1280px;
+    padding:0 1.5rem 4rem;
+}
+
+.gov-strip{
+    background:var(--navy);
+    color:#fff;
+    font-size:11px;
+    padding:8px 0;
+}
+.gov-inner{
+    max-width:1280px;
+    margin:auto;
+    padding:0 24px;
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+.gov-right{opacity:.85}
+
+.site-header{
+    background:#fff;
+    border-bottom:1px solid var(--line);
+}
+.brand-row{
+    max-width:1280px;
+    margin:auto;
+    padding:18px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px;
+}
+.brand{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+.logo{
+    width:55px;height:55px;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--navy),var(--green));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:28px;
+    box-shadow:0 7px 18px rgba(11,60,93,.15);
+}
+.brand-name{
+    color:var(--navy);
+    font-weight:800;
+    font-size:18px;
+    line-height:1.15;
+}
+.brand-small{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:4px;
+    letter-spacing:.3px;
+}
+
+.nav-wrap{
+    background:#fff;
+    border-top:1px solid #F0F2F4;
+}
+.nav-inner{
+    max-width:1280px;
+    margin:auto;
+    padding:0 24px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.nav-inner .stButton{margin:0!important}
+.nav-inner .stButton>button{
+    background:transparent!important;
+    color:#4D5861!important;
+    border:0!important;
+    border-radius:0!important;
+    padding:12px 9px!important;
+    font-size:12px!important;
+    font-weight:600!important;
+}
+.nav-inner .stButton>button:hover{
+    color:var(--navy)!important;
+    background:#F5F8FA!important;
+}
+
+.hero{
+    margin-top:22px;
+    min-height:330px;
+    border-radius:24px;
+    overflow:hidden;
+    position:relative;
+    background:
+      linear-gradient(90deg,rgba(5,35,54,.95),rgba(11,60,93,.78),rgba(11,60,93,.30)),
+      linear-gradient(135deg,var(--navy),var(--green));
+    display:flex;
+    align-items:center;
+    padding:42px;
+    box-shadow:0 12px 35px rgba(11,60,93,.14);
+}
+.hero-content{max-width:650px;color:white}
+.hero-kicker{
+    color:#F2D09B;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:1.3px;
+    text-transform:uppercase;
+}
+.hero h1{
+    font-size:38px;
+    line-height:1.12;
+    margin:10px 0;
+    font-weight:800;
+}
+.hero p{
+    font-size:14px;
+    line-height:1.7;
+    color:rgba(255,255,255,.86);
+}
+.hero-badge{
+    display:inline-block;
+    margin-top:12px;
+    background:var(--orange);
+    color:#fff;
+    padding:9px 15px;
+    border-radius:9px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.section{margin-top:35px}
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin-bottom:15px;
+}
+.section-title{color:var(--navy);font-size:23px;font-weight:800}
+.section-desc{color:var(--muted);font-size:12px}
+
+.service-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:17px;
+    padding:19px;
+    min-height:150px;
+    box-shadow:0 3px 15px rgba(33,37,41,.035);
+}
+.service-icon{
+    width:42px;height:42px;
+    border-radius:12px;
+    background:#EAF3F8;
+    display:flex;align-items:center;justify-content:center;
+    font-size:21px;
+    margin-bottom:13px;
+}
+.service-title{color:var(--navy);font-weight:800;font-size:13px}
+.service-text{color:var(--muted);font-size:11px;line-height:1.55;margin-top:5px}
+
+.news-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:17px;
+    overflow:hidden;
+    box-shadow:0 3px 15px rgba(33,37,41,.035);
+}
+.news-image{
+    height:135px;
+    background:linear-gradient(135deg,var(--navy),var(--green));
+    display:flex;align-items:center;justify-content:center;
+    font-size:45px;
+}
+.news-body{padding:17px}
+.tag{
+    color:var(--green);
+    background:#EAF6EF;
+    border-radius:20px;
+    padding:5px 9px;
+    font-size:9px;
+    font-weight:800;
+}
+.news-date{color:#8A949D;font-size:10px}
+.news-title{color:var(--navy);font-weight:800;font-size:14px;line-height:1.4;margin:10px 0 5px}
+.news-desc{color:var(--muted);font-size:11px;line-height:1.6}
+
+.stat{
+    background:var(--navy);
+    color:white;
+    border-radius:16px;
+    padding:21px;
+}
+.stat-num{font-size:28px;font-weight:800}
+.stat-label{font-size:10px;opacity:.76;margin-top:3px}
+
+.card{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:15px;
+}
+.card-title{color:var(--navy);font-weight:800;font-size:16px;margin-bottom:8px}
+.card-text{color:#59646D;font-size:13px;line-height:1.7}
+
+.stTextInput input,.stTextArea textarea,
+.stSelectbox div[data-baseweb="select"]>div{
+    background:white!important;
+    border:1px solid #D6DDE2!important;
+    border-radius:10px!important;
+}
+.stButton>button{border-radius:10px!important;font-weight:700!important}
+button[kind="primary"]{
+    background:var(--orange)!important;
+    color:white!important;
+    border-color:var(--orange)!important;
+}
+
+.footer{
+    margin-top:45px;
+    background:var(--navy2);
+    color:#fff;
+    padding:35px 25px;
+    border-radius:22px;
+}
+.footer-title{font-weight:800;font-size:15px}
+.footer-text{color:rgba(255,255,255,.7);font-size:11px;line-height:1.8;margin-top:8px}
+
+@media(max-width:800px){
+    .gov-right{display:none}
+    .brand-row{padding:15px}
+    .nav-inner{overflow-x:auto;padding:0 10px}
+    .hero{padding:28px;min-height:290px}
+    .hero h1{font-size:28px}
+}
+</style>
+""", unsafe_allow_html=True)
+
+if "page" not in st.session_state:
+    st.session_state.page = "Beranda"
+
+# HEADER & NAV
+st.markdown("""
+<div class="gov-strip">
+  <div class="gov-inner">
+    <div>PEMERINTAH KABUPATEN ACEH JAYA • INFORMASI PUBLIK</div>
+    <div class="gov-right">Portal Resmi DPRK Aceh Jaya</div>
+  </div>
+</div>
+<div class="site-header">
+  <div class="brand-row">
+    <div class="brand">
+      <div class="logo">🏛️</div>
+      <div>
+        <div class="brand-name">DPRK ACEH JAYA</div>
+        <div class="brand-small">DEWAN PERWAKILAN RAKYAT KABUPATEN ACEH JAYA</div>
+      </div>
+    </div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('<div class="nav-wrap"><div class="nav-inner">', unsafe_allow_html=True)
+cols = st.columns(len(pages))
+for col, (label, target) in zip(cols, pages.items()):
+    with col:
+        if st.button(label, key="nav_"+label, use_container_width=True):
+            st.session_state.page = target
+            st.rerun()
+st.markdown('</div></div>', unsafe_allow_html=True)
+
+# HALAMAN BERANDA
+if st.session_state.page == "Beranda":
+    st.markdown("""
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-kicker">Portal Resmi DPRK Aceh Jaya</div>
+        <h1>Informasi, Aspirasi, dan Transparansi untuk Aceh Jaya</h1>
+        <p>
+          Akses informasi kelembagaan DPRK, kegiatan dewan, dokumen publik,
+          layanan aspirasi masyarakat, serta agenda daerah melalui satu portal.
+        </p>
+        <div class="hero-badge">Layanan Publik Digital</div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Layanan Utama</div>
+          <div class="section-desc">Akses cepat informasi dan layanan DPRK Aceh Jaya</div>
+        </div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    services = [
+        ("🏛️","Profil DPRK","Informasi kelembagaan, pimpinan, dan alat kelengkapan dewan.","Profil"),
+        ("📜","Fungsi & Komisi","Informasi fungsi legislasi, anggaran, pengawasan, dan komisi.","Dewan"),
+        ("📂","JDIH","Dokumen Qanun, APBK, perencanaan, dan informasi publik.","JDIH"),
+        ("📢","Aspirasi Publik","Sampaikan saran, keluhan, dan aspirasi masyarakat.","Aspirasi"),
+        ("📰","Berita & Agenda","Kabar terbaru, rapat paripurna, reses, dan kegiatan DPRK.","Berita"),
+        ("🏆","PORA XV 2026","Informasi Aceh Jaya sebagai tuan rumah PORA XV 2026.","PORA"),
+    ]
+
+    cols = st.columns(3)
+    for i, (icon,title,desc,target) in enumerate(services):
+        with cols[i%3]:
+            st.markdown(f"""
+            <div class="service-card">
+              <div class="service-icon">{icon}</div>
+              <div class="service-title">{title}</div>
+              <div class="service-text">{desc}</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Lihat informasi", key="service_"+target, use_container_width=True):
+                st.session_state.page = pages[target]
+                st.rerun()
+
+    st.markdown("""
+    <div class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Berita & Informasi Terkini</div>
+          <div class="section-desc">Informasi kegiatan DPRK Aceh Jaya</div>
+        </div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    cols = st.columns(3)
+    for col,(icon,tag,date,title,desc) in zip(cols, news_list):
+        with col:
+            st.markdown(f"""
+            <div class="news-card">
+              <div class="news-image">{icon}</div>
+              <div class="news-body">
+                <span class="tag">{tag}</span>
+                <span class="news-date" style="float:right">{date}</span>
+                <div class="news-title">{title}</div>
+                <div class="news-desc">{desc}</div>
+              </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Sekilas DPRK Aceh Jaya</div>
+          <div class="section-desc">Informasi ringkas kelembagaan</div>
+        </div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    c1,c2,c3,c4=st.columns(4)
+    stats=[("4","Komisi Tetap"),("1","Badan Anggaran"),("1","BAMUS"),("1","Badan Pembentukan Qanun")]
+    for c,(num,label) in zip([c1,c2,c3,c4],stats):
+        with c:
+            st.markdown(f'<div class="stat"><div class="stat-num">{num}</div><div class="stat-label">{label}</div></div>',unsafe_allow_html=True)
+
+elif st.session_state.page == "Profil & Kelengkapan":
+    st.markdown('<div class="section"><div class="section-title">Profil & Kelengkapan DPRK</div><div class="section-desc">Dewan Perwakilan Rakyat Kabupaten Aceh Jaya</div></div>',unsafe_allow_html=True)
+    st.markdown("""
+    <div class="card">
+      <div class="card-title">🏛️ Tentang DPRK Aceh Jaya</div>
+      <div class="card-text">
+      DPRK Aceh Jaya adalah lembaga perwakilan rakyat daerah yang berkedudukan
+      sebagai unsur penyelenggara pemerintahan daerah di Kabupaten Aceh Jaya.
+      DPRK memiliki peran dalam menyalurkan aspirasi masyarakat serta mengawasi
+      pelaksanaan pemerintahan daerah.
+      </div>
+    </div>
+    """,unsafe_allow_html=True)
+
+elif st.session_state.page == "Fungsi & Komisi":
+    st.markdown('<div class="section"><div class="section-title">Fungsi & Komisi Dewan</div><div class="section-desc">Tugas pokok dan bidang kerja DPRK</div></div>',unsafe_allow_html=True)
+
+elif st.session_state.page == "Berita & Rapat":
+    st.markdown('<div class="section"><div class="section-title">Berita & Rapat Paripurna</div><div class="section-desc">Publikasi kegiatan DPRK Aceh Jaya</div></div>',unsafe_allow_html=True)
+    for icon,tag,date,title,desc in news_list:
+        st.markdown(f'<div class="card"><span class="tag">{tag}</span> <span class="news-date">{date}</span><div class="card-title" style="margin-top:10px">{icon} {title}</div><div class="card-text">{desc}</div></div>',unsafe_allow_html=True)
+
+elif st.session_state.page == "JDIH & Transparansi":
+    st.markdown('<div class="section"><div class="section-title">JDIH & Transparansi</div><div class="section-desc">Dokumentasi hukum dan informasi publik</div></div>',unsafe_allow_html=True)
+
+elif st.session_state.page == "Layanan & Pengaduan":
+    st.markdown('<div class="section"><div class="section-title">Layanan Aspirasi Publik</div><div class="section-desc">Sampaikan saran, keluhan, atau permohonan informasi</div></div>',unsafe_allow_html=True)
+
+elif st.session_state.page == "PORA XV 2026":
+    st.markdown('<div class="section"><div class="section-title">PORA XV 2026</div><div class="section-desc">Aceh Jaya Tuan Rumah Pekan Olahraga Rakyat Aceh</div></div>',unsafe_allow_html=True)
+
+elif st.session_state.page == "Kontak & Peta":
+    st.markdown('<div class="section"><div class="section-title">Kontak & Peta Lokasi</div><div class="section-desc">Sekretariat DPRK Aceh Jaya</div></div>',unsafe_allow_html=True)
+
+# FOOTER
+st.markdown("""
+<div class="footer">
+  <div class="footer-title">DPRK ACEH JAYA</div>
+  <div class="footer-text">
+    Sekretariat DPRK Aceh Jaya • Jl. Merdeka No. 01, Komplek Perkantoran Pemkab, Calang<br>
+    Email: sekretariat@dprk.acehjaya.go.id • Telepon: (0654) 221001<br><br>
+    © 2026 DPRK Aceh Jaya. Portal Informasi dan Pelayanan Publik.
+  </div>
+</div>
+""", unsafe_allow_html=True)
+'''
+
+# 2. Pendefinisian file pendukung menggunakan string biasa (Single Quote)
+requirements = "streamlit>=1.40,<2.0\n"
+
+readme = (
+    "# DPRK Aceh Jaya — Portal Informasi\n\n"
+    "Portal Streamlit dengan gaya portal pemerintahan modern.\n\n"
+    "## Menjalankan lokal\n\n"
+    "```bash\n"
+    "pip install -r requirements.txt\n"
+    "streamlit run app.py\n"
+    "```\n"
+)
+
+# 3. Penulisan Berkas ke Disk
+(root / "app.py").write_text(app, encoding="utf-8")
+(root / "requirements.txt").write_text(requirements, encoding="utf-8")
+(root / "README.md").write_text(readme, encoding="utf-8")
+
+# 4. Arsipkan ke ZIP
+zip_path = Path("/mnt/data/dprk_aceh_jaya_semarang_style.zip")
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
+    for file in root.glob("*"):
+        zipf.write(file, arcname=file.name)
 # ============================================================
 # DATA GLOBAL
 # ============================================================
