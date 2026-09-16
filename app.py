@@ -1,14 +1,10 @@
-from datetime import datetime
 from pathlib import Path
-import os
 import zipfile
-import streamlit as st
-import streamlit.components.v1 as components
 
 root = Path("/mnt/data/dprk_aceh_jaya_semarang_style")
 root.mkdir(exist_ok=True)
 
-app = r"""import streamlit as st
+app = r'''import streamlit as st
 import streamlit.components.v1 as components
 from datetime import datetime
 
@@ -20,7 +16,7 @@ st.set_page_config(
 )
 
 # ============================================================
-# DATA INTI (Didefinisikan di Scope Global)
+# DATA GLOBAL
 # ============================================================
 news_list = [
     ("📝", "PARIPURNA", "15 September 2026", "Pembahasan Rancangan KUA-PPAS 2027",
@@ -556,7 +552,7 @@ elif st.session_state.page == "PORA XV 2026":
 elif st.session_state.page == "Kontak & Peta":
     st.markdown('<div class="section"><div class="section-title">Kontak & Peta Lokasi</div><div class="section-desc">Sekretariat DPRK Aceh Jaya</div></div>',unsafe_allow_html=True)
     st.markdown('<div class="card"><div class="card-title">📍 Sekretariat DPRK Aceh Jaya</div><div class="card-text"><b>Alamat:</b> Jl. Merdeka No. 01, Komplek Perkantoran Pemkab, Calang, Kabupaten Aceh Jaya, Provinsi Aceh.<br><b>Jam:</b> Senin–Jumat, 08.00–16.30 WIB<br><b>Telepon:</b> (0654) 221001<br><b>Email:</b> sekretariat@dprk.acehjaya.go.id</div></div>',unsafe_allow_html=True)
-    components.html(\"\"\"<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127637.898456!2d95.5!3d4.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30403b0000000001%3A0x0!2sAceh+Jaya!5e0!3m2!1sid!2sid!4v1600000000000" width="100%" height="360" style="border:0;border-radius:18px" allowfullscreen loading="lazy"></iframe>\"\"\",height=370)
+    components.html("""<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127637.898456!2d95.5!3d4.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30403b0000000001%3A0x0!2sAceh+Jaya!5e0!3m2!1sid!2sid!4v1600000000000" width="100%" height="360" style="border:0;border-radius:18px" allowfullscreen loading="lazy"></iframe>""",height=370)
 
 # ============================================================
 # FOOTER
@@ -571,7 +567,7 @@ st.markdown("""
   </div>
 </div>
 """, unsafe_allow_html=True)
-"""
+'''
 
 requirements = """streamlit>=1.40,<2.0
 """
