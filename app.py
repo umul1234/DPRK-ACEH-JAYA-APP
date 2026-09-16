@@ -2,12 +2,11 @@ import streamlit as st
 import streamlit.components.v1 as components
 from datetime import datetime
 
-# 1. Buka sidebar secara default
 st.set_page_config(
     page_title="DPRK Aceh Jaya",
     page_icon="🏛️",
     layout="wide",
-    initial_sidebar_state="expanded", # Mengaktifkan Sidebar
+    initial_sidebar_state="expanded",
 )
 
 # DATA GLOBAL
@@ -31,55 +30,60 @@ pages = {
     "Kontak": "Kontak & Peta"
 }
 
-# CSS STYLING (Dioptimalkan untuk Sidebar & Kontras Tombol)
+# CSS STYLING (WARNA TOMBOL TERANG & SERASI)
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
     --navy: #0B3C5D;
-    --navy2: #08324d;
+    --navy-light: #164E75;
     --green: #1D7A46;
+    --green-light: #EAF6EF;
     --gold: #D9A05B;
-    --orange: #E67E22;
-    --bg: #F6F8FA;
-    --text: #212529;
-    --muted: #68737D;
-    --line: #E5E9ED;
+    --bg: #F4F7F9;
+    --text: #2C3E50;
+    --muted: #6C7A89;
+    --line: #E2E8F0;
 }
 
 * { font-family: 'Inter', sans-serif; }
 .stApp { background: var(--bg) !important; color: var(--text) !important; }
 
-/* Menampilkan & Mewarnai Sidebar Kiri */
+/* Sidebar Background Terang & Elegan */
 [data-testid="stSidebar"] {
-    background-color: var(--navy) !important;
-    border-right: 1px solid var(--navy2);
+    background-color: #FFFFFF !important;
+    border-right: 1px solid var(--line) !important;
 }
 [data-testid="stSidebar"] * {
-    color: #FFFFFF !important;
+    color: var(--text) !important;
 }
 
-/* Styling Tombol Navigasi di Sidebar (Kontras Tinggi & Jelas) */
-[data-testid="stSidebar"] .stButton > button {
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    color: #FFFFFF !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+/* DESAIN TOMBOL BARU: Serasi, Terang, & Bebas Warna Gelap */
+.stButton > button {
+    background-color: #FFFFFF !important;
+    color: var(--navy) !important;
+    border: 1px solid #CBD5E1 !important;
     border-radius: 10px !important;
     font-weight: 600 !important;
-    font-size: 14px !important;
-    padding: 10px 15px !important;
-    margin-bottom: 4px !important;
-    text-align: left !important;
-    justify-content: flex-start !important;
-    transition: all 0.2s ease;
+    font-size: 13px !important;
+    padding: 10px 16px !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03) !important;
+    transition: all 0.25s ease-in-out !important;
 }
 
-[data-testid="stSidebar"] .stButton > button:hover {
-    background-color: var(--green) !important;
-    color: #FFFFFF !important;
+/* Efek Hover Tombol (Hijau Aceh yang Lembut) */
+.stButton > button:hover {
+    background-color: var(--green-light) !important;
+    color: var(--green) !important;
     border-color: var(--green) !important;
-    transform: translateX(3px);
+    box-shadow: 0 4px 10px rgba(29, 122, 70, 0.12) !important;
+    transform: translateY(-1px);
+}
+
+/* Tombol Aktif / Terpilih */
+[data-testid="stSidebar"] .stButton > button[kind="secondary"] {
+    border-left: 4px solid var(--navy) !important;
 }
 
 .block-container {
@@ -91,83 +95,78 @@ st.markdown("""
     background: var(--navy);
     color: #fff;
     font-size: 11px;
-    padding: 8px 15px;
-    border-radius: 10px;
-    margin-bottom: 15px;
+    padding: 10px 18px;
+    border-radius: 12px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
 }
 
 .hero {
-    min-height: 280px;
+    min-height: 260px;
     border-radius: 20px;
     background: linear-gradient(135deg, var(--navy), var(--green));
     display: flex;
     align-items: center;
     padding: 35px;
     color: white;
+    box-shadow: 0 10px 25px rgba(11, 60, 93, 0.12);
 }
-.hero h1 { font-size: 32px; font-weight: 800; margin: 10px 0; }
+.hero h1 { font-size: 32px; font-weight: 800; margin: 8px 0; }
 
 .service-card {
-    background: #fff;
+    background: #FFFFFF;
     border: 1px solid var(--line);
-    border-radius: 15px;
-    padding: 18px;
+    border-radius: 16px;
+    padding: 20px;
     min-height: 140px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
 }
-.service-icon { font-size: 24px; margin-bottom: 8px; }
-.service-title { color: var(--navy); font-weight: 800; font-size: 14px; }
-.service-text { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.service-icon { font-size: 26px; margin-bottom: 8px; }
+.service-title { color: var(--navy); font-weight: 800; font-size: 15px; }
+.service-text { color: var(--muted); font-size: 12px; margin-top: 4px; line-height: 1.5; }
 
 .card {
-    background: white;
+    background: #FFFFFF;
     border: 1px solid var(--line);
-    border-radius: 15px;
-    padding: 20px;
+    border-radius: 16px;
+    padding: 22px;
     margin-bottom: 15px;
 }
 .card-title { color: var(--navy); font-weight: 800; font-size: 16px; }
 
 .footer {
     margin-top: 40px;
-    background: var(--navy2);
+    background: var(--navy);
     color: #fff;
     padding: 25px;
-    border-radius: 15px;
+    border-radius: 16px;
     font-size: 12px;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# SESSION STATE
 if "page" not in st.session_state:
     st.session_state.page = "Beranda"
 
-# ============================================================
-# SIDEBAR NAVIGATION (Terlihat Jelas)
-# ============================================================
+# SIDEBAR NAVIGATION
 with st.sidebar:
-    st.markdown("### 🏛️ DPRK ACEH JAYA")
+    st.markdown("## 🏛️ DPRK ACEH JAYA")
     st.caption("Dewan Perwakilan Rakyat Kabupaten")
     st.markdown("---")
-    st.markdown("**MENU UTAMA**")
     
-    # Tombol Menu Navigasi Sidebar
     for label, target in pages.items():
         is_active = (st.session_state.page == target)
-        btn_label = f"› {label}" if not is_active else f"• {label}"
-        if st.button(btn_label, key="side_nav_"+label, use_container_width=True):
+        prefix = "📌 " if is_active else "  "
+        if st.button(f"{prefix}{label}", key="side_nav_"+label, use_container_width=True):
             st.session_state.page = target
             st.rerun()
 
     st.markdown("---")
     st.caption("© 2026 Layanan Digital DPRK")
 
-# ============================================================
 # KONTEN UTAMA
-# ============================================================
 st.markdown("""
 <div class="gov-strip">
   <div>PEMERINTAH KABUPATEN ACEH JAYA • INFORMASI PUBLIK</div>
@@ -186,7 +185,7 @@ if st.session_state.page == "Beranda":
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("<h3 style='color:var(--navy); margin-top:25px;'>Layanan Utama</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color:var(--navy); margin-top:28px;'>Layanan Utama</h3>", unsafe_allow_html=True)
     
     services = [
         ("🏛️","Profil DPRK","Informasi kelembagaan & pimpinan.","Profil"),
@@ -216,16 +215,16 @@ elif st.session_state.page == "Berita & Rapat":
     for icon, tag, date, title, desc in news_list:
         st.markdown(f"""
         <div class="card">
-          <span style="background:#EAF6EF; color:var(--green); padding:3px 8px; border-radius:10px; font-size:10px; font-weight:700;">{tag}</span>
-          <span style="color:#8A949D; font-size:11px; float:right;">{date}</span>
-          <div class="card-title" style="margin-top:8px;">{icon} {title}</div>
-          <div style="color:var(--muted); font-size:13px; margin-top:5px;">{desc}</div>
+          <span style="background:var(--green-light); color:var(--green); padding:4px 10px; border-radius:12px; font-size:10px; font-weight:700;">{tag}</span>
+          <span style="color:var(--muted); font-size:11px; float:right;">{date}</span>
+          <div class="card-title" style="margin-top:10px;">{icon} {title}</div>
+          <div style="color:var(--muted); font-size:13px; margin-top:6px;">{desc}</div>
         </div>
         """, unsafe_allow_html=True)
 
 else:
     st.markdown(f"<h3 style='color:var(--navy);'>{st.session_state.page}</h3>", unsafe_allow_html=True)
-    st.markdown('<div class="card"><div style="color:var(--muted);">Halaman ini siap diisi dengan informasi detail.</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="card"><div style="color:var(--muted);">Halaman ini sedang dalam pembaruan informasi.</div></div>', unsafe_allow_html=True)
 
 # Footer
 st.markdown("""
