@@ -1,848 +1,457 @@
 import streamlit as st
 from datetime import datetime
-import pandas as pd
 
-# =========================================================
-# KONFIGURASI HALAMAN
-# =========================================================
+# Konfigurasi Halaman
 st.set_page_config(
-    page_title="DPRK Aceh Jaya | Portal Informasi Publik",
+    page_title="DPRK Aceh Jaya - Portal Resmi",
     page_icon="🏛️",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="collapsed" # Kita gunakan navigasi atas untuk kesan website publik
 )
 
-# =========================================================
-# DATA
-# =========================================================
-PAGES = {
+# ==========================================
+# 1. CSS STYLING (Modern, Clean, Consistent)
+# ==========================================
+st.markdown("""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    :root {
+        --navy: #0F2C4A;
+        --navy-light: #1A4B7C;
+        --green: #15803D;
+        --green-light: #DCFCE7;
+        --gold: #D97706;
+        --bg: #F8FAFC;
+        --surface: #FFFFFF;
+        --text: #0F172A;
+        --text-muted: #64748B;
+        --border: #E2E8F0;
+    }
+
+    * { font-family: 'Plus Jakarta Sans', sans-serif; box-sizing: border-box; }
+    
+    /* Hide default Streamlit clutter */
+    #MainMenu { visibility: hidden; }
+    footer { visibility: hidden; }
+    .stApp > header { display: none; }
+    
+    .stApp { background: var(--bg) !important; color: var(--text) !important; }
+
+    /* Top Alert Banner */
+    .alert-banner {
+        background: linear-gradient(90deg, #FEF3C7 0%, #FDE68A 100%);
+        border-bottom: 1px solid #F59E0B;
+        color: #92400E;
+        padding: 10px 24px;
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .nav-logo { font-size: 20px; font-weight: 800; color: var(--navy); display: flex; align-items: center; gap: 10px; }
+    .nav-logo span { color: var(--green); }
+    
+    /* Nav Buttons */
+    .nav-btn {
+        background: transparent !important;
+        color: var(--text-muted) !important;
+        border: none !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+        padding: 8px 16px !important;
+        border-radius: 6px !important;
+        transition: all 0.2s !important;
+    }
+    .nav-btn:hover { background: var(--green-light) !important; color: var(--green) !important; }
+    .nav-btn.active { background: var(--navy) !important; color: white !important; }
+
+    /* Main Container */
+    .main-content { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+    /* Hero Section */
+    .hero {
+        background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+        border-radius: 20px;
+        padding: 60px 48px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 40px;
+    }
+    .hero::after {
+        content: '';
+        position: absolute;
+        right: -50px;
+        top: -50px;
+        width: 300px;
+        height: 300px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+    .hero h1 { font-size: 36px; font-weight: 800; margin: 0 0 16px 0; line-height: 1.2; }
+    .hero p { font-size: 16px; opacity: 0.9; max-width: 600px; line-height: 1.6; margin: 0; }
+    .hero-btn {
+        display: inline-block;
+        background: var(--green);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 700;
+        margin-top: 24px;
+        text-decoration: none;
+        transition: transform 0.2s;
+    }
+    .hero-btn:hover { transform: translateY(-2px); background: #166534; }
+
+    /* Section Titles */
+    .section-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--navy);
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .section-title::before {
+        content: '';
+        width: 4px;
+        height: 24px;
+        background: var(--green);
+        border-radius: 2px;
+    }
+
+    /* Service Cards */
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 48px; }
+    .service-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 24px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .service-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(15, 44, 74, 0.08);
+        border-color: var(--green);
+    }
+    .service-icon {
+        width: 56px;
+        height: 56px;
+        background: var(--green-light);
+        color: var(--green);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin: 0 auto 16px;
+    }
+    .service-title { font-weight: 700; color: var(--navy); margin-bottom: 8px; font-size: 15px; }
+    .service-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* News Cards */
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .news-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    .news-card:hover { box-shadow: 0 8px 16px rgba(0,0,0,0.06); }
+    .news-img { height: 180px; background: #CBD5E1; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 14px; }
+    .news-content { padding: 20px; }
+    .news-tag {
+        display: inline-block;
+        background: var(--navy);
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 20px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+    }
+    .news-title { font-size: 17px; font-weight: 700; color: var(--navy); margin: 0 0 8px 0; line-height: 1.4; }
+    .news-date { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+
+    /* Footer */
+    .footer {
+        background: var(--navy);
+        color: white;
+        padding: 48px 40px;
+        margin-top: 60px;
+        border-radius: 20px 20px 0 0;
+    }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+    .footer h4 { font-size: 16px; font-weight: 700; margin: 0 0 16px 0; color: #FDE68A; }
+    .footer p, .footer a { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.8; text-decoration: none; display: block; }
+    .footer a:hover { color: white; }
+    .footer-bottom {
+        max-width: 1200px;
+        margin: 40px auto 0;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
+        font-size: 13px;
+        color: rgba(255,255,255,0.5);
+    }
+
+    /* Form Styling */
+    .stTextInput > div > div > input, .stTextArea > div > div > textarea, .stSelectbox > div > div > select {
+        border-radius: 8px !important;
+        border: 1px solid var(--border) !important;
+        background: var(--surface) !important;
+    }
+    .stTextInput > div > div > input:focus, .stTextArea > div > div > textarea:focus {
+        border-color: var(--green) !important;
+        box-shadow: 0 0 0 3px var(--green-light) !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# ==========================================
+# 2. STATE & NAVIGATION
+# ==========================================
+if "page" not in st.session_state:
+    st.session_state.page = "Beranda"
+
+pages = {
     "Beranda": "Beranda",
     "Profil": "Profil & Pimpinan",
     "Berita": "Berita & Agenda",
     "Layanan": "Layanan & Pengaduan",
     "JDIH": "JDIH & Transparansi",
-    "Kontak": "Hubungi Kami",
+    "Kontak": "Hubungi Kami"
 }
 
-NEWS = [
-    {
-        "tag": "PARIPURNA",
-        "date": "15 September 2026",
-        "title": "Pembahasan KUA-PPAS 2027",
-        "desc": "Rapat paripurna membahas kebijakan umum anggaran dan prioritas plafon anggaran sementara.",
-        "image": "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80",
-    },
-    {
-        "tag": "RESES",
-        "date": "10 September 2026",
-        "title": "Penjaringan Aspirasi Masyarakat",
-        "desc": "Anggota DPRK melakukan kegiatan penjaringan aspirasi masyarakat dan mendengarkan kebutuhan pembangunan daerah.",
-        "image": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=900&q=80",
-    },
-    {
-        "tag": "LEGISLASI",
-        "date": "02 September 2026",
-        "title": "RDPU Penyempurnaan Qanun",
-        "desc": "DPRK mendengarkan masukan akademisi, tokoh masyarakat, dan pemangku kepentingan terhadap rancangan qanun.",
-        "image": "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=900&q=80",
-    },
-]
-
-AGENDA = [
-    ("18", "SEP", "Rapat Paripurna", "Pembahasan kebijakan dan agenda pembangunan daerah."),
-    ("20", "SEP", "Rapat Komisi", "Evaluasi program dan pelaksanaan kegiatan pemerintahan daerah."),
-    ("24", "SEP", "Rapat Dengar Pendapat", "Penyerapan aspirasi dan masukan masyarakat."),
-]
-
-PIMPINAN = [
-    ("Ketua DPRK", "H. Muhammad Yusuf, S.H.", "Memimpin sidang paripurna dan koordinasi alat kelengkapan dewan."),
-    ("Wakil Ketua I", "Drs. H. Ahmad Fauzi, M.M.", "Koordinasi bidang legislasi dan anggaran."),
-    ("Wakil Ketua II", "Siti Rahmah, S.IP.", "Koordinasi bidang pengawasan dan hubungan masyarakat."),
-]
-
-JDIH_DATA = [
-    ["1", "Qanun No. 5/2025", "Ketertiban Umum dan Ketenteraman Masyarakat", "Berlaku"],
-    ["2", "Perbup No. 12/2026", "Penjabaran APBK Aceh Jaya 2026", "Berlaku"],
-    ["3", "Qanun No. 2/2024", "Perlindungan Korban Bencana Alam", "Berlaku"],
-]
-
-# =========================================================
-# CSS
-# =========================================================
-st.markdown(
-    """
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
-
-:root {
-    --primary: #0c4a3e;
-    --primary-2: #0f6b58;
-    --primary-3: #e9f5f1;
-    --gold: #d5a52b;
-    --gold-soft: #f7efd4;
-    --dark: #17322d;
-    --text: #273936;
-    --muted: #71817d;
-    --bg: #f6f8f7;
-    --white: #ffffff;
-    --border: #e1e8e5;
-    --shadow: 0 8px 28px rgba(12, 74, 62, .08);
-}
-
-* { box-sizing: border-box; font-family: 'Inter', sans-serif; }
-html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-#MainMenu, footer, header { visibility: hidden; height: 0; }
-.stApp { background: var(--bg); color: var(--text); }
-.block-container { max-width: 100%; padding: 0 !important; }
-section[data-testid="stSidebar"] { display: none; }
-
-.govbar {
-    background: #083b32; color: rgba(255,255,255,.88); min-height: 38px;
-    padding: 0 6%; display: flex; align-items: center; justify-content: space-between; font-size: 12px;
-}
-.govbar-left, .govbar-right { display: flex; gap: 20px; align-items: center; }
-.govbar strong { color: #fff; }
-
-.brand-wrap { background: #fff; border-bottom: 1px solid #e7ecea; padding: 18px 6%; }
-.brand-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.brand { display: flex; align-items: center; gap: 14px; }
-.brand-logo {
-    width: 58px; height: 58px; border-radius: 50%;
-    background: linear-gradient(145deg, #0b5b4b, #0a3e35); color: #fff;
-    display: flex; align-items: center; justify-content: center; font-size: 27px;
-    box-shadow: 0 4px 12px rgba(12,74,62,.18);
-}
-.brand-title {
-    color: #123b33; font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 18px; line-height: 1.2; font-weight: 800; text-transform: uppercase;
-}
-.brand-subtitle { margin-top: 4px; color: #788783; font-size: 11px; letter-spacing: .6px; }
-
-.nav-wrap { background: #fff; border-bottom: 1px solid var(--border); padding: 0 6%; }
-.nav-inner { min-height: 54px; display: flex; align-items: center; gap: 4px; }
-
-.nav-button .stButton > button {
-    background: transparent !important; border: none !important; color: #52645f !important;
-    font-size: 13px !important; font-weight: 600 !important; border-radius: 0 !important;
-    padding: 12px 8px !important; min-height: 40px !important;
-}
-.nav-button .stButton > button:hover { color: var(--primary) !important; background: #f2f7f5 !important; }
-.nav-button-active .stButton > button {
-    color: var(--primary) !important; border-bottom: 3px solid var(--gold) !important;
-}
-
-.alert {
-    background: #fff9e9; border-bottom: 1px solid #f0dfad; color: #725719;
-    padding: 9px 6%; font-size: 12px; display: flex; align-items: center; gap: 8px;
-}
-
-.hero {
-    position: relative; min-height: 440px; display: flex; align-items: center; overflow: hidden;
-    background: linear-gradient(90deg, rgba(4,43,36,.95) 0%, rgba(8,74,62,.78) 45%, rgba(8,74,62,.35) 100%),
-    url('https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
-}
-.hero-content { width: 88%; max-width: 1250px; margin: 0 auto; padding: 70px 0; color: white; }
-.hero-kicker {
-    display: inline-block; color: #f8df87; font-size: 12px; font-weight: 800;
-    letter-spacing: 1.5px; margin-bottom: 14px;
-}
-.hero h1 {
-    max-width: 720px; font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(34px, 5vw, 60px); line-height: 1.08; margin: 0 0 20px; font-weight: 800;
-}
-.hero p { max-width: 650px; color: rgba(255,255,255,.88); font-size: 16px; line-height: 1.75; margin-bottom: 28px; }
-.hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
-.hero-btn {
-    display: inline-block; padding: 12px 21px; border-radius: 5px; background: var(--gold);
-    color: #fff !important; text-decoration: none; font-weight: 700; font-size: 13px;
-}
-.hero-btn.secondary { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.55); }
-
-.content { width: 88%; max-width: 1250px; margin: 0 auto; }
-.section { padding: 48px 0; }
-.section-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 24px; }
-.section-kicker {
-    color: var(--primary-2); font-size: 11px; font-weight: 800;
-    letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 6px;
-}
-.section-title { color: #183d35; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 27px; font-weight: 800; margin: 0; }
-.section-desc { color: var(--muted); font-size: 13px; line-height: 1.6; margin-top: 7px; }
-
-.service-box {
-    background: #fff; border: 1px solid var(--border); min-height: 160px; padding: 25px 20px;
-    text-align: center; transition: .25s ease; border-radius: 8px;
-}
-.service-box:hover { transform: translateY(-4px); border-color: #b9d6ce; box-shadow: var(--shadow); }
-.service-icon {
-    width: 54px; height: 54px; margin: 0 auto 14px; border-radius: 50%;
-    background: var(--primary-3); color: var(--primary);
-    display: flex; align-items: center; justify-content: center; font-size: 24px;
-}
-.service-title { color: #183d35; font-size: 14px; font-weight: 800; margin-bottom: 7px; }
-.service-desc { color: #7a8884; font-size: 11px; line-height: 1.5; }
-
-.news-main { background: #fff; border: 1px solid var(--border); overflow: hidden; border-radius: 8px; height: 100%; }
-.news-main-img { width: 100%; height: 260px; object-fit: cover; display: block; }
-.news-main-body { padding: 20px; }
-.news-tag { display: inline-block; color: var(--primary-2); font-size: 10px; font-weight: 800; letter-spacing: .8px; margin-bottom: 9px; }
-.news-main h3 { color: #173b33; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 21px; line-height: 1.3; margin: 0 0 9px; }
-.news-date { color: #8a9894; font-size: 11px; }
-
-.news-side {
-    display: flex; gap: 15px; background: #fff; border-bottom: 1px solid var(--border);
-    padding: 0 0 16px; margin-bottom: 16px;
-}
-.news-side-img { width: 145px; height: 105px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
-.news-side h4 { color: #1d4038; font-size: 14px; line-height: 1.35; margin: 5px 0 8px; }
-.news-side p { color: #7a8884; font-size: 11px; line-height: 1.5; margin: 0; }
-
-.agenda-wrap { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 22px; }
-.agenda-row { display: flex; gap: 16px; padding: 15px 0; border-bottom: 1px solid #edf1ef; }
-.agenda-row:last-child { border-bottom: none; }
-.agenda-date {
-    width: 62px; height: 66px; background: var(--primary); color: white;
-    border-radius: 5px; text-align: center; padding-top: 8px; flex-shrink: 0;
-}
-.agenda-date strong { display: block; font-size: 24px; line-height: 1; }
-.agenda-date span { font-size: 9px; letter-spacing: 1px; }
-.agenda-title { color: #1b4138; font-weight: 800; font-size: 14px; margin-bottom: 5px; }
-.agenda-desc { color: #7a8884; font-size: 11px; line-height: 1.5; }
-
-.info-strip { background: var(--primary); color: white; padding: 34px 6%; }
-.info-inner { width: 88%; max-width: 1250px; margin: auto; }
-.info-item { text-align: center; padding: 5px 15px; }
-.info-number { color: #f4d873; font-size: 29px; font-weight: 800; }
-.info-label { color: rgba(255,255,255,.78); font-size: 11px; }
-
-.profile-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 28px 20px; text-align: center; height: 100%; }
-.profile-photo {
-    width: 92px; height: 92px; border-radius: 50%; margin: auto;
-    display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(145deg, #0c5d4d, #0b4037); color: #fff; font-size: 30px; font-weight: 800;
-}
-.profile-role { color: var(--primary-2); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; margin-top: 16px; }
-.profile-name { color: #183d35; font-size: 17px; font-weight: 800; margin: 6px 0; }
-.profile-desc { color: #7a8884; font-size: 11px; line-height: 1.55; }
-
-.footer { background: #092f29; color: rgba(255,255,255,.75); margin-top: 35px; padding: 48px 6% 20px; }
-.footer-inner { width: 88%; max-width: 1250px; margin: auto; }
-.footer-title { color: white; font-size: 15px; font-weight: 800; margin-bottom: 14px; }
-.footer p, .footer a { color: rgba(255,255,255,.68); font-size: 11px; line-height: 1.8; text-decoration: none; margin: 0; }
-.footer-bottom {
-    border-top: 1px solid rgba(255,255,255,.12); margin-top: 35px; padding-top: 18px;
-    text-align: center; color: rgba(255,255,255,.45); font-size: 10px;
-}
-
-div[data-testid="stForm"] { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 25px !important; }
-.stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { border-radius: 5px !important; border-color: #d8e1de !important; }
-.stButton > button[kind="primary"], .stFormSubmitButton > button {
-    background: var(--primary) !important; border: none !important; color: white !important;
-    border-radius: 5px !important; font-weight: 700 !important;
-}
-
-@media (max-width: 850px) {
-    .govbar-left { display: none; }
-    .govbar { justify-content: flex-end; }
-    .brand-inner { align-items: flex-start; }
-    .brand-title { font-size: 14px; }
-    .hero { min-height: 430px; }
-    .content, .hero-content, .info-inner, .footer-inner { width: 92%; }
-    .nav-wrap { padding: 0 4%; overflow-x: auto; }
-}
-</style>
-""",
-    unsafe_allow_html=True,
-)
-
-# =========================================================
-# SESSION STATE
-# =========================================================
-if "page" not in st.session_state:
-    st.session_state.page = "Beranda"
-
-# =========================================================
-# TOP BAR
-# =========================================================
-st.markdown(
-    """
-<div class="govbar">
-    <div class="govbar-left">
-        <span>🇮🇩 Portal Informasi Pemerintahan Daerah</span>
-        <span>|</span>
-        <strong>DPRK ACEH JAYA</strong>
-    </div>
-    <div class="govbar-right">
-        <span>Hubungi Kami</span>
-        <span>PPID</span>
-        <span>ID</span>
-    </div>
+# Top Alert Banner (Konteks Bantuan Banjir)
+st.markdown("""
+<div class="alert-banner">
+    <span>🚨</span>
+    <span>Layanan Khusus Tanggap Banjir Aktif: Prioritas pengaduan dampak bencana dipercepat 1x24 jam.</span>
 </div>
-""",
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
 
-# =========================================================
-# BRAND
-# =========================================================
-st.markdown(
-    """
-<div class="brand-wrap">
-    <div class="brand-inner">
-        <div class="brand">
-            <div class="brand-logo">🏛️</div>
-            <div>
-                <div class="brand-title">Dewan Perwakilan Rakyat<br>Kabupaten Aceh Jaya</div>
-                <div class="brand-subtitle">PORTAL INFORMASI PUBLIK DAN ASPIRASI MASYARAKAT</div>
-            </div>
-        </div>
-        <div style="text-align:right;color:#74827e;font-size:11px;line-height:1.7;">
-            Kabupaten Aceh Jaya<br>
-            Provinsi Aceh
-        </div>
-    </div>
-</div>
-""",
-    unsafe_allow_html=True,
-)
+# Navbar
+nav_cols = st.columns([1, 3, 1])
+with nav_cols[0]:
+    st.markdown('<div class="nav-logo">🏛️ DPRK <span>ACEH JAYA</span></div>', unsafe_allow_html=True)
 
-# =========================================================
-# NAVIGATION
-# =========================================================
-st.markdown('<div class="nav-wrap"><div class="nav-inner">', unsafe_allow_html=True)
-nav_cols = st.columns([1.05, 1.05, 1.15, 1.2, 1.2, 1.05, 0.85])
-nav_keys = list(PAGES.keys())
+with nav_cols[1]:
+    nav_container = st.container()
+    with nav_container:
+        cols = st.columns(len(pages))
+        for i, (key, label) in enumerate(pages.items()):
+            is_active = (st.session_state.page == label)
+            btn_class = "active" if is_active else ""
+            if cols[i].button(label, key=f"nav_{key}", use_container_width=True, type="secondary"):
+                st.session_state.page = label
+                st.rerun()
 
-for i, key in enumerate(nav_keys):
-    with nav_cols[i]:
-        active_class = "nav-button-active" if st.session_state.page == PAGES[key] else "nav-button"
-        st.markdown(f'<div class="{active_class}">', unsafe_allow_html=True)
-        if st.button(PAGES[key].replace(" & ", " • "), key=f"nav_{key}", use_container_width=True):
-            st.session_state.page = PAGES[key]
-            st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
+with nav_cols[2]:
+    st.markdown('<div style="text-align: right; font-size: 13px; color: var(--text-muted); padding-top: 10px;">🇮🇩 ID | EN</div>', unsafe_allow_html=True)
 
-st.markdown("</div></div>", unsafe_allow_html=True)
+st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
-# =========================================================
-# ALERT
-# =========================================================
-st.markdown(
-    """
-<div class="alert">
-    <span>📢</span>
-    <strong>Informasi:</strong>
-    <span>Portal DPRK Aceh Jaya menyediakan akses informasi publik, produk hukum, agenda dewan, dan penyampaian aspirasi masyarakat.</span>
-</div>
-""",
-    unsafe_allow_html=True,
-)
+# ==========================================
+# 3. PAGE CONTENT
+# ==========================================
 
-# =========================================================
-# BERANDA
-# =========================================================
 if st.session_state.page == "Beranda":
-    st.markdown(
-        """
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-kicker">PORTAL RESMI DPRK ACEH JAYA</div>
-            <h1>Suara Masyarakat,<br>Bagian dari Pembangunan Aceh Jaya</h1>
-            <p>Akses informasi kegiatan DPRK, produk hukum, agenda persidangan, layanan publik, serta sampaikan aspirasi masyarakat melalui satu portal informasi yang mudah diakses.</p>
-            <div class="hero-buttons">
-                <a class="hero-btn" href="#layanan">Sampaikan Aspirasi</a>
-                <a class="hero-btn secondary" href="#berita">Lihat Berita</a>
+    # Hero Section
+    st.markdown("""
+    <div class="hero">
+        <div style="position: relative; z-index: 2;">
+            <div style="background: rgba(255,255,255,0.15); display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 16px; backdrop-filter: blur(4px);">
+                PORTAL RESMI LEGISLATIF
             </div>
+            <h1>Melayani, Mengawasi,<br>& Mengayomi Masyarakat Aceh Jaya</h1>
+            <p>Akses informasi kinerja dewan, produk hukum daerah (JDIH), agenda rapat, dan layanan aspirasi publik dalam satu platform terintegrasi.</p>
+            <a href="#" class="hero-btn" onclick="document.querySelector('[key=\'nav_Layanan\']').click()">Sampaikan Aspirasi Anda</a>
         </div>
-    </section>
-    """,
-        unsafe_allow_html=True,
-    )
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.markdown('<div class="content" id="layanan">', unsafe_allow_html=True)
-    st.markdown(
-        """
-    <section class="section">
-        <div class="section-head">
-            <div>
-                <div class="section-kicker">Akses Cepat</div>
-                <h2 class="section-title">Layanan Publik</h2>
-                <div class="section-desc">Akses layanan dan informasi DPRK Aceh Jaya secara lebih mudah.</div>
-            </div>
-        </div>
-    """,
-        unsafe_allow_html=True,
-    )
-
+    # Quick Services
+    st.markdown('<div class="section-title">Layanan Publik Cepat</div>', unsafe_allow_html=True)
     services = [
-        ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi, keluhan, dan laporan masyarakat.", "Layanan"),
-        ("📜", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "JDIH"),
-        ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "Berita"),
-        ("📊", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "JDIH"),
-        ("📂", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "JDIH"),
-        ("ℹ️", "Informasi Publik", "Informasi mengenai layanan dan kelembagaan DPRK.", "Kontak"),
+        ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi atau laporan, termasuk tanggap banjir.", "Layanan"),
+        ("📜", "JDIH & Qanun", "Akses dokumen hukum daerah dan APBK secara transparan.", "JDIH"),
+        ("📅", "Agenda Rapat", "Jadwal sidang paripurna, RDPU, dan kegiatan komisi.", "Berita"),
+        ("📄", "Permohonan Informasi", "Layanan PPID untuk keterbukaan informasi publik.", "Layanan")
     ]
-
-    service_cols = st.columns(6)
+    
+    svc_cols = st.columns(4)
     for i, (icon, title, desc, target) in enumerate(services):
-        with service_cols[i]:
-            st.markdown(
-                f"""
-            <div class="service-box">
+        with svc_cols[i]:
+            st.markdown(f"""
+            <div class="service-card" onclick="document.querySelector('[key=\'nav_{target}\']').click()">
                 <div class="service-icon">{icon}</div>
                 <div class="service-title">{title}</div>
                 <div class="service-desc">{desc}</div>
             </div>
-            """,
-                unsafe_allow_html=True,
-            )
+            """, unsafe_allow_html=True)
 
-    st.markdown("</section></div>", unsafe_allow_html=True)
-
-    st.markdown(
-        """
-    <div class="info-strip">
-        <div class="info-inner">
-    """,
-        unsafe_allow_html=True,
-    )
-
-    stat_cols = st.columns(4)
-    stats = [("2024–2029", "Masa Jabatan"), ("3", "Pimpinan DPRK"), ("5", "Komisi / Alat Kelengkapan"), ("24/7", "Akses Informasi")]
-    for i, (number, label) in enumerate(stats):
-        with stat_cols[i]:
-            st.markdown(
-                f"""
-            <div class="info-item">
-                <div class="info-number">{number}</div>
-                <div class="info-label">{label}</div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
-
-    st.markdown(
-        """
-        </div>
-    </div>
-    <div class="content" id="berita">
-    """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        """
-    <section class="section">
-        <div class="section-head">
-            <div>
-                <div class="section-kicker">Informasi Terbaru</div>
-                <h2 class="section-title">Berita & Agenda</h2>
-                <div class="section-desc">Informasi kegiatan dan agenda DPRK Aceh Jaya.</div>
-            </div>
-        </div>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    col_news, col_agenda = st.columns([1.75, 1])
-
-    with col_news:
-        main_news = NEWS[0]
-        st.markdown(
-            f"""
-        <div class="news-main">
-            <img class="news-main-img" src="{main_news['image']}">
-            <div class="news-main-body">
-                <div class="news-tag">{main_news['tag']}</div>
-                <h3>{main_news['title']}</h3>
-                <p style="color:#71817d;font-size:12px;line-height:1.65;">{main_news['desc']}</p>
-                <div class="news-date">🕒 {main_news['date']}</div>
-            </div>
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
-
-        for item in NEWS[1:]:
-            st.markdown(
-                f"""
-            <div class="news-side" style="margin-top:18px;">
-                <img class="news-side-img" src="{item['image']}">
-                <div>
-                    <div class="news-tag">{item['tag']}</div>
-                    <h4>{item['title']}</h4>
-                    <p>{item['desc']}</p>
-                    <div class="news-date" style="margin-top:7px;">🕒 {item['date']}</div>
+    # Latest News
+    st.markdown('<div class="section-title" style="margin-top: 20px;">Berita & Kegiatan Terkini</div>', unsafe_allow_html=True)
+    news_data = [
+        ("PARIPURNA", "15 Sep 2026", "Pembahasan KUA-PPAS 2027", "Rapat paripurna membahas kebijakan umum anggaran dan prioritas plafon anggaran sementara."),
+        ("RESES", "10 Sep 2026", "Penjaringan Aspirasi Daerah Terpencil", "Anggota DPRK turun langsung menampung keluhan masyarakat terkait infrastruktur pascabanjir."),
+        ("LEGISLASI", "02 Sep 2026", "RDPU Penyempurnaan Qanun Ketertiban", "Mendengarkan masukan akademisi dan tokoh masyarakat atas draf qanun terbaru.")
+    ]
+    
+    news_cols = st.columns(3)
+    for i, (tag, date, title, desc) in enumerate(news_data):
+        with news_cols[i]:
+            st.markdown(f"""
+            <div class="news-card">
+                <div class="news-img">📷 Thumbnail Berita</div>
+                <div class="news-content">
+                    <span class="news-tag">{tag}</span>
+                    <h3 class="news-title">{title}</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">{desc}</p>
+                    <div class="news-date">🕒 {date}</div>
                 </div>
             </div>
-            """,
-                unsafe_allow_html=True,
-            )
+            """, unsafe_allow_html=True)
 
-    with col_agenda:
-        st.markdown('<div class="agenda-wrap">', unsafe_allow_html=True)
-        st.markdown(
-            """
-            <div class="section-kicker">Jadwal</div>
-            <div style="font-family:'Plus Jakarta Sans';font-size:20px;font-weight:800;color:#183d35;margin-bottom:5px;">Agenda Terdekat</div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-        for day, month, title, desc in AGENDA:
-            st.markdown(
-                f"""
-            <div class="agenda-row">
-                <div class="agenda-date">
-                    <strong>{day}</strong>
-                    <span>{month}</span>
-                </div>
-                <div>
-                    <div class="agenda-title">{title}</div>
-                    <div class="agenda-desc">{desc}</div>
-                </div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown("</section></div>", unsafe_allow_html=True)
-
-# =========================================================
-# PROFIL
-# =========================================================
 elif st.session_state.page == "Profil & Pimpinan":
-    st.markdown('<div class="content">', unsafe_allow_html=True)
-    st.markdown(
-        """
-    <section class="section">
-        <div class="section-kicker">Tentang DPRK</div>
-        <h2 class="section-title">Profil DPRK Aceh Jaya</h2>
-        <p class="section-desc">Dewan Perwakilan Rakyat Kabupaten Aceh Jaya sebagai unsur penyelenggara pemerintahan daerah bersama pemerintah daerah menjalankan fungsi legislasi, anggaran, dan pengawasan sesuai ketentuan peraturan perundang-undangan.</p>
-    </section>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        """
-    <div style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:28px;margin-bottom:40px;">
-        <div class="section-kicker">Pimpinan</div>
-        <h2 class="section-title" style="font-size:22px;">Pimpinan DPRK Aceh Jaya</h2>
-        <p class="section-desc">Masa Jabatan 2024–2029.</p>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
-
+    st.markdown('<div class="section-title">Profil & Pimpinan DPRK</div>', unsafe_allow_html=True)
+    st.markdown('<p style="color: var(--text-muted); margin-bottom: 32px;">Masa Jabatan 2024 - 2029 | Kabupaten Aceh Jaya</p>', unsafe_allow_html=True)
+    
     cols = st.columns(3)
-    for i, (role, name, desc) in enumerate(PIMPINAN):
+    pimpinan = [
+        ("Ketua DPRK", "H. Muhammad Yusuf, S.H.", "Memimpin sidang paripurna dan koordinasi antar alat kelengkapan dewan."),
+        ("Wakil Ketua I", "Drs. H. Ahmad Fauzi, M.M.", "Bidang Legislasi dan Anggaran."),
+        ("Wakil Ketua II", "Siti Rahmah, S.IP.", "Bidang Pengawasan dan Hubungan Masyarakat.")
+    ]
+    
+    for i, (jabatan, nama, desc) in enumerate(pimpinan):
         with cols[i]:
-            initials = "".join([word[0] for word in name.split()[:2]])
-            st.markdown(
-                f"""
-            <div class="profile-card">
-                <div class="profile-photo">{initials}</div>
-                <div class="profile-role">{role}</div>
-                <div class="profile-name">{name}</div>
-                <div class="profile-desc">{desc}</div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# =========================================================
-# BERITA & AGENDA
-# =========================================================
-elif st.session_state.page == "Berita & Agenda":
-    st.markdown('<div class="content">', unsafe_allow_html=True)
-    st.markdown(
-        """
-    <section class="section">
-        <div class="section-kicker">Publikasi</div>
-        <h2 class="section-title">Berita & Agenda DPRK</h2>
-        <p class="section-desc">Informasi kegiatan, rapat, agenda, dan aktivitas DPRK Aceh Jaya.</p>
-    </section>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    for item in NEWS:
-        st.markdown(
-            f"""
-        <div style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:18px;margin-bottom:18px;display:flex;gap:22px;">
-            <img src="{item['image']}" style="width:270px;height:165px;object-fit:cover;border-radius:6px;">
-            <div style="padding:6px 0;">
-                <div class="news-tag">{item['tag']}</div>
-                <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';font-size:21px;margin:0 0 8px;">{item['title']}</h3>
-                <p style="color:#71817d;font-size:12px;line-height:1.7;">{item['desc']}</p>
-                <div class="news-date">🕒 {item['date']}</div>
-            </div>
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
-
-    st.markdown(
-        """
-    <div style="margin-top:45px;" class="section-kicker">Agenda</div>
-    <h2 class="section-title" style="font-size:23px;margin-bottom:18px;">Agenda Terdekat</h2>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    agenda_cols = st.columns(3)
-    for i, (day, month, title, desc) in enumerate(AGENDA):
-        with agenda_cols[i]:
-            st.markdown(
-                f"""
-            <div class="agenda-wrap" style="height:100%;">
-                <div class="agenda-date">
-                    <strong>{day}</strong><span>{month}</span>
+            st.markdown(f"""
+            <div class="service-card" style="text-align: center; padding: 32px 24px;">
+                <div style="width: 80px; height: 80px; background: var(--navy); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; margin: 0 auto 16px;">
+                    {nama.split()[0][0]}
                 </div>
-                <div style="margin-top:16px;" class="agenda-title">{title}</div>
-                <div class="agenda-desc">{desc}</div>
+                <div style="font-size: 12px; color: var(--green); font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">{jabatan}</div>
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--navy); margin: 0 0 12px 0;">{nama}</h3>
+                <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">{desc}</p>
             </div>
-            """,
-                unsafe_allow_html=True,
-            )
-    st.markdown("</div>", unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
-# =========================================================
-# LAYANAN & PENGADUAN
-# =========================================================
 elif st.session_state.page == "Layanan & Pengaduan":
-    st.markdown('<div class="content">', unsafe_allow_html=True)
-    st.markdown(
-        """
-    <section class="section">
-        <div class="section-kicker">Pelayanan Masyarakat</div>
-        <h2 class="section-title">Layanan Aspirasi & Pengaduan</h2>
-        <p class="section-desc">Sampaikan aspirasi, laporan, atau pengaduan kepada DPRK Aceh Jaya.</p>
-    </section>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    col1, col2 = st.columns([1.75, 1])
-
+    st.markdown('<div class="section-title">Layanan Aspirasi & Pengaduan</div>', unsafe_allow_html=True)
+    
+    col1, col2 = st.columns([2, 1])
     with col1:
-        st.markdown(
-            """
-        <div class="section-kicker">Formulir</div>
-        <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';font-size:21px;margin-bottom:15px;">Sampaikan Aspirasi Anda</h3>
-        """,
-            unsafe_allow_html=True,
-        )
-
+        st.markdown("##### Formulir Pengaduan Masyarakat")
         with st.form("form_aduan"):
             c1, c2 = st.columns(2)
             with c1:
-                nama = st.text_input("Nama Lengkap *", placeholder="Masukkan nama lengkap")
-                nik = st.text_input("NIK (Opsional)", placeholder="16 digit")
+                nama = st.text_input("Nama Lengkap *", placeholder="Sesuai KTP")
+                nik = st.text_input("NIK (Opsional)", placeholder="16 digit untuk verifikasi")
             with c2:
-                kategori = st.selectbox(
-                    "Kategori Pengaduan *",
-                    ["Pengaduan Masyarakat", "Infrastruktur & Jalan", "Pelayanan Publik", "Legislasi & Qanun", "Lingkungan & Bencana", "Lainnya"],
-                )
-            lokasi = st.text_input("Lokasi Kejadian (Opsional)", placeholder="Desa / Kecamatan / lokasi")
-            isi = st.text_area("Isi Laporan / Aspirasi *", height=150, placeholder="Jelaskan aspirasi atau laporan secara jelas...")
-
-            submitted = st.form_submit_button("Kirim Aspirasi", type="primary", use_container_width=True)
-
+                kategori = st.selectbox("Kategori Pengaduan *", [
+                    "🚨 Bantuan Dampak Banjir (Prioritas)", 
+                    "Infrastruktur & Jalan", 
+                    "Pelayanan Publik", 
+                    "Legislasi & Qanun", 
+                    "Lainnya"
+                ])
+            isi = st.text_area("Isi Laporan / Aspirasi *", height=150, placeholder="Jelaskan detail lokasi, kronologi, atau aspirasi Anda secara jelas...")
+            
+            submitted = st.form_submit_button("Kirim Laporan", type="primary", use_container_width=True)
             if submitted:
-                if nama.strip() and isi.strip():
-                    nomor = datetime.now().strftime("%Y%m%d%H%M%S")
-                    st.success(f"✅ Laporan berhasil dicatat. Nomor tiket: ADU-{nomor}")
-                    st.info("Simpan nomor tiket untuk keperluan pengecekan tindak lanjut.")
+                if nama and isi:
+                    st.success("✅ Laporan berhasil dikirim! Nomor tiket: #ADU-2026-0917. Petugas kami akan menindaklanjuti dalam 1x24 jam (Prioritas Banjir).")
                 else:
-                    st.error("Mohon lengkapi Nama Lengkap dan Isi Laporan.")
+                    st.error("Mohon lengkapi Nama dan Isi Laporan.")
 
     with col2:
-        st.markdown(
-            """
-        <div class="agenda-wrap">
-            <div class="section-kicker">Kontak</div>
-            <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';font-size:20px;margin-top:0;">Hubungi Kami</h3>
-            <p style="font-size:12px;color:#71817d;line-height:1.8;">
-                <strong>📞 Telepon</strong><br>(0655) 12345
-            </p>
-            <p style="font-size:12px;color:#71817d;line-height:1.8;">
-                <strong>✉️ Email</strong><br>sekretariat@dprk.acehjaya.go.id
-            </p>
-            <p style="font-size:12px;color:#71817d;line-height:1.8;">
-                <strong>📍 Alamat</strong><br>Jl. Merdeka No. 01, Calang, Aceh Jaya
-            </p>
-            <hr style="border:none;border-top:1px solid #edf1ef;">
-            <p style="font-size:11px;color:#71817d;line-height:1.7;">Jam layanan: Senin–Jumat, 08.00–16.00 WIB.</p>
+        st.markdown("""
+        <div class="service-card" style="background: var(--green-light); border-color: var(--green); text-align: left;">
+            <h4 style="color: var(--green); margin-top: 0; font-size: 16px;">📞 Kontak Cepat</h4>
+            <p style="font-size: 13px; color: var(--text); margin-bottom: 12px;"><strong>WhatsApp Pengaduan:</strong><br>+62 812-3456-7890</p>
+            <p style="font-size: 13px; color: var(--text); margin-bottom: 12px;"><strong>Email:</strong><br>pengaduan@dprk.acehjaya.go.id</p>
+            <p style="font-size: 13px; color: var(--text);"><strong>Jam Operasional:</strong><br>Senin - Jumat, 08.00 - 16.00 WIB</p>
         </div>
-        """,
-            unsafe_allow_html=True,
-        )
-    st.markdown("</div>", unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
-# =========================================================
-# JDIH & TRANSPARANSI
-# =========================================================
 elif st.session_state.page == "JDIH & Transparansi":
-    st.markdown('<div class="content">', unsafe_allow_html=True)
-    st.markdown(
-        """
-    <section class="section">
-        <div class="section-kicker">Dokumentasi Hukum</div>
-        <h2 class="section-title">JDIH & Transparansi</h2>
-        <p class="section-desc">Akses daftar produk hukum dan informasi publik DPRK Aceh Jaya.</p>
-    </section>
-    """,
-        unsafe_allow_html=True,
-    )
+    st.markdown('<div class="section-title">Jaringan Dokumentasi & Informasi Hukum (JDIH)</div>', unsafe_allow_html=True)
+    
+    # Mock Data Table
+    data = {
+        "No": ["1", "2", "3"],
+        "Nomor & Tahun": ["Qanun No. 5/2025", "Perbup No. 12/2026", "Qanun No. 2/2024"],
+        "Tentang": ["Ketertiban Umum dan Ketenteraman Masyarakat", "Penjabaran APBK Aceh Jaya 2026", "Perlindungan Korban Bencana Alam"],
+        "Status": ["Berlaku", "Berlaku", "Berlaku"],
+        "Unduh": ["📄 PDF", "📄 PDF", "📄 PDF"]
+    }
+    st.dataframe(data, use_container_width=True, hide_index=True)
 
-    info_cols = st.columns(4)
-    cards = [
-        ("⚖️", "Produk Hukum", "Qanun dan dokumen hukum daerah."),
-        ("📊", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
-        ("📂", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
-        ("📑", "Informasi Berkala", "Informasi yang diterbitkan secara berkala."),
-    ]
-
-    for i, (icon, title, desc) in enumerate(cards):
-        with info_cols[i]:
-            st.markdown(
-                f"""
-            <div class="service-box" style="text-align:left;">
-                <div class="service-icon" style="margin:0 0 13px;">{icon}</div>
-                <div class="service-title">{title}</div>
-                <div class="service-desc">{desc}</div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
-
-    st.markdown(
-        """
-    <div style="margin-top:45px;">
-        <div class="section-kicker">Database</div>
-        <h2 class="section-title" style="font-size:23px;margin-bottom:18px;">Produk Hukum Daerah</h2>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    df = pd.DataFrame(JDIH_DATA, columns=["No", "Nomor & Tahun", "Tentang", "Status"])
-    st.dataframe(
-        df,
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "No": st.column_config.TextColumn("No", width="small"),
-            "Nomor & Tahun": st.column_config.TextColumn("Nomor & Tahun"),
-            "Tentang": st.column_config.TextColumn("Tentang"),
-            "Status": st.column_config.TextColumn("Status"),
-        },
-    )
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# =========================================================
-# KONTAK
-# =========================================================
 else:
-    st.markdown('<div class="content">', unsafe_allow_html=True)
-    st.markdown(
-        """
-    <section class="section">
-        <div class="section-kicker">Informasi Kontak</div>
-        <h2 class="section-title">Hubungi DPRK Aceh Jaya</h2>
-        <p class="section-desc">Gunakan informasi berikut untuk mendapatkan layanan dan informasi dari Sekretariat DPRK Aceh Jaya.</p>
-    </section>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    cols = st.columns(3)
-    contacts = [
-        ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya"),
-        ("📞", "Telepon", "(0655) 12345"),
-        ("✉️", "Email", "sekretariat@dprk.acehjaya.go.id"),
-    ]
-
-    for i, (icon, title, value) in enumerate(contacts):
-        with cols[i]:
-            st.markdown(
-                f"""
-            <div class="service-box" style="min-height:180px;">
-                <div class="service-icon">{icon}</div>
-                <div class="service-title">{title}</div>
-                <div class="service-desc" style="font-size:12px;">{value}</div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
-
-    st.markdown(
-        """
-    <div style="margin-top:35px;background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:30px;">
-        <div class="section-kicker">Sekretariat</div>
-        <h3 style="font-family:'Plus Jakarta Sans';color:#183d35;font-size:21px;">Jam Pelayanan</h3>
-        <p style="font-size:12px;color:#71817d;line-height:1.8;">
-            Senin–Kamis: 08.00–16.30 WIB<br>
-            Jumat: 08.00–16.30 WIB<br>
-            Sabtu–Minggu: Libur
+    st.markdown(f'<div class="section-title">{st.session_state.page}</div>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="service-card" style="text-align: center; padding: 60px 20px;">
+        <div style="font-size: 48px; margin-bottom: 16px;">🚧</div>
+        <h3 style="color: var(--navy); margin-bottom: 8px;">Halaman Dalam Pengembangan</h3>
+        <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">
+            Konten untuk halaman ini sedang dalam proses sinkronisasi data dengan sistem internal Sekretariat DPRK Aceh Jaya.
         </p>
     </div>
-    """,
-        unsafe_allow_html=True,
-    )
-    st.markdown("</div>", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
-# =========================================================
-# FOOTER
-# =========================================================
-st.markdown(
-    """
+# ==========================================
+# 4. FOOTER
+# ==========================================
+st.markdown('</div>', unsafe_allow_html=True) # Close main-content
+
+st.markdown("""
 <div class="footer">
-    <div class="footer-inner">
-        <div class="brand" style="margin-bottom:30px;">
-            <div class="brand-logo">🏛️</div>
-            <div>
-                <div class="brand-title" style="color:#fff;font-size:16px;">DPRK ACEH JAYA</div>
-                <div class="brand-subtitle" style="color:rgba(255,255,255,.5);">PORTAL INFORMASI PUBLIK</div>
-            </div>
+    <div class="footer-grid">
+        <div>
+            <h4>DPRK ACEH JAYA</h4>
+            <p>Secretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya.<br>
+            Mewujudkan pemerintahan yang transparan, akuntabel, dan melayani.</p>
         </div>
-
-        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:35px;">
-            <div>
-                <div class="footer-title">Tentang Portal</div>
-                <p>Portal informasi DPRK Aceh Jaya menyediakan akses informasi kelembagaan, berita, agenda, produk hukum, layanan publik, dan aspirasi masyarakat.</p>
-            </div>
-            <div>
-                <div class="footer-title">Navigasi</div>
-                <p>Beranda</p>
-                <p>Profil</p>
-                <p>Berita & Agenda</p>
-                <p>JDIH</p>
-            </div>
-            <div>
-                <div class="footer-title">Layanan</div>
-                <p>Pengaduan Masyarakat</p>
-                <p>Informasi Publik</p>
-                <p>Produk Hukum</p>
-                <p>Transparansi</p>
-            </div>
-            <div>
-                <div class="footer-title">Kontak</div>
-                <p>Jl. Merdeka No. 01</p>
-                <p>Calang, Aceh Jaya</p>
-                <p>(0655) 12345</p>
-                <p>sekretariat@dprk.acehjaya.go.id</p>
-            </div>
+        <div>
+            <h4>Tautan Terkait</h4>
+            <a href="#">Pemerintah Kab. Aceh Jaya</a>
+            <a href="#">JDIH Nasional</a>
+            <a href="#">LAPOR! (Pengaduan Nasional)</a>
+            <a href="#">Badan Pusat Statistik</a>
         </div>
-
-        <div class="footer-bottom">
-            © 2026 Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Hak Cipta Dilindungi.
+        <div>
+            <h4>Hubungi Kami</h4>
+            <p>📍 Jl. Merdeka No. 01, Calang, Aceh Jaya</p>
+            <p>📞 (0655) 12345</p>
+            <p>✉️ sekretariat@dprk.acehjaya.go.id</p>
         </div>
     </div>
+    <div class="footer-bottom">
+        © 2026 Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Hak Cipta Dilindungi.
+    </div>
 </div>
-""",
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
