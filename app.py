@@ -795,173 +795,54 @@ else:
     )
     st.markdown("</div>", unsafe_allow_html=True)
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
+# =========================================================
+# FOOTER
+# =========================================================
+st.markdown(
+    """
+<div class="footer">
+    <div class="footer-inner">
+        <div class="brand" style="margin-bottom:30px;">
+            <div class="brand-logo">🏛️</div>
+            <div>
+                <div class="brand-title" style="color:#fff;font-size:16px;">DPRK ACEH JAYA</div>
+                <div class="brand-subtitle" style="color:rgba(255,255,255,.5);">PORTAL INFORMASI PUBLIK</div>
+            </div>
+        </div>
 
-.footer {
-    background: #063b32;
-    color: rgba(255, 255, 255, 0.78);
-    margin-top: 60px;
-    padding: 55px 6% 0;
-    border-top: 4px solid #d5a52b;
-}
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:35px;">
+            <div>
+                <div class="footer-title">Tentang Portal</div>
+                <p>Portal informasi DPRK Aceh Jaya menyediakan akses informasi kelembagaan, berita, agenda, produk hukum, layanan publik, dan aspirasi masyarakat.</p>
+            </div>
+            <div>
+                <div class="footer-title">Navigasi</div>
+                <p>Beranda</p>
+                <p>Profil</p>
+                <p>Berita & Agenda</p>
+                <p>JDIH</p>
+            </div>
+            <div>
+                <div class="footer-title">Layanan</div>
+                <p>Pengaduan Masyarakat</p>
+                <p>Informasi Publik</p>
+                <p>Produk Hukum</p>
+                <p>Transparansi</p>
+            </div>
+            <div>
+                <div class="footer-title">Kontak</div>
+                <p>Jl. Merdeka No. 01</p>
+                <p>Calang, Aceh Jaya</p>
+                <p>(0655) 12345</p>
+                <p>sekretariat@dprk.acehjaya.go.id</p>
+            </div>
+        </div>
 
-.footer-container {
-    max-width: 1250px;
-    width: 88%;
-    margin: 0 auto;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 45px;
-    padding-bottom: 42px;
-}
-
-.footer-brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 18px;
-}
-
-.footer-logo {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: #0b6655;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px;
-    flex-shrink: 0;
-}
-
-.footer-brand-name {
-    color: #ffffff;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 17px;
-    font-weight: 800;
-    line-height: 1.25;
-}
-
-.footer-brand-subtitle {
-    color: rgba(255,255,255,.55);
-    font-size: 10px;
-    letter-spacing: .8px;
-    margin-top: 4px;
-}
-
-.footer-column h4 {
-    color: #ffffff;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 800;
-    margin: 4px 0 16px;
-}
-
-.footer-column p {
-    color: rgba(255,255,255,.68);
-    font-size: 11px;
-    line-height: 1.8;
-    margin: 0 0 7px;
-}
-
-.footer-column a {
-    display: block;
-    color: rgba(255,255,255,.68);
-    font-size: 11px;
-    line-height: 1.8;
-    text-decoration: none;
-    margin-bottom: 5px;
-    transition: .2s ease;
-}
-
-.footer-column a:hover {
-    color: #f2d56b;
-    padding-left: 4px;
-}
-
-.footer-description {
-    max-width: 390px;
-    color: rgba(255,255,255,.68);
-    font-size: 11px;
-    line-height: 1.8;
-}
-
-.footer-social {
-    display: flex;
-    gap: 8px;
-    margin-top: 17px;
-}
-
-.footer-social-item {
-    width: 34px;
-    height: 34px;
-    border: 1px solid rgba(255,255,255,.2);
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255,255,255,.8);
-    font-size: 14px;
-}
-
-.footer-divider {
-    height: 1px;
-    background: rgba(255,255,255,.12);
-}
-
-.footer-bottom {
-    min-height: 65px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    color: rgba(255,255,255,.45);
-    font-size: 10px;
-}
-
-.footer-bottom-left {
-    line-height: 1.6;
-}
-
-.footer-bottom-right {
-    text-align: right;
-}
-
-@media (max-width: 900px) {
-    .footer-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 35px;
-    }
-
-    .footer-bottom {
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        padding: 18px 0;
-    }
-
-    .footer-bottom-right {
-        text-align: left;
-    }
-}
-
-@media (max-width: 600px) {
-    .footer {
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-
-    .footer-container {
-        width: 94%;
-    }
-
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
-    }
-}
+        <div class="footer-bottom">
+            © 2026 Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Hak Cipta Dilindungi.
+        </div>
+    </div>
+</div>
+""",
+    unsafe_allow_html=True,
+)
