@@ -68,7 +68,7 @@ JDIH_DATA = [
 ]
 
 # =========================================================
-# CSS (LENGKAP & DISEMPURNAKAN)
+# CSS (DISEMPURNAKAN)
 # =========================================================
 st.markdown(
     """
@@ -263,9 +263,8 @@ section[data-testid="stSidebar"] { display: none; }
 .footer { background: #062e26; color: rgba(255,255,255,0.7); margin-top: 40px; padding: 56px 6% 24px; }
 .footer-inner { width: 88%; max-width: 1250px; margin: auto; }
 .footer-title { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 16px; font-family: 'Plus Jakarta Sans'; }
-.footer p { color: rgba(255,255,255,0.6); font-size: 12px; line-height: 1.8; margin: 0; }
-.footer a { color: rgba(255,255,255,0.7); text-decoration: none; transition: all 0.2s ease; display: inline-block; }
-.footer a:hover { color: var(--gold) !important; padding-left: 4px; }
+.footer p, .footer a { color: rgba(255,255,255,0.6); font-size: 12px; line-height: 2; text-decoration: none; margin: 0; transition: color 0.2s; }
+.footer a:hover { color: var(--gold); }
 .footer-bottom {
     border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; padding-top: 20px;
     text-align: center; color: rgba(255,255,255,0.4); font-size: 11px;
@@ -299,12 +298,6 @@ div[data-testid="stForm"] { background: var(--white); border: 1px solid var(--bo
     .nav-wrap { padding: 0 4%; overflow-x: auto; }
     .nav-inner { min-height: 48px; }
     .section-head { flex-direction: column; align-items: flex-start; gap: 8px; }
-    
-    /* Footer Mobile Grid */
-    .footer-grid-mobile {
-        grid-template-columns: 1fr !important;
-        gap: 32px !important;
-    }
 }
 </style>
 """,
@@ -321,7 +314,7 @@ st.markdown(
     """
 <div class="govbar">
     <div class="govbar-left"><span>🇮🇩 Portal Informasi Pemerintahan Daerah</span><span>|</span><strong>DPRK ACEH JAYA</strong></div>
-    <div class="govbar-right"><span>PPID</span><span>🇩 ID</span></div>
+    <div class="govbar-right"><span>PPID</span><span>🇮🇩 ID</span></div>
 </div>
 """,
     unsafe_allow_html=True,
@@ -610,7 +603,7 @@ elif st.session_state.page == "Berita & Agenda":
     for item in NEWS:
         st.markdown(
             f"""
-        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;display:flex;gap:24px;transition:all 0.2s;">
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;display:flex;gap:24px;transition:all 0.2s;" class="news-side" style="border:1px solid var(--border);">
             <img src="{item['image']}" style="width:280px;height:170px;object-fit:cover;border-radius:8px;flex-shrink:0;">
             <div style="padding:4px 0;flex:1;">
                 <div class="news-tag">{item['tag']}</div>
@@ -724,7 +717,7 @@ elif st.session_state.page == "Layanan & Pengaduan":
             <h3 style="color:#0f172a;font-family:'Plus Jakarta Sans';font-size:19px;margin-top:0;font-weight:700;">Hubungi Kami</h3>
             
             <div style="margin-top:20px;">
-                <p style="font-size:12px;color:#0f172a;font-weight:700;margin:0 0 4px;"> Telepon</p>
+                <p style="font-size:12px;color:#0f172a;font-weight:700;margin:0 0 4px;">📞 Telepon</p>
                 <p style="font-size:13px;color:var(--text-muted);margin:0 0 16px;">(0655) 12345</p>
                 
                 <p style="font-size:12px;color:#0f172a;font-weight:700;margin:0 0 4px;">✉️ Email</p>
@@ -795,6 +788,7 @@ elif st.session_state.page == "JDIH & Transparansi":
 
     df = pd.DataFrame(JDIH_DATA, columns=["No", "Nomor & Tahun", "Tentang", "Status", "Ukuran"])
     
+    # Konfigurasi kolom agar terlihat seperti portal JDIH profesional
     st.dataframe(
         df,
         use_container_width=True,
@@ -862,66 +856,50 @@ else:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# FOOTER (DISEMPURNAKAN)
+# FOOTER
 # =========================================================
 st.markdown(
     """
 <div class="footer">
     <div class="footer-inner">
-        <div class="brand" style="margin-bottom:32px; display:flex; align-items:center; gap:14px;">
-            <div class="brand-logo" style="width:48px; height:48px; font-size:22px;">🏛️</div>
+        <div class="brand" style="margin-bottom:32px;">
+            <div class="brand-logo">🏛️</div>
             <div>
-                <div class="brand-title" style="color:#fff; font-size:16px; line-height:1.2;">DPRK ACEH JAYA</div>
-                <div class="brand-subtitle" style="color:rgba(255,255,255,0.5); font-size:10px;">PORTAL INFORMASI PUBLIK</div>
+                <div class="brand-title" style="color:#fff;font-size:16px;">DPRK ACEH JAYA</div>
+                <div class="brand-subtitle" style="color:rgba(255,255,255,0.5);">PORTAL INFORMASI PUBLIK</div>
             </div>
         </div>
 
-        <div class="footer-grid-mobile" style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px;">
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;">
             <div>
                 <div class="footer-title">Tentang Portal</div>
-                <p style="line-height:1.7;">
-                    Portal resmi DPRK Aceh Jaya menyediakan akses transparan terhadap informasi 
-                    kelembagaan, berita, agenda persidangan, produk hukum, serta layanan 
-                    pengaduan dan aspirasi masyarakat.
-                </p>
+                <p>Portal informasi DPRK Aceh Jaya menyediakan akses informasi kelembagaan, berita, agenda, produk hukum, layanan publik, dan aspirasi masyarakat.</p>
             </div>
-            
             <div>
                 <div class="footer-title">Navigasi</div>
                 <p><a href="#">Beranda</a></p>
-                <p><a href="#">Profil & Pimpinan</a></p>
+                <p><a href="#">Profil</a></p>
                 <p><a href="#">Berita & Agenda</a></p>
-                <p><a href="#">JDIH & Transparansi</a></p>
+                <p><a href="#">JDIH</a></p>
             </div>
-            
             <div>
-                <div class="footer-title">Layanan Publik</div>
+                <div class="footer-title">Layanan</div>
                 <p><a href="#">Pengaduan Masyarakat</a></p>
-                <p><a href="#">Permohonan Informasi (PPID)</a></p>
-                <p><a href="#">Produk Hukum Daerah</a></p>
-                <p><a href="#">Transparansi Anggaran</a></p>
+                <p><a href="#">Informasi Publik</a></p>
+                <p><a href="#">Produk Hukum</a></p>
+                <p><a href="#">Transparansi</a></p>
             </div>
-            
             <div>
-                <div class="footer-title">Hubungi Kami</div>
-                <p style="display:flex; gap:8px; align-items:flex-start; margin-bottom:12px;">
-                    <span>📍</span> 
-                    <span>Jl. Merdeka No. 01, Calang,<br>Kabupaten Aceh Jaya, Aceh 23654</span>
-                </p>
-                <p style="display:flex; gap:8px; align-items:center; margin-bottom:12px;">
-                    <span>📞</span> 
-                    <span>(0655) 12345</span>
-                </p>
-                <p style="display:flex; gap:8px; align-items:center;">
-                    <span>✉️</span> 
-                    <a href="mailto:sekretariat@dprk.acehjaya.go.id">sekretariat@dprk.acehjaya.go.id</a>
-                </p>
+                <div class="footer-title">Kontak</div>
+                <p>Jl. Merdeka No. 01</p>
+                <p>Calang, Aceh Jaya</p>
+                <p>(0655) 12345</p>
+                <p>sekretariat@dprk.acehjaya.go.id</p>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <p>© 2026 Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Hak Cipta Dilindungi.</p>
-            <p style="margin-top:4px; font-size:10px; opacity:0.6;">Dikembangkan untuk transparansi dan pelayanan publik yang lebih baik.</p>
+            © 2026 Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Hak Cipta Dilindungi.
         </div>
     </div>
 </div>
