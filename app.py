@@ -796,10 +796,9 @@ else:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# FOOTER
+# FOOTER (DIPERBAIKI)
 # =========================================================
-st.markdown(
-    """
+footer_html = """
 <div class="footer">
     <div class="footer-inner">
         <div class="brand" style="margin-bottom:30px;">
@@ -843,6 +842,6 @@ st.markdown(
         </div>
     </div>
 </div>
-""",
-    unsafe_allow_html=True,
-)
+"""
+
+st.markdown(footer_html, unsafe_allow_html=True)
