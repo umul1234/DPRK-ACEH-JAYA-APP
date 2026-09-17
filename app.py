@@ -798,51 +798,176 @@ else:
 # =========================================================
 # FOOTER
 # =========================================================
+
 st.markdown(
-    """
+"""
 <div class="footer">
-    <div class="footer-inner">
-        <div class="brand" style="margin-bottom:30px;">
-            <div class="brand-logo">🏛️</div>
-            <div>
-                <div class="brand-title" style="color:#fff;font-size:16px;">DPRK ACEH JAYA</div>
-                <div class="brand-subtitle" style="color:rgba(255,255,255,.5);">PORTAL INFORMASI PUBLIK</div>
-            </div>
-        </div>
 
-        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:35px;">
-            <div>
-                <div class="footer-title">Tentang Portal</div>
-                <p>Portal informasi DPRK Aceh Jaya menyediakan akses informasi kelembagaan, berita, agenda, produk hukum, layanan publik, dan aspirasi masyarakat.</p>
-            </div>
-            <div>
-                <div class="footer-title">Navigasi</div>
-                <p>Beranda</p>
-                <p>Profil</p>
-                <p>Berita & Agenda</p>
-                <p>JDIH</p>
-            </div>
-            <div>
-                <div class="footer-title">Layanan</div>
-                <p>Pengaduan Masyarakat</p>
-                <p>Informasi Publik</p>
-                <p>Produk Hukum</p>
-                <p>Transparansi</p>
-            </div>
-            <div>
-                <div class="footer-title">Kontak</div>
-                <p>Jl. Merdeka No. 01</p>
-                <p>Calang, Aceh Jaya</p>
-                <p>(0655) 12345</p>
-                <p>sekretariat@dprk.acehjaya.go.id</p>
-            </div>
-        </div>
+<div class="footer-container">
 
-        <div class="footer-bottom">
-            © 2026 Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Hak Cipta Dilindungi.
-        </div>
-    </div>
+<div class="footer-grid">
+
+<!-- KOLOM 1 -->
+<div class="footer-column">
+
+<div class="footer-brand">
+
+<div class="footer-logo">
+🏛️
+</div>
+
+<div>
+<div class="footer-brand-name">
+DPRK ACEH JAYA
+</div>
+
+<div class="footer-brand-subtitle">
+PORTAL INFORMASI PUBLIK
+</div>
+</div>
+
+</div>
+
+<p class="footer-description">
+Portal resmi Dewan Perwakilan Rakyat Kabupaten Aceh Jaya
+yang menyediakan informasi kelembagaan, berita, agenda,
+produk hukum, layanan publik, dan aspirasi masyarakat.
+</p>
+
+<div class="footer-social">
+
+<div class="footer-social-item">
+f
+</div>
+
+<div class="footer-social-item">
+𝕏
+</div>
+
+<div class="footer-social-item">
+▶
+</div>
+
+<div class="footer-social-item">
+◎
+</div>
+
+</div>
+
+</div>
+
+
+<!-- KOLOM 2 -->
+<div class="footer-column">
+
+<h4>
+Navigasi
+</h4>
+
+<a href="#">
+Beranda
+</a>
+
+<a href="#">
+Profil DPRK
+</a>
+
+<a href="#">
+Pimpinan DPRK
+</a>
+
+<a href="#">
+Berita & Agenda
+</a>
+
+<a href="#">
+Komisi
+</a>
+
+</div>
+
+
+<!-- KOLOM 3 -->
+<div class="footer-column">
+
+<h4>
+Layanan Publik
+</h4>
+
+<a href="#">
+Pengaduan Masyarakat
+</a>
+
+<a href="#">
+Informasi Publik
+</a>
+
+<a href="#">
+JDIH
+</a>
+
+<a href="#">
+Transparansi
+</a>
+
+<a href="#">
+Dokumen Publik
+</a>
+
+</div>
+
+
+<!-- KOLOM 4 -->
+<div class="footer-column">
+
+<h4>
+Hubungi Kami
+</h4>
+
+<p>
+📍 Jl. Merdeka No. 01
+</p>
+
+<p>
+Calang, Kabupaten Aceh Jaya
+</p>
+
+<p>
+📞 (0655) 12345
+</p>
+
+<p>
+✉️ sekretariat@dprk.acehjaya.go.id
+</p>
+
+<p>
+🕐 Senin–Jumat, 08.00–16.00 WIB
+</p>
+
+</div>
+
+</div>
+
+
+<div class="footer-divider">
+</div>
+
+
+<div class="footer-bottom">
+
+<div class="footer-bottom-left">
+© 2026 DPRK Aceh Jaya. Seluruh hak cipta dilindungi.
+</div>
+
+<div class="footer-bottom-right">
+Portal Informasi Publik • Kabupaten Aceh Jaya
+</div>
+
+</div>
+
+</div>
+
 </div>
 """,
-    unsafe_allow_html=True,
+unsafe_allow_html=True
 )
