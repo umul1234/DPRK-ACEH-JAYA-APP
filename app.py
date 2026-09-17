@@ -121,19 +121,30 @@ section[data-testid="stSidebar"] { display: none; }
 .nav-wrap { background: #fff; border-bottom: 1px solid var(--border); padding: 0 6%; }
 .nav-inner { min-height: 54px; display: flex; align-items: center; gap: 4px; }
 
-.nav-button .stButton > button {
+.nav-button, .nav-button-active { position: relative; }
+.nav-button .stButton > button, .nav-button-active .stButton > button {
     background: transparent !important; border: none !important; color: #52645f !important;
     font-size: 13px !important; font-weight: 600 !important; border-radius: 0 !important;
-    padding: 12px 8px !important; min-height: 40px !important;
+    padding: 12px 8px !important; min-height: 40px !important; transition: color .15s ease !important;
 }
 .nav-button .stButton > button:hover { color: var(--primary) !important; background: #f2f7f5 !important; }
 .nav-button-active .stButton > button {
-    color: var(--primary) !important; border-bottom: 3px solid var(--gold) !important;
+    color: var(--primary) !important; font-weight: 800 !important;
 }
+.nav-button::after, .nav-button-active::after {
+    content: ''; position: absolute; left: 8px; right: 8px; bottom: 0; height: 3px;
+    background: var(--gold); transform: scaleX(0); transition: transform .2s ease; transform-origin: center;
+}
+.nav-button:hover::after { transform: scaleX(1); }
+.nav-button-active::after { transform: scaleX(1); }
 
 .alert {
-    background: #fff9e9; border-bottom: 1px solid #f0dfad; color: #725719;
-    padding: 9px 6%; font-size: 12px; display: flex; align-items: center; gap: 8px;
+    background: #fff9e9; border-bottom: 1px solid #f0dfad; border-left: 3px solid var(--gold);
+    color: #725719; padding: 10px 6%; font-size: 12px; display: flex; align-items: center; gap: 10px;
+}
+.alert-badge {
+    width: 20px; height: 20px; border-radius: 50%; background: var(--gold); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0;
 }
 
 .hero {
@@ -181,13 +192,19 @@ html { scroll-behavior: smooth; }
     width: 54px; height: 54px; margin: 0 auto 14px; border-radius: 50%;
     background: var(--primary-3); color: var(--primary);
     display: flex; align-items: center; justify-content: center; font-size: 24px;
+    transition: transform .25s ease;
 }
+.service-box:hover .service-icon { transform: scale(1.08); }
+.service-icon.accent-gold { background: var(--gold-soft); color: #a97e1c; }
+.service-icon.accent-blue { background: #e7eef7; color: #2f5f8f; }
 .service-title { color: #183d35; font-size: 14px; font-weight: 800; margin-bottom: 7px; }
 .service-desc { color: #7a8884; font-size: 11px; line-height: 1.5; }
 
 .news-main { background: #fff; border: 1px solid var(--border); overflow: hidden; border-radius: 8px; height: 100%; transition: box-shadow .2s ease, border-color .2s ease; }
 .news-main:hover { box-shadow: var(--shadow); border-color: #b9d6ce; }
-.news-main-img { width: 100%; height: 260px; object-fit: cover; display: block; }
+.news-main-img-wrap { overflow: hidden; }
+.news-main-img { width: 100%; height: 260px; object-fit: cover; display: block; transition: transform .4s ease; }
+.news-main:hover .news-main-img { transform: scale(1.05); }
 .news-main-body { padding: 20px; }
 .news-tag { display: inline-block; color: var(--primary-2); font-size: 10px; font-weight: 800; letter-spacing: .8px; margin-bottom: 9px; }
 .news-main h3 { color: #173b33; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 21px; line-height: 1.3; margin: 0 0 9px; }
@@ -195,9 +212,12 @@ html { scroll-behavior: smooth; }
 
 .news-side {
     display: flex; gap: 15px; background: #fff; border-bottom: 1px solid var(--border);
-    padding: 0 0 16px; margin-bottom: 16px;
+    padding: 0 0 16px; margin-bottom: 16px; transition: opacity .15s ease;
 }
-.news-side-img { width: 145px; height: 105px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+.news-side:hover { opacity: .85; }
+.news-side-img-wrap { width: 145px; height: 105px; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+.news-side-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+.news-side:hover .news-side-img { transform: scale(1.08); }
 .news-side h4 { color: #1d4038; font-size: 14px; line-height: 1.35; margin: 5px 0 8px; }
 .news-side p { color: #7a8884; font-size: 11px; line-height: 1.5; margin: 0; }
 
@@ -216,9 +236,13 @@ html { scroll-behavior: smooth; }
 
 .info-strip { background: var(--primary); color: white; padding: 34px 6%; }
 .info-inner { width: 88%; max-width: 1250px; margin: auto; }
-.info-item { text-align: center; padding: 5px 15px; }
+.info-item { text-align: center; padding: 5px 15px; position: relative; }
+.info-item.has-divider::after {
+    content: ''; position: absolute; right: 0; top: 8px; bottom: 8px; width: 1px;
+    background: rgba(255,255,255,.15);
+}
 .info-number { color: #f4d873; font-size: 29px; font-weight: 800; }
-.info-label { color: rgba(255,255,255,.78); font-size: 11px; }
+.info-label { color: rgba(255,255,255,.78); font-size: 11px; margin-top: 3px; }
 
 .profile-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 28px 20px; text-align: center; height: 100%; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
 .profile-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: #b9d6ce; }
@@ -231,6 +255,9 @@ html { scroll-behavior: smooth; }
 .profile-name { color: #183d35; font-size: 17px; font-weight: 800; margin: 6px 0; }
 .profile-desc { color: #7a8884; font-size: 11px; line-height: 1.55; }
 
+.news-list-card { transition: box-shadow .2s ease, border-color .2s ease; }
+.news-list-card:hover { box-shadow: var(--shadow); border-color: #b9d6ce; }
+.news-list-card:hover img { transform: scale(1.06); }
 .footer {
     background: radial-gradient(ellipse at top left, #0d4438 0%, #082722 62%), #082722;
     color: rgba(255,255,255,.75); margin-top: 60px; padding: 56px 6% 0;
@@ -389,7 +416,7 @@ st.markdown("</div></div>", unsafe_allow_html=True)
 st.markdown(
     """
 <div class="alert">
-    <span>📢</span>
+    <span class="alert-badge">i</span>
     <strong>Informasi:</strong>
     <span>Portal DPRK Aceh Jaya menyediakan akses informasi publik, produk hukum, agenda dewan, dan penyampaian aspirasi masyarakat.</span>
 </div>
@@ -443,12 +470,14 @@ if st.session_state.page == "Beranda":
     ]
 
     service_cols = st.columns(6)
+    icon_accents = ["", "accent-gold", "accent-blue"]
     for i, (icon, title, desc, target) in enumerate(services):
         with service_cols[i]:
+            accent = icon_accents[i % 3]
             st.markdown(
                 f"""
             <div class="service-box">
-                <div class="service-icon">{icon}</div>
+                <div class="service-icon {accent}">{icon}</div>
                 <div class="service-title">{title}</div>
                 <div class="service-desc">{desc}</div>
             </div>
@@ -470,9 +499,10 @@ if st.session_state.page == "Beranda":
     stats = [("2024–2029", "Masa Jabatan"), ("3", "Pimpinan DPRK"), ("5", "Komisi / Alat Kelengkapan"), ("24/7", "Akses Informasi")]
     for i, (number, label) in enumerate(stats):
         with stat_cols[i]:
+            divider_class = "has-divider" if i < len(stats) - 1 else ""
             st.markdown(
                 f"""
-            <div class="info-item">
+            <div class="info-item {divider_class}">
                 <div class="info-number">{number}</div>
                 <div class="info-label">{label}</div>
             </div>
@@ -510,7 +540,7 @@ if st.session_state.page == "Beranda":
         st.markdown(
             f"""
         <div class="news-main">
-            <img class="news-main-img" src="{main_news['image']}">
+            <div class="news-main-img-wrap"><img class="news-main-img" src="{main_news['image']}"></div>
             <div class="news-main-body">
                 <div class="news-tag">{main_news['tag']}</div>
                 <h3>{main_news['title']}</h3>
@@ -526,7 +556,7 @@ if st.session_state.page == "Beranda":
             st.markdown(
                 f"""
             <div class="news-side" style="margin-top:18px;">
-                <img class="news-side-img" src="{item['image']}">
+                <div class="news-side-img-wrap"><img class="news-side-img" src="{item['image']}"></div>
                 <div>
                     <div class="news-tag">{item['tag']}</div>
                     <h4>{item['title']}</h4>
@@ -631,8 +661,10 @@ elif st.session_state.page == "Berita & Agenda":
     for item in NEWS:
         st.markdown(
             f"""
-        <div style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:18px;margin-bottom:18px;display:flex;gap:22px;">
-            <img src="{item['image']}" style="width:270px;height:165px;object-fit:cover;border-radius:6px;">
+        <div class="news-list-card" style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:18px;margin-bottom:18px;display:flex;gap:22px;">
+            <div style="width:270px;height:165px;border-radius:6px;overflow:hidden;flex-shrink:0;">
+                <img src="{item['image']}" style="width:100%;height:100%;object-fit:cover;transition:transform .4s ease;">
+            </div>
             <div style="padding:6px 0;">
                 <div class="news-tag">{item['tag']}</div>
                 <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';font-size:21px;margin:0 0 8px;">{item['title']}</h3>
@@ -766,12 +798,13 @@ elif st.session_state.page == "JDIH & Transparansi":
         ("📑", "Informasi Berkala", "Informasi yang diterbitkan secara berkala."),
     ]
 
+    icon_accents = ["", "accent-gold", "accent-blue", "accent-gold"]
     for i, (icon, title, desc) in enumerate(cards):
         with info_cols[i]:
             st.markdown(
                 f"""
             <div class="service-box" style="text-align:left;">
-                <div class="service-icon" style="margin:0 0 13px;">{icon}</div>
+                <div class="service-icon {icon_accents[i]}" style="margin:0 0 13px;">{icon}</div>
                 <div class="service-title">{title}</div>
                 <div class="service-desc">{desc}</div>
             </div>
