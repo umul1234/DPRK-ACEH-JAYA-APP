@@ -971,4 +971,3 @@ Portal Informasi Publik • Kabupaten Aceh Jaya
 """,
 unsafe_allow_html=True
 )
-ubah warna navugasi itu jangan warna hitam berikan full codingN
