@@ -102,6 +102,10 @@ section[data-testid="stSidebar"] { display: none; }
 }
 .govbar-left, .govbar-right { display: flex; gap: 20px; align-items: center; }
 .govbar strong { color: #fff; }
+.govbar-right a {
+    color: rgba(255,255,255,.88); text-decoration: none; transition: color .15s ease;
+}
+.govbar-right a:hover { color: #fff; text-decoration: underline; }
 
 .brand-wrap { background: #fff; border-bottom: 1px solid #e7ecea; padding: 18px 6%; }
 .brand-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
@@ -186,6 +190,11 @@ html { scroll-behavior: smooth; }
 .service-box {
     background: #fff; border: 1px solid var(--border); min-height: 160px; padding: 25px 20px;
     text-align: center; transition: .25s ease; border-radius: 8px;
+}
+a:hover .service-box {
+    transform: translateY(-4px) !important;
+    border-color: #b9d6ce !important;
+    box-shadow: var(--shadow) !important;
 }
 .service-box:hover { transform: translateY(-4px); border-color: #b9d6ce; box-shadow: var(--shadow); }
 .service-icon {
@@ -342,10 +351,30 @@ a:focus-visible, button:focus-visible, .stButton > button:focus-visible {
 )
 
 # =========================================================
-# SESSION STATE
+# SESSION STATE & NAVIGATION
 # =========================================================
 if "page" not in st.session_state:
     st.session_state.page = "Beranda"
+
+# Pemetaan URL untuk navigasi via tag <a>
+PAGE_URLS = {
+    "Beranda": "beranda",
+    "Profil & Pimpinan": "profil",
+    "Berita & Agenda": "berita",
+    "Layanan & Pengaduan": "layanan",
+    "JDIH & Transparansi": "jdih",
+    "Hubungi Kami": "kontak",
+}
+URL_TO_PAGE = {v: k for k, v in PAGE_URLS.items()}
+
+# Tangani navigasi melalui query parameter (misal: ?page=layanan)
+query_params = st.query_params
+if "page" in query_params:
+    target = query_params["page"]
+    if target in URL_TO_PAGE:
+        st.session_state.page = URL_TO_PAGE[target]
+        del st.query_params["page"]  # Bersihkan URL agar rapi
+        st.rerun()
 
 # =========================================================
 # TOP BAR
@@ -359,9 +388,9 @@ st.markdown(
         <strong>DPRK ACEH JAYA</strong>
     </div>
     <div class="govbar-right">
-        <span>Hubungi Kami</span>
-        <span>PPID</span>
-        <span>ID</span>
+        <a href="?page=kontak">Hubungi Kami</a>
+        <span>|</span>
+        <a href="?page=jdih">PPID</a>
     </div>
 </div>
 """,
@@ -436,8 +465,8 @@ if st.session_state.page == "Beranda":
             <h1>Suara Masyarakat,<br>Bagian dari Pembangunan Aceh Jaya</h1>
             <p>Akses informasi kegiatan DPRK, produk hukum, agenda persidangan, layanan publik, serta sampaikan aspirasi masyarakat melalui satu portal informasi yang mudah diakses.</p>
             <div class="hero-buttons">
-                <a class="hero-btn" href="#layanan">Sampaikan Aspirasi</a>
-                <a class="hero-btn secondary" href="#berita">Lihat Berita</a>
+                <a class="hero-btn" href="?page=layanan">Sampaikan Aspirasi</a>
+                <a class="hero-btn secondary" href="?page=berita">Lihat Berita</a>
             </div>
         </div>
     </section>
@@ -461,12 +490,12 @@ if st.session_state.page == "Beranda":
     )
 
     services = [
-        ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi, keluhan, dan laporan masyarakat.", "Layanan"),
-        ("📜", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "JDIH"),
-        ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "Berita"),
-        ("📊", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "JDIH"),
-        ("📂", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "JDIH"),
-        ("ℹ️", "Informasi Publik", "Informasi mengenai layanan dan kelembagaan DPRK.", "Kontak"),
+        ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi, keluhan, dan laporan masyarakat.", "layanan"),
+        ("📜", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "jdih"),
+        ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "berita"),
+        ("📊", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
+        ("📂", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "jdih"),
+        ("ℹ️", "Informasi Publik", "Informasi mengenai layanan dan kelembagaan DPRK.", "kontak"),
     ]
 
     service_cols = st.columns(6)
@@ -476,11 +505,13 @@ if st.session_state.page == "Beranda":
             accent = icon_accents[i % 3]
             st.markdown(
                 f"""
-            <div class="service-box">
-                <div class="service-icon {accent}">{icon}</div>
-                <div class="service-title">{title}</div>
-                <div class="service-desc">{desc}</div>
-            </div>
+            <a href="?page={target}" style="text-decoration: none; color: inherit; display: block;">
+                <div class="service-box">
+                    <div class="service-icon {accent}">{icon}</div>
+                    <div class="service-title">{title}</div>
+                    <div class="service-desc">{desc}</div>
+                </div>
+            </a>
             """,
                 unsafe_allow_html=True,
             )
@@ -891,175 +922,78 @@ else:
 # =========================================================
 # FOOTER
 # =========================================================
-
 st.markdown(
 """
 <div class="footer">
-
 <div class="footer-container">
-
 <div class="footer-grid">
 
 <!-- KOLOM 1 -->
 <div class="footer-column">
-
 <div class="footer-brand">
-
-<div class="footer-logo">
-🏛️
-</div>
-
+<div class="footer-logo">🏛️</div>
 <div>
-<div class="footer-brand-name">
-DPRK ACEH JAYA
-</div>
-
-<div class="footer-brand-subtitle">
-PORTAL INFORMASI PUBLIK
+<div class="footer-brand-name">DPRK ACEH JAYA</div>
+<div class="footer-brand-subtitle">PORTAL INFORMASI PUBLIK</div>
 </div>
 </div>
-
-</div>
-
 <p class="footer-description">
 Portal resmi Dewan Perwakilan Rakyat Kabupaten Aceh Jaya
 yang menyediakan informasi kelembagaan, berita, agenda,
 produk hukum, layanan publik, dan aspirasi masyarakat.
 </p>
-
 <div class="footer-social">
-
-<div class="footer-social-item">
-f
+<div class="footer-social-item">f</div>
+<div class="footer-social-item">𝕏</div>
+<div class="footer-social-item">▶</div>
+<div class="footer-social-item">◎</div>
 </div>
-
-<div class="footer-social-item">
-𝕏
 </div>
-
-<div class="footer-social-item">
-▶
-</div>
-
-<div class="footer-social-item">
-◎
-</div>
-
-</div>
-
-</div>
-
 
 <!-- KOLOM 2 -->
 <div class="footer-column">
-
-<h4>
-Navigasi
-</h4>
-
-<a href="#">
-Beranda
-</a>
-
-<a href="#">
-Profil DPRK
-</a>
-
-<a href="#">
-Pimpinan DPRK
-</a>
-
-<a href="#">
-Berita & Agenda
-</a>
-
-<a href="#">
-Komisi
-</a>
-
+<h4>Navigasi</h4>
+<a href="?page=beranda">Beranda</a>
+<a href="?page=profil">Profil DPRK</a>
+<a href="?page=profil">Pimpinan DPRK</a>
+<a href="?page=berita">Berita & Agenda</a>
+<a href="?page=berita">Komisi</a>
 </div>
-
 
 <!-- KOLOM 3 -->
 <div class="footer-column">
-
-<h4>
-Layanan Publik
-</h4>
-
-<a href="#">
-Pengaduan Masyarakat
-</a>
-
-<a href="#">
-Informasi Publik
-</a>
-
-<a href="#">
-JDIH
-</a>
-
-<a href="#">
-Transparansi
-</a>
-
-<a href="#">
-Dokumen Publik
-</a>
-
+<h4>Layanan Publik</h4>
+<a href="?page=layanan">Pengaduan Masyarakat</a>
+<a href="?page=kontak">Informasi Publik</a>
+<a href="?page=jdih">JDIH</a>
+<a href="?page=jdih">Transparansi</a>
+<a href="?page=jdih">Dokumen Publik</a>
 </div>
-
 
 <!-- KOLOM 4 -->
 <div class="footer-column">
-
-<h4>
-Hubungi Kami
-</h4>
-
-<p>
-📍 Jl. Merdeka No. 01
-</p>
-
-<p>
-Calang, Kabupaten Aceh Jaya
-</p>
-
-<p>
-📞 (0655) 12345
-</p>
-
-<p>
-✉️ sekretariat@dprk.acehjaya.go.id
-</p>
-
-<p>
-🕐 Senin–Jumat, 08.00–16.00 WIB
-</p>
-
+<h4>Hubungi Kami</h4>
+<p>📍 Jl. Merdeka No. 01</p>
+<p>Calang, Kabupaten Aceh Jaya</p>
+<p>📞 (0655) 12345</p>
+<p>✉️ sekretariat@dprk.acehjaya.go.id</p>
+<p>🕐 Senin–Jumat, 08.00–16.00 WIB</p>
 </div>
 
 </div>
 
-
-<div class="footer-divider">
-</div>
-
+<div class="footer-divider"></div>
 
 <div class="footer-bottom">
-
 <div class="footer-bottom-left">
 © 2026 DPRK Aceh Jaya. Seluruh hak cipta dilindungi.
 </div>
-
 <div class="footer-bottom-right">
 Portal Informasi Publik • Kabupaten Aceh Jaya
 </div>
-
 </div>
 
 </div>
-
 </div>
 """,
 unsafe_allow_html=True
