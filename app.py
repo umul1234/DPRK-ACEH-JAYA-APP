@@ -68,7 +68,7 @@ JDIH_DATA = [
 ]
 
 # =========================================================
-# CSS UTAMA
+# CSS (LENGKAP & DISEMPURNAKAN)
 # =========================================================
 st.markdown(
     """
@@ -263,13 +263,13 @@ section[data-testid="stSidebar"] { display: none; }
 .footer { background: #062e26; color: rgba(255,255,255,0.7); margin-top: 40px; padding: 56px 6% 24px; }
 .footer-inner { width: 88%; max-width: 1250px; margin: auto; }
 .footer-title { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 16px; font-family: 'Plus Jakarta Sans'; }
-.footer p, .footer a { color: rgba(255,255,255,0.7); font-size: 12px; line-height: 2; text-decoration: none; margin: 0; transition: all 0.2s ease; }
+.footer p { color: rgba(255,255,255,0.6); font-size: 12px; line-height: 1.8; margin: 0; }
+.footer a { color: rgba(255,255,255,0.7); text-decoration: none; transition: all 0.2s ease; display: inline-block; }
 .footer a:hover { color: var(--gold) !important; padding-left: 4px; }
 .footer-bottom {
     border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; padding-top: 20px;
     text-align: center; color: rgba(255,255,255,0.4); font-size: 11px;
 }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
 
 /* --- STREAMLIT FORM OVERRIDES --- */
 div[data-testid="stForm"] { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 28px !important; box-shadow: var(--shadow-sm); }
@@ -299,7 +299,12 @@ div[data-testid="stForm"] { background: var(--white); border: 1px solid var(--bo
     .nav-wrap { padding: 0 4%; overflow-x: auto; }
     .nav-inner { min-height: 48px; }
     .section-head { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+    
+    /* Footer Mobile Grid */
+    .footer-grid-mobile {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+    }
 }
 </style>
 """,
@@ -316,7 +321,7 @@ st.markdown(
     """
 <div class="govbar">
     <div class="govbar-left"><span>🇮🇩 Portal Informasi Pemerintahan Daerah</span><span>|</span><strong>DPRK ACEH JAYA</strong></div>
-    <div class="govbar-right"><span>PPID</span><span>🇮🇩 ID</span></div>
+    <div class="govbar-right"><span>PPID</span><span>🇩 ID</span></div>
 </div>
 """,
     unsafe_allow_html=True,
@@ -408,7 +413,7 @@ if st.session_state.page == "Beranda":
         ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "Berita"),
         ("📊", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "JDIH"),
         ("📂", "Dokumen Publik", "Dokumen yang dapat diakses secara terbuka oleh masyarakat.", "JDIH"),
-        ("️", "Informasi Kelembagaan", "Profil, struktur organisasi, dan tugas fungsi DPRK.", "Profil"),
+        ("ℹ️", "Informasi Kelembagaan", "Profil, struktur organisasi, dan tugas fungsi DPRK.", "Profil"),
     ]
 
     service_cols = st.columns(6)
@@ -503,7 +508,7 @@ if st.session_state.page == "Beranda":
                     <div class="news-tag">{item['tag']}</div>
                     <h4>{item['title']}</h4>
                     <p>{item['desc']}</p>
-                    <div class="news-date" style="margin-top:8px;"> {item['date']}</div>
+                    <div class="news-date" style="margin-top:8px;">🕒 {item['date']}</div>
                 </div>
             </div>
             """,
@@ -605,7 +610,7 @@ elif st.session_state.page == "Berita & Agenda":
     for item in NEWS:
         st.markdown(
             f"""
-        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;display:flex;gap:24px;transition:all 0.2s;" class="news-side" style="border:1px solid var(--border);">
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;display:flex;gap:24px;transition:all 0.2s;">
             <img src="{item['image']}" style="width:280px;height:170px;object-fit:cover;border-radius:8px;flex-shrink:0;">
             <div style="padding:4px 0;flex:1;">
                 <div class="news-tag">{item['tag']}</div>
@@ -693,7 +698,7 @@ elif st.session_state.page == "Layanan & Pengaduan":
                     "Kategori Pengaduan *",
                     [
                         "🚨 Bencana / Banjir (Prioritas Tinggi)",
-                        "️ Infrastruktur & Jalan",
+                        "🛣️ Infrastruktur & Jalan",
                         "🏥 Pelayanan Publik",
                         "📜 Legislasi & Qanun",
                         "💡 Lainnya",
@@ -719,7 +724,7 @@ elif st.session_state.page == "Layanan & Pengaduan":
             <h3 style="color:#0f172a;font-family:'Plus Jakarta Sans';font-size:19px;margin-top:0;font-weight:700;">Hubungi Kami</h3>
             
             <div style="margin-top:20px;">
-                <p style="font-size:12px;color:#0f172a;font-weight:700;margin:0 0 4px;">📞 Telepon</p>
+                <p style="font-size:12px;color:#0f172a;font-weight:700;margin:0 0 4px;"> Telepon</p>
                 <p style="font-size:13px;color:var(--text-muted);margin:0 0 16px;">(0655) 12345</p>
                 
                 <p style="font-size:12px;color:#0f172a;font-weight:700;margin:0 0 4px;">✉️ Email</p>
@@ -822,9 +827,9 @@ else:
 
     cols = st.columns(3)
     contacts = [
-        ("", "Alamat Kantor", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya, Aceh 23654"),
-        ("", "Telepon & Faks", "Telp: (0655) 12345\nFaks: (0655) 12346"),
-        ("️", "Email Resmi", "sekretariat@dprk.acehjaya.go.id\npengaduan@dprk.acehjaya.go.id"),
+        ("📍", "Alamat Kantor", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya, Aceh 23654"),
+        ("📞", "Telepon & Faks", "Telp: (0655) 12345\nFaks: (0655) 12346"),
+        ("✉️", "Email Resmi", "sekretariat@dprk.acehjaya.go.id\npengaduan@dprk.acehjaya.go.id"),
     ]
 
     for i, (icon, title, value) in enumerate(contacts):
@@ -857,7 +862,7 @@ else:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# FOOTER (TERPERFECT)
+# FOOTER (DISEMPURNAKAN)
 # =========================================================
 st.markdown(
     """
@@ -871,7 +876,7 @@ st.markdown(
             </div>
         </div>
 
-        <div class="footer-grid">
+        <div class="footer-grid-mobile" style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px;">
             <div>
                 <div class="footer-title">Tentang Portal</div>
                 <p style="line-height:1.7;">
@@ -899,17 +904,17 @@ st.markdown(
             
             <div>
                 <div class="footer-title">Hubungi Kami</div>
-                <p style="display:flex; gap:8px; align-items:flex-start;">
+                <p style="display:flex; gap:8px; align-items:flex-start; margin-bottom:12px;">
                     <span>📍</span> 
                     <span>Jl. Merdeka No. 01, Calang,<br>Kabupaten Aceh Jaya, Aceh 23654</span>
                 </p>
-                <p style="display:flex; gap:8px; align-items:center; margin-top:12px;">
+                <p style="display:flex; gap:8px; align-items:center; margin-bottom:12px;">
                     <span>📞</span> 
                     <span>(0655) 12345</span>
                 </p>
-                <p style="display:flex; gap:8px; align-items:center; margin-top:12px;">
+                <p style="display:flex; gap:8px; align-items:center;">
                     <span>✉️</span> 
-                    <a href="mailto:sekretariat@dprk.acehjaya.go.id" style="color:rgba(255,255,255,0.7); text-decoration:none;">sekretariat@dprk.acehjaya.go.id</a>
+                    <a href="mailto:sekretariat@dprk.acehjaya.go.id">sekretariat@dprk.acehjaya.go.id</a>
                 </p>
             </div>
         </div>
