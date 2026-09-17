@@ -796,52 +796,91 @@ else:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# FOOTER (DIPERBAIKI)
+# FOOTER (DIPERBAIKI & RESPONSIF)
 # =========================================================
-footer_html = """
+st.markdown(
+    """
 <div class="footer">
     <div class="footer-inner">
-        <div class="brand" style="margin-bottom:30px;">
-            <div class="brand-logo">🏛️</div>
+        <div class="brand" style="margin-bottom:32px; display:flex; align-items:center; gap:14px;">
+            <div class="brand-logo" style="width:48px; height:48px; font-size:22px;">🏛️</div>
             <div>
-                <div class="brand-title" style="color:#fff;font-size:16px;">DPRK ACEH JAYA</div>
-                <div class="brand-subtitle" style="color:rgba(255,255,255,.5);">PORTAL INFORMASI PUBLIK</div>
+                <div class="brand-title" style="color:#fff; font-size:16px; line-height:1.2;">DPRK ACEH JAYA</div>
+                <div class="brand-subtitle" style="color:rgba(255,255,255,0.5); font-size:10px;">PORTAL INFORMASI PUBLIK</div>
             </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:35px;">
+        <div class="footer-grid">
             <div>
                 <div class="footer-title">Tentang Portal</div>
-                <p>Portal informasi DPRK Aceh Jaya menyediakan akses informasi kelembagaan, berita, agenda, produk hukum, layanan publik, dan aspirasi masyarakat.</p>
+                <p style="line-height:1.7;">
+                    Portal resmi DPRK Aceh Jaya menyediakan akses transparan terhadap informasi 
+                    kelembagaan, berita, agenda persidangan, produk hukum, serta layanan 
+                    pengaduan dan aspirasi masyarakat.
+                </p>
             </div>
+            
             <div>
                 <div class="footer-title">Navigasi</div>
-                <p>Beranda</p>
-                <p>Profil</p>
-                <p>Berita & Agenda</p>
-                <p>JDIH</p>
+                <p><a href="#" style="color:rgba(255,255,255,0.7); text-decoration:none; transition:0.2s;">Beranda</a></p>
+                <p><a href="#" style="color:rgba(255,255,255,0.7); text-decoration:none; transition:0.2s;">Profil & Pimpinan</a></p>
+                <p><a href="#" style="color:rgba(255,255,255,0.7); text-decoration:none; transition:0.2s;">Berita & Agenda</a></p>
+                <p><a href="#" style="color:rgba(255,255,255,0.7); text-decoration:none; transition:0.2s;">JDIH & Transparansi</a></p>
             </div>
+            
             <div>
-                <div class="footer-title">Layanan</div>
-                <p>Pengaduan Masyarakat</p>
-                <p>Informasi Publik</p>
-                <p>Produk Hukum</p>
-                <p>Transparansi</p>
+                <div class="footer-title">Layanan Publik</div>
+                <p><a href="#" style="color:rgba(255,255,255,0.7); text-decoration:none; transition:0.2s;">Pengaduan Masyarakat</a></p>
+                <p><a href="#" style="color:rgba(255,255,255,0.7); text-decoration:none; transition:0.2s;">Permohonan Informasi (PPID)</a></p>
+                <p><a href="#" style="color:rgba(255,255,255,0.7); text-decoration:none; transition:0.2s;">Produk Hukum Daerah</a></p>
+                <p><a href="#" style="color:rgba(255,255,255,0.7); text-decoration:none; transition:0.2s;">Transparansi Anggaran</a></p>
             </div>
+            
             <div>
-                <div class="footer-title">Kontak</div>
-                <p>Jl. Merdeka No. 01</p>
-                <p>Calang, Aceh Jaya</p>
-                <p>(0655) 12345</p>
-                <p>sekretariat@dprk.acehjaya.go.id</p>
+                <div class="footer-title">Hubungi Kami</div>
+                <p style="display:flex; gap:8px; align-items:flex-start;">
+                    <span>📍</span> 
+                    <span>Jl. Merdeka No. 01, Calang,<br>Kabupaten Aceh Jaya, Aceh 23654</span>
+                </p>
+                <p style="display:flex; gap:8px; align-items:center; margin-top:12px;">
+                    <span>📞</span> 
+                    <span>(0655) 12345</span>
+                </p>
+                <p style="display:flex; gap:8px; align-items:center; margin-top:12px;">
+                    <span>✉️</span> 
+                    <a href="mailto:sekretariat@dprk.acehjaya.go.id" style="color:rgba(255,255,255,0.7); text-decoration:none;">sekretariat@dprk.acehjaya.go.id</a>
+                </p>
             </div>
         </div>
 
         <div class="footer-bottom">
-            © 2026 Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Hak Cipta Dilindungi.
+            <p>© 2026 Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Hak Cipta Dilindungi.</p>
+            <p style="margin-top:4px; font-size:10px; opacity:0.6;">Dikembangkan untuk transparansi dan pelayanan publik yang lebih baik.</p>
         </div>
     </div>
 </div>
-"""
 
-st.markdown(footer_html, unsafe_allow_html=True)
+<style>
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+    }
+    .footer a:hover {
+        color: #d5a52b !important; /* Warna emas saat di-hover */
+        padding-left: 4px; /* Efek geser halus */
+    }
+    /* Agar rapi di layar HP */
+    @media (max-width: 850px) {
+        .footer-grid {
+            grid-template-columns: 1fr !important;
+            gap: 32px !important;
+        }
+        .footer-inner {
+            width: 92% !important;
+        }
+    }
+</style>
+""",
+    unsafe_allow_html=True
+)
