@@ -137,22 +137,22 @@ section[data-testid="stSidebar"] { display: none; }
 .nav-button .stButton > button, .nav-button-active .stButton > button {
     background: transparent !important; 
     border: none !important; 
-    color: #ffffff !important; /* UBAH KE PUTIH */
-    font-size: 14px !important; 
-    font-weight: 700 !important; 
-    border-radius: 6px 6px 0 0 !important; 
-    padding: 12px 16px !important; 
+    color: var(--dark) !important; /* Warna lebih gelap dan kontras (#17322d) */
+    font-size: 14px !important; /* Ukuran font sedikit diperbesar */
+    font-weight: 700 !important; /* Font lebih tebal */
+    border-radius: 6px 6px 0 0 !important; /* Sedikit melengkung di atas agar modern */
+    padding: 12px 16px !important; /* Padding diperlebar */
     min-height: 40px !important; 
     transition: all .2s ease !important; 
 }
 .nav-button .stButton > button:hover { 
-    color: #ffffff !important; /* Tetap putih saat hover */
-    background: rgba(255,255,255,0.1) !important; /* Background hover transparan putih */
+    color: var(--primary) !important; 
+    background: var(--primary-3) !important; /* Background hover lebih terlihat */
 }
 .nav-button-active .stButton > button {
-    color: #ffffff !important; /* Tetap putih saat aktif */
+    color: var(--primary) !important; 
     font-weight: 800 !important; 
-    background: rgba(255,255,255,0.15) !important; /* Background aktif lebih terlihat */
+    background: var(--primary-3) !important; /* Background aktif yang jelas namun tetap elegan */
 }
 .nav-button::after, .nav-button-active::after {
     content: ''; position: absolute; left: 12px; right: 12px; bottom: 0; height: 3px;
