@@ -1,8 +1,6 @@
 import streamlit as st
 from datetime import datetime
 import pandas as pd
-import base64
-from pathlib import Path
 
 # =========================================================
 # KONFIGURASI HALAMAN
@@ -15,18 +13,9 @@ st.set_page_config(
 )
 
 # =========================================================
-# LOGO SETUP
+# LOGO URL
 # =========================================================
-# Encode logo ke base64 untuk ditampilkan di HTML
-def get_logo_base64():
-    # Jika logo disimpan sebagai file lokal
-    logo_path = Path("logo_dprk_aceh_jaya.png")
-    if logo_path.exists():
-        with open(logo_path, "rb") as f:
-            return base64.b64encode(f.read()).decode()
-    return None
-
-logo_base64 = get_logo_base64()
+LOGO_URL = "https://i.imgur.com/FnS6rer.png"
 
 # =========================================================
 # DATA
@@ -99,7 +88,7 @@ JDIH_DATA = [
 ]
 
 # =========================================================
-# CSS (DIPERBARUI: NAVBAR LEBIH TERLIHAT)
+# CSS
 # =========================================================
 st.markdown(
     """
@@ -163,27 +152,26 @@ section[data-testid="stSidebar"] { display: none; }
 .nav-wrap { background: #fff; border-bottom: 1px solid var(--border); padding: 0 6%; }
 .nav-inner { min-height: 54px; display: flex; align-items: center; gap: 4px; }
 
-/* --- PERUBAHAN NAVBAR DI SINI --- */
 .nav-button, .nav-button-active { position: relative; }
 .nav-button .stButton > button, .nav-button-active .stButton > button {
     background: transparent !important; 
     border: none !important; 
-    color: var(--dark) !important; /* Warna lebih gelap dan kontras (#17322d) */
-    font-size: 14px !important; /* Ukuran font sedikit diperbesar */
-    font-weight: 700 !important; /* Font lebih tebal */
-    border-radius: 6px 6px 0 0 !important; /* Sedikit melengkung di atas agar modern */
-    padding: 12px 16px !important; /* Padding diperlebar */
+    color: var(--dark) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    border-radius: 6px 6px 0 0 !important;
+    padding: 12px 16px !important;
     min-height: 40px !important; 
     transition: all .2s ease !important; 
 }
 .nav-button .stButton > button:hover { 
     color: var(--primary) !important; 
-    background: var(--primary-3) !important; /* Background hover lebih terlihat */
+    background: var(--primary-3) !important;
 }
 .nav-button-active .stButton > button {
     color: var(--primary) !important; 
     font-weight: 800 !important; 
-    background: var(--primary-3) !important; /* Background aktif yang jelas namun tetap elegan */
+    background: var(--primary-3) !important;
 }
 .nav-button::after, .nav-button-active::after {
     content: ''; position: absolute; left: 12px; right: 12px; bottom: 0; height: 3px;
@@ -191,7 +179,6 @@ section[data-testid="stSidebar"] { display: none; }
 }
 .nav-button:hover::after { transform: scaleX(1); }
 .nav-button-active::after { transform: scaleX(1); }
-/* -------------------------------- */
 
 .alert { background: #fff9e9; border-bottom: 1px solid #f0dfad; border-left: 3px solid var(--gold); color: #725719; padding: 10px 6%; font-size: 12px; display: flex; align-items: center; gap: 10px; }
 .alert-badge { width: 20px; height: 20px; border-radius: 50%; background: var(--gold); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
@@ -365,7 +352,7 @@ st.markdown(
     """
 <div class="govbar">
     <div class="govbar-left">
-        <span>🇮🇩 Portal Informasi Pemerintahan Daerah</span>
+        <span>🇮 Portal Informasi Pemerintahan Daerah</span>
         <span>|</span>
         <strong>DPRK ACEH JAYA</strong>
     </div>
@@ -380,14 +367,14 @@ st.markdown(
 )
 
 # =========================================================
-# RUNNING TEXT (PENGUMUMAN)
+# RUNNING TEXT
 # =========================================================
 st.markdown(
     """
 <div class="running-text-wrap">
     <div class="running-text">
         📢 Selamat Datang di Portal Resmi DPRK Aceh Jaya &nbsp;&nbsp;|&nbsp;&nbsp; 
-        📅 Rapat Paripurna Pembahasan KUA-PPAS 2027 akan dilaksanakan pada 18 September 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 
+         Rapat Paripurna Pembahasan KUA-PPAS 2027 akan dilaksanakan pada 18 September 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 
         📢 Layanan Pengaduan Masyarakat kini dapat diakses melalui menu Layanan & Pengaduan &nbsp;&nbsp;|&nbsp;&nbsp; 
         🌐 Mari wujudkan transparansi dan akuntabilitas pemerintahan daerah bersama DPRK Aceh Jaya.
     </div>
@@ -399,17 +386,15 @@ st.markdown(
 # =========================================================
 # BRAND DENGAN LOGO
 # =========================================================
-if logo_base64:
-    logo_html = f'<img src="data:image/png;base64,{logo_base64}" alt="Logo DPRK Aceh Jaya">'
-else:
-    logo_html = '🏛️'  # Fallback jika logo tidak ada
-
 st.markdown(
     f"""
 <div class="brand-wrap">
     <div class="brand-inner">
         <div class="brand">
-            <div class="brand-logo">{logo_html}</div>
+            <div class="brand-logo">
+                <img src="{LOGO_URL}" alt="Logo DPRK Aceh Jaya" 
+                     onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>'">
+            </div>
             <div>
                 <div class="brand-title">Dewan Perwakilan Rakyat<br>Kabupaten Aceh Jaya</div>
                 <div class="brand-subtitle">PORTAL INFORMASI PUBLIK DAN ASPIRASI MASYARAKAT</div>
@@ -652,7 +637,7 @@ elif st.session_state.page == "Profil & Pimpinan":
         unsafe_allow_html=True,
     )
 
-    tab1, tab2, tab3 = st.tabs(["🏛️ Pimpinan", " Anggota DPRK per Komisi", "🏢 Pejabat Sekretariat"])
+    tab1, tab2, tab3 = st.tabs(["️ Pimpinan", "👥 Anggota DPRK per Komisi", "🏢 Pejabat Sekretariat"])
     
     with tab1:
         st.markdown(
@@ -684,7 +669,7 @@ elif st.session_state.page == "Profil & Pimpinan":
     with tab2:
         st.markdown('<div style="margin-top:20px;">', unsafe_allow_html=True)
         for komisi, members in ANGGOTA_DPRK.items():
-            with st.expander(f"📂 {komisi}", expanded=False):
+            with st.expander(f" {komisi}", expanded=False):
                 cols = st.columns(2)
                 for idx, (jabatan, nama) in enumerate(members):
                     with cols[idx % 2]:
@@ -772,7 +757,7 @@ elif st.session_state.page == "Berita & Agenda":
         <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:6px;">
             <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
-        <p style="margin-top:15px;color:#71817d;font-size:13px;">Video Dokumentasi Kegiatan DPRK Aceh Jaya (Ganti URL iframe sesuai kebutuhan)</p>
+        <p style="margin-top:15px;color:#71817d;font-size:13px;">Video Dokumentasi Kegiatan DPRK Aceh Jaya</p>
     </div>
     """,
         unsafe_allow_html=True,
@@ -895,8 +880,8 @@ elif st.session_state.page == "JDIH & Transparansi":
     info_cols = st.columns(4)
     cards = [
         ("⚖️", "Produk Hukum", "Qanun dan dokumen hukum daerah."),
-        ("", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
-        ("📂", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
+        ("📊", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
+        ("", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
         ("📑", "Informasi Berkala", "Informasi yang diterbitkan secara berkala."),
     ]
 
@@ -957,8 +942,8 @@ else:
     cols = st.columns(3)
     contacts = [
         ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya"),
-        ("", "Telepon", "(0655) 12345"),
-        ("️", "Email", "sekretariat@dprk.acehjaya.go.id"),
+        ("📞", "Telepon", "(0655) 12345"),
+        ("✉️", "Email", "sekretariat@dprk.acehjaya.go.id"),
     ]
 
     for i, (icon, title, value) in enumerate(contacts):
@@ -1002,8 +987,6 @@ else:
 # =========================================================
 # FOOTER DENGAN LOGO
 # =========================================================
-footer_logo_html = f'<img src="data:image/png;base64,{logo_base64}" alt="Logo DPRK Aceh Jaya">' if logo_base64 else '🏛️'
-
 st.markdown(
 f"""
 <div class="footer">
@@ -1013,7 +996,10 @@ f"""
 <!-- KOLOM 1 -->
 <div class="footer-column">
 <div class="footer-brand">
-<div class="footer-logo">{footer_logo_html}</div>
+<div class="footer-logo">
+    <img src="{LOGO_URL}" alt="Logo DPRK Aceh Jaya"
+         onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>'">
+</div>
 <div>
 <div class="footer-brand-name">DPRK ACEH JAYA</div>
 <div class="footer-brand-subtitle">PORTAL INFORMASI PUBLIK</div>
@@ -1059,7 +1045,7 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 <p>Calang, Kabupaten Aceh Jaya</p>
 <p>📞 (0655) 12345</p>
 <p>✉️ sekretariat@dprk.acehjaya.go.id</p>
-<p>🕐 Senin–Jumat, 08.00–16.00 WIB</p>
+<p> Senin–Jumat, 08.00–16.00 WIB</p>
 </div>
 
 </div>
