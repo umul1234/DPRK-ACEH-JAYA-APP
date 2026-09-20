@@ -1,6 +1,8 @@
 import streamlit as st
 from datetime import datetime
 import pandas as pd
+import base64
+from pathlib import Path
 
 # =========================================================
 # KONFIGURASI HALAMAN
@@ -11,6 +13,20 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed",
 )
+
+# =========================================================
+# LOGO SETUP
+# =========================================================
+# Encode logo ke base64 untuk ditampilkan di HTML
+def get_logo_base64():
+    # Jika logo disimpan sebagai file lokal
+    logo_path = Path("logo_dprk_aceh_jaya.png")
+    if logo_path.exists():
+        with open(logo_path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    return None
+
+logo_base64 = get_logo_base64()
 
 # =========================================================
 # DATA
@@ -125,7 +141,22 @@ section[data-testid="stSidebar"] { display: none; }
 .brand-wrap { background: #fff; border-bottom: 1px solid #e7ecea; padding: 18px 6%; }
 .brand-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand { display: flex; align-items: center; gap: 14px; }
-.brand-logo { width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(145deg, #0b5b4b, #0a3e35); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 27px; box-shadow: 0 4px 12px rgba(12,74,62,.18); }
+.brand-logo { 
+    width: 70px; 
+    height: 70px; 
+    border-radius: 8px;
+    background: #fff;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    box-shadow: 0 4px 12px rgba(12,74,62,.18);
+    overflow: hidden;
+}
+.brand-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 .brand-title { color: #123b33; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; line-height: 1.2; font-weight: 800; text-transform: uppercase; }
 .brand-subtitle { margin-top: 4px; color: #788783; font-size: 11px; letter-spacing: .6px; }
 
@@ -253,7 +284,23 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
 .footer-column a:hover { color: #f4d873; padding-left: 3px; }
 .footer-column p { color: rgba(255,255,255,.62); font-size: 12.5px; line-height: 1.85; margin: 0 0 8px; }
 .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-.footer-logo { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(145deg, #d5a52b, #a97e1c); color: #082722; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.footer-logo { 
+    width: 50px; 
+    height: 50px; 
+    border-radius: 6px; 
+    flex-shrink: 0; 
+    background: #fff;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 20px;
+    overflow: hidden;
+}
+.footer-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 .footer-brand-name { color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14.5px; font-weight: 800; letter-spacing: .3px; }
 .footer-brand-subtitle { color: rgba(255,255,255,.5); font-size: 10px; letter-spacing: .6px; margin-top: 2px; }
 .footer-description { color: rgba(255,255,255,.58); font-size: 12.5px; line-height: 1.85; max-width: 340px; margin: 0 0 22px; }
@@ -350,14 +397,19 @@ st.markdown(
 )
 
 # =========================================================
-# BRAND
+# BRAND DENGAN LOGO
 # =========================================================
+if logo_base64:
+    logo_html = f'<img src="data:image/png;base64,{logo_base64}" alt="Logo DPRK Aceh Jaya">'
+else:
+    logo_html = '🏛️'  # Fallback jika logo tidak ada
+
 st.markdown(
-    """
+    f"""
 <div class="brand-wrap">
     <div class="brand-inner">
         <div class="brand">
-            <div class="brand-logo">🏛️</div>
+            <div class="brand-logo">{logo_html}</div>
             <div>
                 <div class="brand-title">Dewan Perwakilan Rakyat<br>Kabupaten Aceh Jaya</div>
                 <div class="brand-subtitle">PORTAL INFORMASI PUBLIK DAN ASPIRASI MASYARAKAT</div>
@@ -531,7 +583,7 @@ if st.session_state.page == "Beranda":
                 <div class="news-tag">{main_news['tag']}</div>
                 <h3>{main_news['title']}</h3>
                 <p style="color:#71817d;font-size:12px;line-height:1.65;">{main_news['desc']}</p>
-                <div class="news-date">🕒 {main_news['date']}</div>
+                <div class="news-date"> {main_news['date']}</div>
             </div>
         </div>
         """,
@@ -600,7 +652,7 @@ elif st.session_state.page == "Profil & Pimpinan":
         unsafe_allow_html=True,
     )
 
-    tab1, tab2, tab3 = st.tabs(["🏛️ Pimpinan", "👥 Anggota DPRK per Komisi", "🏢 Pejabat Sekretariat"])
+    tab1, tab2, tab3 = st.tabs(["🏛️ Pimpinan", " Anggota DPRK per Komisi", "🏢 Pejabat Sekretariat"])
     
     with tab1:
         st.markdown(
@@ -843,7 +895,7 @@ elif st.session_state.page == "JDIH & Transparansi":
     info_cols = st.columns(4)
     cards = [
         ("⚖️", "Produk Hukum", "Qanun dan dokumen hukum daerah."),
-        ("📊", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
+        ("", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
         ("📂", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
         ("📑", "Informasi Berkala", "Informasi yang diterbitkan secara berkala."),
     ]
@@ -905,8 +957,8 @@ else:
     cols = st.columns(3)
     contacts = [
         ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya"),
-        ("📞", "Telepon", "(0655) 12345"),
-        ("✉️", "Email", "sekretariat@dprk.acehjaya.go.id"),
+        ("", "Telepon", "(0655) 12345"),
+        ("️", "Email", "sekretariat@dprk.acehjaya.go.id"),
     ]
 
     for i, (icon, title, value) in enumerate(contacts):
@@ -948,10 +1000,12 @@ else:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# FOOTER
+# FOOTER DENGAN LOGO
 # =========================================================
+footer_logo_html = f'<img src="data:image/png;base64,{logo_base64}" alt="Logo DPRK Aceh Jaya">' if logo_base64 else '🏛️'
+
 st.markdown(
-"""
+f"""
 <div class="footer">
 <div class="footer-container">
 <div class="footer-grid">
@@ -959,7 +1013,7 @@ st.markdown(
 <!-- KOLOM 1 -->
 <div class="footer-column">
 <div class="footer-brand">
-<div class="footer-logo">🏛️</div>
+<div class="footer-logo">{footer_logo_html}</div>
 <div>
 <div class="footer-brand-name">DPRK ACEH JAYA</div>
 <div class="footer-brand-subtitle">PORTAL INFORMASI PUBLIK</div>
@@ -972,7 +1026,7 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 </p>
 <div class="footer-social">
 <div class="footer-social-item">f</div>
-<div class="footer-social-item">𝕏</div>
+<div class="footer-social-item"></div>
 <div class="footer-social-item">▶</div>
 <div class="footer-social-item">◎</div>
 </div>
