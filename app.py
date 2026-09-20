@@ -24,7 +24,6 @@ PAGES = {
     "Kontak": "Hubungi Kami",
 }
 
-# Data berita diperbarui sesuai kegiatan nyata DPRK Aceh Jaya
 NEWS = [
     {
         "tag": "WARTA DPRK",
@@ -55,43 +54,19 @@ AGENDA = [
     ("24", "SEP", "Rapat Dengar Pendapat", "Penyerapan aspirasi dan masukan masyarakat."),
 ]
 
-# Data Pimpinan sesuai situs resmi
 PIMPINAN = [
     ("Ketua DPRK", "Musliadi Z, S.E", "Memimpin sidang paripurna dan koordinasi alat kelengkapan dewan."),
     ("Wakil Ketua I", "Irwanto. NP", "Koordinasi bidang legislasi dan anggaran."),
     ("Wakil Ketua II", "Teuku Asrizal, S.H", "Koordinasi bidang pengawasan dan hubungan masyarakat."),
 ]
 
-# Data Anggota DPRK per Komisi (Untuk tampilan yang rapi, ditampilkan dalam expander)
 ANGGOTA_DPRK = {
-    "Komisi I": [
-        ("Ketua", "Iskandar Ibrahim"),
-        ("Wakil Ketua", "H. Dasril Arahman. IB, S.E"),
-        ("Sekretaris", "Wanti Cahya"),
-        ("Anggota", "Muslim"),
-    ],
-    "Komisi II": [
-        ("Ketua", "Ir. Fauzi Yahya"),
-        ("Wakil Ketua", "Azhar"),
-        ("Sekretaris", "Fitra Akhyar, ST"),
-        ("Anggota", "Safriyantoni"),
-        ("Anggota", "Ayudi Ilham, S.E"),
-    ],
-    "Komisi III": [
-        ("Ketua", "Sudirman, S.P"),
-        ("Wakil Ketua", "Abdul Muthalleb"),
-        ("Sekretaris", "Drs. H. T. Irfan TB., M.Si"),
-        ("Anggota", "Muhammad Diah, S.E"),
-    ],
-    "Komisi IV": [
-        ("Ketua", "Hazami, S.Pd"),
-        ("Wakil Ketua", "Muhammad Jamin"),
-        ("Sekretaris", "Hj. Fitri Maya Lisa, S.Sos"),
-        ("Anggota", "Usman. ID"),
-    ]
+    "Komisi I": [("Ketua", "Iskandar Ibrahim"), ("Wakil Ketua", "H. Dasril Arahman. IB, S.E"), ("Sekretaris", "Wanti Cahya"), ("Anggota", "Muslim")],
+    "Komisi II": [("Ketua", "Ir. Fauzi Yahya"), ("Wakil Ketua", "Azhar"), ("Sekretaris", "Fitra Akhyar, ST"), ("Anggota", "Safriyantoni"), ("Anggota", "Ayudi Ilham, S.E")],
+    "Komisi III": [("Ketua", "Sudirman, S.P"), ("Wakil Ketua", "Abdul Muthalleb"), ("Sekretaris", "Drs. H. T. Irfan TB., M.Si"), ("Anggota", "Muhammad Diah, S.E")],
+    "Komisi IV": [("Ketua", "Hazami, S.Pd"), ("Wakil Ketua", "Muhammad Jamin"), ("Sekretaris", "Hj. Fitri Maya Lisa, S.Sos"), ("Anggota", "Usman. ID")],
 }
 
-# Data Pejabat Sekretariat
 SEKRETARIAT = [
     ("Sekretaris DPRK", "Abu Bakar, S.Pd.I., M.H"),
     ("Staf Ahli Bidang Pemerintahan, Hukum dan Politik", "Irma Hanum, SH"),
@@ -108,7 +83,7 @@ JDIH_DATA = [
 ]
 
 # =========================================================
-# CSS
+# CSS (DIPERBARUI: NAVBAR LEBIH TERLIHAT)
 # =========================================================
 st.markdown(
     """
@@ -137,103 +112,66 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 .block-container { max-width: 100%; padding: 0 !important; }
 section[data-testid="stSidebar"] { display: none; }
 
-/* Running Text / Marquee */
-.running-text-wrap {
-    background: var(--primary-2);
-    color: white;
-    padding: 10px 0;
-    overflow: hidden;
-    white-space: nowrap;
-    border-bottom: 2px solid var(--gold);
-}
-.running-text {
-    display: inline-block;
-    padding-left: 100%;
-    animation: marquee 35s linear infinite;
-    font-size: 13px;
-    font-weight: 500;
-}
-@keyframes marquee {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); }
-}
+.running-text-wrap { background: var(--primary-2); color: white; padding: 10px 0; overflow: hidden; white-space: nowrap; border-bottom: 2px solid var(--gold); }
+.running-text { display: inline-block; padding-left: 100%; animation: marquee 35s linear infinite; font-size: 13px; font-weight: 500; }
+@keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-.govbar {
-    background: #083b32; color: rgba(255,255,255,.88); min-height: 38px;
-    padding: 0 6%; display: flex; align-items: center; justify-content: space-between; font-size: 12px;
-}
+.govbar { background: #083b32; color: rgba(255,255,255,.88); min-height: 38px; padding: 0 6%; display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
 .govbar-left, .govbar-right { display: flex; gap: 20px; align-items: center; }
 .govbar strong { color: #fff; }
-.govbar-right a {
-    color: rgba(255,255,255,.88); text-decoration: none; transition: color .15s ease;
-}
+.govbar-right a { color: rgba(255,255,255,.88); text-decoration: none; transition: color .15s ease; }
 .govbar-right a:hover { color: #fff; text-decoration: underline; }
 
 .brand-wrap { background: #fff; border-bottom: 1px solid #e7ecea; padding: 18px 6%; }
 .brand-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand { display: flex; align-items: center; gap: 14px; }
-.brand-logo {
-    width: 58px; height: 58px; border-radius: 50%;
-    background: linear-gradient(145deg, #0b5b4b, #0a3e35); color: #fff;
-    display: flex; align-items: center; justify-content: center; font-size: 27px;
-    box-shadow: 0 4px 12px rgba(12,74,62,.18);
-}
-.brand-title {
-    color: #123b33; font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 18px; line-height: 1.2; font-weight: 800; text-transform: uppercase;
-}
+.brand-logo { width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(145deg, #0b5b4b, #0a3e35); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 27px; box-shadow: 0 4px 12px rgba(12,74,62,.18); }
+.brand-title { color: #123b33; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; line-height: 1.2; font-weight: 800; text-transform: uppercase; }
 .brand-subtitle { margin-top: 4px; color: #788783; font-size: 11px; letter-spacing: .6px; }
 
 .nav-wrap { background: #fff; border-bottom: 1px solid var(--border); padding: 0 6%; }
 .nav-inner { min-height: 54px; display: flex; align-items: center; gap: 4px; }
 
+/* --- PERUBAHAN NAVBAR DI SINI --- */
 .nav-button, .nav-button-active { position: relative; }
 .nav-button .stButton > button, .nav-button-active .stButton > button {
-    background: transparent !important; border: none !important; color: #52645f !important;
-    font-size: 13px !important; font-weight: 600 !important; border-radius: 0 !important;
-    padding: 12px 8px !important; min-height: 40px !important; transition: color .15s ease !important;
+    background: transparent !important; 
+    border: none !important; 
+    color: var(--dark) !important; /* Warna lebih gelap dan kontras (#17322d) */
+    font-size: 14px !important; /* Ukuran font sedikit diperbesar */
+    font-weight: 700 !important; /* Font lebih tebal */
+    border-radius: 6px 6px 0 0 !important; /* Sedikit melengkung di atas agar modern */
+    padding: 12px 16px !important; /* Padding diperlebar */
+    min-height: 40px !important; 
+    transition: all .2s ease !important; 
 }
-.nav-button .stButton > button:hover { color: var(--primary) !important; background: #f2f7f5 !important; }
+.nav-button .stButton > button:hover { 
+    color: var(--primary) !important; 
+    background: var(--primary-3) !important; /* Background hover lebih terlihat */
+}
 .nav-button-active .stButton > button {
-    color: var(--primary) !important; font-weight: 800 !important;
+    color: var(--primary) !important; 
+    font-weight: 800 !important; 
+    background: var(--primary-3) !important; /* Background aktif yang jelas namun tetap elegan */
 }
 .nav-button::after, .nav-button-active::after {
-    content: ''; position: absolute; left: 8px; right: 8px; bottom: 0; height: 3px;
-    background: var(--gold); transform: scaleX(0); transition: transform .2s ease; transform-origin: center;
+    content: ''; position: absolute; left: 12px; right: 12px; bottom: 0; height: 3px;
+    background: var(--gold); transform: scaleX(0); transition: transform .2s ease; transform-origin: center; border-radius: 3px 3px 0 0;
 }
 .nav-button:hover::after { transform: scaleX(1); }
 .nav-button-active::after { transform: scaleX(1); }
+/* -------------------------------- */
 
-.alert {
-    background: #fff9e9; border-bottom: 1px solid #f0dfad; border-left: 3px solid var(--gold);
-    color: #725719; padding: 10px 6%; font-size: 12px; display: flex; align-items: center; gap: 10px;
-}
-.alert-badge {
-    width: 20px; height: 20px; border-radius: 50%; background: var(--gold); color: #fff;
-    display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0;
-}
+.alert { background: #fff9e9; border-bottom: 1px solid #f0dfad; border-left: 3px solid var(--gold); color: #725719; padding: 10px 6%; font-size: 12px; display: flex; align-items: center; gap: 10px; }
+.alert-badge { width: 20px; height: 20px; border-radius: 50%; background: var(--gold); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
 
-.hero {
-    position: relative; min-height: 440px; display: flex; align-items: center; overflow: hidden;
-    background: linear-gradient(90deg, rgba(4,43,36,.95) 0%, rgba(8,74,62,.78) 45%, rgba(8,74,62,.35) 100%),
-    url('https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
-}
+.hero { position: relative; min-height: 440px; display: flex; align-items: center; overflow: hidden; background: linear-gradient(90deg, rgba(4,43,36,.95) 0%, rgba(8,74,62,.78) 45%, rgba(8,74,62,.35) 100%), url('https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat; }
 .hero-content { width: 88%; max-width: 1250px; margin: 0 auto; padding: 70px 0; color: white; }
-.hero-kicker {
-    display: inline-block; color: #f8df87; font-size: 12px; font-weight: 800;
-    letter-spacing: 1.5px; margin-bottom: 14px;
-}
-.hero h1 {
-    max-width: 720px; font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(34px, 5vw, 60px); line-height: 1.08; margin: 0 0 20px; font-weight: 800;
-}
+.hero-kicker { display: inline-block; color: #f8df87; font-size: 12px; font-weight: 800; letter-spacing: 1.5px; margin-bottom: 14px; }
+.hero h1 { max-width: 720px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(34px, 5vw, 60px); line-height: 1.08; margin: 0 0 20px; font-weight: 800; }
 .hero p { max-width: 650px; color: rgba(255,255,255,.88); font-size: 16px; line-height: 1.75; margin-bottom: 28px; }
 .hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
-.hero-btn {
-    display: inline-block; padding: 12px 21px; border-radius: 5px; background: var(--gold);
-    color: #fff !important; text-decoration: none; font-weight: 700; font-size: 13px;
-    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-}
+.hero-btn { display: inline-block; padding: 12px 21px; border-radius: 5px; background: var(--gold); color: #fff !important; text-decoration: none; font-weight: 700; font-size: 13px; transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
 .hero-btn:hover { background: #c1961f; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,.2); }
 .hero-btn.secondary { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.55); }
 .hero-btn.secondary:hover { background: rgba(255,255,255,.2); }
@@ -242,29 +180,14 @@ html { scroll-behavior: smooth; }
 .content { width: 88%; max-width: 1250px; margin: 0 auto; }
 .section { padding: 48px 0; }
 .section-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 24px; }
-.section-kicker {
-    color: var(--primary-2); font-size: 11px; font-weight: 800;
-    letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 6px;
-}
+.section-kicker { color: var(--primary-2); font-size: 11px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 6px; }
 .section-title { color: #183d35; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 27px; font-weight: 800; margin: 0; }
 .section-desc { color: var(--muted); font-size: 13px; line-height: 1.6; margin-top: 7px; }
 
-.service-box {
-    background: #fff; border: 1px solid var(--border); min-height: 160px; padding: 25px 20px;
-    text-align: center; transition: .25s ease; border-radius: 8px;
-}
-a:hover .service-box {
-    transform: translateY(-4px) !important;
-    border-color: #b9d6ce !important;
-    box-shadow: var(--shadow) !important;
-}
+.service-box { background: #fff; border: 1px solid var(--border); min-height: 160px; padding: 25px 20px; text-align: center; transition: .25s ease; border-radius: 8px; }
+a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9d6ce !important; box-shadow: var(--shadow) !important; }
 .service-box:hover { transform: translateY(-4px); border-color: #b9d6ce; box-shadow: var(--shadow); }
-.service-icon {
-    width: 54px; height: 54px; margin: 0 auto 14px; border-radius: 50%;
-    background: var(--primary-3); color: var(--primary);
-    display: flex; align-items: center; justify-content: center; font-size: 24px;
-    transition: transform .25s ease;
-}
+.service-icon { width: 54px; height: 54px; margin: 0 auto 14px; border-radius: 50%; background: var(--primary-3); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 24px; transition: transform .25s ease; }
 .service-box:hover .service-icon { transform: scale(1.08); }
 .service-icon.accent-gold { background: var(--gold-soft); color: #a97e1c; }
 .service-icon.accent-blue { background: #e7eef7; color: #2f5f8f; }
@@ -281,10 +204,7 @@ a:hover .service-box {
 .news-main h3 { color: #173b33; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 21px; line-height: 1.3; margin: 0 0 9px; }
 .news-date { color: #8a9894; font-size: 11px; }
 
-.news-side {
-    display: flex; gap: 15px; background: #fff; border-bottom: 1px solid var(--border);
-    padding: 0 0 16px; margin-bottom: 16px; transition: opacity .15s ease;
-}
+.news-side { display: flex; gap: 15px; background: #fff; border-bottom: 1px solid var(--border); padding: 0 0 16px; margin-bottom: 16px; transition: opacity .15s ease; }
 .news-side:hover { opacity: .85; }
 .news-side-img-wrap { width: 145px; height: 105px; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
 .news-side-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
@@ -296,10 +216,7 @@ a:hover .service-box {
 .agenda-row { display: flex; gap: 16px; padding: 15px 4px; border-bottom: 1px solid #edf1ef; border-radius: 6px; transition: background .15s ease; }
 .agenda-row:hover { background: #f6faf8; }
 .agenda-row:last-child { border-bottom: none; }
-.agenda-date {
-    width: 62px; height: 66px; background: var(--primary); color: white;
-    border-radius: 5px; text-align: center; padding-top: 8px; flex-shrink: 0;
-}
+.agenda-date { width: 62px; height: 66px; background: var(--primary); color: white; border-radius: 5px; text-align: center; padding-top: 8px; flex-shrink: 0; }
 .agenda-date strong { display: block; font-size: 24px; line-height: 1; }
 .agenda-date span { font-size: 9px; letter-spacing: 1px; }
 .agenda-title { color: #1b4138; font-weight: 800; font-size: 14px; margin-bottom: 5px; }
@@ -308,20 +225,13 @@ a:hover .service-box {
 .info-strip { background: var(--primary); color: white; padding: 34px 6%; }
 .info-inner { width: 88%; max-width: 1250px; margin: auto; }
 .info-item { text-align: center; padding: 5px 15px; position: relative; }
-.info-item.has-divider::after {
-    content: ''; position: absolute; right: 0; top: 8px; bottom: 8px; width: 1px;
-    background: rgba(255,255,255,.15);
-}
+.info-item.has-divider::after { content: ''; position: absolute; right: 0; top: 8px; bottom: 8px; width: 1px; background: rgba(255,255,255,.15); }
 .info-number { color: #f4d873; font-size: 29px; font-weight: 800; }
 .info-label { color: rgba(255,255,255,.78); font-size: 11px; margin-top: 3px; }
 
 .profile-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 28px 20px; text-align: center; height: 100%; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
 .profile-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: #b9d6ce; }
-.profile-photo {
-    width: 92px; height: 92px; border-radius: 50%; margin: auto;
-    display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(145deg, #0c5d4d, #0b4037); color: #fff; font-size: 30px; font-weight: 800;
-}
+.profile-photo { width: 92px; height: 92px; border-radius: 50%; margin: auto; display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #0c5d4d, #0b4037); color: #fff; font-size: 30px; font-weight: 800; }
 .profile-role { color: var(--primary-2); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; margin-top: 16px; }
 .profile-name { color: #183d35; font-size: 17px; font-weight: 800; margin: 6px 0; }
 .profile-desc { color: #7a8884; font-size: 11px; line-height: 1.55; }
@@ -330,60 +240,28 @@ a:hover .service-box {
 .news-list-card:hover { box-shadow: var(--shadow); border-color: #b9d6ce; }
 .news-list-card:hover img { transform: scale(1.06); }
 
-/* Custom Tabs Styling for Clean Look */
 .stTabs [data-baseweb="tab-list"] { gap: 8px; background: transparent; border-bottom: 1px solid var(--border); }
 .stTabs [data-baseweb="tab"] { background: transparent; border-radius: 8px 8px 0 0; padding: 12px 24px; color: var(--muted); font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.2s ease; }
 .stTabs [aria-selected="true"] { background: var(--primary-3) !important; color: var(--primary) !important; border-bottom: 2px solid var(--primary); }
 .stTabs [data-baseweb="tab"]:hover { background: #f2f7f5 !important; color: var(--primary) !important; }
 
-.footer {
-    background: radial-gradient(ellipse at top left, #0d4438 0%, #082722 62%), #082722;
-    color: rgba(255,255,255,.75); margin-top: 60px; padding: 56px 6% 0;
-}
+.footer { background: radial-gradient(ellipse at top left, #0d4438 0%, #082722 62%), #082722; color: rgba(255,255,255,.75); margin-top: 60px; padding: 56px 6% 0; }
 .footer-container { width: 88%; max-width: 1250px; margin: 0 auto; }
-.footer-grid {
-    display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px;
-    padding-bottom: 40px;
-}
-.footer-column h4 {
-    color: #fff; font-size: 13px; font-weight: 800; margin: 0 0 18px;
-    letter-spacing: .3px;
-}
-.footer-column a {
-    display: block; color: rgba(255,255,255,.62); font-size: 12.5px; line-height: 2.15;
-    text-decoration: none; transition: color .15s ease, padding-left .15s ease;
-}
+.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 40px; }
+.footer-column h4 { color: #fff; font-size: 13px; font-weight: 800; margin: 0 0 18px; letter-spacing: .3px; }
+.footer-column a { display: block; color: rgba(255,255,255,.62); font-size: 12.5px; line-height: 2.15; text-decoration: none; transition: color .15s ease, padding-left .15s ease; }
 .footer-column a:hover { color: #f4d873; padding-left: 3px; }
-.footer-column p {
-    color: rgba(255,255,255,.62); font-size: 12.5px; line-height: 1.85; margin: 0 0 8px;
-}
+.footer-column p { color: rgba(255,255,255,.62); font-size: 12.5px; line-height: 1.85; margin: 0 0 8px; }
 .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-.footer-logo {
-    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
-    background: linear-gradient(145deg, #d5a52b, #a97e1c); color: #082722;
-    display: flex; align-items: center; justify-content: center; font-size: 20px;
-}
-.footer-brand-name {
-    color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14.5px;
-    font-weight: 800; letter-spacing: .3px;
-}
+.footer-logo { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(145deg, #d5a52b, #a97e1c); color: #082722; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.footer-brand-name { color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14.5px; font-weight: 800; letter-spacing: .3px; }
 .footer-brand-subtitle { color: rgba(255,255,255,.5); font-size: 10px; letter-spacing: .6px; margin-top: 2px; }
-.footer-description {
-    color: rgba(255,255,255,.58); font-size: 12.5px; line-height: 1.85; max-width: 340px; margin: 0 0 22px;
-}
+.footer-description { color: rgba(255,255,255,.58); font-size: 12.5px; line-height: 1.85; max-width: 340px; margin: 0 0 22px; }
 .footer-social { display: flex; gap: 10px; }
-.footer-social-item {
-    width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.85);
-    display: flex; align-items: center; justify-content: center; font-size: 13px;
-    transition: background .15s ease, border-color .15s ease;
-}
+.footer-social-item { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.85); display: flex; align-items: center; justify-content: center; font-size: 13px; transition: background .15s ease, border-color .15s ease; }
 .footer-social-item:hover { background: #d5a52b; border-color: #d5a52b; color: #082722; }
 .footer-divider { border-top: 1px solid rgba(255,255,255,.1); }
-.footer-bottom {
-    padding: 18px 0 22px; display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 8px; color: rgba(255,255,255,.42); font-size: 11px;
-}
+.footer-bottom { padding: 18px 0 22px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; color: rgba(255,255,255,.42); font-size: 11px; }
 @media (max-width: 850px) {
     .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 32px; }
     .footer-bottom { flex-direction: column; text-align: center; }
@@ -391,20 +269,10 @@ a:hover .service-box {
 
 div[data-testid="stForm"] { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 25px !important; }
 .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { border-radius: 5px !important; border-color: #d8e1de !important; }
-.stButton > button[kind="primary"], .stFormSubmitButton > button {
-    background: var(--primary) !important; border: none !important; color: white !important;
-    border-radius: 5px !important; font-weight: 700 !important; transition: background .15s ease !important;
-}
+.stButton > button[kind="primary"], .stFormSubmitButton > button { background: var(--primary) !important; border: none !important; color: white !important; border-radius: 5px !important; font-weight: 700 !important; transition: background .15s ease !important; }
 .stButton > button[kind="primary"]:hover, .stFormSubmitButton > button:hover { background: var(--primary-2) !important; }
-
-div[data-testid="stDataFrame"] {
-    border: 1px solid var(--border) !important; border-radius: 8px !important; overflow: hidden;
-}
-
-a:focus-visible, button:focus-visible, .stButton > button:focus-visible {
-    outline: 2px solid var(--gold) !important; outline-offset: 2px !important;
-}
-
+div[data-testid="stDataFrame"] { border: 1px solid var(--border) !important; border-radius: 8px !important; overflow: hidden; }
+a:focus-visible, button:focus-visible, .stButton > button:focus-visible { outline: 2px solid var(--gold) !important; outline-offset: 2px !important; }
 @media (max-width: 850px) {
     .govbar-left { display: none; }
     .govbar { justify-content: flex-end; }
@@ -732,7 +600,6 @@ elif st.session_state.page == "Profil & Pimpinan":
         unsafe_allow_html=True,
     )
 
-    # Menggunakan Tabs untuk menjaga antarmuka tetap bersih dan terorganisir
     tab1, tab2, tab3 = st.tabs(["🏛️ Pimpinan", "👥 Anggota DPRK per Komisi", "🏢 Pejabat Sekretariat"])
     
     with tab1:
@@ -843,7 +710,6 @@ elif st.session_state.page == "Berita & Agenda":
             unsafe_allow_html=True,
         )
 
-    # Bagian Multimedia / Galeri
     st.markdown(
         """
     <div style="margin-top:45px;">
