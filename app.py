@@ -24,26 +24,27 @@ PAGES = {
     "Kontak": "Hubungi Kami",
 }
 
+# Data berita diperbarui sesuai kegiatan nyata DPRK Aceh Jaya
 NEWS = [
     {
-        "tag": "PARIPURNA",
-        "date": "15 September 2026",
-        "title": "Pembahasan KUA-PPAS 2027",
-        "desc": "Rapat paripurna membahas kebijakan umum anggaran dan prioritas plafon anggaran sementara.",
+        "tag": "WARTA DPRK",
+        "date": "14 Agustus 2026",
+        "title": "Ketua DPRK Aceh Jaya Apresiasi Kejari Berhasil Pulihkan Keuangan Negara Rp2,05 Miliar",
+        "desc": "Ketua DPRK Aceh Jaya menghadiri kegiatan Press Release Capaian Pemulihan Keuangan Negara yang diselenggarakan oleh Kejaksaan Negeri Aceh Jaya.",
         "image": "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80",
     },
     {
-        "tag": "RESES",
-        "date": "10 September 2026",
-        "title": "Penjaringan Aspirasi Masyarakat",
-        "desc": "Anggota DPRK melakukan kegiatan penjaringan aspirasi masyarakat dan mendengarkan kebutuhan pembangunan daerah.",
+        "tag": "RAPAT PARIPURNA",
+        "date": "10 Agustus 2026",
+        "title": "DPRK Aceh Jaya Gelar Rapat Paripurna Pandangan Fraksi terhadap Pertanggungjawaban APBK 2025",
+        "desc": "Dewan Perwakilan Rakyat Kabupaten (DPRK) Aceh Jaya menggelar Rapat Paripurna untuk membahas pandangan fraksi terhadap pertanggungjawaban APBK.",
         "image": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=900&q=80",
     },
     {
-        "tag": "LEGISLASI",
-        "date": "02 September 2026",
-        "title": "RDPU Penyempurnaan Qanun",
-        "desc": "DPRK mendengarkan masukan akademisi, tokoh masyarakat, dan pemangku kepentingan terhadap rancangan qanun.",
+        "tag": "PENDIDIKAN",
+        "date": "14 Juli 2026",
+        "title": "Ketua DPRK Aceh Jaya Dukung Penuh Pembangunan SLB sebagai Wujud Pemerataan Layanan Pendidikan",
+        "desc": "Penandatanganan Naskah Perjanjian Hibah Daerah (NPHD) Hibah Tanah untuk Pembangunan Sekolah Luar Biasa (SLB) di Aceh Jaya.",
         "image": "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=900&q=80",
     },
 ]
@@ -54,10 +55,50 @@ AGENDA = [
     ("24", "SEP", "Rapat Dengar Pendapat", "Penyerapan aspirasi dan masukan masyarakat."),
 ]
 
+# Data Pimpinan sesuai situs resmi
 PIMPINAN = [
-    ("Ketua DPRK", "H. Muhammad Yusuf, S.H.", "Memimpin sidang paripurna dan koordinasi alat kelengkapan dewan."),
-    ("Wakil Ketua I", "Drs. H. Ahmad Fauzi, M.M.", "Koordinasi bidang legislasi dan anggaran."),
-    ("Wakil Ketua II", "Siti Rahmah, S.IP.", "Koordinasi bidang pengawasan dan hubungan masyarakat."),
+    ("Ketua DPRK", "Musliadi Z, S.E", "Memimpin sidang paripurna dan koordinasi alat kelengkapan dewan."),
+    ("Wakil Ketua I", "Irwanto. NP", "Koordinasi bidang legislasi dan anggaran."),
+    ("Wakil Ketua II", "Teuku Asrizal, S.H", "Koordinasi bidang pengawasan dan hubungan masyarakat."),
+]
+
+# Data Anggota DPRK per Komisi (Untuk tampilan yang rapi, ditampilkan dalam expander)
+ANGGOTA_DPRK = {
+    "Komisi I": [
+        ("Ketua", "Iskandar Ibrahim"),
+        ("Wakil Ketua", "H. Dasril Arahman. IB, S.E"),
+        ("Sekretaris", "Wanti Cahya"),
+        ("Anggota", "Muslim"),
+    ],
+    "Komisi II": [
+        ("Ketua", "Ir. Fauzi Yahya"),
+        ("Wakil Ketua", "Azhar"),
+        ("Sekretaris", "Fitra Akhyar, ST"),
+        ("Anggota", "Safriyantoni"),
+        ("Anggota", "Ayudi Ilham, S.E"),
+    ],
+    "Komisi III": [
+        ("Ketua", "Sudirman, S.P"),
+        ("Wakil Ketua", "Abdul Muthalleb"),
+        ("Sekretaris", "Drs. H. T. Irfan TB., M.Si"),
+        ("Anggota", "Muhammad Diah, S.E"),
+    ],
+    "Komisi IV": [
+        ("Ketua", "Hazami, S.Pd"),
+        ("Wakil Ketua", "Muhammad Jamin"),
+        ("Sekretaris", "Hj. Fitri Maya Lisa, S.Sos"),
+        ("Anggota", "Usman. ID"),
+    ]
+}
+
+# Data Pejabat Sekretariat
+SEKRETARIAT = [
+    ("Sekretaris DPRK", "Abu Bakar, S.Pd.I., M.H"),
+    ("Staf Ahli Bidang Pemerintahan, Hukum dan Politik", "Irma Hanum, SH"),
+    ("Kepala Bagian Umum dan Keuangan", "Hidayat, SE., M.Si"),
+    ("Kepala Bagian Persidangan dan Perundang-Undangan", "Yuswardi, S.Kom"),
+    ("Kepala Bagian Fasilitasi Penganggaran dan Pengawasan", "Nelli Fauziana, SH., MH"),
+    ("Kepala Sub Bagian Tata Usaha dan Kepegawaian", "Ihsan Salim, S.A.P"),
 ]
 
 JDIH_DATA = [
@@ -95,6 +136,27 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 .stApp { background: var(--bg); color: var(--text); }
 .block-container { max-width: 100%; padding: 0 !important; }
 section[data-testid="stSidebar"] { display: none; }
+
+/* Running Text / Marquee */
+.running-text-wrap {
+    background: var(--primary-2);
+    color: white;
+    padding: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-bottom: 2px solid var(--gold);
+}
+.running-text {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 35s linear infinite;
+    font-size: 13px;
+    font-weight: 500;
+}
+@keyframes marquee {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}
 
 .govbar {
     background: #083b32; color: rgba(255,255,255,.88); min-height: 38px;
@@ -267,6 +329,13 @@ a:hover .service-box {
 .news-list-card { transition: box-shadow .2s ease, border-color .2s ease; }
 .news-list-card:hover { box-shadow: var(--shadow); border-color: #b9d6ce; }
 .news-list-card:hover img { transform: scale(1.06); }
+
+/* Custom Tabs Styling for Clean Look */
+.stTabs [data-baseweb="tab-list"] { gap: 8px; background: transparent; border-bottom: 1px solid var(--border); }
+.stTabs [data-baseweb="tab"] { background: transparent; border-radius: 8px 8px 0 0; padding: 12px 24px; color: var(--muted); font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.2s ease; }
+.stTabs [aria-selected="true"] { background: var(--primary-3) !important; color: var(--primary) !important; border-bottom: 2px solid var(--primary); }
+.stTabs [data-baseweb="tab"]:hover { background: #f2f7f5 !important; color: var(--primary) !important; }
+
 .footer {
     background: radial-gradient(ellipse at top left, #0d4438 0%, #082722 62%), #082722;
     color: rgba(255,255,255,.75); margin-top: 60px; padding: 56px 6% 0;
@@ -356,7 +425,6 @@ a:focus-visible, button:focus-visible, .stButton > button:focus-visible {
 if "page" not in st.session_state:
     st.session_state.page = "Beranda"
 
-# Pemetaan URL untuk navigasi via tag <a>
 PAGE_URLS = {
     "Beranda": "beranda",
     "Profil & Pimpinan": "profil",
@@ -367,13 +435,12 @@ PAGE_URLS = {
 }
 URL_TO_PAGE = {v: k for k, v in PAGE_URLS.items()}
 
-# Tangani navigasi melalui query parameter (misal: ?page=layanan)
 query_params = st.query_params
 if "page" in query_params:
     target = query_params["page"]
     if target in URL_TO_PAGE:
         st.session_state.page = URL_TO_PAGE[target]
-        del st.query_params["page"]  # Bersihkan URL agar rapi
+        del st.query_params["page"]
         st.rerun()
 
 # =========================================================
@@ -391,6 +458,23 @@ st.markdown(
         <a href="?page=kontak">Hubungi Kami</a>
         <span>|</span>
         <a href="?page=jdih">PPID</a>
+    </div>
+</div>
+""",
+    unsafe_allow_html=True,
+)
+
+# =========================================================
+# RUNNING TEXT (PENGUMUMAN)
+# =========================================================
+st.markdown(
+    """
+<div class="running-text-wrap">
+    <div class="running-text">
+        📢 Selamat Datang di Portal Resmi DPRK Aceh Jaya &nbsp;&nbsp;|&nbsp;&nbsp; 
+        📅 Rapat Paripurna Pembahasan KUA-PPAS 2027 akan dilaksanakan pada 18 September 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 
+        📢 Layanan Pengaduan Masyarakat kini dapat diakses melalui menu Layanan & Pengaduan &nbsp;&nbsp;|&nbsp;&nbsp; 
+        🌐 Mari wujudkan transparansi dan akuntabilitas pemerintahan daerah bersama DPRK Aceh Jaya.
     </div>
 </div>
 """,
@@ -495,7 +579,7 @@ if st.session_state.page == "Beranda":
         ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "berita"),
         ("📊", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
         ("📂", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "jdih"),
-        ("ℹ️", "Informasi Publik", "Informasi mengenai layanan dan kelembagaan DPRK.", "kontak"),
+        ("🔗", "E-LHKPN", "Pelaporan harta kekayaan penyelenggara negara.", "https://elhpkpn.kpk.go.id/"),
     ]
 
     service_cols = st.columns(6)
@@ -503,9 +587,12 @@ if st.session_state.page == "Beranda":
     for i, (icon, title, desc, target) in enumerate(services):
         with service_cols[i]:
             accent = icon_accents[i % 3]
+            is_external = target.startswith("http")
+            link_target = 'target="_blank" rel="noopener noreferrer"' if is_external else ""
+            href_val = target if is_external else f"?page={target}"
             st.markdown(
                 f"""
-            <a href="?page={target}" style="text-decoration: none; color: inherit; display: block;">
+            <a href="{href_val}" {link_target} style="text-decoration: none; color: inherit; display: block;">
                 <div class="service-box">
                     <div class="service-icon {accent}">{icon}</div>
                     <div class="service-title">{title}</div>
@@ -645,32 +732,81 @@ elif st.session_state.page == "Profil & Pimpinan":
         unsafe_allow_html=True,
     )
 
-    st.markdown(
-        """
-    <div style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:28px;margin-bottom:40px;">
-        <div class="section-kicker">Pimpinan</div>
-        <h2 class="section-title" style="font-size:22px;">Pimpinan DPRK Aceh Jaya</h2>
-        <p class="section-desc">Masa Jabatan 2024–2029.</p>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
+    # Menggunakan Tabs untuk menjaga antarmuka tetap bersih dan terorganisir
+    tab1, tab2, tab3 = st.tabs(["🏛️ Pimpinan", "👥 Anggota DPRK per Komisi", "🏢 Pejabat Sekretariat"])
+    
+    with tab1:
+        st.markdown(
+            """
+        <div style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:28px;margin-top:20px;margin-bottom:20px;">
+            <div class="section-kicker">Pimpinan</div>
+            <h2 class="section-title" style="font-size:22px;">Pimpinan DPRK Aceh Jaya</h2>
+            <p class="section-desc">Masa Jabatan 2024–2029.</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+        cols = st.columns(3)
+        for i, (role, name, desc) in enumerate(PIMPINAN):
+            with cols[i]:
+                initials = "".join([word[0] for word in name.split()[:2]])
+                st.markdown(
+                    f"""
+                <div class="profile-card">
+                    <div class="profile-photo">{initials}</div>
+                    <div class="profile-role">{role}</div>
+                    <div class="profile-name">{name}</div>
+                    <div class="profile-desc">{desc}</div>
+                </div>
+                """,
+                    unsafe_allow_html=True,
+                )
 
-    cols = st.columns(3)
-    for i, (role, name, desc) in enumerate(PIMPINAN):
-        with cols[i]:
-            initials = "".join([word[0] for word in name.split()[:2]])
-            st.markdown(
-                f"""
-            <div class="profile-card">
-                <div class="profile-photo">{initials}</div>
-                <div class="profile-role">{role}</div>
-                <div class="profile-name">{name}</div>
-                <div class="profile-desc">{desc}</div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
+    with tab2:
+        st.markdown('<div style="margin-top:20px;">', unsafe_allow_html=True)
+        for komisi, members in ANGGOTA_DPRK.items():
+            with st.expander(f"📂 {komisi}", expanded=False):
+                cols = st.columns(2)
+                for idx, (jabatan, nama) in enumerate(members):
+                    with cols[idx % 2]:
+                        initials = "".join([word[0] for word in nama.split()[:2]])
+                        st.markdown(
+                            f"""
+                        <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#f6f8f7;border-radius:6px;margin-bottom:8px;border:1px solid #e1e8e5;">
+                            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-3);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;">
+                                {initials}
+                            </div>
+                            <div>
+                                <div style="font-size:11px;color:var(--primary-2);font-weight:700;text-transform:uppercase;">{jabatan}</div>
+                                <div style="font-size:14px;font-weight:600;color:#183d35;">{nama}</div>
+                            </div>
+                        </div>
+                        """,
+                            unsafe_allow_html=True,
+                        )
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with tab3:
+        st.markdown('<div style="margin-top:20px;">', unsafe_allow_html=True)
+        cols = st.columns(2)
+        for idx, (jabatan, nama) in enumerate(SEKRETARIAT):
+            with cols[idx % 2]:
+                st.markdown(
+                    f"""
+                <div style="display:flex;align-items:center;gap:12px;padding:16px;background:#fff;border-radius:8px;margin-bottom:12px;border:1px solid #e1e8e5;box-shadow:0 2px 8px rgba(12,74,62,0.04);">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--gold-soft);color:#a97e1c;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0;">
+                        🏢
+                    </div>
+                    <div>
+                        <div style="font-size:11px;color:#71817d;font-weight:600;text-transform:uppercase;">{jabatan}</div>
+                        <div style="font-size:15px;font-weight:700;color:#183d35;">{nama}</div>
+                    </div>
+                </div>
+                """,
+                    unsafe_allow_html=True,
+                )
+        st.markdown('</div>', unsafe_allow_html=True)
+        
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
@@ -707,9 +843,26 @@ elif st.session_state.page == "Berita & Agenda":
             unsafe_allow_html=True,
         )
 
+    # Bagian Multimedia / Galeri
     st.markdown(
         """
-    <div style="margin-top:45px;" class="section-kicker">Agenda</div>
+    <div style="margin-top:45px;">
+        <div class="section-kicker">Multimedia</div>
+        <h2 class="section-title" style="font-size:23px;margin-bottom:18px;">Galeri & Video</h2>
+    </div>
+    <div style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:20px;text-align:center;margin-bottom:40px;">
+        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:6px;">
+            <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <p style="margin-top:15px;color:#71817d;font-size:13px;">Video Dokumentasi Kegiatan DPRK Aceh Jaya (Ganti URL iframe sesuai kebutuhan)</p>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        """
+    <div class="section-kicker">Agenda</div>
     <h2 class="section-title" style="font-size:23px;margin-bottom:18px;">Agenda Terdekat</h2>
     """,
         unsafe_allow_html=True,
@@ -906,8 +1059,17 @@ else:
     st.markdown(
         """
     <div style="margin-top:35px;background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:30px;">
+        <div class="section-kicker">Lokasi Kantor</div>
+        <h3 style="font-family:'Plus Jakarta Sans';color:#183d35;font-size:21px;margin-bottom:15px;">Peta & Lokasi</h3>
+        <div style="width:100%;height:300px;border-radius:8px;overflow:hidden;border:1px solid #e1e8e5;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.5!2d95.39!3d4.71!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30403e5f3a0b0b0b%3A0x0!2sCalang%2C%20Aceh%20Jaya%20Regency%2C%20Aceh!5e0!3m2!1sen!2sid!4v1600000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <p style="font-size:12px;color:#71817d;line-height:1.8;margin-top:15px;">
+            <strong>📍 Alamat Lengkap:</strong> Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya, Aceh.
+        </p>
+        <hr style="border:none;border-top:1px solid #edf1ef;margin:20px 0;">
         <div class="section-kicker">Sekretariat</div>
-        <h3 style="font-family:'Plus Jakarta Sans';color:#183d35;font-size:21px;">Jam Pelayanan</h3>
+        <h3 style="font-family:'Plus Jakarta Sans';color:#183d35;font-size:21px;margin-bottom:10px;">Jam Pelayanan</h3>
         <p style="font-size:12px;color:#71817d;line-height:1.8;">
             Senin–Kamis: 08.00–16.30 WIB<br>
             Jumat: 08.00–16.30 WIB<br>
@@ -967,7 +1129,7 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 <a href="?page=kontak">Informasi Publik</a>
 <a href="?page=jdih">JDIH</a>
 <a href="?page=jdih">Transparansi</a>
-<a href="?page=jdih">Dokumen Publik</a>
+<a href="https://elhpkpn.kpk.go.id/" target="_blank" rel="noopener noreferrer">E-LHKPN</a>
 </div>
 
 <!-- KOLOM 4 -->
