@@ -7,7 +7,7 @@ import pandas as pd
 # =========================================================
 st.set_page_config(
     page_title="DPRK Aceh Jaya | Portal Informasi Publik",
-    page_icon="️",
+    page_icon="🏛️",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -211,7 +211,7 @@ section[data-testid="stSidebar"] { display: none; }
     justify-content: center;
 }
 
-/* Navbar Items */
+/* Navbar Items - HIJAU PREMIUM */
 .nav-button, .nav-button-active { 
     position: relative;
     flex: 1;
@@ -220,13 +220,13 @@ section[data-testid="stSidebar"] { display: none; }
 
 .nav-button .stButton > button, 
 .nav-button-active .stButton > button {
-    background: transparent !important; 
-    border: 1px solid transparent !important; 
-    color: rgba(255,255,255,0.95) !important;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; 
+    border: 1px solid rgba(255,255,255,0.2) !important; 
+    color: #ffffff !important;
     font-size: 12.5px !important;
     font-weight: 700 !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    border-radius: 6px !important;
+    border-radius: 8px !important;
     padding: 14px 16px !important;
     min-height: 48px !important;
     width: 100% !important;
@@ -234,23 +234,24 @@ section[data-testid="stSidebar"] { display: none; }
     letter-spacing: 0.8px !important;
     text-transform: uppercase !important;
     white-space: nowrap !important;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .nav-button .stButton > button:hover { 
     color: #ffffff !important; 
-    background: rgba(255,255,255,0.15) !important;
-    border-color: rgba(255,255,255,0.2) !important;
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
+    border-color: rgba(255,255,255,0.4) !important;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
 }
 
 .nav-button-active .stButton > button {
     color: #ffffff !important; 
     font-weight: 800 !important; 
-    background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.1) 100%) !important;
-    border-color: rgba(255,255,255,0.3) !important;
-    box-shadow: 0 0 20px rgba(255,255,255,0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+    background: linear-gradient(135deg, #fcd34d 0%, #d5a52b 100%) !important;
+    border-color: rgba(255,255,255,0.5) !important;
+    box-shadow: 0 4px 16px rgba(213, 165, 43, 0.5);
 }
 
 /* Active Indicator - Premium Gold Glow */
@@ -495,7 +496,7 @@ st.markdown(
     """
 <div class="running-text-wrap">
     <div class="running-text">
-        📢 Selamat Datang di Portal Resmi DPRK Aceh Jaya &nbsp;&nbsp;|&nbsp;&nbsp; 
+         Selamat Datang di Portal Resmi DPRK Aceh Jaya &nbsp;&nbsp;|&nbsp;&nbsp; 
         📅 Rapat Paripurna Pembahasan KUA-PPAS 2027 akan dilaksanakan pada 18 September 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 
         📢 Layanan Pengaduan Masyarakat kini dapat diakses melalui menu Layanan & Pengaduan &nbsp;&nbsp;|&nbsp;&nbsp; 
          Mari wujudkan transparansi dan akuntabilitas pemerintahan daerah bersama DPRK Aceh Jaya.
@@ -555,9 +556,9 @@ if st.session_state.page == "Beranda":
 
     services = [
         ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi, keluhan, dan laporan masyarakat.", "layanan"),
-        ("", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "jdih"),
+        ("📜", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "jdih"),
         ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "berita"),
-        ("📊", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
+        ("", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
         ("📂", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "jdih"),
         ("🔗", "E-LHKPN", "Pelaporan harta kekayaan penyelenggara negara.", "https://elhpkpn.kpk.go.id/"),
     ]
@@ -898,7 +899,7 @@ elif st.session_state.page == "Layanan & Pengaduan":
                 <strong>✉️ Email</strong><br>sekretariat@dprk.acehjaya.go.id
             </p>
             <p style="font-size:12px;color:#71817d;line-height:1.8;">
-                <strong> Alamat</strong><br>Jl. Merdeka No. 01, Calang, Aceh Jaya
+                <strong>📍 Alamat</strong><br>Jl. Merdeka No. 01, Calang, Aceh Jaya
             </p>
             <hr style="border:none;border-top:1px solid #edf1ef;">
             <p style="font-size:11px;color:#71817d;line-height:1.7;">Jam layanan: Senin–Jumat, 08.00–16.00 WIB.</p>
@@ -927,7 +928,7 @@ elif st.session_state.page == "JDIH & Transparansi":
     info_cols = st.columns(4)
     cards = [
         ("⚖️", "Produk Hukum", "Qanun dan dokumen hukum daerah."),
-        ("📊", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
+        ("", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
         ("📂", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
         ("📑", "Informasi Berkala", "Informasi yang diterbitkan secara berkala."),
     ]
@@ -989,8 +990,8 @@ else:
     cols = st.columns(3)
     contacts = [
         ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya"),
-        ("📞", "Telepon", "(0655) 12345"),
-        ("✉️", "Email", "sekretariat@dprk.acehjaya.go.id"),
+        ("", "Telepon", "(0655) 12345"),
+        ("️", "Email", "sekretariat@dprk.acehjaya.go.id"),
     ]
 
     for i, (icon, title, value) in enumerate(contacts):
@@ -1059,7 +1060,7 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 </p>
 <div class="footer-social">
 <a href="#" class="footer-social-item">f</a>
-<a href="#" class="footer-social-item">𝕏</a>
+<a href="#" class="footer-social-item"></a>
 <a href="#" class="footer-social-item">▶</a>
 <a href="#" class="footer-social-item">◎</a>
 </div>
