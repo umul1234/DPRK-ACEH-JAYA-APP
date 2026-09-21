@@ -7,7 +7,7 @@ import pandas as pd
 # =========================================================
 st.set_page_config(
     page_title="DPRK Aceh Jaya | Portal Informasi Publik",
-    page_icon="🏛️",
+    page_icon="️",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -133,7 +133,7 @@ JDIH_DATA = [
 ]
 
 # =========================================================
-# CSS STYLE - NAVBAR SUPER PREMIUM
+# CSS STYLE - NAVBAR HIJAU SUPER PREMIUM
 # =========================================================
 st.markdown(
     """
@@ -141,10 +141,10 @@ st.markdown(
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
-    --primary: #064e3b;
-    --primary-dark: #022c22;
-    --primary-2: #0f6b58;
-    --primary-3: #e9f5f1;
+    --primary: #059669;
+    --primary-dark: #047857;
+    --primary-2: #10b981;
+    --primary-3: #d1fae5;
     --gold: #d5a52b;
     --gold-light: #fcd34d;
     --gold-soft: #f7efd4;
@@ -165,7 +165,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 section[data-testid="stSidebar"] { display: none; }
 
 /* Top Bar */
-.govbar { background: var(--primary-dark); color: rgba(255,255,255,.88); min-height: 38px; padding: 0 6%; display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
+.govbar { background: var(--dark); color: rgba(255,255,255,.88); min-height: 38px; padding: 0 6%; display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
 .govbar-left, .govbar-right { display: flex; gap: 20px; align-items: center; }
 .govbar strong { color: #fff; }
 .govbar-right a { color: rgba(255,255,255,.88); text-decoration: none; transition: color .15s ease; }
@@ -181,10 +181,10 @@ section[data-testid="stSidebar"] { display: none; }
 .brand-subtitle { margin-top: 4px; color: #788783; font-size: 11px; letter-spacing: .6px; }
 
 /* =========================================
-   NAVIGATION - SUPER PREMIUM
+   NAVIGATION - SUPER PREMIUM (HIJAU)
    ========================================= */
 .nav-wrap { 
-    background: linear-gradient(180deg, #065f46 0%, #022c22 100%); 
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%); 
     border-bottom: 2px solid var(--gold); 
     padding: 0 6%;
     box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.1);
@@ -222,7 +222,7 @@ section[data-testid="stSidebar"] { display: none; }
 .nav-button-active .stButton > button {
     background: transparent !important; 
     border: 1px solid transparent !important; 
-    color: rgba(255,255,255,0.85) !important;
+    color: rgba(255,255,255,0.95) !important;
     font-size: 12.5px !important;
     font-weight: 700 !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
@@ -239,8 +239,8 @@ section[data-testid="stSidebar"] { display: none; }
 
 .nav-button .stButton > button:hover { 
     color: #ffffff !important; 
-    background: rgba(255,255,255,0.08) !important;
-    border-color: rgba(255,255,255,0.15) !important;
+    background: rgba(255,255,255,0.15) !important;
+    border-color: rgba(255,255,255,0.2) !important;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
@@ -248,9 +248,9 @@ section[data-testid="stSidebar"] { display: none; }
 .nav-button-active .stButton > button {
     color: #ffffff !important; 
     font-weight: 800 !important; 
-    background: linear-gradient(135deg, rgba(213, 165, 43, 0.2) 0%, rgba(213, 165, 43, 0.05) 100%) !important;
-    border-color: rgba(213, 165, 43, 0.5) !important;
-    box-shadow: 0 0 20px rgba(213, 165, 43, 0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+    background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.1) 100%) !important;
+    border-color: rgba(255,255,255,0.3) !important;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2), inset 0 1px 0 rgba(255,255,255,0.3);
 }
 
 /* Active Indicator - Premium Gold Glow */
@@ -384,7 +384,7 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
 .footer-description { color: rgba(255,255,255,.58); font-size: 12.5px; line-height: 1.85; max-width: 340px; margin: 0 0 22px; }
 .footer-social { display: flex; gap: 10px; }
 .footer-social-item { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.85); display: flex; align-items: center; justify-content: center; font-size: 13px; transition: background .15s ease, border-color .15s ease; text-decoration: none; }
-.footer-social-item:hover { background: var(--gold); border-color: var(--gold); color: var(--primary-dark); }
+.footer-social-item:hover { background: var(--gold); border-color: var(--gold); color: var(--dark); }
 .footer-divider { border-top: 1px solid rgba(255,255,255,.1); }
 .footer-bottom { padding: 18px 0 22px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; color: rgba(255,255,255,.42); font-size: 11px; }
 
@@ -555,7 +555,7 @@ if st.session_state.page == "Beranda":
 
     services = [
         ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi, keluhan, dan laporan masyarakat.", "layanan"),
-        ("📜", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "jdih"),
+        ("", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "jdih"),
         ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "berita"),
         ("📊", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
         ("📂", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "jdih"),
@@ -898,7 +898,7 @@ elif st.session_state.page == "Layanan & Pengaduan":
                 <strong>✉️ Email</strong><br>sekretariat@dprk.acehjaya.go.id
             </p>
             <p style="font-size:12px;color:#71817d;line-height:1.8;">
-                <strong>📍 Alamat</strong><br>Jl. Merdeka No. 01, Calang, Aceh Jaya
+                <strong> Alamat</strong><br>Jl. Merdeka No. 01, Calang, Aceh Jaya
             </p>
             <hr style="border:none;border-top:1px solid #edf1ef;">
             <p style="font-size:11px;color:#71817d;line-height:1.7;">Jam layanan: Senin–Jumat, 08.00–16.00 WIB.</p>
