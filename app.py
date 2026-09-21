@@ -30,6 +30,7 @@ PAGES = {
     "Kontak": "Hubungi Kami",
 }
 
+# WARTA DPRK - Berita Utama
 WARTA_DPRK = [
     {
         "title": "DPRK Aceh Jaya Gelar Rapat Paripurna Pandangan Fraksi terhadap Pertanggungjawaban APBK 2025",
@@ -57,6 +58,7 @@ WARTA_DPRK = [
     },
 ]
 
+# KESEKRETARIATAN
 KESEKRETARIATAN = [
     {
         "title": "Apel Pagi Rutin, ASN DPRK Aceh Jaya Diingatkan Disiplin dan Komitmen Kerja",
@@ -70,6 +72,7 @@ KESEKRETARIATAN = [
     },
 ]
 
+# AGENDA TERKINI
 AGENDA_TERKINI = [
     {
         "tanggal": "09 September 2026",
@@ -88,6 +91,7 @@ AGENDA_TERKINI = [
     },
 ]
 
+# PIMPINAN DAN ANGGOTA DPRK
 PIMPINAN_DAN_ANGGOTA = [
     ("MUSLIADI Z, S.E", "KETUA DPRK"),
     ("IRWANTO. NP", "WAKIL KETUA I DPRK"),
@@ -111,6 +115,7 @@ PIMPINAN_DAN_ANGGOTA = [
     ("USMAN. ID", "ANGGOTA DPRK / ANGGOTA KOMISI IV"),
 ]
 
+# PEJABAT SEKRETARIAT
 PEJABAT_SEKRETARIAT = [
     ("ABU BAKAR, S.Pd.I., M.H", "Sekretaris DPRK Aceh Jaya"),
     ("IRMA HANUM, SH", "Staf Ahli Bidang Pemerintahan, Hukum dan Politik"),
@@ -120,6 +125,7 @@ PEJABAT_SEKRETARIAT = [
     ("IHSAN SALIM, S.A.P", "Kepala Sub Bagian Tata Usaha dan Kepegawaian"),
 ]
 
+# JDIH DATA
 JDIH_DATA = [
     ["1", "Qanun No. 5/2025", "Ketertiban Umum dan Ketenteraman Masyarakat", "Berlaku"],
     ["2", "Perbup No. 12/2026", "Penjabaran APBK Aceh Jaya 2026", "Berlaku"],
@@ -127,7 +133,7 @@ JDIH_DATA = [
 ]
 
 # =========================================================
-# CSS STYLE - NAVBAR MODERN GLASSMORPHISM (DIPERKUAT)
+# CSS STYLE - NAVBAR SUPER PREMIUM
 # =========================================================
 st.markdown(
     """
@@ -137,8 +143,8 @@ st.markdown(
 :root {
     --primary: #064e3b;
     --primary-dark: #022c22;
-    --primary-2: #10b981;
-    --primary-3: #d1fae5;
+    --primary-2: #0f6b58;
+    --primary-3: #e9f5f1;
     --gold: #d5a52b;
     --gold-light: #fcd34d;
     --gold-soft: #f7efd4;
@@ -175,91 +181,100 @@ section[data-testid="stSidebar"] { display: none; }
 .brand-subtitle { margin-top: 4px; color: #788783; font-size: 11px; letter-spacing: .6px; }
 
 /* =========================================
-   NAVIGATION - MODERN GLASSMORPHISM (FIXED)
+   NAVIGATION - SUPER PREMIUM
    ========================================= */
 .nav-wrap { 
-    background: rgba(17, 24, 39, 0.9) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
-    padding: 12px 6% !important;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3) !important;
+    background: linear-gradient(180deg, #065f46 0%, #022c22 100%); 
+    border-bottom: 2px solid var(--gold); 
+    padding: 0 6%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.1);
     position: relative;
     z-index: 100;
 }
 
+/* Subtle top shine for premium glass effect */
+.nav-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+}
+
 .nav-inner { 
-    min-height: 56px !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    justify-content: center !important;
-    flex-wrap: wrap;
+    min-height: 64px; 
+    display: flex; 
+    align-items: center; 
+    gap: 0;
+    justify-content: center;
 }
 
+/* Navbar Items */
 .nav-button, .nav-button-active { 
-    position: relative !important;
-    flex: 0 0 auto !important;
-    margin: 0 2px !important;
+    position: relative;
+    flex: 1;
+    margin: 0 4px;
 }
 
-/* Target Streamlit button elements with HIGH specificity */
-.nav-wrap .stButton > button {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: rgba(255, 255, 255, 0.8) !important;
-    border-radius: 9999px !important; /* Pill shape */
-    padding: 10px 24px !important;
-    font-weight: 600 !important;
-    font-size: 13px !important;
-    font-family: 'Plus Jakarta Sans', sans-serif !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    letter-spacing: 0.3px !important;
-    white-space: nowrap !important;
-    box-shadow: none !important;
-    min-height: 40px !important;
-    width: auto !important;
-}
-
-.nav-wrap .stButton > button:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    border-color: rgba(255, 255, 255, 0.25) !important;
-    color: #ffffff !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
-}
-
-/* Active State - Vibrant Green Gradient */
+.nav-button .stButton > button, 
 .nav-button-active .stButton > button {
-    background: linear-gradient(135deg, #10b981 0%, #047857 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    color: #ffffff !important;
+    background: transparent !important; 
+    border: 1px solid transparent !important; 
+    color: rgba(255,255,255,0.85) !important;
+    font-size: 12.5px !important;
     font-weight: 700 !important;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    border-radius: 6px !important;
+    padding: 14px 16px !important;
+    min-height: 48px !important;
+    width: 100% !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    letter-spacing: 0.8px !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
-/* Active Indicator Line */
+.nav-button .stButton > button:hover { 
+    color: #ffffff !important; 
+    background: rgba(255,255,255,0.08) !important;
+    border-color: rgba(255,255,255,0.15) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.nav-button-active .stButton > button {
+    color: #ffffff !important; 
+    font-weight: 800 !important; 
+    background: linear-gradient(135deg, rgba(213, 165, 43, 0.2) 0%, rgba(213, 165, 43, 0.05) 100%) !important;
+    border-color: rgba(213, 165, 43, 0.5) !important;
+    box-shadow: 0 0 20px rgba(213, 165, 43, 0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* Active Indicator - Premium Gold Glow */
 .nav-button::after, 
 .nav-button-active::after {
-    content: '' !important;
-    position: absolute !important;
-    left: 50% !important;
-    width: 0 !important;
-    bottom: -6px !important;
-    height: 3px !important;
-    background: linear-gradient(90deg, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent) !important;
-    border-radius: 2px !important;
-    transform: translateX(-50%) !important;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 0 0 12px rgba(213, 165, 43, 0.8) !important;
+    content: ''; 
+    position: absolute; 
+    left: 50%; 
+    width: 0;
+    bottom: -2px; 
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent); 
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    box-shadow: 0 0 12px rgba(213, 165, 43, 0.8);
 }
 
 .nav-button:hover::after { 
-    width: 60% !important;
+    width: 60%;
 }
 
 .nav-button-active::after { 
-    width: 60% !important;
+    width: 60%;
 }
 /* ========================================= */
 
@@ -378,10 +393,11 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
     .footer-bottom { flex-direction: column; text-align: center; }
     .news-grid { grid-template-columns: 1fr; }
     .nav-inner { flex-wrap: wrap; justify-content: center; }
-    .nav-button, .nav-button-active { flex: 0 0 auto; margin: 4px; }
-    .nav-wrap .stButton > button { 
-        padding: 8px 16px !important; 
-        font-size: 12px !important; 
+    .nav-button, .nav-button-active { flex: 0 0 33.333%; margin: 2px; }
+    .nav-button .stButton > button, .nav-button-active .stButton > button { 
+        padding: 10px 8px !important; 
+        font-size: 11px !important; 
+        letter-spacing: 0.5px !important;
     }
 }
 
@@ -455,7 +471,7 @@ st.markdown(
 )
 
 # =========================================================
-# NAVIGATION - MODERN GLASSMORPHISM
+# NAVIGATION - SUPER PREMIUM
 # =========================================================
 st.markdown('<div class="nav-wrap"><div class="nav-inner">', unsafe_allow_html=True)
 nav_cols = st.columns(7)
@@ -465,8 +481,7 @@ for i, key in enumerate(nav_keys):
     with nav_cols[i]:
         active_class = "nav-button-active" if st.session_state.page == PAGES[key] else "nav-button"
         st.markdown(f'<div class="{active_class}">', unsafe_allow_html=True)
-        # use_container_width=False agar tombol mengikuti ukuran teks (pill shape)
-        if st.button(PAGES[key].replace(" & ", " • "), key=f"nav_{key}", use_container_width=False):
+        if st.button(PAGES[key].replace(" & ", " • "), key=f"nav_{key}", use_container_width=True):
             st.session_state.page = PAGES[key]
             st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
@@ -483,7 +498,7 @@ st.markdown(
         📢 Selamat Datang di Portal Resmi DPRK Aceh Jaya &nbsp;&nbsp;|&nbsp;&nbsp; 
         📅 Rapat Paripurna Pembahasan KUA-PPAS 2027 akan dilaksanakan pada 18 September 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 
         📢 Layanan Pengaduan Masyarakat kini dapat diakses melalui menu Layanan & Pengaduan &nbsp;&nbsp;|&nbsp;&nbsp; 
-        Mari wujudkan transparansi dan akuntabilitas pemerintahan daerah bersama DPRK Aceh Jaya.
+         Mari wujudkan transparansi dan akuntabilitas pemerintahan daerah bersama DPRK Aceh Jaya.
     </div>
 </div>
 """,
@@ -522,6 +537,7 @@ if st.session_state.page == "Beranda":
         unsafe_allow_html=True,
     )
 
+    # Layanan Publik
     st.markdown('<div class="content" id="layanan">', unsafe_allow_html=True)
     st.markdown(
         """
@@ -568,6 +584,7 @@ if st.session_state.page == "Beranda":
             )
     st.markdown("</section></div>", unsafe_allow_html=True)
 
+    # Info Strip
     st.markdown(
         """
     <div class="info-strip">
@@ -592,6 +609,7 @@ if st.session_state.page == "Beranda":
             )
     st.markdown("</div></div>", unsafe_allow_html=True)
 
+    # WARTA DPRK & AGENDA
     st.markdown(
         """
     <div class="content">
@@ -648,6 +666,7 @@ if st.session_state.page == "Beranda":
 
     st.markdown("</section>", unsafe_allow_html=True)
 
+    # KESEKRETARIATAN
     st.markdown(
         """
     <section class="section" style="background: #fff;">
@@ -669,6 +688,7 @@ if st.session_state.page == "Beranda":
             unsafe_allow_html=True,
         )
     st.markdown("</div></section></div>", unsafe_allow_html=True)
+
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
@@ -716,6 +736,7 @@ elif st.session_state.page == "Profil & Pimpinan":
                 unsafe_allow_html=True,
             )
         st.markdown('</div>', unsafe_allow_html=True)
+        
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
@@ -1092,3 +1113,4 @@ Portal Informasi Publik • Kabupaten Aceh Jaya
 """,
 unsafe_allow_html=True
 )
+ubah navigation bar nya menjadi seperti gambar ke 2
