@@ -30,7 +30,7 @@ PAGES = {
     "Kontak": "Hubungi Kami",
 }
 
-# WARTA DPRK - Berita Utama (dari website asli)
+# WARTA DPRK - Berita Utama
 WARTA_DPRK = [
     {
         "title": "DPRK Aceh Jaya Gelar Rapat Paripurna Pandangan Fraksi terhadap Pertanggungjawaban APBK 2025",
@@ -58,7 +58,7 @@ WARTA_DPRK = [
     },
 ]
 
-# KESEKRETARIATAN - Berita Sekretariat
+# KESEKRETARIATAN
 KESEKRETARIATAN = [
     {
         "title": "Apel Pagi Rutin, ASN DPRK Aceh Jaya Diingatkan Disiplin dan Komitmen Kerja",
@@ -76,25 +76,22 @@ KESEKRETARIATAN = [
 AGENDA_TERKINI = [
     {
         "tanggal": "09 September 2026",
-        "hari": "Rabu",
         "judul": "Rapat Pleno DPRK Aceh Jaya - 09 September 2026",
         "desc": "Rapat Pleno DPRK Aceh Jaya terhadap Rancangan Perubahan KUA-PPAS APBK Aceh Jaya Tahun Anggaran",
     },
     {
         "tanggal": "07 September 2026",
-        "hari": "Senin",
         "judul": "Rapat Komisi III DPRK Aceh Jaya - 07 September 2026",
         "desc": "Rapat Dengar Pendapat Komisi III terkait Realisasi Program dan Kegiatan Pembangunan Jalan dan Jembatan pada Dinas PUPR.",
     },
     {
         "tanggal": "01 September 2026",
-        "hari": "Selasa",
         "judul": "Rapat Badan Musyawarah DPRK Aceh Jaya - 01 September 2026",
         "desc": "Rapat Badan Musyawarah tentang Penetapan Jadwal Rapat Paripurna DPRK Aceh Jaya.",
     },
 ]
 
-# PIMPINAN DAN ANGGOTA DPRK (dari website asli)
+# PIMPINAN DAN ANGGOTA DPRK
 PIMPINAN_DAN_ANGGOTA = [
     ("MUSLIADI Z, S.E", "KETUA DPRK"),
     ("IRWANTO. NP", "WAKIL KETUA I DPRK"),
@@ -128,8 +125,7 @@ PEJABAT_SEKRETARIAT = [
     ("IHSAN SALIM, S.A.P", "Kepala Sub Bagian Tata Usaha dan Kepegawaian"),
 ]
 
-
-
+# JDIH DATA
 JDIH_DATA = [
     ["1", "Qanun No. 5/2025", "Ketertiban Umum dan Ketenteraman Masyarakat", "Berlaku"],
     ["2", "Perbup No. 12/2026", "Penjabaran APBK Aceh Jaya 2026", "Berlaku"],
@@ -137,7 +133,7 @@ JDIH_DATA = [
 ]
 
 # =========================================================
-# CSS STYLE
+# CSS STYLE (Tautan Terkait DIHAPUS)
 # =========================================================
 st.markdown(
     """
@@ -303,18 +299,18 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
 .footer-divider { border-top: 1px solid rgba(255,255,255,.1); }
 .footer-bottom { padding: 18px 0 22px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; color: rgba(255,255,255,.42); font-size: 11px; }
 
-/* Tautan Terkait */
-.tautan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-.tautan-box { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center; transition: .25s ease; min-height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; }
-.tautan-box:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--gold); }
-.tautan-icon { font-size: 32px; }
-.tautan-title { color: var(--primary); font-size: 13px; font-weight: 700; margin: 0; }
-
 @media (max-width: 850px) {
     .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 32px; }
     .footer-bottom { flex-direction: column; text-align: center; }
     .news-grid { grid-template-columns: 1fr; }
 }
+
+div[data-testid="stForm"] { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 25px !important; }
+.stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { border-radius: 5px !important; border-color: #d8e1de !important; }
+.stButton > button[kind="primary"], .stFormSubmitButton > button { background: var(--primary) !important; border: none !important; color: white !important; border-radius: 5px !important; font-weight: 700 !important; transition: background .15s ease !important; }
+.stButton > button[kind="primary"]:hover, .stFormSubmitButton > button:hover { background: var(--primary-2) !important; }
+div[data-testid="stDataFrame"] { border: 1px solid var(--border) !important; border-radius: 8px !important; overflow: hidden; }
+a:focus-visible, button:focus-visible, .stButton > button:focus-visible { outline: 2px solid var(--gold) !important; outline-offset: 2px !important; }
 </style>
 """,
     unsafe_allow_html=True,
@@ -406,7 +402,7 @@ st.markdown(
         📢 Selamat Datang di Portal Resmi DPRK Aceh Jaya &nbsp;&nbsp;|&nbsp;&nbsp; 
         📅 Rapat Paripurna Pembahasan KUA-PPAS 2027 akan dilaksanakan pada 18 September 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 
          Layanan Pengaduan Masyarakat kini dapat diakses melalui menu Layanan & Pengaduan &nbsp;&nbsp;|&nbsp;&nbsp; 
-        🌐 Mari wujudkan transparansi dan akuntabilitas pemerintahan daerah bersama DPRK Aceh Jaya.
+         Mari wujudkan transparansi dan akuntabilitas pemerintahan daerah bersama DPRK Aceh Jaya.
     </div>
 </div>
 """,
@@ -425,7 +421,7 @@ st.markdown(
 )
 
 # =========================================================
-# BERANDA
+# BERANDA (Tautan Terkait DIHAPUS)
 # =========================================================
 if st.session_state.page == "Beranda":
     st.markdown(
@@ -462,11 +458,11 @@ if st.session_state.page == "Beranda":
     )
 
     services = [
-        ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi, keluhan, dan laporan masyarakat.", "layanan"),
+        ("", "Pengaduan Masyarakat", "Sampaikan aspirasi, keluhan, dan laporan masyarakat.", "layanan"),
         ("", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "jdih"),
         ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "berita"),
         ("", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
-        ("📂", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "jdih"),
+        ("", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "jdih"),
         ("🔗", "E-LHKPN", "Pelaporan harta kekayaan penyelenggara negara.", "https://elhpkpn.kpk.go.id/"),
     ]
 
@@ -597,36 +593,11 @@ if st.session_state.page == "Beranda":
         )
     st.markdown("</div></section></div>", unsafe_allow_html=True)
 
-    # TAUTAN TERKAIT
-    st.markdown(
-        """
-    <section class="section" style="background: var(--bg); border-top: 1px solid var(--border);">
-        <div class="content">
-            <div class="section-head">
-                <div>
-                    <div class="section-kicker">Mitra & Tautan</div>
-                    <h2 class="section-title">Tautan Terkait</h2>
-                </div>
-            </div>
-            <div class="tautan-grid">
-    """,
-        unsafe_allow_html=True,
-    )
-    for name, url, icon in TAUTAN_TERKAIT:
-        st.markdown(
-            f"""
-            <a href="{url}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
-                <div class="tautan-box">
-                    <div class="tautan-icon">{icon}</div>
-                    <div class="tautan-title">{name}</div>
-                </div>
-            </a>
-            """
-        )
-    st.markdown("</div></section></div>", unsafe_allow_html=True)
+    # Footer langsung tanpa Tautan Terkait
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# HALAMAN LAINNYA (Profil, Berita, Galeri, Layanan, JDIH, Kontak)
+# PROFIL & PIMPINAN
 # =========================================================
 elif st.session_state.page == "Profil & Pimpinan":
     st.markdown('<div class="content">', unsafe_allow_html=True)
@@ -673,6 +644,9 @@ elif st.session_state.page == "Profil & Pimpinan":
         
     st.markdown("</div>", unsafe_allow_html=True)
 
+# =========================================================
+# BERITA & AGENDA
+# =========================================================
 elif st.session_state.page == "Berita & Agenda":
     st.markdown('<div class="content">', unsafe_allow_html=True)
     st.markdown(
@@ -727,6 +701,9 @@ elif st.session_state.page == "Berita & Agenda":
         )
     st.markdown("</div></section></div>", unsafe_allow_html=True)
 
+# =========================================================
+# GALERI
+# =========================================================
 elif st.session_state.page == "Galeri Foto & Video":
     st.markdown('<div class="content">', unsafe_allow_html=True)
     st.markdown(
@@ -763,6 +740,9 @@ elif st.session_state.page == "Galeri Foto & Video":
         )
     st.markdown('</div></div>', unsafe_allow_html=True)
 
+# =========================================================
+# LAYANAN & PENGADUAN
+# =========================================================
 elif st.session_state.page == "Layanan & Pengaduan":
     st.markdown('<div class="content">', unsafe_allow_html=True)
     st.markdown(
@@ -817,7 +797,7 @@ elif st.session_state.page == "Layanan & Pengaduan":
             <div class="section-kicker">Kontak</div>
             <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';font-size:20px;margin-top:0;">Hubungi Kami</h3>
             <p style="font-size:12px;color:#71817d;line-height:1.8;">
-                <strong>📞 Telepon</strong><br>(0655) 12345
+                <strong> Telepon</strong><br>(0655) 12345
             </p>
             <p style="font-size:12px;color:#71817d;line-height:1.8;">
                 <strong>✉️ Email</strong><br>sekretariat@dprk.acehjaya.go.id
@@ -833,6 +813,9 @@ elif st.session_state.page == "Layanan & Pengaduan":
         )
     st.markdown("</div>", unsafe_allow_html=True)
 
+# =========================================================
+# JDIH & TRANSPARANSI
+# =========================================================
 elif st.session_state.page == "JDIH & Transparansi":
     st.markdown('<div class="content">', unsafe_allow_html=True)
     st.markdown(
@@ -849,8 +832,8 @@ elif st.session_state.page == "JDIH & Transparansi":
     info_cols = st.columns(4)
     cards = [
         ("⚖️", "Produk Hukum", "Qanun dan dokumen hukum daerah."),
-        ("📊", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
-        ("📂", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
+        ("", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
+        ("", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
         ("📑", "Informasi Berkala", "Informasi yang diterbitkan secara berkala."),
     ]
 
@@ -892,7 +875,10 @@ elif st.session_state.page == "JDIH & Transparansi":
     )
     st.markdown("</div>", unsafe_allow_html=True)
 
-else:  # Kontak
+# =========================================================
+# KONTAK
+# =========================================================
+else:
     st.markdown('<div class="content">', unsafe_allow_html=True)
     st.markdown(
         """
@@ -907,9 +893,9 @@ else:  # Kontak
 
     cols = st.columns(3)
     contacts = [
-        ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya"),
-        ("📞", "Telepon", "(0655) 12345"),
-        ("✉️", "Email", "sekretariat@dprk.acehjaya.go.id"),
+        ("", "Alamat", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya"),
+        ("", "Telepon", "(0655) 12345"),
+        ("️", "Email", "sekretariat@dprk.acehjaya.go.id"),
     ]
 
     for i, (icon, title, value) in enumerate(contacts):
