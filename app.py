@@ -7,13 +7,13 @@ import pandas as pd
 # =========================================================
 st.set_page_config(
     page_title="DPRK Aceh Jaya | Portal Informasi Publik",
-    page_icon="https://i.imgur.com/bTNXnLF.png",  # Menggunakan emoji agar icon tab browser pasti muncul
+    page_icon="🏛️",  # Emoji lebih stabil untuk icon tab browser di Streamlit
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
 # =========================================================
-# LOGO URL (Direct Link dari Imgur)
+# LOGO URL
 # =========================================================
 LOGO_URL = "https://i.imgur.com/bTNXnLF.png"
 
@@ -24,10 +24,26 @@ PAGES = {
     "Beranda": "Beranda",
     "Profil": "Profil & Pimpinan",
     "Berita": "Berita & Agenda",
+    "Galeri": "Galeri Foto & Video",  # FITUR BARU
     "Layanan": "Layanan & Pengaduan",
     "JDIH": "JDIH & Transparansi",
     "Kontak": "Hubungi Kami",
 }
+
+SAMBUTAN_KETUA = {
+    "nama": "Musliadi Z, S.E",
+    "jabatan": "Ketua DPRK Aceh Jaya",
+    "pesan": "Assalamu'alaikum Warahmatullahi Wabarakatuh. Selamat datang di Portal Resmi Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Portal ini kami hadirkan sebagai wujud transparansi, akuntabilitas publik, serta media komunikasi dan interaksi antara DPRK dengan masyarakat Aceh Jaya. Semoga portal ini bermanfaat dan dapat meningkatkan pelayanan informasi publik.",
+    "foto": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" # Placeholder foto pimpinan
+}
+
+TAUTAN_TERKAIT = [
+    ("Pemerintah Kab. Aceh Jaya", "https://acehjayakab.go.id/", "🏛️"),
+    ("Kementerian Hukum dan HAM", "https://www.kemenkumham.go.id/", "⚖️"),
+    ("KPK RI", "https://www.kpk.go.id/", "🛡️"),
+    ("DPR RI", "https://www.dpr.go.id/", "🏢"),
+    ("DPD RI", "https://www.dpd.go.id/", "🏛️"),
+]
 
 NEWS = [
     {
@@ -41,16 +57,23 @@ NEWS = [
         "tag": "RAPAT PARIPURNA",
         "date": "10 Agustus 2026",
         "title": "DPRK Aceh Jaya Gelar Rapat Paripurna Pandangan Fraksi terhadap Pertanggungjawaban APBK 2025",
-        "desc": "Dewan Perwakilan Rakyat Kabupaten (DPRK) Aceh Jaya menggelar Rapat Paripurna untuk membahas pandangan fraksi terhadap pertanggungjawaban APBK.",
+        "desc": "Dewan Perwakilan Rakyat Kabupaten (DPRK) Aceh Jaya menggelar Rapat Paripurna untuk membahas pandangan fraksi.",
         "image": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=900&q=80",
     },
     {
         "tag": "PENDIDIKAN",
         "date": "14 Juli 2026",
         "title": "Ketua DPRK Aceh Jaya Dukung Penuh Pembangunan SLB sebagai Wujud Pemerataan Layanan Pendidikan",
-        "desc": "Penandatanganan Naskah Perjanjian Hibah Daerah (NPHD) Hibah Tanah untuk Pembangunan Sekolah Luar Biasa (SLB) di Aceh Jaya.",
+        "desc": "Penandatanganan Naskah Perjanjian Hibah Daerah (NPHD) Hibah Tanah untuk Pembangunan Sekolah Luar Biasa (SLB).",
         "image": "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=900&q=80",
     },
+    {
+        "tag": "LEGISLASI",
+        "date": "05 Juli 2026",
+        "title": "RDPU Penyempurnaan Rancangan Qanun Tentang Pengelolaan Keuangan Desa",
+        "desc": "DPRK Aceh Jaya menggelar Rapat Dengar Pendapat Umum bersama akademisi dan tokoh masyarakat.",
+        "image": "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=900&q=80",
+    }
 ]
 
 AGENDA = [
@@ -141,44 +164,42 @@ section[data-testid="stSidebar"] { display: none; }
     box-shadow: 0 4px 12px rgba(12,74,62,.18);
     overflow: hidden;
 }
-.brand-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
+.brand-logo img { width: 100%; height: 100%; object-fit: contain; }
 .brand-title { color: #123b33; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; line-height: 1.2; font-weight: 800; text-transform: uppercase; }
 .brand-subtitle { margin-top: 4px; color: #788783; font-size: 11px; letter-spacing: .6px; }
 
-.nav-wrap { background: #fff; border-bottom: 1px solid var(--border); padding: 0 6%; }
+/* Search Bar Visual */
+.search-wrap { margin-left: auto; display: flex; align-items: center; }
+.search-input { 
+    border: 1px solid var(--border); border-radius: 20px; padding: 6px 16px; font-size: 12px; 
+    outline: none; transition: border-color .2s ease; width: 200px;
+}
+.search-input:focus { border-color: var(--primary); }
+
+.nav-wrap { background: var(--primary); border-bottom: 1px solid var(--border); padding: 0 6%; }
 .nav-inner { min-height: 54px; display: flex; align-items: center; gap: 4px; }
 
 .nav-button, .nav-button-active { position: relative; }
 .nav-button .stButton > button, .nav-button-active .stButton > button {
     background: transparent !important; 
     border: none !important; 
-    color: var(--dark) !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    border-radius: 6px 6px 0 0 !important;
+    color: rgba(255,255,255,0.85) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    border-radius: 4px !important;
     padding: 12px 16px !important;
     min-height: 40px !important; 
     transition: all .2s ease !important; 
 }
 .nav-button .stButton > button:hover { 
-    color: var(--primary) !important; 
-    background: var(--primary-3) !important;
+    color: #fff !important; 
+    background: rgba(255,255,255,0.1) !important;
 }
 .nav-button-active .stButton > button {
-    color: var(--primary) !important; 
-    font-weight: 800 !important; 
-    background: var(--primary-3) !important;
+    color: #fff !important; 
+    font-weight: 700 !important; 
+    background: rgba(255,255,255,0.15) !important;
 }
-.nav-button::after, .nav-button-active::after {
-    content: ''; position: absolute; left: 12px; right: 12px; bottom: 0; height: 3px;
-    background: var(--gold); transform: scaleX(0); transition: transform .2s ease; transform-origin: center; border-radius: 3px 3px 0 0;
-}
-.nav-button:hover::after { transform: scaleX(1); }
-.nav-button-active::after { transform: scaleX(1); }
 
 .alert { background: #fff9e9; border-bottom: 1px solid #f0dfad; border-left: 3px solid var(--gold); color: #725719; padding: 10px 6%; font-size: 12px; display: flex; align-items: center; gap: 10px; }
 .alert-badge { width: 20px; height: 20px; border-radius: 50%; background: var(--gold); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
@@ -212,31 +233,24 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
 .service-title { color: #183d35; font-size: 14px; font-weight: 800; margin-bottom: 7px; }
 .service-desc { color: #7a8884; font-size: 11px; line-height: 1.5; }
 
-.news-main { background: #fff; border: 1px solid var(--border); overflow: hidden; border-radius: 8px; height: 100%; transition: box-shadow .2s ease, border-color .2s ease; }
-.news-main:hover { box-shadow: var(--shadow); border-color: #b9d6ce; }
-.news-main-img-wrap { overflow: hidden; }
-.news-main-img { width: 100%; height: 260px; object-fit: cover; display: block; transition: transform .4s ease; }
-.news-main:hover .news-main-img { transform: scale(1.05); }
-.news-main-body { padding: 20px; }
-.news-tag { display: inline-block; color: var(--primary-2); font-size: 10px; font-weight: 800; letter-spacing: .8px; margin-bottom: 9px; }
-.news-main h3 { color: #173b33; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 21px; line-height: 1.3; margin: 0 0 9px; }
-.news-date { color: #8a9894; font-size: 11px; }
-
-.news-side { display: flex; gap: 15px; background: #fff; border-bottom: 1px solid var(--border); padding: 0 0 16px; margin-bottom: 16px; transition: opacity .15s ease; }
-.news-side:hover { opacity: .85; }
-.news-side-img-wrap { width: 145px; height: 105px; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
-.news-side-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
-.news-side:hover .news-side-img { transform: scale(1.08); }
-.news-side h4 { color: #1d4038; font-size: 14px; line-height: 1.35; margin: 5px 0 8px; }
-.news-side p { color: #7a8884; font-size: 11px; line-height: 1.5; margin: 0; }
+.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+.news-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: box-shadow .2s ease, border-color .2s ease; height: 100%; display: flex; flex-direction: column; }
+.news-card:hover { box-shadow: var(--shadow); border-color: #b9d6ce; }
+.news-card-img { width: 100%; height: 180px; object-fit: cover; transition: transform .4s ease; }
+.news-card:hover .news-card-img { transform: scale(1.05); }
+.news-card-img-wrap { overflow: hidden; }
+.news-card-body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+.news-card h3 { color: #173b33; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; line-height: 1.4; margin: 0 0 8px; font-weight: 700; flex: 1; }
+.news-card p { color: #71817d; font-size: 12px; line-height: 1.6; margin: 0 0 12px; flex: 1; }
+.news-date { color: #8a9894; font-size: 11px; display: flex; align-items: center; gap: 5px; }
 
 .agenda-wrap { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 22px; }
 .agenda-row { display: flex; gap: 16px; padding: 15px 4px; border-bottom: 1px solid #edf1ef; border-radius: 6px; transition: background .15s ease; }
 .agenda-row:hover { background: #f6faf8; }
 .agenda-row:last-child { border-bottom: none; }
-.agenda-date { width: 62px; height: 66px; background: var(--primary); color: white; border-radius: 5px; text-align: center; padding-top: 8px; flex-shrink: 0; }
-.agenda-date strong { display: block; font-size: 24px; line-height: 1; }
-.agenda-date span { font-size: 9px; letter-spacing: 1px; }
+.agenda-date-box { width: 62px; height: 66px; background: var(--primary); color: white; border-radius: 5px; text-align: center; padding-top: 8px; flex-shrink: 0; }
+.agenda-date-box strong { display: block; font-size: 24px; line-height: 1; }
+.agenda-date-box span { font-size: 9px; letter-spacing: 1px; }
 .agenda-title { color: #1b4138; font-weight: 800; font-size: 14px; margin-bottom: 5px; }
 .agenda-desc { color: #7a8884; font-size: 11px; line-height: 1.5; }
 
@@ -254,10 +268,6 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
 .profile-name { color: #183d35; font-size: 17px; font-weight: 800; margin: 6px 0; }
 .profile-desc { color: #7a8884; font-size: 11px; line-height: 1.55; }
 
-.news-list-card { transition: box-shadow .2s ease, border-color .2s ease; }
-.news-list-card:hover { box-shadow: var(--shadow); border-color: #b9d6ce; }
-.news-list-card:hover img { transform: scale(1.06); }
-
 .stTabs [data-baseweb="tab-list"] { gap: 8px; background: transparent; border-bottom: 1px solid var(--border); }
 .stTabs [data-baseweb="tab"] { background: transparent; border-radius: 8px 8px 0 0; padding: 12px 24px; color: var(--muted); font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.2s ease; }
 .stTabs [aria-selected="true"] { background: var(--primary-3) !important; color: var(--primary) !important; border-bottom: 2px solid var(--primary); }
@@ -271,34 +281,20 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
 .footer-column a:hover { color: #f4d873; padding-left: 3px; }
 .footer-column p { color: rgba(255,255,255,.62); font-size: 12.5px; line-height: 1.85; margin: 0 0 8px; }
 .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-.footer-logo { 
-    width: 50px; 
-    height: 50px; 
-    border-radius: 6px; 
-    flex-shrink: 0; 
-    background: #fff;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 20px;
-    overflow: hidden;
-}
-.footer-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
+.footer-logo { width: 50px; height: 50px; border-radius: 6px; flex-shrink: 0; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.footer-logo img { width: 100%; height: 100%; object-fit: contain; }
 .footer-brand-name { color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14.5px; font-weight: 800; letter-spacing: .3px; }
 .footer-brand-subtitle { color: rgba(255,255,255,.5); font-size: 10px; letter-spacing: .6px; margin-top: 2px; }
 .footer-description { color: rgba(255,255,255,.58); font-size: 12.5px; line-height: 1.85; max-width: 340px; margin: 0 0 22px; }
 .footer-social { display: flex; gap: 10px; }
-.footer-social-item { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.85); display: flex; align-items: center; justify-content: center; font-size: 13px; transition: background .15s ease, border-color .15s ease; }
+.footer-social-item { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.85); display: flex; align-items: center; justify-content: center; font-size: 13px; transition: background .15s ease, border-color .15s ease; text-decoration: none; }
 .footer-social-item:hover { background: #d5a52b; border-color: #d5a52b; color: #082722; }
 .footer-divider { border-top: 1px solid rgba(255,255,255,.1); }
 .footer-bottom { padding: 18px 0 22px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; color: rgba(255,255,255,.42); font-size: 11px; }
 @media (max-width: 850px) {
     .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 32px; }
     .footer-bottom { flex-direction: column; text-align: center; }
+    .search-wrap { display: none; }
 }
 
 div[data-testid="stForm"] { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 25px !important; }
@@ -327,14 +323,7 @@ a:focus-visible, button:focus-visible, .stButton > button:focus-visible { outlin
 if "page" not in st.session_state:
     st.session_state.page = "Beranda"
 
-PAGE_URLS = {
-    "Beranda": "beranda",
-    "Profil & Pimpinan": "profil",
-    "Berita & Agenda": "berita",
-    "Layanan & Pengaduan": "layanan",
-    "JDIH & Transparansi": "jdih",
-    "Hubungi Kami": "kontak",
-}
+PAGE_URLS = {v: k.lower().replace(" & ", "-").replace(" ", "-") for k, v in PAGES.items()}
 URL_TO_PAGE = {v: k for k, v in PAGE_URLS.items()}
 
 query_params = st.query_params
@@ -346,7 +335,7 @@ if "page" in query_params:
         st.rerun()
 
 # =========================================================
-# TOP BAR
+# TOP BAR & BRAND
 # =========================================================
 st.markdown(
     """
@@ -366,8 +355,49 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+st.markdown(
+    f"""
+<div class="brand-wrap">
+    <div class="brand-inner">
+        <div class="brand">
+            <div class="brand-logo">
+                <img src="{LOGO_URL}" alt="Logo DPRK Aceh Jaya" 
+                     onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>'">
+            </div>
+            <div>
+                <div class="brand-title">Dewan Perwakilan Rakyat<br>Kabupaten Aceh Jaya</div>
+                <div class="brand-subtitle">PORTAL INFORMASI PUBLIK DAN ASPIRASI MASYARAKAT</div>
+            </div>
+        </div>
+        <div class="search-wrap">
+            <input type="text" class="search-input" placeholder="Cari informasi...">
+        </div>
+    </div>
+</div>
+""",
+    unsafe_allow_html=True,
+)
+
 # =========================================================
-# RUNNING TEXT
+# NAVIGATION
+# =========================================================
+st.markdown('<div class="nav-wrap"><div class="nav-inner">', unsafe_allow_html=True)
+nav_cols = st.columns([1.05, 1.05, 1.05, 1.05, 1.15, 1.2, 1.05, 0.85])
+nav_keys = list(PAGES.keys())
+
+for i, key in enumerate(nav_keys):
+    with nav_cols[i]:
+        active_class = "nav-button-active" if st.session_state.page == PAGES[key] else "nav-button"
+        st.markdown(f'<div class="{active_class}">', unsafe_allow_html=True)
+        if st.button(PAGES[key].replace(" & ", " • "), key=f"nav_{key}", use_container_width=True):
+            st.session_state.page = PAGES[key]
+            st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
+
+st.markdown("</div></div>", unsafe_allow_html=True)
+
+# =========================================================
+# RUNNING TEXT & ALERT
 # =========================================================
 st.markdown(
     """
@@ -383,54 +413,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# =========================================================
-# BRAND DENGAN LOGO
-# =========================================================
-st.markdown(
-    f"""
-<div class="brand-wrap">
-    <div class="brand-inner">
-        <div class="brand">
-            <div class="brand-logo">
-                <img src="{LOGO_URL}" alt="Logo DPRK Aceh Jaya" 
-                     onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>'">
-            </div>
-            <div>
-                <div class="brand-title">Dewan Perwakilan Rakyat<br>Kabupaten Aceh Jaya</div>
-                <div class="brand-subtitle">PORTAL INFORMASI PUBLIK DAN ASPIRASI MASYARAKAT</div>
-            </div>
-        </div>
-        <div style="text-align:right;color:#74827e;font-size:11px;line-height:1.7;">
-            Kabupaten Aceh Jaya<br>
-            Provinsi Aceh
-        </div>
-    </div>
-</div>
-""",
-    unsafe_allow_html=True,
-)
-
-# =========================================================
-# NAVIGATION
-# =========================================================
-st.markdown('<div class="nav-wrap"><div class="nav-inner">', unsafe_allow_html=True)
-nav_cols = st.columns([1.05, 1.05, 1.15, 1.2, 1.2, 1.05, 0.85])
-nav_keys = list(PAGES.keys())
-
-for i, key in enumerate(nav_keys):
-    with nav_cols[i]:
-        active_class = "nav-button-active" if st.session_state.page == PAGES[key] else "nav-button"
-        st.markdown(f'<div class="{active_class}">', unsafe_allow_html=True)
-        if st.button(PAGES[key].replace(" & ", " • "), key=f"nav_{key}", use_container_width=True):
-            st.session_state.page = PAGES[key]
-            st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-
-st.markdown("</div></div>", unsafe_allow_html=True)
-
-# =========================================================
-# ALERT
-# =========================================================
 st.markdown(
     """
 <div class="alert">
@@ -443,7 +425,7 @@ st.markdown(
 )
 
 # =========================================================
-# BERANDA
+# HALAMAN: BERANDA
 # =========================================================
 if st.session_state.page == "Beranda":
     st.markdown(
@@ -456,6 +438,33 @@ if st.session_state.page == "Beranda":
             <div class="hero-buttons">
                 <a class="hero-btn" href="?page=layanan">Sampaikan Aspirasi</a>
                 <a class="hero-btn secondary" href="?page=berita">Lihat Berita</a>
+            </div>
+        </div>
+    </section>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    # Sambutan Ketua (FITUR BARU)
+    st.markdown(
+        f"""
+    <section class="section" style="background: #fff; border-bottom: 1px solid var(--border);">
+        <div class="content">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Sambutan</div>
+                    <h2 class="section-title">Sambutan Ketua DPRK Aceh Jaya</h2>
+                </div>
+            </div>
+            <div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
+                <div style="flex: 0 0 220px;">
+                    <img src="{SAMBUTAN_KETUA['foto']}" style="width: 100%; border-radius: 8px; box-shadow: var(--shadow); border: 3px solid var(--primary-3);">
+                </div>
+                <div style="flex: 1;">
+                    <h3 style="color: var(--primary); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; margin-bottom: 5px;">{SAMBUTAN_KETUA['nama']}</h3>
+                    <p style="color: var(--muted); font-size: 13px; margin-bottom: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">{SAMBUTAN_KETUA['jabatan']}</p>
+                    <p style="color: var(--text); font-size: 14px; line-height: 1.8; font-style: italic;">"{SAMBUTAN_KETUA['pesan']}"</p>
+                </div>
             </div>
         </div>
     </section>
@@ -507,105 +516,60 @@ if st.session_state.page == "Beranda":
             """,
                 unsafe_allow_html=True,
             )
-
     st.markdown("</section></div>", unsafe_allow_html=True)
 
+    # Berita & Agenda Section
     st.markdown(
         """
-    <div class="info-strip">
-        <div class="info-inner">
-    """,
-        unsafe_allow_html=True,
-    )
-
-    stat_cols = st.columns(4)
-    stats = [("2024–2029", "Masa Jabatan"), ("3", "Pimpinan DPRK"), ("5", "Komisi / Alat Kelengkapan"), ("24/7", "Akses Informasi")]
-    for i, (number, label) in enumerate(stats):
-        with stat_cols[i]:
-            divider_class = "has-divider" if i < len(stats) - 1 else ""
-            st.markdown(
-                f"""
-            <div class="info-item {divider_class}">
-                <div class="info-number">{number}</div>
-                <div class="info-label">{label}</div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
-
-    st.markdown(
-        """
-        </div>
-    </div>
-    <div class="content" id="berita">
-    """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        """
+    <div class="content">
     <section class="section">
         <div class="section-head">
             <div>
                 <div class="section-kicker">Informasi Terbaru</div>
                 <h2 class="section-title">Berita & Agenda</h2>
-                <div class="section-desc">Informasi kegiatan dan agenda DPRK Aceh Jaya.</div>
             </div>
+            <a href="?page=berita" style="color: var(--primary); font-size: 13px; font-weight: 700; text-decoration: none;">Lihat Semua →</a>
         </div>
     """,
         unsafe_allow_html=True,
     )
 
-    col_news, col_agenda = st.columns([1.75, 1])
+    col_news, col_agenda = st.columns([2, 1])
 
     with col_news:
-        main_news = NEWS[0]
-        st.markdown(
-            f"""
-        <div class="news-main">
-            <div class="news-main-img-wrap"><img class="news-main-img" src="{main_news['image']}"></div>
-            <div class="news-main-body">
-                <div class="news-tag">{main_news['tag']}</div>
-                <h3>{main_news['title']}</h3>
-                <p style="color:#71817d;font-size:12px;line-height:1.65;">{main_news['desc']}</p>
-                <div class="news-date">🕒 {main_news['date']}</div>
-            </div>
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
-
-        for item in NEWS[1:]:
+        st.markdown('<div class="news-grid">', unsafe_allow_html=True)
+        for item in NEWS[:3]:
             st.markdown(
                 f"""
-            <div class="news-side" style="margin-top:18px;">
-                <div class="news-side-img-wrap"><img class="news-side-img" src="{item['image']}"></div>
-                <div>
-                    <div class="news-tag">{item['tag']}</div>
-                    <h4>{item['title']}</h4>
-                    <p>{item['desc']}</p>
-                    <div class="news-date" style="margin-top:7px;">🕒 {item['date']}</div>
+            <div class="news-card">
+                <div class="news-card-img-wrap">
+                    <img class="news-card-img" src="{item['image']}">
+                </div>
+                <div class="news-card-body">
+                    <div class="section-kicker" style="margin-bottom: 8px;">{item['tag']}</div>
+                    <h3>{item['title']}</h3>
+                    <div class="news-date">🕒 {item['date']}</div>
                 </div>
             </div>
             """,
                 unsafe_allow_html=True,
             )
+        st.markdown('</div>', unsafe_allow_html=True)
 
     with col_agenda:
-        st.markdown('<div class="agenda-wrap">', unsafe_allow_html=True)
         st.markdown(
             """
+        <div class="agenda-wrap">
             <div class="section-kicker">Jadwal</div>
-            <div style="font-family:'Plus Jakarta Sans';font-size:20px;font-weight:800;color:#183d35;margin-bottom:5px;">Agenda Terdekat</div>
-            """,
+            <div style="font-family:'Plus Jakarta Sans';font-size:18px;font-weight:800;color:#183d35;margin-bottom:15px;">Agenda Terdekat</div>
+        """,
             unsafe_allow_html=True,
         )
-
         for day, month, title, desc in AGENDA:
             st.markdown(
                 f"""
             <div class="agenda-row">
-                <div class="agenda-date">
+                <div class="agenda-date-box">
                     <strong>{day}</strong>
                     <span>{month}</span>
                 </div>
@@ -619,10 +583,38 @@ if st.session_state.page == "Beranda":
             )
         st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown("</section></div>", unsafe_allow_html=True)
+    st.markdown("</section>", unsafe_allow_html=True)
+
+    # Tautan Terkait (FITUR BARU)
+    st.markdown(
+        """
+    <section class="section" style="background: #fff; border-top: 1px solid var(--border);">
+        <div class="content">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Mitra & Tautan</div>
+                    <h2 class="section-title">Tautan Terkait</h2>
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+    """,
+        unsafe_allow_html=True,
+    )
+    for name, url, icon in TAUTAN_TERKAIT:
+        st.markdown(
+            f"""
+            <a href="{url}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+                <div class="service-box" style="min-height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;">
+                    <div style="font-size: 28px;">{icon}</div>
+                    <div class="service-title" style="margin: 0; font-size: 13px;">{name}</div>
+                </div>
+            </a>
+            """
+        )
+    st.markdown("</div></section></div>", unsafe_allow_html=True)
 
 # =========================================================
-# PROFIL
+# HALAMAN: PROFIL
 # =========================================================
 elif st.session_state.page == "Profil & Pimpinan":
     st.markdown('<div class="content">', unsafe_allow_html=True)
@@ -714,7 +706,7 @@ elif st.session_state.page == "Profil & Pimpinan":
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# BERITA & AGENDA
+# HALAMAN: BERITA & AGENDA
 # =========================================================
 elif st.session_state.page == "Berita & Agenda":
     st.markdown('<div class="content">', unsafe_allow_html=True)
@@ -729,36 +721,38 @@ elif st.session_state.page == "Berita & Agenda":
         unsafe_allow_html=True,
     )
 
+    st.markdown('<div class="news-grid">', unsafe_allow_html=True)
     for item in NEWS:
         st.markdown(
             f"""
-        <div class="news-list-card" style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:18px;margin-bottom:18px;display:flex;gap:22px;">
-            <div style="width:270px;height:165px;border-radius:6px;overflow:hidden;flex-shrink:0;">
-                <img src="{item['image']}" style="width:100%;height:100%;object-fit:cover;transition:transform .4s ease;">
+        <div class="news-card">
+            <div class="news-card-img-wrap">
+                <img class="news-card-img" src="{item['image']}">
             </div>
-            <div style="padding:6px 0;">
-                <div class="news-tag">{item['tag']}</div>
-                <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';font-size:21px;margin:0 0 8px;">{item['title']}</h3>
-                <p style="color:#71817d;font-size:12px;line-height:1.7;">{item['desc']}</p>
+            <div class="news-card-body">
+                <div class="section-kicker" style="margin-bottom: 8px;">{item['tag']}</div>
+                <h3>{item['title']}</h3>
+                <p>{item['desc']}</p>
                 <div class="news-date">🕒 {item['date']}</div>
             </div>
         </div>
         """,
             unsafe_allow_html=True,
         )
+    st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown(
         """
-    <div style="margin-top:45px;">
+    <section class="section">
         <div class="section-kicker">Multimedia</div>
         <h2 class="section-title" style="font-size:23px;margin-bottom:18px;">Galeri & Video</h2>
-    </div>
-    <div style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:20px;text-align:center;margin-bottom:40px;">
-        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:6px;">
-            <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <div style="background:#fff;border:1px solid #e1e8e5;border-radius:8px;padding:20px;text-align:center;">
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:6px;">
+                <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <p style="margin-top:15px;color:#71817d;font-size:13px;">Video Dokumentasi Kegiatan DPRK Aceh Jaya</p>
         </div>
-        <p style="margin-top:15px;color:#71817d;font-size:13px;">Video Dokumentasi Kegiatan DPRK Aceh Jaya</p>
-    </div>
+    </section>
     """,
         unsafe_allow_html=True,
     )
@@ -777,7 +771,7 @@ elif st.session_state.page == "Berita & Agenda":
             st.markdown(
                 f"""
             <div class="agenda-wrap" style="height:100%;">
-                <div class="agenda-date">
+                <div class="agenda-date-box">
                     <strong>{day}</strong><span>{month}</span>
                 </div>
                 <div style="margin-top:16px;" class="agenda-title">{title}</div>
@@ -789,7 +783,48 @@ elif st.session_state.page == "Berita & Agenda":
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# LAYANAN & PENGADUAN
+# HALAMAN: GALERI (FITUR BARU)
+# =========================================================
+elif st.session_state.page == "Galeri Foto & Video":
+    st.markdown('<div class="content">', unsafe_allow_html=True)
+    st.markdown(
+        """
+    <section class="section">
+        <div class="section-kicker">Dokumentasi</div>
+        <h2 class="section-title">Galeri Foto & Video</h2>
+        <p class="section-desc">Dokumentasi kegiatan, rapat, dan aktivitas DPRK Aceh Jaya.</p>
+    </section>
+    """,
+        unsafe_allow_html=True,
+    )
+    
+    # Simulasi galeri grid
+    st.markdown('<div class="news-grid">', unsafe_allow_html=True)
+    gallery_items = [
+        ("Rapat Paripurna", "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=600&q=80"),
+        ("Kunjungan Kerja", "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=600&q=80"),
+        ("Sosialisasi Qanun", "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=80"),
+        ("Penanaman Mangrove", "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=600&q=80"),
+    ]
+    for title, img in gallery_items:
+        st.markdown(
+            f"""
+        <div class="news-card">
+            <div class="news-card-img-wrap">
+                <img class="news-card-img" src="{img}" style="height: 220px;">
+            </div>
+            <div class="news-card-body" style="justify-content: center; align-items: center; text-align: center;">
+                <h3 style="margin: 0;">{title}</h3>
+            </div>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# =========================================================
+# HALAMAN: LAYANAN & PENGADUAN
 # =========================================================
 elif st.session_state.page == "Layanan & Pengaduan":
     st.markdown('<div class="content">', unsafe_allow_html=True)
@@ -862,7 +897,7 @@ elif st.session_state.page == "Layanan & Pengaduan":
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# JDIH & TRANSPARANSI
+# HALAMAN: JDIH & TRANSPARANSI
 # =========================================================
 elif st.session_state.page == "JDIH & Transparansi":
     st.markdown('<div class="content">', unsafe_allow_html=True)
@@ -924,7 +959,7 @@ elif st.session_state.page == "JDIH & Transparansi":
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# KONTAK
+# HALAMAN: KONTAK
 # =========================================================
 else:
     st.markdown('<div class="content">', unsafe_allow_html=True)
@@ -985,7 +1020,7 @@ else:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# FOOTER DENGAN LOGO
+# FOOTER
 # =========================================================
 st.markdown(
 f"""
@@ -1011,10 +1046,10 @@ yang menyediakan informasi kelembagaan, berita, agenda,
 produk hukum, layanan publik, dan aspirasi masyarakat.
 </p>
 <div class="footer-social">
-<div class="footer-social-item">f</div>
-<div class="footer-social-item">𝕏</div>
-<div class="footer-social-item">▶</div>
-<div class="footer-social-item">◎</div>
+<a href="#" class="footer-social-item">f</a>
+<a href="#" class="footer-social-item">𝕏</a>
+<a href="#" class="footer-social-item">▶</a>
+<a href="#" class="footer-social-item">◎</a>
 </div>
 </div>
 
@@ -1025,7 +1060,7 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 <a href="?page=profil">Profil DPRK</a>
 <a href="?page=profil">Pimpinan DPRK</a>
 <a href="?page=berita">Berita & Agenda</a>
-<a href="?page=berita">Komisi</a>
+<a href="?page=galeri">Galeri</a>
 </div>
 
 <!-- KOLOM 3 -->
@@ -1054,7 +1089,7 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 
 <div class="footer-bottom">
 <div class="footer-bottom-left">
-© 2026 DPRK Aceh Jaya. Seluruh hak cipta dilindungi.
+© {datetime.now().year} DPRK Aceh Jaya. Seluruh hak cipta dilindungi.
 </div>
 <div class="footer-bottom-right">
 Portal Informasi Publik • Kabupaten Aceh Jaya
