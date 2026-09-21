@@ -152,7 +152,7 @@ ANGGARAN_DATA = pd.DataFrame({
 })
 
 # =========================================================
-# CSS STYLE - SEMUA TEKS HITAM JELAS
+# CSS STYLE - RESPONSIVE MOBILE-FIRST
 # =========================================================
 st.markdown(
     """
@@ -179,10 +179,18 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 .block-container { max-width: 100%; padding: 0 !important; }
 section[data-testid="stSidebar"] { display: none; }
 
-/* Semua teks di app default HITAM */
 .stApp, .stApp p, .stApp span, .stApp div, .stApp label {
     color: #000000;
 }
+
+/* Hide streamlit empty space */
+.stApp > div > div { gap: 0 !important; }
+div[data-testid="stVerticalBlock"] { gap: 0 !important; }
+div[data-testid="stHorizontalBlock"] { gap: 0 !important; }
+.element-container { margin: 0 !important; }
+div[data-testid="stMarkdownContainer"] { margin: 0 !important; padding: 0 !important; }
+div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
+.stMarkdown { margin: 0 !important; }
 
 /* ============================================
    TOP BAR
@@ -190,75 +198,79 @@ section[data-testid="stSidebar"] { display: none; }
 .topbar { 
     background: #083d26; 
     color: #ffffff !important; 
-    padding: 8px 5%; 
+    padding: 10px 16px; 
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
-    font-size: 12px; 
+    font-size: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 .topbar * { color: #ffffff !important; }
-.topbar-left, .topbar-right { display: flex; gap: 18px; align-items: center; }
+.topbar-left, .topbar-right { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
 .topbar a { color: #ffffff !important; text-decoration: none; }
 .topbar a:hover { color: #e6c458 !important; }
 .topbar-clock { color: #e6c458 !important; font-weight: 600; }
 
 /* ============================================
-   HEADER / BRAND
+   HEADER BRAND
    ============================================ */
 .header-wrap {
     background: #ffffff;
-    padding: 18px 5%;
+    padding: 16px 16px;
     border-bottom: 1px solid #e0e6e2;
 }
 .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    gap: 16px;
     max-width: 1400px;
     margin: 0 auto;
+    flex-wrap: wrap;
 }
-.header-brand { display: flex; align-items: center; gap: 16px; }
+.header-brand { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 250px; }
 .header-logo {
-    width: 72px; height: 72px;
+    width: 60px; height: 60px;
     border-radius: 8px;
     background: #fff;
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
+    flex-shrink: 0;
 }
 .header-logo img { width: 100%; height: 100%; object-fit: contain; }
 .header-text-title {
     color: #083d26 !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 20px;
-    line-height: 1.15;
+    font-size: 16px;
+    line-height: 1.2;
     font-weight: 800;
     text-transform: uppercase;
 }
 .header-text-sub {
     color: #4a5a55 !important;
-    font-size: 11.5px;
-    margin-top: 4px;
-    letter-spacing: 0.5px;
+    font-size: 10.5px;
+    margin-top: 3px;
+    letter-spacing: 0.3px;
 }
-.header-social { display: flex; gap: 8px; }
+.header-social { display: flex; gap: 6px; flex-wrap: wrap; }
 .header-social-item {
-    width: 34px; height: 34px;
+    width: 32px; height: 32px;
     border-radius: 50%;
     background: #0d5e3a;
     color: #ffffff !important;
     display: flex; align-items: center; justify-content: center;
-    font-size: 13px;
+    font-size: 12px;
     text-decoration: none;
 }
 .header-social-item:hover { background: #c9a227; }
 
 /* ============================================
-   NAVBAR - BACKGROUND PUTIH, TEKS HITAM JELAS
+   NAVBAR - RESPONSIVE GRID
    ============================================ */
 .navbar {
     background: #ffffff !important;
-    padding: 0 5%;
+    padding: 8px 16px;
     border-top: 3px solid #0d5e3a;
     border-bottom: 3px solid #c9a227;
     position: sticky;
@@ -267,7 +279,7 @@ section[data-testid="stSidebar"] { display: none; }
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 
-/* FORCE semua button navbar - background putih, teks hitam */
+/* Container untuk button grid */
 .navbar .stButton > button,
 .navbar button,
 div[data-testid="stHorizontalBlock"] .stButton > button {
@@ -277,21 +289,20 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     border: 1px solid #e0e6e2 !important;
     color: #000000 !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    font-size: 13px !important;
+    font-size: 12px !important;
     font-weight: 700 !important;
-    padding: 16px 12px !important;
+    padding: 12px 8px !important;
     border-radius: 6px !important;
-    min-height: 50px !important;
+    min-height: 44px !important;
     width: 100% !important;
-    margin: 4px 2px !important;
+    margin: 2px !important;
     transition: all 0.25s ease !important;
-    letter-spacing: 0.5px !important;
+    letter-spacing: 0.3px !important;
     text-transform: uppercase !important;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
     text-shadow: none !important;
 }
 
-/* FORCE semua teks dalam button jadi hitam */
 .navbar .stButton > button p,
 .navbar .stButton > button span,
 .navbar .stButton > button div,
@@ -306,7 +317,6 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     text-shadow: none !important;
 }
 
-/* Hover state - background hijau muda */
 .navbar .stButton > button:hover {
     background: #e8f5ef !important;
     background-color: #e8f5ef !important;
@@ -319,7 +329,6 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     color: #0d5e3a !important;
 }
 
-/* Active nav - background hijau, teks putih */
 .navbar .nav-active .stButton > button {
     background: #0d5e3a !important;
     background-color: #0d5e3a !important;
@@ -337,18 +346,18 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 .running-text-bar {
     background: #ffffff;
     border-bottom: 1px solid #e0e6e2;
-    padding: 10px 5%;
+    padding: 10px 16px;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     overflow: hidden;
 }
 .running-label {
     background: #c9a227;
     color: #ffffff !important;
-    padding: 5px 14px;
+    padding: 5px 12px;
     border-radius: 3px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -358,12 +367,13 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     flex: 1;
     overflow: hidden;
     white-space: nowrap;
+    min-width: 0;
 }
 .running-scroll {
     display: inline-block;
     padding-left: 100%;
     animation: marquee 40s linear infinite;
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 600;
     color: #000000 !important;
 }
@@ -394,54 +404,53 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     position: relative;
     z-index: 3;
     max-width: 900px;
-    padding: 0 5%;
+    padding: 0 20px;
 }
 .hero-slide-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(26px, 4vw, 48px);
+    font-size: clamp(22px, 4vw, 48px);
     font-weight: 800;
-    line-height: 1.15;
-    margin-bottom: 16px;
+    line-height: 1.2;
+    margin-bottom: 14px;
     color: #ffffff !important;
     text-shadow: 0 4px 24px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.7);
 }
 .hero-slide-sub {
-    font-size: clamp(13px, 1.4vw, 17px);
+    font-size: clamp(12px, 1.4vw, 17px);
     color: #ffffff !important;
-    line-height: 1.7;
+    line-height: 1.6;
     max-width: 700px;
-    margin: 0 auto 28px;
+    margin: 0 auto 22px;
     text-shadow: 0 2px 12px rgba(0,0,0,0.9);
 }
 .hero-slide-btn {
     display: inline-block;
-    padding: 13px 32px;
+    padding: 11px 26px;
     background: #c9a227;
     color: #ffffff !important;
     text-decoration: none;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 12px;
     border-radius: 4px;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.6px;
     text-transform: uppercase;
     box-shadow: 0 6px 20px rgba(201,162,39,0.5);
 }
 .hero-slide-btn:hover {
     background: #e6c458;
-    color: #ffffff !important;
     transform: translateY(-3px);
 }
 .hero-dots {
     position: absolute;
-    bottom: 24px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 10px;
+    gap: 8px;
     z-index: 5;
 }
 .hero-dot {
-    width: 12px; height: 12px;
+    width: 10px; height: 10px;
     border-radius: 50%;
     background: rgba(255,255,255,0.5);
     border: 2px solid transparent;
@@ -453,11 +462,11 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 }
 
 /* ============================================
-   INFO STATS - BACKGROUND PUTIH, TEKS HITAM
+   INFO STATS - RESPONSIVE 2x2
    ============================================ */
 .info-stats {
     background: #ffffff !important;
-    padding: 32px 5% !important;
+    padding: 24px 16px !important;
     border-top: 3px solid #0d5e3a;
     border-bottom: 3px solid #c9a227;
     box-shadow: 0 4px 16px rgba(0,0,0,0.05);
@@ -468,7 +477,7 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 }
 .info-stat-item {
     text-align: center;
-    padding: 12px 15px;
+    padding: 10px 8px;
     position: relative;
 }
 .info-stat-item.has-divider::after {
@@ -480,7 +489,7 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 }
 .info-stat-num {
     color: #0d5e3a !important;
-    font-size: 36px !important;
+    font-size: 30px !important;
     font-weight: 800 !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
     line-height: 1 !important;
@@ -488,10 +497,10 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 }
 .info-stat-label {
     color: #000000 !important;
-    font-size: 12px !important;
-    margin-top: 8px !important;
+    font-size: 11px !important;
+    margin-top: 6px !important;
     text-transform: uppercase !important;
-    letter-spacing: 1px !important;
+    letter-spacing: 0.6px !important;
     font-weight: 700 !important;
     display: block !important;
 }
@@ -503,55 +512,57 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 22px;
-    padding-bottom: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
     border-bottom: 2px solid #e0e6e2;
     position: relative;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 .section-header::after {
     content: '';
     position: absolute;
     bottom: -2px; left: 0;
-    width: 80px;
+    width: 70px;
     height: 2px;
     background: #0d5e3a;
 }
 .section-header-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 800;
     color: #083d26 !important;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     margin: 0;
 }
 .section-header-title::before {
     content: '';
     display: inline-block;
     width: 4px;
-    height: 18px;
+    height: 16px;
     background: #c9a227;
-    margin-right: 10px;
+    margin-right: 8px;
     vertical-align: middle;
     border-radius: 2px;
 }
 .section-header-link {
     color: #0d5e3a !important;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 700;
     text-decoration: none;
 }
 .section-header-link:hover { color: #c9a227 !important; }
 
 /* ============================================
-   WARTA CARD
+   WARTA CARD - RESPONSIVE
    ============================================ */
 .warta-card {
     background: #ffffff;
     border: 1px solid #e0e6e2;
-    border-radius: 6px;
+    border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     transition: all 0.3s ease;
     display: flex;
     gap: 0;
@@ -562,13 +573,13 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     border-color: rgba(201,162,39,0.4);
 }
 .warta-card-img {
-    width: 260px;
-    min-height: 180px;
+    width: 240px;
+    min-height: 170px;
     object-fit: cover;
     flex-shrink: 0;
 }
 .warta-card-img-wrap {
-    width: 260px;
+    width: 240px;
     overflow: hidden;
     flex-shrink: 0;
     position: relative;
@@ -583,12 +594,14 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
+    z-index: 2;
 }
 .warta-card-body {
-    padding: 20px 24px;
+    padding: 18px 20px;
     flex: 1;
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 .warta-card-date {
     color: #4a5a55 !important;
@@ -599,25 +612,25 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 .warta-card-title {
     color: #000000 !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 17px;
+    font-size: 15px;
     line-height: 1.4;
     font-weight: 700;
-    margin: 0 0 10px;
+    margin: 0 0 8px;
 }
 .warta-card:hover .warta-card-title { color: #0d5e3a !important; }
 .warta-card-desc {
     color: #4a5a55 !important;
-    font-size: 13px;
-    line-height: 1.65;
+    font-size: 12.5px;
+    line-height: 1.6;
     margin: 0;
     flex: 1;
 }
 .warta-card-readmore {
     color: #0d5e3a !important;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 700;
     text-decoration: none;
-    margin-top: 12px;
+    margin-top: 10px;
     display: inline-block;
 }
 
@@ -627,19 +640,19 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 .sidebar-widget {
     background: #ffffff;
     border: 1px solid #e0e6e2;
-    border-radius: 6px;
-    margin-bottom: 24px;
+    border-radius: 8px;
+    margin-bottom: 20px;
     overflow: hidden;
 }
 .sidebar-widget-head {
     background: #0d5e3a;
     color: #ffffff !important;
-    padding: 14px 18px;
+    padding: 12px 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.6px;
     border-bottom: 3px solid #c9a227;
 }
 .sidebar-widget-body {
@@ -648,49 +661,49 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 }
 
 .kesekret-item {
-    padding: 14px 18px;
+    padding: 12px 16px;
     border-bottom: 1px solid #e0e6e2;
     display: flex;
-    gap: 12px;
+    gap: 10px;
 }
 .kesekret-item:last-child { border-bottom: none; }
 .kesekret-item:hover { background: #f9faf9; }
 .kesekret-icon {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     background: #0d5e3a;
     color: #ffffff !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 14px;
     flex-shrink: 0;
 }
-.kesekret-content { flex: 1; }
+.kesekret-content { flex: 1; min-width: 0; }
 .kesekret-title {
     color: #000000 !important;
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 700;
     line-height: 1.4;
     margin: 0 0 4px;
 }
 .kesekret-date {
     color: #4a5a55 !important;
-    font-size: 11px;
+    font-size: 10.5px;
 }
 
 .agenda-card {
     display: flex;
-    padding: 16px 18px;
+    padding: 14px 16px;
     border-bottom: 1px solid #e0e6e2;
-    gap: 14px;
+    gap: 12px;
 }
 .agenda-card:last-child { border-bottom: none; }
 .agenda-card:hover { background: #f9faf9; }
 .agenda-date-box {
-    width: 62px;
-    height: 68px;
+    width: 56px;
+    height: 62px;
     background: #0d5e3a;
     color: #ffffff !important;
     border-radius: 6px;
@@ -710,7 +723,7 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     border-radius: 6px 6px 0 0;
 }
 .agenda-day {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 800;
     line-height: 1;
     color: #ffffff !important;
@@ -720,21 +733,21 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     font-size: 9px;
     font-weight: 700;
     color: #ffffff !important;
-    margin-top: 4px;
+    margin-top: 3px;
 }
-.agenda-content { flex: 1; }
+.agenda-content { flex: 1; min-width: 0; }
 .agenda-title-link {
     color: #000000 !important;
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 700;
     line-height: 1.4;
-    margin: 0 0 6px;
+    margin: 0 0 5px;
 }
 .agenda-desc-short {
     color: #4a5a55 !important;
     font-size: 11px;
     line-height: 1.5;
-    margin: 0 0 6px;
+    margin: 0 0 5px;
 }
 .agenda-full-date {
     color: #c9a227 !important;
@@ -743,19 +756,20 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 }
 
 /* ============================================
-   LAYANAN ICON GRID
+   LAYANAN ICON GRID - RESPONSIVE
    ============================================ */
 .layanan-icon {
     background: #ffffff;
     border: 1px solid #e0e6e2;
     border-radius: 8px;
-    padding: 22px 16px;
+    padding: 18px 12px;
     text-align: center;
     transition: all 0.3s ease;
     height: 100%;
     text-decoration: none;
     display: block;
     color: #000000 !important;
+    margin-bottom: 8px;
 }
 .layanan-icon:hover {
     transform: translateY(-5px);
@@ -763,16 +777,16 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     border-color: #c9a227;
 }
 .layanan-icon-circle {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 12px;
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 10px;
     border-radius: 50%;
     background: #e8f5ef;
     color: #0d5e3a !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 22px;
 }
 .layanan-icon:hover .layanan-icon-circle {
     background: #c9a227;
@@ -781,15 +795,16 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 }
 .layanan-icon-title {
     color: #000000 !important;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.3;
 }
 .layanan-icon-desc {
     color: #4a5a55 !important;
-    font-size: 11px;
-    line-height: 1.5;
+    font-size: 10.5px;
+    line-height: 1.4;
 }
 
 /* ============================================
@@ -798,8 +813,8 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 .footer-main {
     background: #0a2a1b;
     color: #ffffff !important;
-    padding: 50px 5% 0;
-    margin-top: 60px;
+    padding: 40px 16px 0;
+    margin-top: 40px;
     border-top: 4px solid #c9a227;
 }
 .footer-main * { color: #ffffff !important; }
@@ -810,78 +825,79 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 .footer-grid {
     display: grid;
     grid-template-columns: 1.6fr 1fr 1fr 1fr;
-    gap: 40px;
-    padding-bottom: 40px;
+    gap: 30px;
+    padding-bottom: 30px;
 }
 .footer-col h4 {
     color: #ffffff !important;
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 800;
-    margin: 0 0 18px;
+    margin: 0 0 14px;
     text-transform: uppercase;
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 8px;
 }
 .footer-col h4::after {
     content: '';
     position: absolute;
     bottom: 0; left: 0;
-    width: 30px;
+    width: 28px;
     height: 2px;
     background: #c9a227;
 }
 .footer-col p {
     color: rgba(255,255,255,0.75) !important;
-    font-size: 12.5px;
-    line-height: 1.85;
-    margin: 0 0 8px;
+    font-size: 12px;
+    line-height: 1.8;
+    margin: 0 0 6px;
 }
 .footer-col a {
     display: block;
     color: rgba(255,255,255,0.75) !important;
-    font-size: 12.5px;
-    line-height: 2.1;
+    font-size: 12px;
+    line-height: 2;
     text-decoration: none;
 }
-.footer-col a:hover { color: #e6c458 !important; padding-left: 5px; }
+.footer-col a:hover { color: #e6c458 !important; padding-left: 4px; }
 .footer-brand-block {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 18px;
+    gap: 12px;
+    margin-bottom: 14px;
 }
 .footer-logo-box {
-    width: 56px;
-    height: 56px;
+    width: 50px;
+    height: 50px;
     background: #ffffff;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    flex-shrink: 0;
 }
 .footer-logo-box img { width: 100%; height: 100%; object-fit: contain; }
 .footer-brand-title {
     color: #ffffff !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
+    font-size: 13.5px;
     font-weight: 800;
     text-transform: uppercase;
 }
 .footer-brand-sub {
     color: rgba(255,255,255,0.6) !important;
-    font-size: 10px;
+    font-size: 9.5px;
     letter-spacing: 0.5px;
     margin-top: 3px;
 }
 .footer-social {
     display: flex;
-    gap: 8px;
-    margin-top: 18px;
+    gap: 6px;
+    margin-top: 14px;
 }
 .footer-social-item {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.15);
     border-radius: 6px;
@@ -889,7 +905,7 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 13px;
     text-decoration: none;
 }
 .footer-social-item:hover {
@@ -898,19 +914,20 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 }
 .footer-bottom {
     border-top: 1px solid rgba(255,255,255,0.1);
-    padding: 20px 0;
+    padding: 16px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
-    font-size: 11.5px;
+    gap: 8px;
+    font-size: 11px;
     color: rgba(255,255,255,0.55) !important;
+    text-align: center;
 }
 .footer-bottom * { color: rgba(255,255,255,0.55) !important; }
 
 /* ============================================
-   STREAMLIT BUTTON (default, non-navbar)
+   BUTTON & FORM
    ============================================ */
 .stButton > button {
     background: #0d5e3a !important;
@@ -922,17 +939,7 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 .stButton > button:hover {
     background: #14734a !important;
 }
-.stButton > button[kind="primary"] {
-    background: #0d5e3a !important;
-    color: #ffffff !important;
-}
-.stButton > button[kind="primary"]:hover {
-    background: #14734a !important;
-}
-
-/* Tapi button di NAVBAR harus tetap PUTIH dengan TEKS HITAM */
-.navbar .stButton > button,
-.navbar button {
+.navbar .stButton > button {
     background: #ffffff !important;
     color: #000000 !important;
 }
@@ -944,18 +951,12 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
     background: #0d5e3a !important;
     color: #ffffff !important;
 }
-.navbar .nav-active .stButton > button * {
-    color: #ffffff !important;
-}
 
-/* ============================================
-   FORM & INPUT
-   ============================================ */
 div[data-testid="stForm"] {
     background: #ffffff;
     border: 1px solid #e0e6e2;
     border-radius: 8px;
-    padding: 24px !important;
+    padding: 20px !important;
 }
 .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div {
     border-radius: 6px !important;
@@ -963,14 +964,11 @@ div[data-testid="stForm"] {
     color: #000000 !important;
 }
 
-/* ============================================
-   PAGE CONTAINER
-   ============================================ */
 .page-container {
     width: 92%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 30px 0;
+    padding: 24px 0;
 }
 
 /* Tabs */
@@ -978,15 +976,16 @@ div[data-testid="stForm"] {
     gap: 4px;
     background: transparent;
     border-bottom: 2px solid #e0e6e2;
+    flex-wrap: wrap;
 }
 .stTabs [data-baseweb="tab"] {
     background: transparent;
     border-radius: 6px 6px 0 0;
-    padding: 12px 24px;
+    padding: 10px 16px;
     color: #4a5a55 !important;
     font-weight: 700;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
 }
 .stTabs [aria-selected="true"] {
     background: #f0f6f2 !important;
@@ -994,19 +993,174 @@ div[data-testid="stForm"] {
     border-bottom: 3px solid #0d5e3a;
 }
 
-/* Plotly chart text */
-.js-plotly-plot .plotly .gtitle,
-.js-plotly-plot .plotly text {
-    fill: #000000 !important;
+/* ============================================
+   RESPONSIVE - TABLET
+   ============================================ */
+@media (max-width: 1024px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .warta-card-img-wrap, .warta-card-img { width: 200px; }
+    .hero-slider { height: 420px; }
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-    .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
-    .footer-bottom { flex-direction: column; text-align: center; }
-    .warta-card { flex-direction: column; }
-    .warta-card-img-wrap, .warta-card-img { width: 100%; height: 200px; }
-    .hero-slider { height: 380px; }
+/* ============================================
+   RESPONSIVE - MOBILE (HP)
+   ============================================ */
+@media (max-width: 768px) {
+    /* Topbar stack */
+    .topbar { 
+        flex-direction: column; 
+        gap: 6px; 
+        text-align: center; 
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+    .topbar-left, .topbar-right { 
+        justify-content: center; 
+        gap: 10px; 
+        font-size: 11px;
+    }
+    .topbar-right a { display: none; }
+    .topbar-clock { font-size: 11px; }
+    
+    /* Header mobile */
+    .header-wrap { padding: 12px; }
+    .header-inner { gap: 10px; }
+    .header-logo { width: 50px; height: 50px; }
+    .header-text-title { font-size: 13px; }
+    .header-text-sub { font-size: 9px; }
+    .header-social { 
+        width: 100%; 
+        justify-content: center; 
+        margin-top: 8px; 
+        padding-top: 8px;
+        border-top: 1px solid #e0e6e2;
+    }
+    .header-social-item { width: 30px; height: 30px; font-size: 11px; }
+    
+    /* Navbar mobile - grid 4-3 */
+    .navbar { padding: 6px 8px; }
+    .navbar .stButton > button,
+    .navbar button {
+        font-size: 10px !important;
+        padding: 10px 4px !important;
+        min-height: 38px !important;
+        margin: 1px !important;
+        letter-spacing: 0 !important;
+    }
+    .navbar .stButton > button p,
+    .navbar .stButton > button span,
+    .navbar .stButton > button * {
+        font-size: 10px !important;
+    }
+    
+    /* Running text */
+    .running-text-bar { padding: 8px 12px; gap: 8px; }
+    .running-label { font-size: 9px; padding: 4px 10px; }
+    .running-scroll { font-size: 11.5px; }
+    
+    /* Hero mobile */
+    .hero-slider { height: 340px; }
+    .hero-slide-title { font-size: 20px; margin-bottom: 10px; }
+    .hero-slide-sub { font-size: 12px; margin-bottom: 16px; }
+    .hero-slide-btn { padding: 10px 20px; font-size: 11px; }
+    .hero-dots { bottom: 14px; }
+    .hero-dot { width: 8px; height: 8px; }
+    
+    /* Info stats mobile - 2x2 grid */
+    .info-stats { padding: 18px 12px !important; }
+    .info-stat-num { font-size: 24px !important; }
+    .info-stat-label { font-size: 9.5px !important; margin-top: 4px !important; }
+    .info-stat-item { padding: 8px 4px; }
+    
+    /* Page container */
+    .page-container { width: 95%; padding: 18px 0; }
+    
+    /* Section header */
+    .section-header { margin-bottom: 14px; padding-bottom: 8px; }
+    .section-header-title { font-size: 15px; }
+    .section-header-title::before { width: 3px; height: 14px; margin-right: 6px; }
+    .section-header-link { font-size: 11px; }
+    
+    /* Layanan icon grid mobile - 2 columns */
+    .layanan-icon { padding: 14px 8px; margin-bottom: 6px; }
+    .layanan-icon-circle { width: 44px; height: 44px; font-size: 18px; margin-bottom: 8px; }
+    .layanan-icon-title { font-size: 11px; margin-bottom: 3px; }
+    .layanan-icon-desc { font-size: 9.5px; line-height: 1.3; }
+    
+    /* Warta card mobile - gambar di atas */
+    .warta-card { 
+        flex-direction: column; 
+        margin-bottom: 12px;
+    }
+    .warta-card-img-wrap { 
+        width: 100%; 
+        height: 180px; 
+    }
+    .warta-card-img { 
+        width: 100%; 
+        height: 180px; 
+        min-height: auto;
+    }
+    .warta-card-body { padding: 14px; }
+    .warta-card-title { font-size: 14px; margin-bottom: 6px; }
+    .warta-card-desc { font-size: 12px; line-height: 1.5; }
+    .warta-card-readmore { font-size: 11px; margin-top: 8px; }
+    .warta-card-cat { font-size: 9px; padding: 3px 8px; top: 10px; left: 10px; }
+    .warta-card-date { font-size: 10px; margin-bottom: 6px; }
+    
+    /* Sidebar widget mobile */
+    .sidebar-widget { margin-bottom: 16px; }
+    .sidebar-widget-head { padding: 10px 14px; font-size: 12px; }
+    .kesekret-item { padding: 10px 14px; }
+    .kesekret-icon { width: 34px; height: 34px; font-size: 13px; }
+    .kesekret-title { font-size: 11.5px; }
+    .kesekret-date { font-size: 10px; }
+    
+    /* Agenda mobile */
+    .agenda-card { padding: 12px 14px; gap: 10px; }
+    .agenda-date-box { width: 50px; height: 56px; }
+    .agenda-day { font-size: 20px; }
+    .agenda-month-year { font-size: 8px; }
+    .agenda-title-link { font-size: 11.5px; }
+    .agenda-desc-short { font-size: 10.5px; line-height: 1.4; }
+    .agenda-full-date { font-size: 10px; }
+    
+    /* Footer mobile - 1 column */
+    .footer-main { padding: 30px 14px 0; margin-top: 30px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 22px; padding-bottom: 22px; }
+    .footer-col h4 { font-size: 12px; margin-bottom: 10px; padding-bottom: 6px; }
+    .footer-col p, .footer-col a { font-size: 11.5px; line-height: 1.8; }
+    .footer-brand-block { gap: 10px; margin-bottom: 12px; }
+    .footer-logo-box { width: 44px; height: 44px; }
+    .footer-brand-title { font-size: 12.5px; }
+    .footer-brand-sub { font-size: 9px; }
+    .footer-social-item { width: 30px; height: 30px; font-size: 12px; }
+    .footer-bottom { flex-direction: column; text-align: center; padding: 14px 0; font-size: 10.5px; gap: 6px; }
+    
+    /* Tabs mobile */
+    .stTabs [data-baseweb="tab"] { padding: 8px 12px; font-size: 11px; }
+    
+    /* Form mobile */
+    div[data-testid="stForm"] { padding: 16px !important; }
+}
+
+/* Extra small phones */
+@media (max-width: 400px) {
+    .navbar .stButton > button { font-size: 9px !important; padding: 8px 2px !important; }
+    .hero-slider { height: 300px; }
+    .hero-slide-title { font-size: 17px; }
+    .hero-slide-sub { font-size: 11px; }
+    .info-stat-num { font-size: 20px !important; }
+    .info-stat-label { font-size: 8.5px !important; }
+    .layanan-icon-title { font-size: 10px; }
+    .layanan-icon-desc { font-size: 9px; }
+    .warta-card-title { font-size: 13px; }
+    .warta-card-desc { font-size: 11px; }
+}
+
+/* Fix plotly di mobile */
+@media (max-width: 768px) {
+    .js-plotly-plot { font-size: 10px !important; }
 }
 </style>
 """,
@@ -1041,8 +1195,6 @@ st.markdown(
     <div class="topbar-right">
         <span class="topbar-clock">🕐 {now.strftime('%A, %d %B %Y | %H:%M:%S WIB')}</span>
         <a href="?page=kontak">Hubungi Kami</a>
-        <span>|</span>
-        <a href="?page=jdih">PPID</a>
     </div>
 </div>
 """,
@@ -1071,7 +1223,6 @@ st.markdown(
             <a href="#" class="header-social-item">𝕏</a>
             <a href="#" class="header-social-item">▶</a>
             <a href="#" class="header-social-item">◎</a>
-            <a href="#" class="header-social-item">in</a>
         </div>
     </div>
 </div>
@@ -1080,11 +1231,13 @@ st.markdown(
 )
 
 # =========================================================
-# NAVBAR - PUTIH TEKS HITAM
+# NAVBAR - RESPONSIVE GRID (4-3 di mobile)
 # =========================================================
 st.markdown('<div class="navbar">', unsafe_allow_html=True)
-nav_cols = st.columns(7)
+
+# Detect screen via columns: 7 cols di desktop, akan otomatis wrap di mobile karena CSS
 nav_keys = list(PAGES.keys())
+nav_cols = st.columns(7)
 
 for i, key in enumerate(nav_keys):
     with nav_cols[i]:
@@ -1103,7 +1256,7 @@ st.markdown("</div>", unsafe_allow_html=True)
 st.markdown(
     """
 <div class="running-text-bar">
-    <span class="running-label">📢 INFO TERKINI</span>
+    <span class="running-label">📢 INFO</span>
     <div class="running-scroll-wrap">
         <div class="running-scroll">
             Selamat Datang di Portal Resmi Sekretariat DPRK Kabupaten Aceh Jaya &nbsp;&nbsp;•&nbsp;&nbsp;
@@ -1143,24 +1296,25 @@ if st.session_state.page == "Beranda":
         unsafe_allow_html=True,
     )
 
-    slide_cols = st.columns([1, 1, 1, 1, 1])
-    with slide_cols[1]:
+    # Navigasi slider - 3 kolom
+    slide_cols = st.columns([1, 1, 1])
+    with slide_cols[0]:
         if st.button("◀ Sebelumnya", key="slide_prev", use_container_width=True):
             st.session_state.slide_index = (st.session_state.slide_index - 1) % len(HERO_SLIDES)
             st.rerun()
-    with slide_cols[3]:
+    with slide_cols[2]:
         if st.button("Berikutnya ▶", key="slide_next", use_container_width=True):
             st.session_state.slide_index = (st.session_state.slide_index + 1) % len(HERO_SLIDES)
             st.rerun()
 
-    # INFO STATS
+    # INFO STATS - 4 columns (otomatis 2x2 di mobile via CSS)
     st.markdown('<div class="info-stats"><div class="info-stats-inner">', unsafe_allow_html=True)
     stat_cols = st.columns(4)
     stats = [
         ("20", "Anggota DPRK"),
         ("4", "Komisi DPRK"),
         ("120+", "Produk Hukum"),
-        (f"{st.session_state.visitor_count:,}", "Total Kunjungan"),
+        (f"{st.session_state.visitor_count:,}", "Kunjungan"),
     ]
     for i, (num, label) in enumerate(stats):
         with stat_cols[i]:
@@ -1176,29 +1330,50 @@ if st.session_state.page == "Beranda":
             )
     st.markdown("</div></div>", unsafe_allow_html=True)
 
-    # LAYANAN ICON GRID
+    # LAYANAN ICON GRID - 6 cols desktop, 3 cols tablet, 2 cols mobile
     st.markdown('<div class="page-container">', unsafe_allow_html=True)
     st.markdown(
         """
     <div class="section-header">
         <h2 class="section-header-title">Layanan Publik</h2>
-        <a href="?page=layanan" class="section-header-link">Lihat Semua →</a>
     </div>
     """,
         unsafe_allow_html=True,
     )
 
     layanan_items = [
-        ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi & laporan", "layanan"),
+        ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi", "layanan"),
         ("📜", "JDIH", "Produk hukum daerah", "jdih"),
         ("📅", "Agenda DPRK", "Jadwal rapat & sidang", "berita"),
         ("📊", "Transparansi", "Informasi publik", "jdih"),
         ("📂", "Dokumen Publik", "Akses dokumen resmi", "jdih"),
-        ("🔗", "E-LHKPN", "Pelaporan harta kekayaan", "https://elhpkpn.kpk.go.id/"),
+        ("🔗", "E-LHKPN", "Pelaporan harta", "https://elhpkpn.kpk.go.id/"),
     ]
-    cols = st.columns(6)
-    for i, (icon, title, desc, target) in enumerate(layanan_items):
-        with cols[i]:
+    
+    # Row 1: 3 items
+    row1_cols = st.columns(3)
+    for i in range(3):
+        icon, title, desc, target = layanan_items[i]
+        with row1_cols[i]:
+            is_ext = target.startswith("http")
+            href = target if is_ext else f"?page={target}"
+            tgt = 'target="_blank" rel="noopener"' if is_ext else ""
+            st.markdown(
+                f"""
+            <a href="{href}" {tgt} class="layanan-icon">
+                <div class="layanan-icon-circle">{icon}</div>
+                <div class="layanan-icon-title">{title}</div>
+                <div class="layanan-icon-desc">{desc}</div>
+            </a>
+            """,
+                unsafe_allow_html=True,
+            )
+    
+    # Row 2: 3 items
+    row2_cols = st.columns(3)
+    for i in range(3, 6):
+        icon, title, desc, target = layanan_items[i]
+        with row2_cols[i - 3]:
             is_ext = target.startswith("http")
             href = target if is_ext else f"?page={target}"
             tgt = 'target="_blank" rel="noopener"' if is_ext else ""
@@ -1215,7 +1390,7 @@ if st.session_state.page == "Beranda":
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # KONTEN 2 KOLOM
+    # KONTEN 2 KOLOM - Warta + Sidebar
     st.markdown('<div class="page-container">', unsafe_allow_html=True)
     main_col, side_col = st.columns([2, 1])
 
@@ -1240,7 +1415,7 @@ if st.session_state.page == "Beranda":
                 <div class="warta-card-body">
                     <div class="warta-card-date">📅 {item['date']}</div>
                     <h3 class="warta-card-title">{item['title']}</h3>
-                    <p class="warta-card-desc">{item['desc'][:150]}...</p>
+                    <p class="warta-card-desc">{item['desc'][:130]}...</p>
                     <a href="?page=berita" class="warta-card-readmore">Baca Selengkapnya →</a>
                 </div>
             </div>
@@ -1322,12 +1497,12 @@ if st.session_state.page == "Beranda":
         fig1.update_layout(
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(family="Inter", size=12, color="#000000"),
-            title_font=dict(size=14, family="Plus Jakarta Sans", color="#000000"),
-            margin=dict(l=20, r=20, t=50, b=20),
-            height=300,
+            font=dict(family="Inter", size=11, color="#000000"),
+            title_font=dict(size=13, family="Plus Jakarta Sans", color="#000000"),
+            margin=dict(l=10, r=10, t=40, b=10),
+            height=280,
         )
-        fig1.update_traces(line=dict(width=3), marker=dict(size=9, line=dict(width=2, color="#fff")))
+        fig1.update_traces(line=dict(width=3), marker=dict(size=8, line=dict(width=2, color="#fff")))
         st.plotly_chart(fig1, use_container_width=True)
 
     with stat_col2:
@@ -1340,10 +1515,10 @@ if st.session_state.page == "Beranda":
         fig2.update_layout(
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(family="Inter", size=12, color="#000000"),
-            title_font=dict(size=14, family="Plus Jakarta Sans", color="#000000"),
-            margin=dict(l=20, r=20, t=50, b=20),
-            height=300,
+            font=dict(family="Inter", size=11, color="#000000"),
+            title_font=dict(size=13, family="Plus Jakarta Sans", color="#000000"),
+            margin=dict(l=10, r=10, t=40, b=10),
+            height=280,
         )
         st.plotly_chart(fig2, use_container_width=True)
 
@@ -1359,42 +1534,42 @@ elif st.session_state.page == "Profil":
     <div class="section-header">
         <h2 class="section-header-title">Profil DPRK Aceh Jaya</h2>
     </div>
-    <p style="color: #000000; font-size: 13.5px; line-height: 1.8; max-width: 900px; margin-bottom: 24px;">
+    <p style="color: #000000; font-size: 13px; line-height: 1.7; max-width: 900px; margin-bottom: 20px;">
         Dewan Perwakilan Rakyat Kabupaten Aceh Jaya sebagai unsur penyelenggara pemerintahan daerah bersama pemerintah daerah menjalankan fungsi legislasi, anggaran, dan pengawasan sesuai ketentuan peraturan perundang-undangan.
     </p>
     """,
         unsafe_allow_html=True,
     )
 
-    tab1, tab2 = st.tabs(["🏛️ Pimpinan & Anggota DPRK", "🏢 Pejabat Sekretariat"])
+    tab1, tab2 = st.tabs(["🏛️ Pimpinan & Anggota", "🏢 Pejabat Sekretariat"])
 
     with tab1:
-        st.markdown('<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 20px;">', unsafe_allow_html=True)
-        for nama, jabatan in PIMPINAN_DAN_ANGGOTA:
-            st.markdown(
-                f"""
-            <div style="background: #fff; border: 1px solid #e0e6e2; border-radius: 8px; padding: 18px; text-align: center; border-top: 3px solid #0d5e3a;">
-                <div style="font-weight: 800; color: #000000; font-size: 13px; margin-bottom: 5px; font-family: 'Plus Jakarta Sans';">{nama}</div>
-                <div style="color: #4a5a55; font-size: 11px; font-weight: 600;">{jabatan}</div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
-        st.markdown('</div>', unsafe_allow_html=True)
+        cols = st.columns(2)
+        for i, (nama, jabatan) in enumerate(PIMPINAN_DAN_ANGGOTA):
+            with cols[i % 2]:
+                st.markdown(
+                    f"""
+                <div style="background: #fff; border: 1px solid #e0e6e2; border-radius: 8px; padding: 14px; text-align: center; border-top: 3px solid #0d5e3a; margin-bottom: 10px;">
+                    <div style="font-weight: 800; color: #000000; font-size: 12px; margin-bottom: 4px; font-family: 'Plus Jakarta Sans';">{nama}</div>
+                    <div style="color: #4a5a55; font-size: 10.5px; font-weight: 600;">{jabatan}</div>
+                </div>
+                """,
+                    unsafe_allow_html=True,
+                )
 
     with tab2:
-        st.markdown('<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; margin-top: 20px;">', unsafe_allow_html=True)
-        for nama, jabatan in PEJABAT_SEKRETARIAT:
-            st.markdown(
-                f"""
-            <div style="background: #fff; border: 1px solid #e0e6e2; border-radius: 8px; padding: 18px; text-align: center; border-top: 3px solid #c9a227;">
-                <div style="font-weight: 800; color: #000000; font-size: 13px; margin-bottom: 5px; font-family: 'Plus Jakarta Sans';">{nama}</div>
-                <div style="color: #4a5a55; font-size: 11.5px; font-weight: 600;">{jabatan}</div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
-        st.markdown('</div>', unsafe_allow_html=True)
+        cols = st.columns(2)
+        for i, (nama, jabatan) in enumerate(PEJABAT_SEKRETARIAT):
+            with cols[i % 2]:
+                st.markdown(
+                    f"""
+                <div style="background: #fff; border: 1px solid #e0e6e2; border-radius: 8px; padding: 14px; text-align: center; border-top: 3px solid #c9a227; margin-bottom: 10px;">
+                    <div style="font-weight: 800; color: #000000; font-size: 12px; margin-bottom: 4px; font-family: 'Plus Jakarta Sans';">{nama}</div>
+                    <div style="color: #4a5a55; font-size: 10.5px; font-weight: 600;">{jabatan}</div>
+                </div>
+                """,
+                    unsafe_allow_html=True,
+                )
 
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -1413,11 +1588,11 @@ elif st.session_state.page == "Berita":
     )
 
     categories = ["Semua"] + list(set(item["kategori"] for item in WARTA_DPRK))
-    fc1, fc2, _ = st.columns([1.5, 1.5, 4])
+    fc1, fc2 = st.columns(2)
     with fc1:
         selected = st.selectbox("🔍 Kategori", categories)
     with fc2:
-        search = st.text_input("🔎 Cari berita", placeholder="Kata kunci...")
+        search = st.text_input("🔎 Cari", placeholder="Kata kunci...")
 
     filtered = WARTA_DPRK
     if selected != "Semua":
@@ -1428,7 +1603,7 @@ elif st.session_state.page == "Berita":
     for item in filtered:
         st.markdown(
             f"""
-        <div class="warta-card" style="margin-top: 16px;">
+        <div class="warta-card" style="margin-top: 12px;">
             <div class="warta-card-img-wrap">
                 <span class="warta-card-cat">{item['kategori']}</span>
                 <img class="warta-card-img" src="{item['image']}">
@@ -1449,7 +1624,7 @@ elif st.session_state.page == "Berita":
 
     st.markdown(
         """
-    <div class="section-header" style="margin-top: 40px;">
+    <div class="section-header" style="margin-top: 30px;">
         <h2 class="section-header-title">Agenda Terkini</h2>
     </div>
     """,
@@ -1458,7 +1633,7 @@ elif st.session_state.page == "Berita":
     for item in AGENDA_TERKINI:
         st.markdown(
             f"""
-        <div class="agenda-card" style="border: 1px solid #e0e6e2; border-radius: 6px; margin-bottom: 10px; background: #fff;">
+        <div class="agenda-card" style="border: 1px solid #e0e6e2; border-radius: 6px; margin-bottom: 8px; background: #fff;">
             <div class="agenda-date-box">
                 <div class="agenda-day">{item['hari']}</div>
                 <div class="agenda-month-year">{item['bulan_tahun']}</div>
@@ -1496,22 +1671,28 @@ elif st.session_state.page == "Galeri":
         ("Rapat Komisi", "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=600&q=80"),
         ("Bimbingan Teknis", "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80"),
     ]
-    gcols = st.columns(3)
-    for i, (title, img) in enumerate(gallery):
-        with gcols[i % 3]:
-            st.markdown(
-                f"""
-            <div style="background: #fff; border: 1px solid #e0e6e2; border-radius: 8px; overflow: hidden; margin-bottom: 16px;">
-                <div style="overflow: hidden;">
-                    <img src="{img}" style="width: 100%; height: 200px; object-fit: cover;">
-                </div>
-                <div style="padding: 14px; text-align: center;">
-                    <div style="font-family: 'Plus Jakarta Sans'; font-weight: 700; color: #000000; font-size: 13px;">{title}</div>
-                </div>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
+    
+    # 2 kolom di mobile, otomatis wrap
+    for i in range(0, len(gallery), 2):
+        gcols = st.columns(2)
+        for j in range(2):
+            if i + j < len(gallery):
+                title, img = gallery[i + j]
+                with gcols[j]:
+                    st.markdown(
+                        f"""
+                    <div style="background: #fff; border: 1px solid #e0e6e2; border-radius: 8px; overflow: hidden; margin-bottom: 10px;">
+                        <div style="overflow: hidden;">
+                            <img src="{img}" style="width: 100%; height: 160px; object-fit: cover;">
+                        </div>
+                        <div style="padding: 10px; text-align: center;">
+                            <div style="font-family: 'Plus Jakarta Sans'; font-weight: 700; color: #000000; font-size: 11.5px;">{title}</div>
+                        </div>
+                    </div>
+                    """,
+                        unsafe_allow_html=True,
+                    )
+
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
@@ -1524,61 +1705,58 @@ elif st.session_state.page == "Layanan":
     <div class="section-header">
         <h2 class="section-header-title">Layanan Aspirasi & Pengaduan</h2>
     </div>
-    <p style="color: #000000; font-size: 13.5px; line-height: 1.8; max-width: 900px; margin-bottom: 24px;">
-        Sampaikan aspirasi, laporan, atau pengaduan Anda kepada DPRK Aceh Jaya melalui formulir di bawah ini.
+    <p style="color: #000000; font-size: 13px; line-height: 1.7; margin-bottom: 20px;">
+        Sampaikan aspirasi, laporan, atau pengaduan Anda kepada DPRK Aceh Jaya.
     </p>
     """,
         unsafe_allow_html=True,
     )
 
-    col1, col2 = st.columns([2, 1])
+    with st.form("form_aduan"):
+        c1, c2 = st.columns(2)
+        with c1:
+            nama = st.text_input("Nama Lengkap *", placeholder="Nama lengkap")
+            nik = st.text_input("NIK (Opsional)", placeholder="16 digit NIK")
+        with c2:
+            kategori = st.selectbox("Kategori *", ["Pengaduan Masyarakat", "Infrastruktur & Jalan", "Pelayanan Publik", "Legislasi & Qanun", "Lingkungan & Bencana", "Lainnya"])
+            prioritas = st.selectbox("Prioritas", ["Normal", "Penting", "Mendesak"])
+        lokasi = st.text_input("Lokasi Kejadian", placeholder="Desa / Kecamatan")
+        isi = st.text_area("Isi Laporan *", height=120, placeholder="Jelaskan laporan Anda...")
+        lampiran = st.file_uploader("📎 Lampiran", type=["jpg", "jpeg", "png", "pdf"])
 
-    with col1:
-        with st.form("form_aduan"):
-            c1, c2 = st.columns(2)
-            with c1:
-                nama = st.text_input("Nama Lengkap *", placeholder="Nama lengkap Anda")
-                nik = st.text_input("NIK (Opsional)", placeholder="16 digit NIK")
-            with c2:
-                kategori = st.selectbox("Kategori *", ["Pengaduan Masyarakat", "Infrastruktur & Jalan", "Pelayanan Publik", "Legislasi & Qanun", "Lingkungan & Bencana", "Lainnya"])
-                prioritas = st.selectbox("Prioritas", ["Normal", "Penting", "Mendesak"])
-            lokasi = st.text_input("Lokasi Kejadian", placeholder="Desa / Kecamatan")
-            isi = st.text_area("Isi Laporan *", height=140, placeholder="Jelaskan laporan Anda secara detail...")
-            lampiran = st.file_uploader("📎 Lampiran", type=["jpg", "jpeg", "png", "pdf"])
+        submitted = st.form_submit_button("🚀 Kirim Laporan", type="primary", use_container_width=True)
 
-            submitted = st.form_submit_button("🚀 Kirim Laporan", type="primary", use_container_width=True)
+        if submitted:
+            if nama.strip() and isi.strip():
+                nomor = datetime.now().strftime("%Y%m%d%H%M%S")
+                st.success(f"✅ Laporan diterima! Nomor tiket: **ADU-{nomor}**")
+                st.info(f"📋 Kategori: {kategori} | Prioritas: {prioritas}")
+            else:
+                st.error("⚠️ Mohon lengkapi Nama dan Isi Laporan.")
 
-            if submitted:
-                if nama.strip() and isi.strip():
-                    nomor = datetime.now().strftime("%Y%m%d%H%M%S")
-                    st.success(f"✅ Laporan diterima! Nomor tiket: **ADU-{nomor}**")
-                    st.info(f"📋 Kategori: {kategori} | Prioritas: {prioritas}")
-                else:
-                    st.error("⚠️ Mohon lengkapi Nama dan Isi Laporan.")
-
-    with col2:
-        st.markdown(
-            """
-        <div class="sidebar-widget">
-            <div class="sidebar-widget-head">Kontak Kami</div>
-            <div class="sidebar-widget-body" style="padding: 18px;">
-                <p style="font-size: 12.5px; color: #000000; line-height: 1.9; margin: 0 0 12px;">
-                    <strong style="color: #0d5e3a;">📞 Telepon</strong><br>(0655) 12345
-                </p>
-                <p style="font-size: 12.5px; color: #000000; line-height: 1.9; margin: 0 0 12px;">
-                    <strong style="color: #0d5e3a;">✉️ Email</strong><br>sekretariat@dprk.acehjaya.go.id
-                </p>
-                <p style="font-size: 12.5px; color: #000000; line-height: 1.9; margin: 0 0 12px;">
-                    <strong style="color: #0d5e3a;">📍 Alamat</strong><br>Jl. Merdeka No. 01, Calang, Aceh Jaya
-                </p>
-                <p style="font-size: 12.5px; color: #000000; line-height: 1.9; margin: 0;">
-                    <strong style="color: #0d5e3a;">🕐 Jam Layanan</strong><br>Senin–Jumat, 08.00–16.00 WIB
-                </p>
-            </div>
+    # Kontak info
+    st.markdown(
+        """
+    <div class="sidebar-widget" style="margin-top: 20px;">
+        <div class="sidebar-widget-head">Kontak Kami</div>
+        <div class="sidebar-widget-body" style="padding: 16px;">
+            <p style="font-size: 12px; color: #000000; line-height: 1.8; margin: 0 0 10px;">
+                <strong style="color: #0d5e3a;">📞 Telepon</strong><br>(0655) 12345
+            </p>
+            <p style="font-size: 12px; color: #000000; line-height: 1.8; margin: 0 0 10px;">
+                <strong style="color: #0d5e3a;">✉️ Email</strong><br>sekretariat@dprk.acehjaya.go.id
+            </p>
+            <p style="font-size: 12px; color: #000000; line-height: 1.8; margin: 0 0 10px;">
+                <strong style="color: #0d5e3a;">📍 Alamat</strong><br>Jl. Merdeka No. 01, Calang, Aceh Jaya
+            </p>
+            <p style="font-size: 12px; color: #000000; line-height: 1.8; margin: 0;">
+                <strong style="color: #0d5e3a;">🕐 Jam Layanan</strong><br>Senin–Jumat, 08.00–16.00 WIB
+            </p>
         </div>
-        """,
-            unsafe_allow_html=True,
-        )
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
@@ -1591,7 +1769,7 @@ elif st.session_state.page == "JDIH":
     <div class="section-header">
         <h2 class="section-header-title">JDIH & Transparansi</h2>
     </div>
-    <p style="color: #000000; font-size: 13.5px; line-height: 1.8; max-width: 900px; margin-bottom: 24px;">
+    <p style="color: #000000; font-size: 13px; line-height: 1.7; margin-bottom: 20px;">
         Akses daftar produk hukum dan informasi publik DPRK Aceh Jaya.
     </p>
     """,
@@ -1616,9 +1794,10 @@ else:
         unsafe_allow_html=True,
     )
 
+    # 1 kolom mobile, otomatis stack
     cols = st.columns(3)
     contacts = [
-        ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya"),
+        ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Aceh Jaya"),
         ("📞", "Telepon", "(0655) 12345"),
         ("✉️", "Email", "sekretariat@dprk.acehjaya.go.id"),
     ]
@@ -1637,11 +1816,11 @@ else:
 
     st.markdown(
         """
-    <div style="margin-top: 30px; background: #fff; border: 1px solid #e0e6e2; border-radius: 8px; padding: 24px;">
-        <div class="section-header" style="margin-bottom: 16px;">
-            <h2 class="section-header-title" style="font-size: 17px;">Peta Lokasi Kantor</h2>
+    <div style="margin-top: 20px; background: #fff; border: 1px solid #e0e6e2; border-radius: 8px; padding: 18px;">
+        <div class="section-header" style="margin-bottom: 12px;">
+            <h2 class="section-header-title" style="font-size: 15px;">Peta Lokasi</h2>
         </div>
-        <div style="width: 100%; height: 340px; border-radius: 6px; overflow: hidden; border: 1px solid #e0e6e2;">
+        <div style="width: 100%; height: 280px; border-radius: 6px; overflow: hidden; border: 1px solid #e0e6e2;">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.5!2d95.39!3d4.71!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30403e5f3a0b0b0b%3A0x0!2sCalang%2C%20Aceh%20Jaya%20Regency%2C%20Aceh!5e0!3m2!1sen!2sid!4v1600000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
@@ -1670,15 +1849,14 @@ st.markdown(
 <div class="footer-brand-sub">SEKRETARIAT DPRK</div>
 </div>
 </div>
-<p style="color: rgba(255,255,255,0.75); font-size: 12.5px; line-height: 1.85; max-width: 340px; margin: 0 0 8px;">
-Portal resmi Sekretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Menyediakan informasi kelembagaan, berita, agenda, produk hukum, dan layanan aspirasi masyarakat.
+<p style="color: rgba(255,255,255,0.75); font-size: 12px; line-height: 1.8; margin: 0 0 8px;">
+Portal resmi Sekretariat DPRK Kabupaten Aceh Jaya. Menyediakan informasi kelembagaan, berita, agenda, produk hukum, dan aspirasi masyarakat.
 </p>
 <div class="footer-social">
 <a href="#" class="footer-social-item">f</a>
 <a href="#" class="footer-social-item">𝕏</a>
 <a href="#" class="footer-social-item">▶</a>
 <a href="#" class="footer-social-item">◎</a>
-<a href="#" class="footer-social-item">in</a>
 </div>
 </div>
 
@@ -1686,7 +1864,6 @@ Portal resmi Sekretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Menyediaka
 <h4>Navigasi</h4>
 <a href="?page=beranda">Beranda</a>
 <a href="?page=profil">Profil DPRK</a>
-<a href="?page=profil">Pimpinan DPRK</a>
 <a href="?page=berita">Berita & Agenda</a>
 <a href="?page=galeri">Galeri</a>
 </div>
@@ -1696,7 +1873,6 @@ Portal resmi Sekretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Menyediaka
 <a href="?page=layanan">Pengaduan Masyarakat</a>
 <a href="?page=kontak">Informasi Publik</a>
 <a href="?page=jdih">JDIH</a>
-<a href="?page=jdih">Transparansi</a>
 <a href="https://elhpkpn.kpk.go.id/" target="_blank">E-LHKPN</a>
 </div>
 
@@ -1706,14 +1882,12 @@ Portal resmi Sekretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Menyediaka
 <p>Calang, Kabupaten Aceh Jaya</p>
 <p>📞 (0655) 12345</p>
 <p>✉️ sekretariat@dprk.acehjaya.go.id</p>
-<p>🕐 Senin–Jumat, 08.00–16.00 WIB</p>
 </div>
 
 </div>
 
 <div class="footer-bottom">
 <div>© {datetime.now().year} Sekretariat DPRK Kabupaten Aceh Jaya. Seluruh hak cipta dilindungi.</div>
-<div>Portal Informasi Publik • Kabupaten Aceh Jaya</div>
 </div>
 
 </div>
