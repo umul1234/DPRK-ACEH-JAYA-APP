@@ -7,7 +7,7 @@ import pandas as pd
 # =========================================================
 st.set_page_config(
     page_title="DPRK Aceh Jaya | Portal Informasi Publik",
-    page_icon="https://i.imgur.com/FnS6rer.png",
+    page_icon="https://imgur.com/UzP3CBQ",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -15,7 +15,7 @@ st.set_page_config(
 # =========================================================
 # LOGO URL
 # =========================================================
-LOGO_URL = "https://i.imgur.com/FnS6rer.png"
+LOGO_URL = "https://imgur.com/UzP3CBQ"
 
 # =========================================================
 # DATA
@@ -41,7 +41,7 @@ NEWS = [
         "tag": "RAPAT PARIPURNA",
         "date": "10 Agustus 2026",
         "title": "DPRK Aceh Jaya Gelar Rapat Paripurna Pandangan Fraksi terhadap Pertanggungjawaban APBK 2025",
-        "desc": "Dewan Perwakilan Rakyat Kabupaten (DPRK) Aceh Jaya menggelar Rapat Paripurna untuk membahas pandangan fraksi terhadap pertanggungjawaban APBK.",
+        "desc": "Dewan Perwakilan Rakyat Kota (DPRK) Aceh Jaya menggelar Rapat Paripurna untuk membahas pandangan fraksi terhadap pertanggungjawaban APBK.",
         "image": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=900&q=80",
     },
     {
