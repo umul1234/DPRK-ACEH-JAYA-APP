@@ -128,14 +128,7 @@ PEJABAT_SEKRETARIAT = [
     ("IHSAN SALIM, S.A.P", "Kepala Sub Bagian Tata Usaha dan Kepegawaian"),
 ]
 
-# TAUTAN TERKAIT (dari HTML yang user berikan)
-TAUTAN_TERKAIT = [
-    ("Pemerintah Kab. Aceh Jaya", "https://acehjayakab.go.id/", "🏛️"),
-    ("Kementerian Hukum dan HAM", "https://www.kemenkumham.go.id/", "⚖️"),
-    ("KPK RI", "https://www.kpk.go.id/", "🛡️"),
-    ("DPR RI", "https://www.dpr.go.id/", "🏢"),
-    ("DPD RI", "https://www.dpd.go.id/", "🏛️"),
-]
+
 
 JDIH_DATA = [
     ["1", "Qanun No. 5/2025", "Ketertiban Umum dan Ketenteraman Masyarakat", "Berlaku"],
