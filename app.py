@@ -7,15 +7,15 @@ import pandas as pd
 # =========================================================
 st.set_page_config(
     page_title="DPRK Aceh Jaya | Portal Informasi Publik",
-    page_icon="https://imgur.com/UXkXzud",
+    page_icon="🏛️",  # Menggunakan emoji agar icon tab browser pasti muncul
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
 # =========================================================
-# LOGO URL
+# LOGO URL (Direct Link dari Imgur)
 # =========================================================
-LOGO_URL = "https://imgur.com/UXkXzud"
+LOGO_URL = "https://i.imgur.com/bTNXnLF.png"
 
 # =========================================================
 # DATA
@@ -41,7 +41,7 @@ NEWS = [
         "tag": "RAPAT PARIPURNA",
         "date": "10 Agustus 2026",
         "title": "DPRK Aceh Jaya Gelar Rapat Paripurna Pandangan Fraksi terhadap Pertanggungjawaban APBK 2025",
-        "desc": "Dewan Perwakilan Rakyat Kota (DPRK) Aceh Jaya menggelar Rapat Paripurna untuk membahas pandangan fraksi terhadap pertanggungjawaban APBK.",
+        "desc": "Dewan Perwakilan Rakyat Kabupaten (DPRK) Aceh Jaya menggelar Rapat Paripurna untuk membahas pandangan fraksi terhadap pertanggungjawaban APBK.",
         "image": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=900&q=80",
     },
     {
@@ -352,7 +352,7 @@ st.markdown(
     """
 <div class="govbar">
     <div class="govbar-left">
-        <span>🇮 Portal Informasi Pemerintahan Daerah</span>
+        <span>🇮🇩 Portal Informasi Pemerintahan Daerah</span>
         <span>|</span>
         <strong>DPRK ACEH JAYA</strong>
     </div>
@@ -374,7 +374,7 @@ st.markdown(
 <div class="running-text-wrap">
     <div class="running-text">
         📢 Selamat Datang di Portal Resmi DPRK Aceh Jaya &nbsp;&nbsp;|&nbsp;&nbsp; 
-         Rapat Paripurna Pembahasan KUA-PPAS 2027 akan dilaksanakan pada 18 September 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 
+        📅 Rapat Paripurna Pembahasan KUA-PPAS 2027 akan dilaksanakan pada 18 September 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 
         📢 Layanan Pengaduan Masyarakat kini dapat diakses melalui menu Layanan & Pengaduan &nbsp;&nbsp;|&nbsp;&nbsp; 
         🌐 Mari wujudkan transparansi dan akuntabilitas pemerintahan daerah bersama DPRK Aceh Jaya.
     </div>
@@ -568,7 +568,7 @@ if st.session_state.page == "Beranda":
                 <div class="news-tag">{main_news['tag']}</div>
                 <h3>{main_news['title']}</h3>
                 <p style="color:#71817d;font-size:12px;line-height:1.65;">{main_news['desc']}</p>
-                <div class="news-date"> {main_news['date']}</div>
+                <div class="news-date">🕒 {main_news['date']}</div>
             </div>
         </div>
         """,
@@ -637,7 +637,7 @@ elif st.session_state.page == "Profil & Pimpinan":
         unsafe_allow_html=True,
     )
 
-    tab1, tab2, tab3 = st.tabs(["️ Pimpinan", "👥 Anggota DPRK per Komisi", "🏢 Pejabat Sekretariat"])
+    tab1, tab2, tab3 = st.tabs(["🏛️ Pimpinan", "👥 Anggota DPRK per Komisi", "🏢 Pejabat Sekretariat"])
     
     with tab1:
         st.markdown(
@@ -669,7 +669,7 @@ elif st.session_state.page == "Profil & Pimpinan":
     with tab2:
         st.markdown('<div style="margin-top:20px;">', unsafe_allow_html=True)
         for komisi, members in ANGGOTA_DPRK.items():
-            with st.expander(f" {komisi}", expanded=False):
+            with st.expander(f"📂 {komisi}", expanded=False):
                 cols = st.columns(2)
                 for idx, (jabatan, nama) in enumerate(members):
                     with cols[idx % 2]:
@@ -881,7 +881,7 @@ elif st.session_state.page == "JDIH & Transparansi":
     cards = [
         ("⚖️", "Produk Hukum", "Qanun dan dokumen hukum daerah."),
         ("📊", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
-        ("", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
+        ("📂", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
         ("📑", "Informasi Berkala", "Informasi yang diterbitkan secara berkala."),
     ]
 
@@ -1012,7 +1012,7 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 </p>
 <div class="footer-social">
 <div class="footer-social-item">f</div>
-<div class="footer-social-item"></div>
+<div class="footer-social-item">𝕏</div>
 <div class="footer-social-item">▶</div>
 <div class="footer-social-item">◎</div>
 </div>
@@ -1045,7 +1045,7 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 <p>Calang, Kabupaten Aceh Jaya</p>
 <p>📞 (0655) 12345</p>
 <p>✉️ sekretariat@dprk.acehjaya.go.id</p>
-<p> Senin–Jumat, 08.00–16.00 WIB</p>
+<p>🕐 Senin–Jumat, 08.00–16.00 WIB</p>
 </div>
 
 </div>
