@@ -133,7 +133,7 @@ JDIH_DATA = [
 ]
 
 # =========================================================
-# CSS STYLE - NAVBAR PROFESIONAL
+# CSS STYLE - NAVBAR SUPER PREMIUM
 # =========================================================
 st.markdown(
     """
@@ -141,10 +141,12 @@ st.markdown(
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
-    --primary: #0c4a3e;
+    --primary: #064e3b;
+    --primary-dark: #022c22;
     --primary-2: #0f6b58;
     --primary-3: #e9f5f1;
     --gold: #d5a52b;
+    --gold-light: #fcd34d;
     --gold-soft: #f7efd4;
     --dark: #17322d;
     --text: #273936;
@@ -163,11 +165,11 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 section[data-testid="stSidebar"] { display: none; }
 
 /* Top Bar */
-.govbar { background: #083b32; color: rgba(255,255,255,.88); min-height: 38px; padding: 0 6%; display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
+.govbar { background: var(--primary-dark); color: rgba(255,255,255,.88); min-height: 38px; padding: 0 6%; display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
 .govbar-left, .govbar-right { display: flex; gap: 20px; align-items: center; }
 .govbar strong { color: #fff; }
 .govbar-right a { color: rgba(255,255,255,.88); text-decoration: none; transition: color .15s ease; }
-.govbar-right a:hover { color: #fff; text-decoration: underline; }
+.govbar-right a:hover { color: var(--gold-light); text-decoration: underline; }
 
 /* Brand */
 .brand-wrap { background: #fff; border-bottom: 1px solid #e7ecea; padding: 18px 6%; }
@@ -178,79 +180,103 @@ section[data-testid="stSidebar"] { display: none; }
 .brand-title { color: #123b33; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; line-height: 1.2; font-weight: 800; text-transform: uppercase; }
 .brand-subtitle { margin-top: 4px; color: #788783; font-size: 11px; letter-spacing: .6px; }
 
-/* Navigation - PROFESIONAL */
+/* =========================================
+   NAVIGATION - SUPER PREMIUM
+   ========================================= */
 .nav-wrap { 
-    background: var(--primary); 
-    border-bottom: 3px solid var(--gold); 
+    background: linear-gradient(180deg, #065f46 0%, #022c22 100%); 
+    border-bottom: 2px solid var(--gold); 
     padding: 0 6%;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 100;
 }
+
+/* Subtle top shine for premium glass effect */
+.nav-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+}
+
 .nav-inner { 
-    min-height: 50px; 
+    min-height: 64px; 
     display: flex; 
     align-items: center; 
     gap: 0;
     justify-content: center;
 }
 
-/* Navbar Items - Clean & Professional */
+/* Navbar Items */
 .nav-button, .nav-button-active { 
     position: relative;
     flex: 1;
+    margin: 0 4px;
 }
 
 .nav-button .stButton > button, 
 .nav-button-active .stButton > button {
     background: transparent !important; 
-    border: none !important; 
-    color: rgba(255,255,255,0.95) !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
+    border: 1px solid transparent !important; 
+    color: rgba(255,255,255,0.85) !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    border-radius: 0 !important;
-    padding: 16px 20px !important;
-    min-height: 50px !important;
+    border-radius: 6px !important;
+    padding: 14px 16px !important;
+    min-height: 48px !important;
     width: 100% !important;
-    transition: all 0.3s ease !important;
-    letter-spacing: 0.3px !important;
-    text-transform: none !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    letter-spacing: 0.8px !important;
+    text-transform: uppercase !important;
     white-space: nowrap !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .nav-button .stButton > button:hover { 
-    color: #fff !important; 
-    background: rgba(255,255,255,0.12) !important;
-    transform: translateY(-1px);
+    color: #ffffff !important; 
+    background: rgba(255,255,255,0.08) !important;
+    border-color: rgba(255,255,255,0.15) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .nav-button-active .stButton > button {
-    color: #fff !important; 
-    font-weight: 700 !important; 
-    background: rgba(255,255,255,0.18) !important;
+    color: #ffffff !important; 
+    font-weight: 800 !important; 
+    background: linear-gradient(135deg, rgba(213, 165, 43, 0.2) 0%, rgba(213, 165, 43, 0.05) 100%) !important;
+    border-color: rgba(213, 165, 43, 0.5) !important;
+    box-shadow: 0 0 20px rgba(213, 165, 43, 0.15), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
-/* Active Indicator - Gold Line */
+/* Active Indicator - Premium Gold Glow */
 .nav-button::after, 
 .nav-button-active::after {
     content: ''; 
     position: absolute; 
-    left: 0; 
-    right: 0; 
-    bottom: 0; 
+    left: 50%; 
+    width: 0;
+    bottom: -2px; 
     height: 3px;
-    background: var(--gold); 
-    transform: scaleX(0); 
-    transition: transform 0.3s ease; 
-    transform-origin: center;
+    background: linear-gradient(90deg, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent); 
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    box-shadow: 0 0 12px rgba(213, 165, 43, 0.8);
 }
 
 .nav-button:hover::after { 
-    transform: scaleX(1); 
+    width: 60%;
 }
 
 .nav-button-active::after { 
-    transform: scaleX(1); 
+    width: 60%;
 }
+/* ========================================= */
 
 /* Running Text */
 .running-text-wrap { background: var(--gold); color: var(--dark); padding: 10px 0; overflow: hidden; white-space: nowrap; border-bottom: 2px solid var(--primary); }
@@ -343,12 +369,12 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
 .stTabs [data-baseweb="tab"]:hover { background: #f2f7f5 !important; color: var(--primary) !important; }
 
 /* Footer */
-.footer { background: radial-gradient(ellipse at top left, #0d4438 0%, #082722 62%), #082722; color: rgba(255,255,255,.75); margin-top: 60px; padding: 56px 6% 0; }
+.footer { background: radial-gradient(ellipse at top left, #0d4438 0%, #022c22 62%), #022c22; color: rgba(255,255,255,.75); margin-top: 60px; padding: 56px 6% 0; }
 .footer-container { width: 88%; max-width: 1250px; margin: 0 auto; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 40px; }
 .footer-column h4 { color: #fff; font-size: 13px; font-weight: 800; margin: 0 0 18px; letter-spacing: .3px; }
 .footer-column a { display: block; color: rgba(255,255,255,.62); font-size: 12.5px; line-height: 2.15; text-decoration: none; transition: color .15s ease, padding-left .15s ease; }
-.footer-column a:hover { color: #f4d873; padding-left: 3px; }
+.footer-column a:hover { color: var(--gold-light); padding-left: 3px; }
 .footer-column p { color: rgba(255,255,255,.62); font-size: 12.5px; line-height: 1.85; margin: 0 0 8px; }
 .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
 .footer-logo { width: 50px; height: 50px; border-radius: 6px; flex-shrink: 0; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -358,7 +384,7 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
 .footer-description { color: rgba(255,255,255,.58); font-size: 12.5px; line-height: 1.85; max-width: 340px; margin: 0 0 22px; }
 .footer-social { display: flex; gap: 10px; }
 .footer-social-item { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.85); display: flex; align-items: center; justify-content: center; font-size: 13px; transition: background .15s ease, border-color .15s ease; text-decoration: none; }
-.footer-social-item:hover { background: #d5a52b; border-color: #d5a52b; color: #082722; }
+.footer-social-item:hover { background: var(--gold); border-color: var(--gold); color: var(--primary-dark); }
 .footer-divider { border-top: 1px solid rgba(255,255,255,.1); }
 .footer-bottom { padding: 18px 0 22px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; color: rgba(255,255,255,.42); font-size: 11px; }
 
@@ -366,8 +392,13 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
     .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 32px; }
     .footer-bottom { flex-direction: column; text-align: center; }
     .news-grid { grid-template-columns: 1fr; }
-    .nav-inner { flex-wrap: wrap; }
-    .nav-button .stButton > button, .nav-button-active .stButton > button { padding: 12px 10px !important; font-size: 11px !important; }
+    .nav-inner { flex-wrap: wrap; justify-content: center; }
+    .nav-button, .nav-button-active { flex: 0 0 33.333%; margin: 2px; }
+    .nav-button .stButton > button, .nav-button-active .stButton > button { 
+        padding: 10px 8px !important; 
+        font-size: 11px !important; 
+        letter-spacing: 0.5px !important;
+    }
 }
 
 div[data-testid="stForm"] { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 25px !important; }
@@ -440,7 +471,7 @@ st.markdown(
 )
 
 # =========================================================
-# NAVIGATION - PROFESIONAL
+# NAVIGATION - SUPER PREMIUM
 # =========================================================
 st.markdown('<div class="nav-wrap"><div class="nav-inner">', unsafe_allow_html=True)
 nav_cols = st.columns(7)
@@ -527,7 +558,7 @@ if st.session_state.page == "Beranda":
         ("📜", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "jdih"),
         ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "berita"),
         ("📊", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
-        ("", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "jdih"),
+        ("📂", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "jdih"),
         ("🔗", "E-LHKPN", "Pelaporan harta kekayaan penyelenggara negara.", "https://elhpkpn.kpk.go.id/"),
     ]
 
@@ -1061,7 +1092,7 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 <p>Calang, Kabupaten Aceh Jaya</p>
 <p>📞 (0655) 12345</p>
 <p>✉️ sekretariat@dprk.acehjaya.go.id</p>
-<p> Senin–Jumat, 08.00–16.00 WIB</p>
+<p>🕐 Senin–Jumat, 08.00–16.00 WIB</p>
 </div>
 
 </div>
