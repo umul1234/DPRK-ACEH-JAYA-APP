@@ -7,7 +7,7 @@ import pandas as pd
 # =========================================================
 st.set_page_config(
     page_title="DPRK Aceh Jaya | Portal Informasi Publik",
-    page_icon="🏛️",  # Menggunakan emoji agar icon tab browser pasti muncul
+    page_icon="https://i.imgur.com/bTNXnLF.png",  # Menggunakan emoji agar icon tab browser pasti muncul
     layout="wide",
     initial_sidebar_state="collapsed",
 )
