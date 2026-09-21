@@ -133,7 +133,7 @@ JDIH_DATA = [
 ]
 
 # =========================================================
-# CSS STYLE - NAVBAR SUPER PREMIUM
+# CSS STYLE - NAVBAR MODERN GLASSMORPHISM
 # =========================================================
 st.markdown(
     """
@@ -181,86 +181,74 @@ section[data-testid="stSidebar"] { display: none; }
 .brand-subtitle { margin-top: 4px; color: #788783; font-size: 11px; letter-spacing: .6px; }
 
 /* =========================================
-   NAVIGATION - SUPER PREMIUM
+   NAVIGATION - MODERN GLASSMORPHISM
    ========================================= */
 .nav-wrap { 
-    background: linear-gradient(180deg, #065f46 0%, #022c22 100%); 
-    border-bottom: 2px solid var(--gold); 
-    padding: 0 6%;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.1);
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 6%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     position: relative;
     z-index: 100;
 }
 
-/* Subtle top shine for premium glass effect */
-.nav-wrap::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-}
-
 .nav-inner { 
-    min-height: 64px; 
+    min-height: 56px; 
     display: flex; 
     align-items: center; 
-    gap: 0;
+    gap: 8px;
     justify-content: center;
 }
 
-/* Navbar Items */
+/* Navbar Items - Modern Pill Shape */
 .nav-button, .nav-button-active { 
     position: relative;
-    flex: 1;
-    margin: 0 4px;
+    flex: 0 0 auto;
+    margin: 0 2px;
 }
 
 .nav-button .stButton > button, 
 .nav-button-active .stButton > button {
-    background: transparent !important; 
-    border: 1px solid transparent !important; 
-    color: rgba(255,255,255,0.85) !important;
-    font-size: 12.5px !important;
-    font-weight: 700 !important;
+    background: rgba(255,255,255,0.05) !important; 
+    border: 1px solid rgba(255,255,255,0.1) !important; 
+    color: rgba(255,255,255,0.7) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    border-radius: 6px !important;
-    padding: 14px 16px !important;
-    min-height: 48px !important;
-    width: 100% !important;
+    border-radius: 50px !important;
+    padding: 10px 20px !important;
+    min-height: 40px !important;
+    width: auto !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    letter-spacing: 0.8px !important;
-    text-transform: uppercase !important;
+    letter-spacing: 0.3px !important;
     white-space: nowrap !important;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .nav-button .stButton > button:hover { 
     color: #ffffff !important; 
-    background: rgba(255,255,255,0.08) !important;
-    border-color: rgba(255,255,255,0.15) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background: rgba(255,255,255,0.12) !important;
+    border-color: rgba(255,255,255,0.2) !important;
+    transform: translateY(-1px);
 }
 
 .nav-button-active .stButton > button {
     color: #ffffff !important; 
-    font-weight: 800 !important; 
-    background: linear-gradient(135deg, rgba(213, 165, 43, 0.2) 0%, rgba(213, 165, 43, 0.05) 100%) !important;
-    border-color: rgba(213, 165, 43, 0.5) !important;
-    box-shadow: 0 0 20px rgba(213, 165, 43, 0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+    font-weight: 700 !important; 
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    border-color: transparent !important;
+    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
 }
 
-/* Active Indicator - Premium Gold Glow */
+/* Active Indicator */
 .nav-button::after, 
 .nav-button-active::after {
     content: ''; 
     position: absolute; 
     left: 50%; 
     width: 0;
-    bottom: -2px; 
+    bottom: -6px; 
     height: 3px;
     background: linear-gradient(90deg, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent); 
     border-radius: 2px;
@@ -393,11 +381,10 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
     .footer-bottom { flex-direction: column; text-align: center; }
     .news-grid { grid-template-columns: 1fr; }
     .nav-inner { flex-wrap: wrap; justify-content: center; }
-    .nav-button, .nav-button-active { flex: 0 0 33.333%; margin: 2px; }
+    .nav-button, .nav-button-active { flex: 0 0 auto; margin: 4px; }
     .nav-button .stButton > button, .nav-button-active .stButton > button { 
-        padding: 10px 8px !important; 
-        font-size: 11px !important; 
-        letter-spacing: 0.5px !important;
+        padding: 8px 16px !important; 
+        font-size: 12px !important; 
     }
 }
 
@@ -436,7 +423,7 @@ st.markdown(
     """
 <div class="govbar">
     <div class="govbar-left">
-        <span>🇮🇩 Portal Informasi Pemerintahan Daerah</span>
+        <span>🇩 Portal Informasi Pemerintahan Daerah</span>
         <span>|</span>
         <strong>DPRK ACEH JAYA</strong>
     </div>
@@ -471,7 +458,7 @@ st.markdown(
 )
 
 # =========================================================
-# NAVIGATION - SUPER PREMIUM
+# NAVIGATION - MODERN GLASSMORPHISM
 # =========================================================
 st.markdown('<div class="nav-wrap"><div class="nav-inner">', unsafe_allow_html=True)
 nav_cols = st.columns(7)
@@ -481,7 +468,7 @@ for i, key in enumerate(nav_keys):
     with nav_cols[i]:
         active_class = "nav-button-active" if st.session_state.page == PAGES[key] else "nav-button"
         st.markdown(f'<div class="{active_class}">', unsafe_allow_html=True)
-        if st.button(PAGES[key].replace(" & ", " • "), key=f"nav_{key}", use_container_width=True):
+        if st.button(PAGES[key].replace(" & ", " • "), key=f"nav_{key}", use_container_width=False):
             st.session_state.page = PAGES[key]
             st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
@@ -557,7 +544,7 @@ if st.session_state.page == "Beranda":
         ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi, keluhan, dan laporan masyarakat.", "layanan"),
         ("📜", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "jdih"),
         ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "berita"),
-        ("📊", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
+        ("", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
         ("📂", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "jdih"),
         ("🔗", "E-LHKPN", "Pelaporan harta kekayaan penyelenggara negara.", "https://elhpkpn.kpk.go.id/"),
     ]
@@ -1059,7 +1046,7 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 </p>
 <div class="footer-social">
 <a href="#" class="footer-social-item">f</a>
-<a href="#" class="footer-social-item">𝕏</a>
+<a href="#" class="footer-social-item"></a>
 <a href="#" class="footer-social-item">▶</a>
 <a href="#" class="footer-social-item">◎</a>
 </div>
