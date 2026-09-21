@@ -133,7 +133,7 @@ JDIH_DATA = [
 ]
 
 # =========================================================
-# CSS STYLE (Tautan Terkait DIHAPUS)
+# CSS STYLE - NAVBAR PROFESIONAL
 # =========================================================
 st.markdown(
     """
@@ -178,16 +178,79 @@ section[data-testid="stSidebar"] { display: none; }
 .brand-title { color: #123b33; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; line-height: 1.2; font-weight: 800; text-transform: uppercase; }
 .brand-subtitle { margin-top: 4px; color: #788783; font-size: 11px; letter-spacing: .6px; }
 
-/* Navigation */
-.nav-wrap { background: var(--primary); border-bottom: 3px solid var(--gold); padding: 0 6%; }
-.nav-inner { min-height: 54px; display: flex; align-items: center; gap: 4px; }
-.nav-button .stButton > button, .nav-button-active .stButton > button {
-    background: transparent !important; border: none !important; color: rgba(255,255,255,0.9) !important;
-    font-size: 13px !important; font-weight: 600 !important; border-radius: 4px !important;
-    padding: 12px 16px !important; min-height: 40px !important; transition: all .2s ease !important;
+/* Navigation - PROFESIONAL */
+.nav-wrap { 
+    background: var(--primary); 
+    border-bottom: 3px solid var(--gold); 
+    padding: 0 6%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
-.nav-button .stButton > button:hover { color: #fff !important; background: rgba(255,255,255,0.15) !important; }
-.nav-button-active .stButton > button { color: #fff !important; font-weight: 700 !important; background: rgba(255,255,255,0.2) !important; }
+.nav-inner { 
+    min-height: 50px; 
+    display: flex; 
+    align-items: center; 
+    gap: 0;
+    justify-content: center;
+}
+
+/* Navbar Items - Clean & Professional */
+.nav-button, .nav-button-active { 
+    position: relative;
+    flex: 1;
+}
+
+.nav-button .stButton > button, 
+.nav-button-active .stButton > button {
+    background: transparent !important; 
+    border: none !important; 
+    color: rgba(255,255,255,0.95) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    border-radius: 0 !important;
+    padding: 16px 20px !important;
+    min-height: 50px !important;
+    width: 100% !important;
+    transition: all 0.3s ease !important;
+    letter-spacing: 0.3px !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+}
+
+.nav-button .stButton > button:hover { 
+    color: #fff !important; 
+    background: rgba(255,255,255,0.12) !important;
+    transform: translateY(-1px);
+}
+
+.nav-button-active .stButton > button {
+    color: #fff !important; 
+    font-weight: 700 !important; 
+    background: rgba(255,255,255,0.18) !important;
+}
+
+/* Active Indicator - Gold Line */
+.nav-button::after, 
+.nav-button-active::after {
+    content: ''; 
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    height: 3px;
+    background: var(--gold); 
+    transform: scaleX(0); 
+    transition: transform 0.3s ease; 
+    transform-origin: center;
+}
+
+.nav-button:hover::after { 
+    transform: scaleX(1); 
+}
+
+.nav-button-active::after { 
+    transform: scaleX(1); 
+}
 
 /* Running Text */
 .running-text-wrap { background: var(--gold); color: var(--dark); padding: 10px 0; overflow: hidden; white-space: nowrap; border-bottom: 2px solid var(--primary); }
@@ -303,6 +366,8 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
     .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 32px; }
     .footer-bottom { flex-direction: column; text-align: center; }
     .news-grid { grid-template-columns: 1fr; }
+    .nav-inner { flex-wrap: wrap; }
+    .nav-button .stButton > button, .nav-button-active .stButton > button { padding: 12px 10px !important; font-size: 11px !important; }
 }
 
 div[data-testid="stForm"] { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 25px !important; }
@@ -340,7 +405,7 @@ st.markdown(
     """
 <div class="govbar">
     <div class="govbar-left">
-        <span>🇮 Portal Informasi Pemerintahan Daerah</span>
+        <span>🇮🇩 Portal Informasi Pemerintahan Daerah</span>
         <span>|</span>
         <strong>DPRK ACEH JAYA</strong>
     </div>
@@ -375,10 +440,10 @@ st.markdown(
 )
 
 # =========================================================
-# NAVIGATION
+# NAVIGATION - PROFESIONAL
 # =========================================================
 st.markdown('<div class="nav-wrap"><div class="nav-inner">', unsafe_allow_html=True)
-nav_cols = st.columns([1.05, 1.05, 1.05, 1.05, 1.15, 1.2, 1.05, 0.85])
+nav_cols = st.columns(7)
 nav_keys = list(PAGES.keys())
 
 for i, key in enumerate(nav_keys):
@@ -401,7 +466,7 @@ st.markdown(
     <div class="running-text">
         📢 Selamat Datang di Portal Resmi DPRK Aceh Jaya &nbsp;&nbsp;|&nbsp;&nbsp; 
         📅 Rapat Paripurna Pembahasan KUA-PPAS 2027 akan dilaksanakan pada 18 September 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 
-         Layanan Pengaduan Masyarakat kini dapat diakses melalui menu Layanan & Pengaduan &nbsp;&nbsp;|&nbsp;&nbsp; 
+        📢 Layanan Pengaduan Masyarakat kini dapat diakses melalui menu Layanan & Pengaduan &nbsp;&nbsp;|&nbsp;&nbsp; 
          Mari wujudkan transparansi dan akuntabilitas pemerintahan daerah bersama DPRK Aceh Jaya.
     </div>
 </div>
@@ -421,7 +486,7 @@ st.markdown(
 )
 
 # =========================================================
-# BERANDA (Tautan Terkait DIHAPUS)
+# BERANDA
 # =========================================================
 if st.session_state.page == "Beranda":
     st.markdown(
@@ -458,10 +523,10 @@ if st.session_state.page == "Beranda":
     )
 
     services = [
-        ("", "Pengaduan Masyarakat", "Sampaikan aspirasi, keluhan, dan laporan masyarakat.", "layanan"),
-        ("", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "jdih"),
+        ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi, keluhan, dan laporan masyarakat.", "layanan"),
+        ("📜", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "jdih"),
         ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "berita"),
-        ("", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
+        ("📊", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
         ("", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "jdih"),
         ("🔗", "E-LHKPN", "Pelaporan harta kekayaan penyelenggara negara.", "https://elhpkpn.kpk.go.id/"),
     ]
@@ -593,7 +658,6 @@ if st.session_state.page == "Beranda":
         )
     st.markdown("</div></section></div>", unsafe_allow_html=True)
 
-    # Footer langsung tanpa Tautan Terkait
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
@@ -612,7 +676,7 @@ elif st.session_state.page == "Profil & Pimpinan":
         unsafe_allow_html=True,
     )
 
-    tab1, tab2 = st.tabs(["🏛️ Pimpinan dan Anggota DPRK", " Pejabat Sekretariat DPRK"])
+    tab1, tab2 = st.tabs(["🏛️ Pimpinan dan Anggota DPRK", "🏢 Pejabat Sekretariat DPRK"])
     
     with tab1:
         st.markdown('<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 20px;">', unsafe_allow_html=True)
@@ -797,7 +861,7 @@ elif st.session_state.page == "Layanan & Pengaduan":
             <div class="section-kicker">Kontak</div>
             <h3 style="color:#183d35;font-family:'Plus Jakarta Sans';font-size:20px;margin-top:0;">Hubungi Kami</h3>
             <p style="font-size:12px;color:#71817d;line-height:1.8;">
-                <strong> Telepon</strong><br>(0655) 12345
+                <strong>📞 Telepon</strong><br>(0655) 12345
             </p>
             <p style="font-size:12px;color:#71817d;line-height:1.8;">
                 <strong>✉️ Email</strong><br>sekretariat@dprk.acehjaya.go.id
@@ -832,8 +896,8 @@ elif st.session_state.page == "JDIH & Transparansi":
     info_cols = st.columns(4)
     cards = [
         ("⚖️", "Produk Hukum", "Qanun dan dokumen hukum daerah."),
-        ("", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
-        ("", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
+        ("📊", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
+        ("📂", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
         ("📑", "Informasi Berkala", "Informasi yang diterbitkan secara berkala."),
     ]
 
@@ -893,9 +957,9 @@ else:
 
     cols = st.columns(3)
     contacts = [
-        ("", "Alamat", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya"),
-        ("", "Telepon", "(0655) 12345"),
-        ("️", "Email", "sekretariat@dprk.acehjaya.go.id"),
+        ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya"),
+        ("📞", "Telepon", "(0655) 12345"),
+        ("✉️", "Email", "sekretariat@dprk.acehjaya.go.id"),
     ]
 
     for i, (icon, title, value) in enumerate(contacts):
@@ -920,7 +984,7 @@ else:
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.5!2d95.39!3d4.71!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30403e5f3a0b0b0b%3A0x0!2sCalang%2C%20Aceh%20Jaya%20Regency%2C%20Aceh!5e0!3m2!1sen!2sid!4v1600000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <p style="font-size:12px;color:#71817d;line-height:1.8;margin-top:15px;">
-            <strong> Alamat Lengkap:</strong> Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya, Aceh.
+            <strong>📍 Alamat Lengkap:</strong> Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya, Aceh.
         </p>
         <hr style="border:none;border-top:1px solid #edf1ef;margin:20px 0;">
         <div class="section-kicker">Sekretariat</div>
@@ -995,9 +1059,9 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 <h4>Hubungi Kami</h4>
 <p>📍 Jl. Merdeka No. 01</p>
 <p>Calang, Kabupaten Aceh Jaya</p>
-<p> (0655) 12345</p>
+<p>📞 (0655) 12345</p>
 <p>✉️ sekretariat@dprk.acehjaya.go.id</p>
-<p>🕐 Senin–Jumat, 08.00–16.00 WIB</p>
+<p> Senin–Jumat, 08.00–16.00 WIB</p>
 </div>
 
 </div>
