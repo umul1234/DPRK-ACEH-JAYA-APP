@@ -7,7 +7,7 @@ import pandas as pd
 # =========================================================
 st.set_page_config(
     page_title="DPRK Aceh Jaya | Portal Informasi Publik",
-    page_icon="https://imgur.com/UzP3CBQ",
+    page_icon="https://imgur.com/UXkXzud",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -15,7 +15,7 @@ st.set_page_config(
 # =========================================================
 # LOGO URL
 # =========================================================
-LOGO_URL = "https://imgur.com/UzP3CBQ"
+LOGO_URL = "https://imgur.com/UXkXzud"
 
 # =========================================================
 # DATA
