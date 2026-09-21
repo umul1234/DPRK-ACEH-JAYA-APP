@@ -133,7 +133,7 @@ JDIH_DATA = [
 ]
 
 # =========================================================
-# CSS STYLE - NAVBAR HIJAU SUPER PREMIUM
+# CSS STYLE - NAVBAR SUPER PREMIUM
 # =========================================================
 st.markdown(
     """
@@ -141,10 +141,10 @@ st.markdown(
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
-    --primary: #059669;
-    --primary-dark: #047857;
-    --primary-2: #10b981;
-    --primary-3: #d1fae5;
+    --primary: #064e3b;
+    --primary-dark: #022c22;
+    --primary-2: #0f6b58;
+    --primary-3: #e9f5f1;
     --gold: #d5a52b;
     --gold-light: #fcd34d;
     --gold-soft: #f7efd4;
@@ -165,7 +165,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 section[data-testid="stSidebar"] { display: none; }
 
 /* Top Bar */
-.govbar { background: var(--dark); color: rgba(255,255,255,.88); min-height: 38px; padding: 0 6%; display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
+.govbar { background: var(--primary-dark); color: rgba(255,255,255,.88); min-height: 38px; padding: 0 6%; display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
 .govbar-left, .govbar-right { display: flex; gap: 20px; align-items: center; }
 .govbar strong { color: #fff; }
 .govbar-right a { color: rgba(255,255,255,.88); text-decoration: none; transition: color .15s ease; }
@@ -181,10 +181,10 @@ section[data-testid="stSidebar"] { display: none; }
 .brand-subtitle { margin-top: 4px; color: #788783; font-size: 11px; letter-spacing: .6px; }
 
 /* =========================================
-   NAVIGATION - SUPER PREMIUM (HIJAU)
+   NAVIGATION - SUPER PREMIUM
    ========================================= */
 .nav-wrap { 
-    background: linear-gradient(180deg, #10b981 0%, #059669 100%); 
+    background: linear-gradient(180deg, #065f46 0%, #022c22 100%); 
     border-bottom: 2px solid var(--gold); 
     padding: 0 6%;
     box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.1);
@@ -211,7 +211,7 @@ section[data-testid="stSidebar"] { display: none; }
     justify-content: center;
 }
 
-/* Navbar Items - HIJAU PREMIUM */
+/* Navbar Items */
 .nav-button, .nav-button-active { 
     position: relative;
     flex: 1;
@@ -220,13 +220,13 @@ section[data-testid="stSidebar"] { display: none; }
 
 .nav-button .stButton > button, 
 .nav-button-active .stButton > button {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; 
-    border: 1px solid rgba(255,255,255,0.2) !important; 
-    color: #ffffff !important;
+    background: transparent !important; 
+    border: 1px solid transparent !important; 
+    color: rgba(255,255,255,0.85) !important;
     font-size: 12.5px !important;
     font-weight: 700 !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     padding: 14px 16px !important;
     min-height: 48px !important;
     width: 100% !important;
@@ -234,24 +234,23 @@ section[data-testid="stSidebar"] { display: none; }
     letter-spacing: 0.8px !important;
     text-transform: uppercase !important;
     white-space: nowrap !important;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .nav-button .stButton > button:hover { 
     color: #ffffff !important; 
-    background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
-    border-color: rgba(255,255,255,0.4) !important;
+    background: rgba(255,255,255,0.08) !important;
+    border-color: rgba(255,255,255,0.15) !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .nav-button-active .stButton > button {
     color: #ffffff !important; 
     font-weight: 800 !important; 
-    background: linear-gradient(135deg, #fcd34d 0%, #d5a52b 100%) !important;
-    border-color: rgba(255,255,255,0.5) !important;
-    box-shadow: 0 4px 16px rgba(213, 165, 43, 0.5);
+    background: linear-gradient(135deg, rgba(213, 165, 43, 0.2) 0%, rgba(213, 165, 43, 0.05) 100%) !important;
+    border-color: rgba(213, 165, 43, 0.5) !important;
+    box-shadow: 0 0 20px rgba(213, 165, 43, 0.15), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
 /* Active Indicator - Premium Gold Glow */
@@ -385,7 +384,7 @@ a:hover .service-box { transform: translateY(-4px) !important; border-color: #b9
 .footer-description { color: rgba(255,255,255,.58); font-size: 12.5px; line-height: 1.85; max-width: 340px; margin: 0 0 22px; }
 .footer-social { display: flex; gap: 10px; }
 .footer-social-item { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.85); display: flex; align-items: center; justify-content: center; font-size: 13px; transition: background .15s ease, border-color .15s ease; text-decoration: none; }
-.footer-social-item:hover { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+.footer-social-item:hover { background: var(--gold); border-color: var(--gold); color: var(--primary-dark); }
 .footer-divider { border-top: 1px solid rgba(255,255,255,.1); }
 .footer-bottom { padding: 18px 0 22px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; color: rgba(255,255,255,.42); font-size: 11px; }
 
@@ -496,7 +495,7 @@ st.markdown(
     """
 <div class="running-text-wrap">
     <div class="running-text">
-         Selamat Datang di Portal Resmi DPRK Aceh Jaya &nbsp;&nbsp;|&nbsp;&nbsp; 
+        📢 Selamat Datang di Portal Resmi DPRK Aceh Jaya &nbsp;&nbsp;|&nbsp;&nbsp; 
         📅 Rapat Paripurna Pembahasan KUA-PPAS 2027 akan dilaksanakan pada 18 September 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 
         📢 Layanan Pengaduan Masyarakat kini dapat diakses melalui menu Layanan & Pengaduan &nbsp;&nbsp;|&nbsp;&nbsp; 
          Mari wujudkan transparansi dan akuntabilitas pemerintahan daerah bersama DPRK Aceh Jaya.
@@ -558,7 +557,7 @@ if st.session_state.page == "Beranda":
         ("📢", "Pengaduan Masyarakat", "Sampaikan aspirasi, keluhan, dan laporan masyarakat.", "layanan"),
         ("📜", "JDIH", "Akses produk hukum dan dokumen peraturan daerah.", "jdih"),
         ("📅", "Agenda DPRK", "Lihat agenda rapat, sidang, dan kegiatan DPRK.", "berita"),
-        ("", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
+        ("📊", "Transparansi", "Informasi publik dan dokumen penyelenggaraan pemerintahan.", "jdih"),
         ("📂", "Dokumen Publik", "Dokumen yang dapat diakses oleh masyarakat.", "jdih"),
         ("🔗", "E-LHKPN", "Pelaporan harta kekayaan penyelenggara negara.", "https://elhpkpn.kpk.go.id/"),
     ]
@@ -928,7 +927,7 @@ elif st.session_state.page == "JDIH & Transparansi":
     info_cols = st.columns(4)
     cards = [
         ("⚖️", "Produk Hukum", "Qanun dan dokumen hukum daerah."),
-        ("", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
+        ("📊", "Transparansi", "Informasi penyelenggaraan pemerintahan."),
         ("📂", "Dokumen Publik", "Dokumen yang dapat diakses masyarakat."),
         ("📑", "Informasi Berkala", "Informasi yang diterbitkan secara berkala."),
     ]
@@ -990,8 +989,8 @@ else:
     cols = st.columns(3)
     contacts = [
         ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Kabupaten Aceh Jaya"),
-        ("", "Telepon", "(0655) 12345"),
-        ("️", "Email", "sekretariat@dprk.acehjaya.go.id"),
+        ("📞", "Telepon", "(0655) 12345"),
+        ("✉️", "Email", "sekretariat@dprk.acehjaya.go.id"),
     ]
 
     for i, (icon, title, value) in enumerate(contacts):
@@ -1060,7 +1059,7 @@ produk hukum, layanan publik, dan aspirasi masyarakat.
 </p>
 <div class="footer-social">
 <a href="#" class="footer-social-item">f</a>
-<a href="#" class="footer-social-item"></a>
+<a href="#" class="footer-social-item">𝕏</a>
 <a href="#" class="footer-social-item">▶</a>
 <a href="#" class="footer-social-item">◎</a>
 </div>
