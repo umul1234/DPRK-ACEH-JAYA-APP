@@ -1113,4 +1113,3 @@ Portal Informasi Publik • Kabupaten Aceh Jaya
 """,
 unsafe_allow_html=True
 )
-ubah navigation bar nya menjadi seperti gambar ke 2
