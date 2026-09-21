@@ -183,10 +183,8 @@ section[data-testid="stSidebar"] { display: none; }
     color: #000000;
 }
 
-/* Hide streamlit empty space */
 .stApp > div > div { gap: 0 !important; }
 div[data-testid="stVerticalBlock"] { gap: 0 !important; }
-div[data-testid="stHorizontalBlock"] { gap: 0 !important; }
 .element-container { margin: 0 !important; }
 div[data-testid="stMarkdownContainer"] { margin: 0 !important; padding: 0 !important; }
 div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
@@ -217,7 +215,7 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
    ============================================ */
 .header-wrap {
     background: #ffffff;
-    padding: 16px 16px;
+    padding: 16px;
     border-bottom: 1px solid #e0e6e2;
 }
 .header-inner {
@@ -266,11 +264,11 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
 .header-social-item:hover { background: #c9a227; }
 
 /* ============================================
-   NAVBAR - RESPONSIVE GRID
+   NAVBAR - HTML PURE (RESPONSIVE)
    ============================================ */
 .navbar {
     background: #ffffff !important;
-    padding: 8px 16px;
+    padding: 10px 16px;
     border-top: 3px solid #0d5e3a;
     border-bottom: 3px solid #c9a227;
     position: sticky;
@@ -278,65 +276,48 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     z-index: 999;
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
-
-/* Container untuk button grid */
-.navbar .stButton > button,
-.navbar button,
-div[data-testid="stHorizontalBlock"] .stButton > button {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-    background-image: none !important;
-    border: 1px solid #e0e6e2 !important;
-    color: #000000 !important;
-    font-family: 'Plus Jakarta Sans', sans-serif !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    padding: 12px 8px !important;
-    border-radius: 6px !important;
-    min-height: 44px !important;
-    width: 100% !important;
-    margin: 2px !important;
-    transition: all 0.25s ease !important;
-    letter-spacing: 0.3px !important;
-    text-transform: uppercase !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
-    text-shadow: none !important;
+.navbar-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
-
-.navbar .stButton > button p,
-.navbar .stButton > button span,
-.navbar .stButton > button div,
-.navbar .stButton > button *,
-.navbar button p,
-.navbar button span,
-.navbar button * {
+.nav-link {
+    display: inline-block;
+    background: #ffffff;
+    border: 1px solid #e0e6e2;
     color: #000000 !important;
-    font-weight: 700 !important;
-    opacity: 1 !important;
-    fill: #000000 !important;
-    text-shadow: none !important;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 12px 20px;
+    border-radius: 6px;
+    text-decoration: none !important;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    transition: all 0.25s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    white-space: nowrap;
+    flex: 0 0 auto;
 }
-
-.navbar .stButton > button:hover {
-    background: #e8f5ef !important;
-    background-color: #e8f5ef !important;
+.nav-link:hover {
+    background: #e8f5ef;
     color: #0d5e3a !important;
-    border-color: #0d5e3a !important;
+    border-color: #0d5e3a;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(13,94,58,0.2) !important;
+    box-shadow: 0 4px 12px rgba(13,94,58,0.2);
 }
-.navbar .stButton > button:hover * {
-    color: #0d5e3a !important;
-}
-
-.navbar .nav-active .stButton > button {
+.nav-link-active {
     background: #0d5e3a !important;
-    background-color: #0d5e3a !important;
     border-color: #0d5e3a !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 12px rgba(13,94,58,0.3) !important;
+    box-shadow: 0 4px 12px rgba(13,94,58,0.3);
 }
-.navbar .nav-active .stButton > button * {
+.nav-link-active:hover {
+    background: #14734a !important;
     color: #ffffff !important;
 }
 
@@ -462,7 +443,7 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 }
 
 /* ============================================
-   INFO STATS - RESPONSIVE 2x2
+   INFO STATS
    ============================================ */
 .info-stats {
     background: #ffffff !important;
@@ -555,7 +536,7 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 .section-header-link:hover { color: #c9a227 !important; }
 
 /* ============================================
-   WARTA CARD - RESPONSIVE
+   WARTA CARD
    ============================================ */
 .warta-card {
     background: #ffffff;
@@ -756,7 +737,7 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 }
 
 /* ============================================
-   LAYANAN ICON GRID - RESPONSIVE
+   LAYANAN ICON GRID
    ============================================ */
 .layanan-icon {
     background: #ffffff;
@@ -939,18 +920,6 @@ div[data-testid="stHorizontalBlock"] .stButton > button {
 .stButton > button:hover {
     background: #14734a !important;
 }
-.navbar .stButton > button {
-    background: #ffffff !important;
-    color: #000000 !important;
-}
-.navbar .stButton > button:hover {
-    background: #e8f5ef !important;
-    color: #0d5e3a !important;
-}
-.navbar .nav-active .stButton > button {
-    background: #0d5e3a !important;
-    color: #ffffff !important;
-}
 
 div[data-testid="stForm"] {
     background: #ffffff;
@@ -971,7 +940,6 @@ div[data-testid="stForm"] {
     padding: 24px 0;
 }
 
-/* Tabs */
 .stTabs [data-baseweb="tab-list"] {
     gap: 4px;
     background: transparent;
@@ -1000,13 +968,14 @@ div[data-testid="stForm"] {
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
     .warta-card-img-wrap, .warta-card-img { width: 200px; }
     .hero-slider { height: 420px; }
+    .nav-link { font-size: 11.5px; padding: 11px 16px; }
 }
 
 /* ============================================
-   RESPONSIVE - MOBILE (HP)
+   RESPONSIVE - MOBILE
    ============================================ */
 @media (max-width: 768px) {
-    /* Topbar stack */
+    /* Topbar */
     .topbar { 
         flex-direction: column; 
         gap: 6px; 
@@ -1019,10 +988,9 @@ div[data-testid="stForm"] {
         gap: 10px; 
         font-size: 11px;
     }
-    .topbar-right a { display: none; }
     .topbar-clock { font-size: 11px; }
     
-    /* Header mobile */
+    /* Header */
     .header-wrap { padding: 12px; }
     .header-inner { gap: 10px; }
     .header-logo { width: 50px; height: 50px; }
@@ -1037,20 +1005,23 @@ div[data-testid="stForm"] {
     }
     .header-social-item { width: 30px; height: 30px; font-size: 11px; }
     
-    /* Navbar mobile - grid 4-3 */
-    .navbar { padding: 6px 8px; }
-    .navbar .stButton > button,
-    .navbar button {
-        font-size: 10px !important;
-        padding: 10px 4px !important;
-        min-height: 38px !important;
-        margin: 1px !important;
-        letter-spacing: 0 !important;
+    /* NAVBAR MOBILE - GRID 4 KOLOM */
+    .navbar { padding: 8px 10px; }
+    .navbar-inner { 
+        gap: 6px; 
+        justify-content: center;
     }
-    .navbar .stButton > button p,
-    .navbar .stButton > button span,
-    .navbar .stButton > button * {
-        font-size: 10px !important;
+    .nav-link {
+        font-size: 10.5px !important;
+        padding: 10px 6px !important;
+        flex: 1 1 calc(25% - 6px);
+        max-width: calc(25% - 6px);
+        min-width: 0;
+        text-align: center;
+        letter-spacing: 0 !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
     /* Running text */
@@ -1058,7 +1029,7 @@ div[data-testid="stForm"] {
     .running-label { font-size: 9px; padding: 4px 10px; }
     .running-scroll { font-size: 11.5px; }
     
-    /* Hero mobile */
+    /* Hero */
     .hero-slider { height: 340px; }
     .hero-slide-title { font-size: 20px; margin-bottom: 10px; }
     .hero-slide-sub { font-size: 12px; margin-bottom: 16px; }
@@ -1066,7 +1037,7 @@ div[data-testid="stForm"] {
     .hero-dots { bottom: 14px; }
     .hero-dot { width: 8px; height: 8px; }
     
-    /* Info stats mobile - 2x2 grid */
+    /* Info stats */
     .info-stats { padding: 18px 12px !important; }
     .info-stat-num { font-size: 24px !important; }
     .info-stat-label { font-size: 9.5px !important; margin-top: 4px !important; }
@@ -1075,32 +1046,22 @@ div[data-testid="stForm"] {
     /* Page container */
     .page-container { width: 95%; padding: 18px 0; }
     
-    /* Section header */
+    /* Section */
     .section-header { margin-bottom: 14px; padding-bottom: 8px; }
     .section-header-title { font-size: 15px; }
     .section-header-title::before { width: 3px; height: 14px; margin-right: 6px; }
     .section-header-link { font-size: 11px; }
     
-    /* Layanan icon grid mobile - 2 columns */
+    /* Layanan icon */
     .layanan-icon { padding: 14px 8px; margin-bottom: 6px; }
     .layanan-icon-circle { width: 44px; height: 44px; font-size: 18px; margin-bottom: 8px; }
     .layanan-icon-title { font-size: 11px; margin-bottom: 3px; }
     .layanan-icon-desc { font-size: 9.5px; line-height: 1.3; }
     
-    /* Warta card mobile - gambar di atas */
-    .warta-card { 
-        flex-direction: column; 
-        margin-bottom: 12px;
-    }
-    .warta-card-img-wrap { 
-        width: 100%; 
-        height: 180px; 
-    }
-    .warta-card-img { 
-        width: 100%; 
-        height: 180px; 
-        min-height: auto;
-    }
+    /* Warta card */
+    .warta-card { flex-direction: column; margin-bottom: 12px; }
+    .warta-card-img-wrap { width: 100%; height: 180px; }
+    .warta-card-img { width: 100%; height: 180px; min-height: auto; }
     .warta-card-body { padding: 14px; }
     .warta-card-title { font-size: 14px; margin-bottom: 6px; }
     .warta-card-desc { font-size: 12px; line-height: 1.5; }
@@ -1108,7 +1069,7 @@ div[data-testid="stForm"] {
     .warta-card-cat { font-size: 9px; padding: 3px 8px; top: 10px; left: 10px; }
     .warta-card-date { font-size: 10px; margin-bottom: 6px; }
     
-    /* Sidebar widget mobile */
+    /* Sidebar widget */
     .sidebar-widget { margin-bottom: 16px; }
     .sidebar-widget-head { padding: 10px 14px; font-size: 12px; }
     .kesekret-item { padding: 10px 14px; }
@@ -1116,7 +1077,7 @@ div[data-testid="stForm"] {
     .kesekret-title { font-size: 11.5px; }
     .kesekret-date { font-size: 10px; }
     
-    /* Agenda mobile */
+    /* Agenda */
     .agenda-card { padding: 12px 14px; gap: 10px; }
     .agenda-date-box { width: 50px; height: 56px; }
     .agenda-day { font-size: 20px; }
@@ -1125,7 +1086,7 @@ div[data-testid="stForm"] {
     .agenda-desc-short { font-size: 10.5px; line-height: 1.4; }
     .agenda-full-date { font-size: 10px; }
     
-    /* Footer mobile - 1 column */
+    /* Footer */
     .footer-main { padding: 30px 14px 0; margin-top: 30px; }
     .footer-grid { grid-template-columns: 1fr; gap: 22px; padding-bottom: 22px; }
     .footer-col h4 { font-size: 12px; margin-bottom: 10px; padding-bottom: 6px; }
@@ -1137,16 +1098,21 @@ div[data-testid="stForm"] {
     .footer-social-item { width: 30px; height: 30px; font-size: 12px; }
     .footer-bottom { flex-direction: column; text-align: center; padding: 14px 0; font-size: 10.5px; gap: 6px; }
     
-    /* Tabs mobile */
+    /* Tabs */
     .stTabs [data-baseweb="tab"] { padding: 8px 12px; font-size: 11px; }
     
-    /* Form mobile */
+    /* Form */
     div[data-testid="stForm"] { padding: 16px !important; }
 }
 
 /* Extra small phones */
 @media (max-width: 400px) {
-    .navbar .stButton > button { font-size: 9px !important; padding: 8px 2px !important; }
+    .nav-link {
+        font-size: 9.5px !important;
+        padding: 8px 4px !important;
+        flex: 1 1 calc(25% - 4px);
+        max-width: calc(25% - 4px);
+    }
     .hero-slider { height: 300px; }
     .hero-slide-title { font-size: 17px; }
     .hero-slide-sub { font-size: 11px; }
@@ -1158,7 +1124,6 @@ div[data-testid="stForm"] {
     .warta-card-desc { font-size: 11px; }
 }
 
-/* Fix plotly di mobile */
 @media (max-width: 768px) {
     .js-plotly-plot { font-size: 10px !important; }
 }
@@ -1168,7 +1133,7 @@ div[data-testid="stForm"] {
 )
 
 # =========================================================
-# URL ROUTING
+# URL ROUTING (HARUS DI ATAS SEBELUM RENDER)
 # =========================================================
 PAGE_URLS = {v: k.lower().replace(" & ", "-").replace(" ", "-") for k, v in PAGES.items()}
 URL_TO_PAGE = {v: k for k, v in PAGE_URLS.items()}
@@ -1194,7 +1159,6 @@ st.markdown(
     </div>
     <div class="topbar-right">
         <span class="topbar-clock">🕐 {now.strftime('%A, %d %B %Y | %H:%M:%S WIB')}</span>
-        <a href="?page=kontak">Hubungi Kami</a>
     </div>
 </div>
 """,
@@ -1231,24 +1195,25 @@ st.markdown(
 )
 
 # =========================================================
-# NAVBAR - RESPONSIVE GRID (4-3 di mobile)
+# NAVBAR - HTML PURE (RESPONSIVE GRID)
 # =========================================================
-st.markdown('<div class="navbar">', unsafe_allow_html=True)
+nav_items_html = ""
+for key in PAGES.keys():
+    page_value = PAGES[key]
+    url_key = page_value.lower().replace(" & ", "-").replace(" ", "-")
+    active_class = "nav-link-active" if st.session_state.page == page_value else ""
+    nav_items_html += f'<a href="?page={url_key}" class="nav-link {active_class}">{page_value}</a>'
 
-# Detect screen via columns: 7 cols di desktop, akan otomatis wrap di mobile karena CSS
-nav_keys = list(PAGES.keys())
-nav_cols = st.columns(7)
-
-for i, key in enumerate(nav_keys):
-    with nav_cols[i]:
-        active = "nav-active" if st.session_state.page == PAGES[key] else ""
-        st.markdown(f'<div class="{active}">', unsafe_allow_html=True)
-        if st.button(PAGES[key], key=f"nav_{key}", use_container_width=True):
-            st.session_state.page = PAGES[key]
-            st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-
-st.markdown("</div>", unsafe_allow_html=True)
+st.markdown(
+    f"""
+<div class="navbar">
+    <div class="navbar-inner">
+        {nav_items_html}
+    </div>
+</div>
+""",
+    unsafe_allow_html=True,
+)
 
 # =========================================================
 # RUNNING TEXT
@@ -1296,7 +1261,6 @@ if st.session_state.page == "Beranda":
         unsafe_allow_html=True,
     )
 
-    # Navigasi slider - 3 kolom
     slide_cols = st.columns([1, 1, 1])
     with slide_cols[0]:
         if st.button("◀ Sebelumnya", key="slide_prev", use_container_width=True):
@@ -1307,7 +1271,7 @@ if st.session_state.page == "Beranda":
             st.session_state.slide_index = (st.session_state.slide_index + 1) % len(HERO_SLIDES)
             st.rerun()
 
-    # INFO STATS - 4 columns (otomatis 2x2 di mobile via CSS)
+    # INFO STATS
     st.markdown('<div class="info-stats"><div class="info-stats-inner">', unsafe_allow_html=True)
     stat_cols = st.columns(4)
     stats = [
@@ -1330,7 +1294,7 @@ if st.session_state.page == "Beranda":
             )
     st.markdown("</div></div>", unsafe_allow_html=True)
 
-    # LAYANAN ICON GRID - 6 cols desktop, 3 cols tablet, 2 cols mobile
+    # LAYANAN ICON GRID
     st.markdown('<div class="page-container">', unsafe_allow_html=True)
     st.markdown(
         """
@@ -1349,8 +1313,7 @@ if st.session_state.page == "Beranda":
         ("📂", "Dokumen Publik", "Akses dokumen resmi", "jdih"),
         ("🔗", "E-LHKPN", "Pelaporan harta", "https://elhpkpn.kpk.go.id/"),
     ]
-    
-    # Row 1: 3 items
+
     row1_cols = st.columns(3)
     for i in range(3):
         icon, title, desc, target = layanan_items[i]
@@ -1368,8 +1331,7 @@ if st.session_state.page == "Beranda":
             """,
                 unsafe_allow_html=True,
             )
-    
-    # Row 2: 3 items
+
     row2_cols = st.columns(3)
     for i in range(3, 6):
         icon, title, desc, target = layanan_items[i]
@@ -1390,7 +1352,7 @@ if st.session_state.page == "Beranda":
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # KONTEN 2 KOLOM - Warta + Sidebar
+    # KONTEN 2 KOLOM
     st.markdown('<div class="page-container">', unsafe_allow_html=True)
     main_col, side_col = st.columns([2, 1])
 
@@ -1671,8 +1633,7 @@ elif st.session_state.page == "Galeri":
         ("Rapat Komisi", "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=600&q=80"),
         ("Bimbingan Teknis", "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80"),
     ]
-    
-    # 2 kolom di mobile, otomatis wrap
+
     for i in range(0, len(gallery), 2):
         gcols = st.columns(2)
         for j in range(2):
@@ -1734,7 +1695,6 @@ elif st.session_state.page == "Layanan":
             else:
                 st.error("⚠️ Mohon lengkapi Nama dan Isi Laporan.")
 
-    # Kontak info
     st.markdown(
         """
     <div class="sidebar-widget" style="margin-top: 20px;">
@@ -1794,7 +1754,6 @@ else:
         unsafe_allow_html=True,
     )
 
-    # 1 kolom mobile, otomatis stack
     cols = st.columns(3)
     contacts = [
         ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Aceh Jaya"),
