@@ -66,7 +66,7 @@ HERO_SLIDES = [
 SAMBUTAN = {
     "nama": "MUSLIADI Z, S.E",
     "jabatan": "Ketua DPRK Aceh Jaya",
-    "foto": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80",
+    "foto": "https://imgur.com/mEWIdvc",
     "assalamualaikum": "Assalamu'alaikum Warahmatullahi Wabarakatuh,",
     "pembuka": "Selamat datang di Portal Resmi Dewan Perwakilan Rakyat Kabupaten (DPRK) Aceh Jaya. Portal ini hadir sebagai gerbang informasi dan komunikasi antara DPRK dengan seluruh masyarakat Aceh Jaya.",
     "quote": "Visi kami adalah mewujudkan DPRK yang responsif, transparan, dan akuntabel dalam menjalankan fungsi legislasi, anggaran, dan pengawasan.",
