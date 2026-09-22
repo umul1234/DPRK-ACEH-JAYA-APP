@@ -2,6 +2,7 @@ import streamlit as st
 from datetime import datetime
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import random
 
 # =========================================================
@@ -24,9 +25,9 @@ if "page" not in st.session_state:
 if "slide_index" not in st.session_state:
     st.session_state.slide_index = 0
 if "visitor_count" not in st.session_state:
-    st.session_state.visitor_count = random.randint(15000, 25000)
-if "show_chat" not in st.session_state:
-    st.session_state.show_chat = False
+    st.session_state.visitor_count = random.randint(25000, 45000)
+if "form_step" not in st.session_state:
+    st.session_state.form_step = 1
 
 # =========================================================
 # DATA
@@ -62,14 +63,6 @@ HERO_SLIDES = [
     },
 ]
 
-QUICK_LINKS = [
-    {"icon": "📋", "title": "Pengaduan", "desc": "Lapor Online", "page": "layanan", "color": "#0d5e3a"},
-    {"icon": "📜", "title": "JDIH", "desc": "Produk Hukum", "page": "jdih", "color": "#c9a227"},
-    {"icon": "📅", "title": "Agenda", "desc": "Jadwal Rapat", "page": "berita", "color": "#14734a"},
-    {"icon": "📊", "title": "Transparansi", "desc": "Info Publik", "page": "jdih", "color": "#0a2a1b"},
-]
-
-# Sambutan Pimpinan
 SAMBUTAN = {
     "nama": "MUSLIADI Z, S.E",
     "jabatan": "Ketua DPRK Aceh Jaya",
@@ -79,7 +72,6 @@ SAMBUTAN = {
     "quote": "Visi kami adalah mewujudkan DPRK yang responsif, transparan, dan akuntabel dalam menjalankan fungsi legislasi, anggaran, dan pengawasan.",
     "paragraf2": "Melalui portal ini, kami berkomitmen untuk menyediakan akses informasi publik yang mudah, cepat, dan transparan. Kami mengundang seluruh masyarakat untuk berpartisipasi aktif menyampaikan aspirasi dan mengawasi kinerja DPRK.",
     "penutup": "Mari bersama-sama membangun Aceh Jaya yang lebih maju, sejahtera, dan bermartabat.",
-    "salam": "Salam hangat,",
 }
 
 WARTA_DPRK = [
@@ -89,6 +81,7 @@ WARTA_DPRK = [
         "desc": "Dewan Perwakilan Rakyat Kabupaten (DPRK) Aceh Jaya menggelar Rapat Paripurna Ke-IX Masa Persidangan II Tahun Sidang membahas pandangan fraksi terhadap pertanggungjawaban APBK.",
         "image": "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=800&q=80",
         "kategori": "Paripurna",
+        "views": 2450,
     },
     {
         "title": "DPRK Aceh Jaya Gelar Rapat Paripurna ke-VIII Masa Persidangan II",
@@ -96,6 +89,7 @@ WARTA_DPRK = [
         "desc": "Rapat Paripurna ke-VIII Masa Persidangan II membahas pertanggungjawaban APBK 2025 dan Perubahan Anggaran Kas Daerah.",
         "image": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=800&q=80",
         "kategori": "Paripurna",
+        "views": 1876,
     },
     {
         "title": "Ketua DPRK Aceh Jaya Dukung Pelestarian Mangrove",
@@ -103,6 +97,7 @@ WARTA_DPRK = [
         "desc": "Ketua DPRK Aceh Jaya Musliadi Z, S.E menyampaikan dukungan terhadap kegiatan Penanaman Mangrove Serentak dalam rangka memperingati Hari Mangrove.",
         "image": "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=800&q=80",
         "kategori": "Lingkungan",
+        "views": 1523,
     },
     {
         "title": "Ketua DPRK Apresiasi Kejari Pulihkan Keuangan Negara Rp2,05 Miliar",
@@ -110,6 +105,23 @@ WARTA_DPRK = [
         "desc": "Ketua DPRK Aceh Jaya menghadiri kegiatan Press Release Capaian Pemulihan Keuangan Negara yang diselenggarakan oleh Kejaksaan Negeri Aceh Jaya.",
         "image": "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=800&q=80",
         "kategori": "Hukum",
+        "views": 2103,
+    },
+    {
+        "title": "Sosialisasi Qanun No. 5 Tahun 2025 tentang Ketertiban Umum",
+        "date": "Senin, 20 Juli 2026",
+        "desc": "DPRK Aceh Jaya menggelar sosialisasi Qanun Nomor 5 Tahun 2025 tentang Ketertiban Umum dan Ketenteraman Masyarakat.",
+        "image": "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80",
+        "kategori": "Legislasi",
+        "views": 987,
+    },
+    {
+        "title": "Kunjungan Kerja Komisi II ke Dinas Pendidikan Aceh Jaya",
+        "date": "Kamis, 16 Juli 2026",
+        "desc": "Komisi II DPRK Aceh Jaya melakukan kunjungan kerja ke Dinas Pendidikan untuk membahas program prioritas pendidikan tahun 2027.",
+        "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+        "kategori": "Kunjungan",
+        "views": 756,
     },
 ]
 
@@ -163,6 +175,7 @@ JDIH_DATA = [
     ["3", "Qanun No. 2/2024", "Perlindungan Korban Bencana Alam", "Berlaku"],
     ["4", "Qanun No. 3/2024", "Pengelolaan Sampah dan Kebersihan", "Berlaku"],
     ["5", "Perbup No. 08/2025", "Standar Operasional Prosedur Pelayanan", "Berlaku"],
+    ["6", "Qanun No. 1/2023", "Rencana Tata Ruang Wilayah", "Dicabut"],
 ]
 
 STATS_DATA = pd.DataFrame({
@@ -176,8 +189,14 @@ ANGGARAN_DATA = pd.DataFrame({
     "Anggaran": [45, 25, 15, 8, 7],
 })
 
+# MITRA LOGOS (untuk marquee)
+MITRA = [
+    "🏛️ KPK", "⚖️ Kejaksaan", "🚔 Polri", "🏦 BPK", "📊 BPS",
+    "🎓 Universitas", "🏥 RSUD", "📚 Dinas Pendidikan", "🌾 Dinas Pertanian", "🛣️ PUPR"
+]
+
 # =========================================================
-# CSS STYLE - SUPER PREMIUM v4.0
+# CSS STYLE - ULTRA PREMIUM v5.0
 # =========================================================
 st.markdown(
     """
@@ -197,10 +216,12 @@ st.markdown(
     --border: #e5ebe7;
     --text: #0a1f18;
     --muted: #4a5a55;
+    --glass: rgba(255, 255, 255, 0.7);
 }
 
 * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
 html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+html { scroll-behavior: smooth; }
 #MainMenu, footer, header { visibility: hidden; height: 0; }
 .stApp { background: var(--bg); color: #000000; }
 .block-container { max-width: 100%; padding: 0 !important; }
@@ -213,42 +234,83 @@ div[data-testid="stMarkdownContainer"] { margin: 0 !important; padding: 0 !impor
 div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
 .stMarkdown { margin: 0 !important; }
 
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #e8f5ef; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #0d5e3a, #c9a227); border-radius: 10px; }
+
 /* ============================================
-   TOP BAR MODERN
+   TOP BAR - ANNOUNCEMENT & TICKER
    ============================================ */
 .topbar { 
-    background: linear-gradient(90deg, #083d26 0%, #0d5e3a 100%);
+    background: linear-gradient(90deg, #062b1b 0%, #083d26 50%, #062b1b 100%);
     color: #ffffff !important; 
     padding: 8px 16px; 
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
-    font-size: 12px;
+    font-size: 11.5px;
     flex-wrap: wrap;
     gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+.topbar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(230,196,88,0.15), transparent);
+    animation: topbarShine 8s infinite;
+}
+@keyframes topbarShine {
+    0% { left: -100%; }
+    100% { left: 100%; }
 }
 .topbar * { color: #ffffff !important; }
-.topbar-left, .topbar-right { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.topbar-left, .topbar-right { 
+    display: flex; 
+    gap: 16px; 
+    align-items: center; 
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+}
 .topbar-item { display: flex; align-items: center; gap: 6px; }
 .topbar a { color: #ffffff !important; text-decoration: none; transition: color 0.2s; }
 .topbar a:hover { color: #e6c458 !important; }
 .topbar-badge {
-    background: rgba(230, 196, 88, 0.2);
-    color: #e6c458 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e !important;
     padding: 3px 10px;
     border-radius: 12px;
-    font-size: 11px;
-    font-weight: 700;
-    border: 1px solid rgba(230, 196, 88, 0.3);
+    font-size: 10.5px;
+    font-weight: 800;
+    border: 1px solid rgba(34, 197, 94, 0.4);
+}
+.topbar-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: pulseGreen 1.5s infinite;
+}
+@keyframes pulseGreen {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.7); opacity: 1; }
+    50% { box-shadow: 0 0 0 8px rgba(34,197,94,0); opacity: 0.7; }
 }
 .topbar-lang {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: #ffffff !important;
+    background: rgba(230,196,88,0.15);
+    border: 1px solid rgba(230,196,88,0.3);
+    color: #e6c458 !important;
     padding: 3px 10px;
     border-radius: 4px;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 10.5px;
+    font-weight: 700;
     cursor: pointer;
     text-decoration: none;
 }
@@ -260,7 +322,9 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     background: #ffffff;
     padding: 18px 16px;
     border-bottom: 1px solid #e5ebe7;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+    position: relative;
+    z-index: 100;
 }
 .header-inner {
     display: flex;
@@ -274,13 +338,19 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
 .header-brand { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 250px; }
 .header-logo {
     width: 68px; height: 68px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #f8faf9, #e8f5ef);
+    border-radius: 14px;
+    background: linear-gradient(135deg, #ffffff, #f8faf9);
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
     flex-shrink: 0;
     border: 2px solid #e5ebe7;
     padding: 6px;
+    box-shadow: 0 4px 12px rgba(13,94,58,0.08);
+    transition: all 0.3s ease;
+}
+.header-logo:hover {
+    transform: scale(1.05) rotate(-3deg);
+    box-shadow: 0 8px 24px rgba(13,94,58,0.2);
 }
 .header-logo img { width: 100%; height: 100%; object-fit: contain; }
 .header-text-title {
@@ -307,17 +377,20 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     background: #f8faf9;
     border: 1px solid #e5ebe7;
     color: #083d26 !important;
-    padding: 8px 14px;
-    border-radius: 8px;
+    padding: 9px 16px;
+    border-radius: 10px;
     font-size: 12px;
     font-weight: 700;
     text-decoration: none;
     transition: all 0.25s;
+    position: relative;
 }
 .header-action-btn:hover {
     background: #0d5e3a;
     color: #ffffff !important;
     border-color: #0d5e3a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(13,94,58,0.25);
 }
 .header-action-primary {
     background: linear-gradient(135deg, #0d5e3a, #14734a);
@@ -328,16 +401,59 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
 .header-action-primary:hover {
     background: linear-gradient(135deg, #14734a, #c9a227);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(13,94,58,0.35);
+    box-shadow: 0 8px 24px rgba(13,94,58,0.35);
+}
+
+/* Notification bell */
+.notif-btn {
+    position: relative;
+    background: #f8faf9;
+    border: 1px solid #e5ebe7;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+}
+.notif-btn:hover {
+    background: #0d5e3a;
+    border-color: #0d5e3a;
+}
+.notif-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #ef4444;
+    color: #ffffff !important;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 9px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+    animation: notifPulse 2s infinite;
+}
+@keyframes notifPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
 }
 
 /* ============================================
-   NAVBAR MODERN - STICKY
+   NAVBAR - ULTRA PREMIUM
    ============================================ */
 .navbar {
-    background: #ffffff !important;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcfb 100%) !important;
     padding: 0 16px;
-    border-top: 3px solid #0d5e3a;
+    border-top: 3px solid transparent;
+    border-image: linear-gradient(90deg, #0d5e3a, #c9a227, #0d5e3a) 1;
     border-bottom: 1px solid #e5ebe7;
     position: sticky;
     top: 0;
@@ -362,7 +478,6 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-size: 12.5px;
     font-weight: 700;
     padding: 14px 18px;
-    border-radius: 0;
     text-decoration: none !important;
     letter-spacing: 0.4px;
     text-transform: uppercase;
@@ -385,19 +500,15 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
 .nav-link:hover {
     color: #0d5e3a !important;
 }
-.nav-link:hover::after {
-    width: 60%;
-}
+.nav-link:hover::after { width: 60%; }
 .nav-link-active {
     color: #0d5e3a !important;
     font-weight: 800;
 }
-.nav-link-active::after {
-    width: 80%;
-}
+.nav-link-active::after { width: 80%; }
 
 /* ============================================
-   RUNNING TEXT MODERN
+   RUNNING TEXT
    ============================================ */
 .running-text-bar {
     background: linear-gradient(90deg, #f8faf9, #ffffff);
@@ -419,6 +530,21 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     letter-spacing: 0.8px;
     flex-shrink: 0;
     box-shadow: 0 2px 8px rgba(201,162,39,0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.running-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ef4444;
+    animation: pulseRed 1.5s infinite;
+}
+@keyframes pulseRed {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
 }
 .running-scroll-wrap {
     flex: 1;
@@ -440,248 +566,255 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
 }
 
 /* ============================================
-   HERO MODERN
+   HERO ULTRA PREMIUM
    ============================================ */
-.hero-modern {
+.hero-ultra {
     position: relative;
-    min-height: 560px;
+    min-height: 620px;
     overflow: hidden;
     display: flex;
     align-items: center;
     background: #000;
 }
-.hero-modern-bg {
+.hero-ultra-bg {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
     background-size: cover;
     background-position: center;
-    animation: heroZoom 20s ease-in-out infinite;
+    animation: heroZoomUltra 25s ease-in-out infinite;
 }
-@keyframes heroZoom {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
+@keyframes heroZoomUltra {
+    0%, 100% { transform: scale(1) translate(0, 0); }
+    50% { transform: scale(1.1) translate(-1%, -1%); }
 }
-.hero-modern-overlay {
+.hero-ultra-overlay {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: linear-gradient(120deg, rgba(8,61,38,0.92) 0%, rgba(13,94,58,0.75) 45%, rgba(8,61,38,0.55) 100%);
+    background: 
+        linear-gradient(120deg, rgba(8,61,38,0.95) 0%, rgba(13,94,58,0.75) 45%, rgba(8,61,38,0.5) 100%),
+        radial-gradient(ellipse at 20% 30%, rgba(230,196,88,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(230,196,88,0.1) 0%, transparent 50%);
 }
-.hero-modern-pattern {
+.hero-ultra-grid {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background-image: radial-gradient(circle at 20% 30%, rgba(230,196,88,0.12) 0%, transparent 50%),
-                      radial-gradient(circle at 80% 70%, rgba(230,196,88,0.08) 0%, transparent 50%);
+    background-image: 
+        linear-gradient(rgba(230,196,88,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(230,196,88,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.5;
     pointer-events: none;
 }
-.hero-modern-content {
+.hero-ultra-content {
     position: relative;
     z-index: 3;
     max-width: 1400px;
     margin: 0 auto;
     width: 92%;
-    padding: 60px 0;
+    padding: 80px 0;
     color: #ffffff;
 }
-.hero-modern-kicker {
+.hero-ultra-kicker {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     background: rgba(230,196,88,0.15);
     border: 1px solid rgba(230,196,88,0.4);
     color: #e6c458 !important;
-    padding: 8px 18px;
+    padding: 10px 22px;
     border-radius: 30px;
     font-size: 11.5px;
     font-weight: 800;
-    letter-spacing: 1.8px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 24px;
-    backdrop-filter: blur(10px);
+    margin-bottom: 28px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(230,196,88,0.15);
 }
-.hero-modern-kicker::before {
+.hero-ultra-kicker::before {
     content: '';
     width: 8px;
     height: 8px;
     border-radius: 50%;
     background: #e6c458;
-    animation: pulseDot 2s infinite;
+    animation: pulseDotUltra 2s infinite;
+    box-shadow: 0 0 12px #e6c458;
 }
-@keyframes pulseDot {
+@keyframes pulseDotUltra {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(1.3); }
+    50% { opacity: 0.7; transform: scale(1.4); }
 }
-.hero-modern-title {
+.hero-ultra-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(30px, 5vw, 62px);
+    font-size: clamp(32px, 5.5vw, 72px);
     font-weight: 900;
-    line-height: 1.05;
-    letter-spacing: -1.5px;
-    margin-bottom: 22px;
+    line-height: 1.02;
+    letter-spacing: -2px;
+    margin-bottom: 26px;
     color: #ffffff !important;
-    text-shadow: 0 4px 40px rgba(0,0,0,0.5);
-    max-width: 900px;
+    text-shadow: 0 6px 60px rgba(0,0,0,0.5);
+    max-width: 950px;
 }
-.hero-modern-title span {
-    background: linear-gradient(135deg, #e6c458 0%, #f5e090 50%, #c9a227 100%);
+.hero-ultra-title span {
+    background: linear-gradient(135deg, #e6c458 0%, #f5e090 30%, #c9a227 70%, #e6c458 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: gradientShift 5s ease infinite;
 }
-.hero-modern-sub {
-    font-size: clamp(14px, 1.5vw, 18px);
-    line-height: 1.7;
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+}
+.hero-ultra-sub {
+    font-size: clamp(14px, 1.6vw, 19px);
+    line-height: 1.75;
     color: rgba(255,255,255,0.92) !important;
     max-width: 720px;
-    margin-bottom: 36px;
+    margin-bottom: 40px;
     text-shadow: 0 2px 12px rgba(0,0,0,0.4);
 }
-.hero-modern-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 48px; }
-.hero-modern-btn {
+.hero-ultra-buttons { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 56px; }
+.hero-ultra-btn {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 14px 28px;
+    padding: 16px 32px;
     background: linear-gradient(135deg, #c9a227, #e6c458);
     color: #083d26 !important;
     text-decoration: none !important;
     font-weight: 800;
-    font-size: 13px;
-    border-radius: 8px;
+    font-size: 13.5px;
+    border-radius: 10px;
     letter-spacing: 0.6px;
     text-transform: uppercase;
-    box-shadow: 0 8px 24px rgba(201,162,39,0.4);
-    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(201,162,39,0.45);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
 }
-.hero-modern-btn:hover {
-    background: linear-gradient(135deg, #e6c458, #f5e090);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(201,162,39,0.6);
+.hero-ultra-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    transition: left 0.6s ease;
 }
-.hero-modern-btn-outline {
+.hero-ultra-btn:hover::before { left: 100%; }
+.hero-ultra-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(201,162,39,0.6);
+}
+.hero-ultra-btn-outline {
     background: rgba(255,255,255,0.08);
     color: #ffffff !important;
     border: 2px solid rgba(255,255,255,0.5);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     box-shadow: none;
 }
-.hero-modern-btn-outline:hover {
+.hero-ultra-btn-outline:hover {
     background: rgba(255,255,255,0.2);
     border-color: #e6c458;
-    transform: translateY(-3px);
+    transform: translateY(-4px);
 }
 
-/* Hero Stats */
-.hero-modern-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+/* Hero Stats Ultra */
+.hero-ultra-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 900px;
 }
-.hero-stat {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(15px);
+.hero-stat-ultra {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
     border: 1px solid rgba(255,255,255,0.15);
-    padding: 16px 22px;
-    border-radius: 12px;
-    min-width: 130px;
-    transition: all 0.3s ease;
+    padding: 20px 22px;
+    border-radius: 16px;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
 }
-.hero-stat:hover {
-    background: rgba(230,196,88,0.15);
+.hero-stat-ultra::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #e6c458, transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+.hero-stat-ultra:hover::before { transform: translateX(100%); }
+.hero-stat-ultra:hover {
+    background: rgba(230,196,88,0.12);
     border-color: rgba(230,196,88,0.4);
-    transform: translateY(-3px);
+    transform: translateY(-4px);
 }
-.hero-stat-num {
+.hero-stat-num-ultra {
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #e6c458 !important;
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 900;
     line-height: 1;
     display: block;
+    letter-spacing: -0.5px;
 }
-.hero-stat-label {
+.hero-stat-label-ultra {
     color: rgba(255,255,255,0.85) !important;
     font-size: 10.5px;
-    margin-top: 6px;
+    margin-top: 8px;
     text-transform: uppercase;
     letter-spacing: 0.8px;
     font-weight: 700;
 }
 
 /* ============================================
-   QUICK ACCESS CARDS
+   MITRA MARQUEE
    ============================================ */
-.quick-access {
+.mitra-section {
     background: #ffffff;
-    padding: 32px 16px;
+    padding: 24px 0;
     border-bottom: 1px solid #e5ebe7;
-}
-.quick-access-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-.quick-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-}
-.quick-card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: #f8faf9;
-    border: 1px solid #e5ebe7;
-    border-radius: 12px;
-    padding: 18px;
-    text-decoration: none !important;
-    color: #0a1f18 !important;
-    transition: all 0.3s ease;
-    position: relative;
     overflow: hidden;
 }
-.quick-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-    transition: left 0.6s ease;
+.mitra-label {
+    text-align: center;
+    font-size: 10.5px;
+    color: #4a5a55 !important;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
 }
-.quick-card:hover::before { left: 100%; }
-.quick-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(13,94,58,0.12);
-    border-color: #0d5e3a;
-}
-.quick-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
+.mitra-track {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    gap: 40px;
+    animation: mitraScroll 30s linear infinite;
+    width: max-content;
 }
-.quick-content { min-width: 0; }
-.quick-title {
+@keyframes mitraScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.mitra-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13.5px;
+    font-size: 14px;
     font-weight: 800;
     color: #083d26 !important;
-    margin: 0 0 3px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.quick-desc {
-    font-size: 11px;
-    color: #4a5a55 !important;
-    font-weight: 500;
+    padding: 8px 16px;
+    background: #f8faf9;
+    border-radius: 10px;
+    border: 1px solid #e5ebe7;
 }
 
 /* ============================================
@@ -691,238 +824,558 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     width: 92%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 50px 0;
+    padding: 60px 0;
 }
 .section-header-modern {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 .section-kicker-modern {
     display: inline-block;
     color: #c9a227 !important;
     font-size: 11.5px;
     font-weight: 800;
-    letter-spacing: 2.5px;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     position: relative;
-    padding: 0 30px;
+    padding: 0 40px;
 }
 .section-kicker-modern::before,
 .section-kicker-modern::after {
     content: '';
     position: absolute;
     top: 50%;
-    width: 20px;
+    width: 28px;
     height: 2px;
-    background: #c9a227;
+    background: linear-gradient(90deg, transparent, #c9a227);
 }
 .section-kicker-modern::before { left: 0; }
-.section-kicker-modern::after { right: 0; }
+.section-kicker-modern::after { right: 0; transform: scaleX(-1); }
 .section-title-modern {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(22px, 3vw, 34px);
+    font-size: clamp(24px, 3.2vw, 38px);
     font-weight: 900;
     color: #083d26 !important;
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
     line-height: 1.15;
-    margin: 0 0 12px;
+    margin: 0 0 14px;
 }
 .section-desc-modern {
     color: #4a5a55 !important;
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: 14.5px;
+    line-height: 1.75;
     max-width: 720px;
     margin: 0 auto;
 }
 
 /* ============================================
-   SAMBUTAN PIMPINAN (Mayor's Remarks Style)
+   GLASSMORPHISM QUICK ACCESS
    ============================================ */
-.sambutan-section {
-    background: linear-gradient(135deg, #ffffff 0%, #f8faf9 100%);
-    padding: 60px 16px;
+.quick-access-glass {
+    background: linear-gradient(135deg, #f8faf9 0%, #ffffff 100%);
+    padding: 40px 16px;
+    border-bottom: 1px solid #e5ebe7;
+    position: relative;
+}
+.quick-access-glass::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 200px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(13,94,58,0.05) 0%, transparent 70%);
+}
+.quick-access-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+.quick-grid-glass {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.quick-card-glass {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff, #f8faf9);
+    border: 1px solid #e5ebe7;
+    border-radius: 20px;
+    padding: 32px 20px;
+    text-decoration: none !important;
+    color: #0a1f18 !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+}
+.quick-card-glass::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(230,196,88,0.15) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+.quick-card-glass:hover::before { opacity: 1; }
+.quick-card-glass:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(13,94,58,0.18);
+    border-color: #c9a227;
+}
+.quick-icon-glass {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin-bottom: 18px;
+    background: linear-gradient(135deg, #e8f5ef, #d1e8dd);
+    color: #0d5e3a !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 24px rgba(13,94,58,0.1);
+    position: relative;
+}
+.quick-card-glass:hover .quick-icon-glass {
+    background: linear-gradient(135deg, #c9a227, #e6c458);
+    color: #ffffff !important;
+    transform: scale(1.1) rotate(-10deg);
+    box-shadow: 0 12px 32px rgba(201,162,39,0.4);
+}
+.quick-title-glass {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #083d26 !important;
+    margin: 0 0 6px;
+    letter-spacing: -0.2px;
+}
+.quick-desc-glass {
+    font-size: 12px;
+    color: #4a5a55 !important;
+    font-weight: 500;
+}
+
+/* ============================================
+   SAMBUTAN PIMPINAN
+   ============================================ */
+.sambutan-section-ultra {
+    background: linear-gradient(135deg, #ffffff 0%, #f8faf9 50%, #faf6e8 100%);
+    padding: 80px 16px;
     position: relative;
     overflow: hidden;
 }
-.sambutan-section::before {
+.sambutan-section-ultra::before {
     content: '';
     position: absolute;
     top: -50%; right: -20%;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(13,94,58,0.05) 0%, transparent 70%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(13,94,58,0.06) 0%, transparent 60%);
     border-radius: 50%;
+    animation: floatOrb 15s ease-in-out infinite;
 }
-.sambutan-inner {
+.sambutan-section-ultra::after {
+    content: '';
+    position: absolute;
+    bottom: -50%; left: -20%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201,162,39,0.08) 0%, transparent 60%);
+    border-radius: 50%;
+    animation: floatOrb 20s ease-in-out infinite reverse;
+}
+@keyframes floatOrb {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -30px) scale(1.1); }
+}
+.sambutan-inner-ultra {
     max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 48px;
+    grid-template-columns: 340px 1fr;
+    gap: 60px;
     align-items: start;
     position: relative;
     z-index: 2;
 }
-.sambutan-photo-wrap {
+.sambutan-photo-wrap-ultra {
     position: relative;
     text-align: center;
 }
-.sambutan-photo {
+.sambutan-photo-ultra {
     width: 100%;
-    max-width: 320px;
+    max-width: 340px;
     aspect-ratio: 3/4;
     object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 30px 80px rgba(13,94,58,0.3);
+    border: 5px solid #ffffff;
+    position: relative;
+    z-index: 3;
+    transition: transform 0.5s ease;
+}
+.sambutan-photo-ultra:hover {
+    transform: scale(1.02) rotate(-1deg);
+}
+.sambutan-photo-frame-ultra {
+    position: absolute;
+    top: 20px; left: 20px;
+    width: 100%;
+    max-width: 340px;
+    aspect-ratio: 3/4;
+    border: 3px solid #c9a227;
+    border-radius: 20px;
+    z-index: 1;
+}
+.sambutan-photo-frame-ultra::before {
+    content: '';
+    position: absolute;
+    top: -10px; left: -10px;
+    right: -10px; bottom: -10px;
+    border: 2px dashed rgba(201,162,39,0.3);
+    border-radius: 24px;
+    animation: rotateDash 30s linear infinite;
+}
+@keyframes rotateDash {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.sambutan-photo-info-ultra {
+    margin-top: 28px;
+    background: #ffffff;
+    border: 1px solid #e5ebe7;
     border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(13,94,58,0.25);
-    border: 4px solid #ffffff;
+    padding: 20px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
     position: relative;
     z-index: 2;
 }
-.sambutan-photo-frame {
-    position: absolute;
-    top: 16px; left: 16px;
-    width: 100%;
-    max-width: 320px;
-    aspect-ratio: 3/4;
-    border: 3px solid #c9a227;
-    border-radius: 16px;
-    z-index: 1;
-}
-.sambutan-photo-info {
-    margin-top: 24px;
-    background: #ffffff;
-    border: 1px solid #e5ebe7;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-}
-.sambutan-nama {
+.sambutan-nama-ultra {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 900;
     color: #083d26 !important;
     text-transform: uppercase;
     letter-spacing: 0.3px;
-    margin: 0 0 4px;
+    margin: 0 0 5px;
 }
-.sambutan-jabatan {
+.sambutan-jabatan-ultra {
     color: #c9a227 !important;
-    font-size: 11.5px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
 }
-.sambutan-content {
-    padding-top: 20px;
-}
-.sambutan-assalam {
+.sambutan-content-ultra { padding-top: 24px; }
+.sambutan-assalam-ultra {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
     color: #0d5e3a !important;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    padding: 14px 20px;
+    background: linear-gradient(90deg, #e8f5ef, #ffffff);
+    border-radius: 12px;
+    border-left: 4px solid #0d5e3a;
 }
-.sambutan-text {
+.sambutan-text-ultra {
     color: #0a1f18 !important;
     font-size: 14.5px;
-    line-height: 1.9;
-    margin-bottom: 18px;
+    line-height: 1.95;
+    margin-bottom: 20px;
 }
-.sambutan-quote {
-    border-left: 4px solid #c9a227;
-    background: linear-gradient(90deg, #faf6e8, #ffffff);
-    padding: 18px 22px;
-    border-radius: 0 12px 12px 0;
-    margin: 24px 0;
+.sambutan-quote-ultra {
+    border-left: 5px solid #c9a227;
+    background: linear-gradient(90deg, #faf6e8, #ffffff 60%);
+    padding: 24px 28px;
+    border-radius: 0 16px 16px 0;
+    margin: 28px 0;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     font-style: italic;
     color: #083d26 !important;
     line-height: 1.7;
     position: relative;
+    box-shadow: 0 8px 24px rgba(201,162,39,0.08);
 }
-.sambutan-quote::before {
+.sambutan-quote-ultra::before {
     content: '"';
     position: absolute;
-    top: 0; left: 12px;
-    font-size: 60px;
-    color: rgba(201,162,39,0.15);
+    top: -10px; left: 16px;
+    font-size: 80px;
+    color: rgba(201,162,39,0.2);
     font-family: Georgia, serif;
     line-height: 1;
 }
-.sambutan-salam {
-    margin-top: 28px;
-    padding-top: 20px;
-    border-top: 1px solid #e5ebe7;
+.sambutan-salam-ultra {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 2px dashed #e5ebe7;
 }
-.sambutan-salam-line {
+.sambutan-salam-line-ultra {
     color: #4a5a55 !important;
     font-size: 13.5px;
-    margin: 0 0 4px;
+    margin: 0 0 6px;
 }
-.sambutan-salam-nama {
+.sambutan-salam-nama-ultra {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 900;
     color: #083d26 !important;
     text-transform: uppercase;
-    margin: 8px 0 4px;
+    margin: 10px 0 4px;
 }
-.sambutan-salam-jabatan {
+.sambutan-salam-jabatan-ultra {
     color: #c9a227 !important;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
 }
 
 /* ============================================
-   WARTA GRID MODERN
+   TRENDING NEWS
    ============================================ */
-.warta-grid-modern {
+.trending-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+.trending-main {
+    background: #ffffff;
+    border: 1px solid #e5ebe7;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s ease;
+}
+.trending-main:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px rgba(13,94,58,0.18);
+    border-color: #c9a227;
+}
+.trending-main-img {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    overflow: hidden;
+}
+.trending-main-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+.trending-main:hover .trending-main-img img {
+    transform: scale(1.08);
+}
+.trending-main-img::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60%;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.7));
+}
+.trending-badge {
+    position: absolute;
+    top: 20px; left: 20px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #ffffff !important;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    z-index: 2;
+    box-shadow: 0 4px 16px rgba(239,68,68,0.4);
+    animation: trendingPulse 2s infinite;
+}
+@keyframes trendingPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+.trending-main-content {
+    padding: 28px;
+}
+.trending-main-cat {
+    display: inline-block;
+    background: linear-gradient(135deg, #c9a227, #e6c458);
+    color: #083d26 !important;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 14px;
+}
+.trending-main-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: #083d26 !important;
+    line-height: 1.35;
+    margin: 0 0 12px;
+    letter-spacing: -0.5px;
+}
+.trending-main-desc {
+    color: #4a5a55 !important;
+    font-size: 14px;
+    line-height: 1.75;
+    margin: 0 0 18px;
+}
+.trending-main-meta {
+    display: flex;
+    gap: 20px;
+    color: #c9a227 !important;
+    font-size: 11.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.trending-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.trending-item {
+    display: flex;
+    gap: 14px;
+    background: #ffffff;
+    border: 1px solid #e5ebe7;
+    border-radius: 16px;
+    padding: 16px;
+    text-decoration: none !important;
+    color: inherit;
+    transition: all 0.3s ease;
+    position: relative;
+}
+.trending-item:hover {
+    border-color: #c9a227;
+    transform: translateX(6px);
+    box-shadow: 0 12px 32px rgba(13,94,58,0.12);
+}
+.trending-rank {
+    position: absolute;
+    top: -8px; left: -8px;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #0d5e3a, #14734a);
+    color: #ffffff !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 12px rgba(13,94,58,0.3);
+    z-index: 2;
+}
+.trending-item:nth-child(1) .trending-rank { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.trending-item:nth-child(2) .trending-rank { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.trending-item:nth-child(3) .trending-rank { background: linear-gradient(135deg, #c9a227, #e6c458); }
+.trending-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.trending-info { flex: 1; min-width: 0; }
+.trending-info-cat {
+    color: #c9a227 !important;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+}
+.trending-info-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: #083d26 !important;
+    line-height: 1.4;
+    margin: 0 0 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.trending-info-meta {
+    color: #4a5a55 !important;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+/* ============================================
+   WARTA GRID ULTRA
+   ============================================ */
+.warta-grid-ultra {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
 }
-.warta-card-modern {
+.warta-card-ultra {
     background: #ffffff;
     border: 1px solid #e5ebe7;
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
     text-decoration: none !important;
     color: inherit;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     position: relative;
 }
-.warta-card-modern:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 25px 60px rgba(13,94,58,0.18);
+.warta-card-ultra::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0d5e3a, #c9a227, #e6c458);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+    z-index: 2;
+}
+.warta-card-ultra:hover::before { transform: scaleX(1); }
+.warta-card-ultra:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 70px rgba(13,94,58,0.2);
     border-color: rgba(201,162,39,0.4);
 }
-.warta-card-modern-img {
+.warta-card-ultra-img {
     position: relative;
     width: 100%;
     height: 220px;
     overflow: hidden;
 }
-.warta-card-modern-img img {
+.warta-card-ultra-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.7s ease;
+    transition: transform 0.8s ease;
 }
-.warta-card-modern:hover .warta-card-modern-img img {
-    transform: scale(1.1);
+.warta-card-ultra:hover .warta-card-ultra-img img {
+    transform: scale(1.12);
 }
-.warta-card-modern-img::after {
+.warta-card-ultra-img::after {
     content: '';
     position: absolute;
     bottom: 0; left: 0; right: 0;
     height: 50%;
     background: linear-gradient(180deg, transparent, rgba(0,0,0,0.5));
 }
-.warta-card-modern-cat {
+.warta-card-ultra-cat {
     position: absolute;
     top: 14px; left: 14px;
     background: linear-gradient(135deg, #c9a227, #e6c458);
@@ -936,13 +1389,28 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     z-index: 2;
     box-shadow: 0 4px 12px rgba(201,162,39,0.4);
 }
-.warta-card-modern-body {
+.warta-card-ultra-views {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: rgba(0,0,0,0.6);
+    color: #ffffff !important;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 800;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.warta-card-ultra-body {
     padding: 24px;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
-.warta-card-modern-date {
+.warta-card-ultra-date {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -953,27 +1421,27 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     letter-spacing: 0.5px;
     margin-bottom: 12px;
 }
-.warta-card-modern-title {
+.warta-card-ultra-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 17px;
+    font-size: 16.5px;
     font-weight: 800;
     color: #083d26 !important;
     line-height: 1.4;
     margin: 0 0 12px;
-    letter-spacing: -0.2px;
+    letter-spacing: -0.3px;
     transition: color 0.25s;
 }
-.warta-card-modern:hover .warta-card-modern-title {
+.warta-card-ultra:hover .warta-card-ultra-title {
     color: #0d5e3a !important;
 }
-.warta-card-modern-desc {
+.warta-card-ultra-desc {
     color: #4a5a55 !important;
     font-size: 13px;
     line-height: 1.65;
     margin: 0 0 16px;
     flex: 1;
 }
-.warta-card-modern-more {
+.warta-card-ultra-more {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -984,33 +1452,32 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     letter-spacing: 0.6px;
     transition: gap 0.25s;
 }
-.warta-card-modern:hover .warta-card-modern-more {
+.warta-card-ultra:hover .warta-card-ultra-more {
     gap: 12px;
     color: #c9a227 !important;
 }
 
 /* ============================================
-   AGENDA + SIDEBAR
+   WIDGET MODERN
    ============================================ */
-.content-grid-2col {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 32px;
-}
-.widget-modern {
+.widget-ultra {
     background: #ffffff;
     border: 1px solid #e5ebe7;
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
     margin-bottom: 24px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    transition: box-shadow 0.3s;
 }
-.widget-modern-head {
+.widget-ultra:hover {
+    box-shadow: 0 12px 40px rgba(13,94,58,0.1);
+}
+.widget-ultra-head {
     background: linear-gradient(135deg, #0d5e3a, #14734a);
     color: #ffffff !important;
-    padding: 16px 20px;
+    padding: 18px 22px;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.8px;
@@ -1018,60 +1485,73 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     align-items: center;
     justify-content: space-between;
     border-bottom: 3px solid #c9a227;
+    position: relative;
+    overflow: hidden;
 }
-.widget-modern-head::before {
+.widget-ultra-head::before {
     content: '';
     position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    animation: widgetShine 5s infinite;
 }
-.widget-modern-body { padding: 0; }
+@keyframes widgetShine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+.widget-ultra-body { padding: 0; }
 
-.agenda-item-modern {
+.agenda-item-ultra {
     display: flex;
-    gap: 14px;
-    padding: 16px 20px;
+    gap: 16px;
+    padding: 18px 22px;
     border-bottom: 1px solid #e5ebe7;
-    transition: background 0.2s;
+    transition: all 0.25s ease;
 }
-.agenda-item-modern:last-child { border-bottom: none; }
-.agenda-item-modern:hover { background: #f8faf9; }
-.agenda-date-modern {
-    width: 60px;
-    height: 68px;
+.agenda-item-ultra:last-child { border-bottom: none; }
+.agenda-item-ultra:hover { 
+    background: #f8faf9; 
+    padding-left: 26px;
+}
+.agenda-date-ultra {
+    width: 64px;
+    height: 72px;
     background: linear-gradient(135deg, #0d5e3a, #14734a);
     color: #ffffff !important;
-    border-radius: 10px;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     position: relative;
-    box-shadow: 0 4px 12px rgba(13,94,58,0.25);
+    box-shadow: 0 6px 16px rgba(13,94,58,0.25);
 }
-.agenda-date-modern::before {
+.agenda-date-ultra::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 4px;
     background: #c9a227;
-    border-radius: 10px 10px 0 0;
+    border-radius: 12px 12px 0 0;
 }
-.agenda-day-modern {
+.agenda-day-ultra {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 900;
     line-height: 1;
     color: #ffffff !important;
 }
-.agenda-month-modern {
-    font-size: 9px;
+.agenda-month-ultra {
+    font-size: 9.5px;
     font-weight: 800;
     color: #ffffff !important;
     margin-top: 4px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
 }
-.agenda-content-modern { flex: 1; min-width: 0; }
-.agenda-title-modern {
+.agenda-content-ultra { flex: 1; min-width: 0; }
+.agenda-title-ultra {
     color: #083d26 !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 13.5px;
@@ -1079,389 +1559,431 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     line-height: 1.4;
     margin: 0 0 6px;
 }
-.agenda-desc-modern {
+.agenda-desc-ultra {
     color: #4a5a55 !important;
     font-size: 11.5px;
     line-height: 1.55;
-    margin: 0 0 6px;
+    margin: 0 0 8px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.agenda-footer-modern {
-    display: flex;
+.agenda-footer-ultra {
+    display: inline-flex;
     align-items: center;
     gap: 6px;
     color: #c9a227 !important;
     font-size: 10.5px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    background: #faf6e8;
+    border-radius: 8px;
 }
 
-/* Kesekretariatan item */
-.kesekret-item-modern {
+.kesekret-item-ultra {
     display: flex;
-    gap: 12px;
-    padding: 14px 20px;
+    gap: 14px;
+    padding: 16px 22px;
     border-bottom: 1px solid #e5ebe7;
-    transition: background 0.2s;
+    transition: all 0.25s ease;
 }
-.kesekret-item-modern:last-child { border-bottom: none; }
-.kesekret-item-modern:hover { background: #f8faf9; }
-.kesekret-icon-modern {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+.kesekret-item-ultra:last-child { border-bottom: none; }
+.kesekret-item-ultra:hover { 
+    background: #f8faf9;
+    padding-left: 26px;
+}
+.kesekret-icon-ultra {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
     background: linear-gradient(135deg, #e8f5ef, #d1e8dd);
     color: #0d5e3a !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 20px;
     flex-shrink: 0;
+    transition: all 0.3s;
 }
-.kesekret-title-modern {
+.kesekret-item-ultra:hover .kesekret-icon-ultra {
+    background: linear-gradient(135deg, #c9a227, #e6c458);
+    color: #ffffff !important;
+    transform: rotate(-10deg) scale(1.1);
+}
+.kesekret-title-ultra {
     color: #083d26 !important;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 700;
     line-height: 1.45;
-    margin: 0 0 4px;
+    margin: 0 0 5px;
 }
-.kesekret-date-modern {
+.kesekret-date-ultra {
     color: #c9a227 !important;
     font-size: 10.5px;
-    font-weight: 700;
+    font-weight: 800;
 }
 
 /* ============================================
-   STATS SECTION
+   STATS SECTION - PREMIUM
    ============================================ */
-.stats-section-modern {
-    background: linear-gradient(135deg, #083d26 0%, #0d5e3a 50%, #083d26 100%);
-    padding: 60px 16px;
+.stats-section-ultra {
+    background: 
+        linear-gradient(135deg, #062b1b 0%, #0d5e3a 50%, #062b1b 100%);
+    padding: 80px 16px;
     position: relative;
     overflow: hidden;
 }
-.stats-section-modern::before {
+.stats-section-ultra::before {
     content: '';
     position: absolute;
     top: -50%; right: -20%;
-    width: 600px; height: 600px;
+    width: 800px; height: 800px;
     background: radial-gradient(circle, rgba(230,196,88,0.15) 0%, transparent 60%);
     border-radius: 50%;
     animation: floatOrb 12s ease-in-out infinite;
 }
-@keyframes floatOrb {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(30px, -30px); }
+.stats-section-ultra::after {
+    content: '';
+    position: absolute;
+    bottom: -50%; left: -20%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(13,94,58,0.3) 0%, transparent 60%);
+    border-radius: 50%;
+    animation: floatOrb 15s ease-in-out infinite reverse;
 }
-.stats-inner {
+.stats-inner-ultra {
     max-width: 1400px;
     margin: 0 auto;
     position: relative;
     z-index: 2;
 }
-.stats-grid-modern {
+.stats-grid-ultra {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
 }
-.stat-item-modern {
+.stat-item-ultra {
     text-align: center;
-    padding: 28px 20px;
+    padding: 36px 24px;
     background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 16px;
-    transition: all 0.3s ease;
+    border-radius: 20px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
 }
-.stat-item-modern:hover {
+.stat-item-ultra::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #e6c458, transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+.stat-item-ultra:hover::before { opacity: 1; }
+.stat-item-ultra:hover {
     background: rgba(230,196,88,0.12);
-    border-color: rgba(230,196,88,0.35);
-    transform: translateY(-6px);
+    border-color: rgba(230,196,88,0.4);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(230,196,88,0.15);
 }
-.stat-num-modern {
+.stat-icon-ultra {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+    opacity: 0.9;
+}
+.stat-num-ultra {
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #e6c458 !important;
-    font-size: 42px;
+    font-size: 44px;
     font-weight: 900;
     line-height: 1;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     letter-spacing: -1px;
-    text-shadow: 0 4px 20px rgba(230,196,88,0.4);
+    text-shadow: 0 4px 24px rgba(230,196,88,0.4);
 }
-.stat-label-modern {
+.stat-label-ultra {
     color: #ffffff !important;
     font-size: 12.5px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
 }
 
 /* ============================================
-   LAYANAN GRID
+   LAYANAN GRID ULTRA
    ============================================ */
-.layanan-grid-modern {
+.layanan-grid-ultra {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
-.layanan-card-modern {
+.layanan-card-ultra {
     background: #ffffff;
     border: 1px solid #e5ebe7;
-    border-radius: 16px;
-    padding: 28px 22px;
+    border-radius: 20px;
+    padding: 32px 24px;
     text-align: center;
     text-decoration: none !important;
     color: inherit;
-    transition: all 0.35s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
-.layanan-card-modern::before {
+.layanan-card-ultra::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #0d5e3a, #c9a227);
+    background: linear-gradient(90deg, #0d5e3a, #c9a227, #e6c458);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s ease;
 }
-.layanan-card-modern:hover::before { transform: scaleX(1); }
-.layanan-card-modern:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 25px 50px rgba(13,94,58,0.15);
+.layanan-card-ultra:hover::before { transform: scaleX(1); }
+.layanan-card-ultra:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(13,94,58,0.18);
     border-color: rgba(201,162,39,0.3);
 }
-.layanan-icon-modern {
-    width: 68px;
-    height: 68px;
-    margin: 0 auto 16px;
-    border-radius: 18px;
+.layanan-icon-ultra {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 24px;
     background: linear-gradient(135deg, #e8f5ef, #d1e8dd);
     color: #0d5e3a !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
-    transition: all 0.4s ease;
-    box-shadow: 0 4px 12px rgba(13,94,58,0.08);
+    font-size: 36px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 24px rgba(13,94,58,0.1);
 }
-.layanan-card-modern:hover .layanan-icon-modern {
+.layanan-card-ultra:hover .layanan-icon-ultra {
     background: linear-gradient(135deg, #c9a227, #e6c458);
     color: #ffffff !important;
     transform: scale(1.1) rotate(-8deg);
-    box-shadow: 0 8px 24px rgba(201,162,39,0.4);
+    box-shadow: 0 12px 32px rgba(201,162,39,0.4);
 }
-.layanan-title-modern {
+.layanan-title-ultra {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 800;
     color: #083d26 !important;
-    margin: 0 0 6px;
+    margin: 0 0 8px;
     letter-spacing: -0.2px;
 }
-.layanan-desc-modern {
+.layanan-desc-ultra {
     color: #4a5a55 !important;
-    font-size: 11.5px;
-    line-height: 1.5;
+    font-size: 12px;
+    line-height: 1.55;
 }
 
 /* ============================================
-   FOOTER MODERN
+   FOOTER ULTRA PREMIUM
    ============================================ */
-.footer-modern {
-    background: #062b1b;
+.footer-ultra {
+    background: linear-gradient(180deg, #062b1b 0%, #041f13 100%);
     color: #ffffff !important;
-    padding: 60px 16px 0;
-    margin-top: 0;
+    padding: 70px 16px 0;
     position: relative;
     overflow: hidden;
 }
-.footer-modern::before {
+.footer-ultra::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 4px;
+    height: 5px;
     background: linear-gradient(90deg, #0d5e3a, #c9a227, #e6c458, #c9a227, #0d5e3a);
+    background-size: 200% auto;
+    animation: gradientShift 5s linear infinite;
 }
-.footer-modern * { color: #ffffff !important; }
-.footer-inner-modern {
+.footer-ultra * { color: #ffffff !important; }
+.footer-inner-ultra {
     max-width: 1400px;
     margin: 0 auto;
     position: relative;
     z-index: 2;
 }
-.footer-grid-modern {
+.footer-grid-ultra {
     display: grid;
     grid-template-columns: 1.8fr 1fr 1fr 1.2fr;
-    gap: 40px;
-    padding-bottom: 40px;
+    gap: 44px;
+    padding-bottom: 44px;
 }
-.footer-col-modern h4 {
+.footer-col-ultra h4 {
     color: #ffffff !important;
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 800;
-    margin: 0 0 20px;
+    margin: 0 0 22px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     position: relative;
-    padding-bottom: 12px;
+    padding-bottom: 14px;
 }
-.footer-col-modern h4::after {
+.footer-col-ultra h4::after {
     content: '';
     position: absolute;
     bottom: 0; left: 0;
-    width: 32px;
-    height: 2px;
-    background: #c9a227;
+    width: 36px;
+    height: 3px;
+    background: linear-gradient(90deg, #c9a227, #e6c458);
+    border-radius: 2px;
 }
-.footer-col-modern p {
+.footer-col-ultra p {
     color: rgba(255,255,255,0.7) !important;
     font-size: 12.5px;
     line-height: 1.9;
     margin: 0 0 8px;
 }
-.footer-col-modern a {
+.footer-col-ultra a {
     display: block;
     color: rgba(255,255,255,0.7) !important;
     font-size: 12.5px;
-    line-height: 2.1;
+    line-height: 2.15;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
 }
-.footer-col-modern a:hover { color: #e6c458 !important; padding-left: 6px; }
-.footer-brand-modern {
+.footer-col-ultra a:hover { 
+    color: #e6c458 !important; 
+    padding-left: 8px;
+}
+.footer-brand-ultra {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 20px;
+    gap: 16px;
+    margin-bottom: 22px;
 }
-.footer-logo-modern {
-    width: 56px;
-    height: 56px;
+.footer-logo-ultra {
+    width: 60px;
+    height: 60px;
     background: #ffffff;
-    border-radius: 10px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    padding: 6px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    padding: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
-.footer-logo-modern img { width: 100%; height: 100%; object-fit: contain; }
-.footer-brand-title-modern {
+.footer-logo-ultra img { width: 100%; height: 100%; object-fit: contain; }
+.footer-brand-title-ultra {
     color: #ffffff !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14.5px;
+    font-size: 15px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.3px;
 }
-.footer-brand-sub-modern {
+.footer-brand-sub-ultra {
     color: #e6c458 !important;
     font-size: 10px;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     margin-top: 4px;
-    font-weight: 700;
+    font-weight: 800;
 }
-.footer-social-modern {
+.footer-social-ultra {
     display: flex;
-    gap: 8px;
-    margin-top: 20px;
+    gap: 10px;
+    margin-top: 22px;
 }
-.footer-social-item-modern {
-    width: 38px;
-    height: 38px;
+.footer-social-item-ultra {
+    width: 42px;
+    height: 42px;
     background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
     color: #ffffff !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 15px;
     text-decoration: none;
     transition: all 0.3s;
 }
-.footer-social-item-modern:hover {
+.footer-social-item-ultra:hover {
     background: linear-gradient(135deg, #c9a227, #e6c458);
     border-color: #c9a227;
     color: #083d26 !important;
-    transform: translateY(-4px);
+    transform: translateY(-5px) rotate(-5deg);
+    box-shadow: 0 10px 24px rgba(201,162,39,0.4);
 }
-.footer-bottom-modern {
+.footer-bottom-ultra {
     border-top: 1px solid rgba(255,255,255,0.08);
-    padding: 24px 0;
+    padding: 26px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 14px;
     font-size: 11.5px;
     color: rgba(255,255,255,0.5) !important;
 }
-.footer-bottom-modern * { color: rgba(255,255,255,0.5) !important; }
+.footer-bottom-ultra * { color: rgba(255,255,255,0.5) !important; }
 
 /* ============================================
-   CHAT WIDGET "SAVIRA"
+   CHAT WIDGET
    ============================================ */
 .chat-widget {
     position: fixed;
     bottom: 24px;
     right: 24px;
     z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
 }
 .chat-btn {
-    width: 64px;
-    height: 64px;
+    width: 68px;
+    height: 68px;
     border-radius: 50%;
     background: linear-gradient(135deg, #0d5e3a, #14734a);
     color: #ffffff !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 28px;
     text-decoration: none;
-    box-shadow: 0 12px 30px rgba(13,94,58,0.4);
-    border: 3px solid #ffffff;
+    box-shadow: 0 14px 40px rgba(13,94,58,0.45);
+    border: 4px solid #ffffff;
     transition: all 0.3s ease;
     position: relative;
     animation: chatPulse 2.5s infinite;
 }
 @keyframes chatPulse {
-    0%, 100% { box-shadow: 0 12px 30px rgba(13,94,58,0.4), 0 0 0 0 rgba(13,94,58,0.5); }
-    50% { box-shadow: 0 12px 30px rgba(13,94,58,0.4), 0 0 0 15px rgba(13,94,58,0); }
+    0%, 100% { box-shadow: 0 14px 40px rgba(13,94,58,0.45), 0 0 0 0 rgba(13,94,58,0.5); }
+    50% { box-shadow: 0 14px 40px rgba(13,94,58,0.45), 0 0 0 18px rgba(13,94,58,0); }
 }
 .chat-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(-10deg);
     background: linear-gradient(135deg, #c9a227, #e6c458);
     color: #083d26 !important;
 }
 .chat-label {
-    position: absolute;
-    bottom: 76px;
-    right: 0;
     background: #ffffff;
     color: #083d26 !important;
-    padding: 8px 14px;
+    padding: 10px 18px;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 800;
-    white-space: nowrap;
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s;
     border: 2px solid #c9a227;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: chatLabelBounce 2s infinite;
 }
-.chat-btn:hover + .chat-label,
-.chat-widget:hover .chat-label {
-    opacity: 1;
-    transform: translateY(-8px);
+@keyframes chatLabelBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
 }
 
 /* ============================================
@@ -1471,29 +1993,31 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     background: linear-gradient(135deg, #0d5e3a, #14734a) !important;
     color: #ffffff !important;
     border: none !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     font-weight: 700 !important;
-    box-shadow: 0 4px 12px rgba(13,94,58,0.25) !important;
+    box-shadow: 0 6px 16px rgba(13,94,58,0.25) !important;
+    transition: all 0.3s ease !important;
 }
 .stButton > button:hover {
     background: linear-gradient(135deg, #14734a, #c9a227) !important;
     transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(13,94,58,0.35) !important;
 }
 div[data-testid="stForm"] {
     background: #ffffff;
     border: 1px solid #e5ebe7;
-    border-radius: 16px;
-    padding: 24px !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    border-radius: 20px;
+    padding: 28px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.04);
 }
 .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div {
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     border-color: #e5ebe7 !important;
     color: #000000 !important;
 }
 .stTextInput input:focus, .stTextArea textarea:focus {
     border-color: #c9a227 !important;
-    box-shadow: 0 0 0 3px rgba(201,162,39,0.15) !important;
+    box-shadow: 0 0 0 4px rgba(201,162,39,0.15) !important;
 }
 
 /* Tabs */
@@ -1504,15 +2028,15 @@ div[data-testid="stForm"] {
 }
 .stTabs [data-baseweb="tab"] {
     background: transparent;
-    border-radius: 8px 8px 0 0;
-    padding: 12px 20px;
+    border-radius: 10px 10px 0 0;
+    padding: 14px 22px;
     color: #4a5a55 !important;
     font-weight: 700;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 13px;
 }
 .stTabs [aria-selected="true"] {
-    background: #f0f6f2 !important;
+    background: linear-gradient(180deg, #f0f6f2, transparent) !important;
     color: #0d5e3a !important;
     border-bottom: 3px solid #0d5e3a;
 }
@@ -1521,20 +2045,21 @@ div[data-testid="stForm"] {
    RESPONSIVE TABLET
    ============================================ */
 @media (max-width: 1100px) {
-    .quick-grid { grid-template-columns: repeat(2, 1fr); }
-    .warta-grid-modern { grid-template-columns: repeat(2, 1fr); }
-    .stats-grid-modern { grid-template-columns: repeat(2, 1fr); }
-    .layanan-grid-modern { grid-template-columns: repeat(2, 1fr); }
+    .quick-grid-glass { grid-template-columns: repeat(2, 1fr); }
+    .warta-grid-ultra { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid-ultra { grid-template-columns: repeat(2, 1fr); }
+    .layanan-grid-ultra { grid-template-columns: repeat(2, 1fr); }
+    .trending-grid { grid-template-columns: 1fr; }
     .content-grid-2col { grid-template-columns: 1fr; }
-    .footer-grid-modern { grid-template-columns: 1fr 1fr; gap: 32px; }
-    .sambutan-inner { grid-template-columns: 280px 1fr; gap: 32px; }
+    .footer-grid-ultra { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .sambutan-inner-ultra { grid-template-columns: 280px 1fr; gap: 40px; }
+    .hero-ultra-stats { grid-template-columns: repeat(2, 1fr); max-width: 600px; }
 }
 
 /* ============================================
    RESPONSIVE MOBILE
    ============================================ */
 @media (max-width: 768px) {
-    /* Topbar */
     .topbar { 
         flex-direction: column; 
         gap: 8px; 
@@ -1544,14 +2069,13 @@ div[data-testid="stForm"] {
     .topbar-left, .topbar-right { 
         justify-content: center; 
         gap: 10px; 
-        font-size: 11px;
+        font-size: 10.5px;
     }
-    .topbar-item { font-size: 11px; }
+    .topbar-item { font-size: 10.5px; }
     
-    /* Header */
     .header-wrap { padding: 14px 12px; }
     .header-inner { gap: 12px; }
-    .header-logo { width: 52px; height: 52px; border-radius: 10px; }
+    .header-logo { width: 52px; height: 52px; border-radius: 12px; }
     .header-text-title { font-size: 13.5px; }
     .header-text-sub { font-size: 9.5px; }
     .header-actions { 
@@ -1561,9 +2085,8 @@ div[data-testid="stForm"] {
         padding-top: 12px;
         border-top: 1px solid #e5ebe7;
     }
-    .header-action-btn { font-size: 11px; padding: 7px 12px; }
+    .header-action-btn { font-size: 11px; padding: 8px 14px; }
     
-    /* NAVBAR MOBILE */
     .navbar { padding: 0 8px; }
     .navbar-inner { gap: 0; padding: 2px 0; }
     .nav-link {
@@ -1576,118 +2099,107 @@ div[data-testid="stForm"] {
         min-width: 0;
     }
     
-    /* Running text */
     .running-text-bar { padding: 10px 12px; gap: 10px; }
     .running-label { font-size: 9.5px; padding: 5px 10px; }
     .running-scroll { font-size: 11.5px; }
     
-    /* Hero */
-    .hero-modern { min-height: 480px; }
-    .hero-modern-content { padding: 40px 0; }
-    .hero-modern-kicker { font-size: 10px; padding: 6px 14px; letter-spacing: 1.2px; margin-bottom: 16px; }
-    .hero-modern-title { font-size: 26px; margin-bottom: 14px; letter-spacing: -0.5px; }
-    .hero-modern-sub { font-size: 13px; margin-bottom: 24px; line-height: 1.6; }
-    .hero-modern-buttons { gap: 8px; margin-bottom: 28px; }
-    .hero-modern-btn { padding: 11px 20px; font-size: 11px; }
-    .hero-modern-stats { gap: 8px; }
-    .hero-stat { padding: 12px 16px; min-width: 100px; }
-    .hero-stat-num { font-size: 20px; }
-    .hero-stat-label { font-size: 9px; }
+    .hero-ultra { min-height: 520px; }
+    .hero-ultra-content { padding: 44px 0; }
+    .hero-ultra-kicker { font-size: 10px; padding: 7px 14px; letter-spacing: 1.2px; margin-bottom: 18px; }
+    .hero-ultra-title { font-size: 26px; margin-bottom: 16px; letter-spacing: -0.8px; }
+    .hero-ultra-sub { font-size: 13px; margin-bottom: 26px; line-height: 1.6; }
+    .hero-ultra-buttons { gap: 8px; margin-bottom: 32px; }
+    .hero-ultra-btn { padding: 12px 22px; font-size: 11.5px; }
+    .hero-ultra-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .hero-stat-ultra { padding: 14px 16px; border-radius: 12px; }
+    .hero-stat-num-ultra { font-size: 22px; }
+    .hero-stat-label-ultra { font-size: 9px; }
     
-    /* Quick access */
-    .quick-access { padding: 24px 12px; }
-    .quick-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-    .quick-card { padding: 14px; gap: 10px; }
-    .quick-icon { width: 44px; height: 44px; font-size: 20px; border-radius: 10px; }
-    .quick-title { font-size: 12px; }
-    .quick-desc { font-size: 10px; }
+    .quick-access-glass { padding: 28px 12px; }
+    .quick-grid-glass { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .quick-card-glass { padding: 20px 14px; border-radius: 16px; }
+    .quick-icon-glass { width: 56px; height: 56px; font-size: 24px; border-radius: 16px; margin-bottom: 12px; }
+    .quick-title-glass { font-size: 12.5px; }
+    .quick-desc-glass { font-size: 10.5px; }
     
-    /* Page container */
-    .page-container { width: 95%; padding: 32px 0; }
+    .page-container { width: 95%; padding: 40px 0; }
     
-    /* Section header */
-    .section-header-modern { margin-bottom: 28px; }
-    .section-kicker-modern { font-size: 10.5px; letter-spacing: 2px; }
+    .section-header-modern { margin-bottom: 32px; }
+    .section-kicker-modern { font-size: 10.5px; letter-spacing: 2px; padding: 0 30px; }
     .section-title-modern { font-size: 22px; }
     .section-desc-modern { font-size: 12.5px; }
     
-    /* Sambutan */
-    .sambutan-section { padding: 40px 12px; }
-    .sambutan-inner { 
-        grid-template-columns: 1fr; 
-        gap: 28px; 
-    }
-    .sambutan-photo-wrap { max-width: 260px; margin: 0 auto; }
-    .sambutan-photo-frame { display: none; }
-    .sambutan-assalam { font-size: 15px; }
-    .sambutan-text { font-size: 13.5px; line-height: 1.8; }
-    .sambutan-quote { font-size: 14px; padding: 14px 18px; }
-    .sambutan-salam-nama { font-size: 14px; }
+    .sambutan-section-ultra { padding: 44px 12px; }
+    .sambutan-inner-ultra { grid-template-columns: 1fr; gap: 32px; }
+    .sambutan-photo-wrap-ultra { max-width: 260px; margin: 0 auto; }
+    .sambutan-photo-frame-ultra { display: none; }
+    .sambutan-assalam-ultra { font-size: 15px; padding: 12px 16px; }
+    .sambutan-text-ultra { font-size: 13.5px; line-height: 1.8; }
+    .sambutan-quote-ultra { font-size: 14px; padding: 18px 20px; }
+    .sambutan-salam-nama-ultra { font-size: 14px; }
     
-    /* Warta grid */
-    .warta-grid-modern { grid-template-columns: 1fr; gap: 16px; }
-    .warta-card-modern-img { height: 200px; }
-    .warta-card-modern-body { padding: 20px; }
-    .warta-card-modern-title { font-size: 15px; }
-    .warta-card-modern-desc { font-size: 12.5px; }
+    .trending-grid { grid-template-columns: 1fr; gap: 20px; }
+    .trending-main-img { height: 240px; }
+    .trending-main-content { padding: 20px; }
+    .trending-main-title { font-size: 18px; }
+    .trending-main-desc { font-size: 12.5px; }
+    .trending-thumb { width: 64px; height: 64px; }
+    .trending-info-title { font-size: 12px; }
+    .trending-rank { width: 26px; height: 26px; font-size: 12px; }
     
-    /* Content 2 col */
-    .content-grid-2col { grid-template-columns: 1fr; gap: 24px; }
-    .widget-modern { margin-bottom: 16px; }
-    .widget-modern-head { padding: 12px 16px; font-size: 12px; }
-    .agenda-item-modern { padding: 12px 16px; gap: 12px; }
-    .agenda-date-modern { width: 52px; height: 60px; }
-    .agenda-day-modern { font-size: 20px; }
-    .agenda-title-modern { font-size: 12.5px; }
-    .agenda-desc-modern { font-size: 11px; }
-    .kesekret-item-modern { padding: 12px 16px; }
-    .kesekret-icon-modern { width: 36px; height: 36px; font-size: 16px; }
-    .kesekret-title-modern { font-size: 11.5px; }
+    .warta-grid-ultra { grid-template-columns: 1fr; gap: 16px; }
+    .warta-card-ultra-img { height: 200px; }
+    .warta-card-ultra-body { padding: 20px; }
+    .warta-card-ultra-title { font-size: 15px; }
+    .warta-card-ultra-desc { font-size: 12.5px; }
     
-    /* Stats */
-    .stats-section-modern { padding: 40px 12px; }
-    .stats-grid-modern { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .stat-item-modern { padding: 20px 12px; }
-    .stat-num-modern { font-size: 32px; }
-    .stat-label-modern { font-size: 11px; }
+    .widget-ultra { margin-bottom: 16px; border-radius: 16px; }
+    .widget-ultra-head { padding: 14px 18px; font-size: 12.5px; }
+    .agenda-item-ultra { padding: 14px 18px; gap: 14px; }
+    .agenda-date-ultra { width: 56px; height: 64px; border-radius: 10px; }
+    .agenda-day-ultra { font-size: 22px; }
+    .agenda-title-ultra { font-size: 12.5px; }
+    .agenda-desc-ultra { font-size: 11px; }
+    .kesekret-item-ultra { padding: 14px 18px; }
+    .kesekret-icon-ultra { width: 38px; height: 38px; font-size: 17px; }
+    .kesekret-title-ultra { font-size: 11.5px; }
     
-    /* Layanan */
-    .layanan-grid-modern { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .layanan-card-modern { padding: 20px 14px; }
-    .layanan-icon-modern { width: 56px; height: 56px; font-size: 24px; border-radius: 14px; }
-    .layanan-title-modern { font-size: 12.5px; }
-    .layanan-desc-modern { font-size: 10.5px; }
+    .stats-section-ultra { padding: 48px 12px; }
+    .stats-grid-ultra { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat-item-ultra { padding: 24px 14px; border-radius: 16px; }
+    .stat-icon-ultra { font-size: 24px; }
+    .stat-num-ultra { font-size: 30px; }
+    .stat-label-ultra { font-size: 10.5px; }
     
-    /* Footer */
-    .footer-modern { padding: 40px 14px 0; }
-    .footer-grid-modern { grid-template-columns: 1fr; gap: 28px; padding-bottom: 28px; }
-    .footer-col-modern h4 { font-size: 12.5px; margin-bottom: 14px; padding-bottom: 8px; }
-    .footer-col-modern p, .footer-col-modern a { font-size: 12px; }
-    .footer-logo-modern { width: 48px; height: 48px; }
-    .footer-brand-title-modern { font-size: 13px; }
-    .footer-social-item-modern { width: 34px; height: 34px; font-size: 13px; }
-    .footer-bottom-modern { flex-direction: column; text-align: center; padding: 18px 0; font-size: 11px; }
+    .layanan-grid-ultra { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .layanan-card-ultra { padding: 22px 14px; border-radius: 16px; }
+    .layanan-icon-ultra { width: 60px; height: 60px; font-size: 26px; border-radius: 16px; margin-bottom: 14px; }
+    .layanan-title-ultra { font-size: 12.5px; }
+    .layanan-desc-ultra { font-size: 10.5px; }
     
-    /* Chat */
-    .chat-widget { bottom: 16px; right: 16px; }
-    .chat-btn { width: 56px; height: 56px; font-size: 22px; }
+    .footer-ultra { padding: 44px 14px 0; }
+    .footer-grid-ultra { grid-template-columns: 1fr; gap: 30px; padding-bottom: 30px; }
+    .footer-col-ultra h4 { font-size: 12.5px; margin-bottom: 14px; padding-bottom: 10px; }
+    .footer-col-ultra p, .footer-col-ultra a { font-size: 12px; }
+    .footer-logo-ultra { width: 52px; height: 52px; }
+    .footer-brand-title-ultra { font-size: 13.5px; }
+    .footer-social-item-ultra { width: 36px; height: 36px; font-size: 14px; }
+    .footer-bottom-ultra { flex-direction: column; text-align: center; padding: 20px 0; font-size: 11px; }
     
-    /* Tabs */
+    .chat-widget { bottom: 16px; right: 16px; gap: 8px; }
+    .chat-btn { width: 58px; height: 58px; font-size: 24px; }
+    .chat-label { font-size: 11px; padding: 8px 14px; }
+    
     .stTabs [data-baseweb="tab"] { padding: 10px 14px; font-size: 12px; }
 }
 
-/* Extra small */
 @media (max-width: 400px) {
     .nav-link { font-size: 9.5px !important; padding: 10px 4px !important; }
-    .hero-modern-title { font-size: 22px; }
-    .hero-modern-sub { font-size: 12px; }
-    .quick-icon { width: 38px; height: 38px; font-size: 18px; }
-    .quick-title { font-size: 11px; }
-    .quick-desc { font-size: 9px; }
-    .stat-num-modern { font-size: 26px; }
-    .stat-label-modern { font-size: 10px; }
-    .layanan-icon-modern { width: 48px; height: 48px; font-size: 20px; }
-    .layanan-title-modern { font-size: 11.5px; }
+    .hero-ultra-title { font-size: 22px; }
+    .hero-ultra-sub { font-size: 12px; }
+    .quick-icon-glass { width: 48px; height: 48px; font-size: 20px; }
+    .stat-num-ultra { font-size: 26px; }
+    .layanan-icon-ultra { width: 52px; height: 52px; font-size: 22px; }
 }
 </style>
 """,
@@ -1726,7 +2238,7 @@ st.markdown(
         </div>
     </div>
     <div class="topbar-right">
-        <span class="topbar-badge">🟢 ONLINE</span>
+        <span class="topbar-badge">ONLINE</span>
         <div class="topbar-item">
             <span>🕐</span>
             <span>{now.strftime('%H:%M WIB')}</span>
@@ -1739,7 +2251,7 @@ st.markdown(
 )
 
 # =========================================================
-# HEADER MODERN
+# HEADER
 # =========================================================
 st.markdown(
     f"""
@@ -1793,7 +2305,7 @@ st.markdown(
 st.markdown(
     """
 <div class="running-text-bar">
-    <span class="running-label">📢 INFO TERKINI</span>
+    <span class="running-label">INFO TERKINI</span>
     <div class="running-scroll-wrap">
         <div class="running-scroll">
             Selamat Datang di Portal Resmi DPRK Kabupaten Aceh Jaya &nbsp;&nbsp;★&nbsp;&nbsp;
@@ -1815,36 +2327,36 @@ if st.session_state.page == "Beranda":
     slide = HERO_SLIDES[st.session_state.slide_index % len(HERO_SLIDES)]
     st.markdown(
         f"""
-    <section class="hero-modern">
-        <div class="hero-modern-bg" style="background-image: url('{slide['image']}');"></div>
-        <div class="hero-modern-overlay"></div>
-        <div class="hero-modern-pattern"></div>
-        <div class="hero-modern-content">
-            <div class="hero-modern-kicker">{slide['kicker']}</div>
-            <h1 class="hero-modern-title">
+    <section class="hero-ultra">
+        <div class="hero-ultra-bg" style="background-image: url('{slide['image']}');"></div>
+        <div class="hero-ultra-overlay"></div>
+        <div class="hero-ultra-grid"></div>
+        <div class="hero-ultra-content">
+            <div class="hero-ultra-kicker">{slide['kicker']}</div>
+            <h1 class="hero-ultra-title">
                 {slide['title'].split(' ')[0]} <span>{' '.join(slide['title'].split(' ')[1:3])}</span> {' '.join(slide['title'].split(' ')[3:])}
             </h1>
-            <p class="hero-modern-sub">{slide['subtitle']}</p>
-            <div class="hero-modern-buttons">
-                <a href="?page=layanan" class="hero-modern-btn">📢 Sampaikan Aspirasi</a>
-                <a href="?page=berita" class="hero-modern-btn hero-modern-btn-outline">📰 Lihat Berita</a>
+            <p class="hero-ultra-sub">{slide['subtitle']}</p>
+            <div class="hero-ultra-buttons">
+                <a href="?page=layanan" class="hero-ultra-btn">📢 Sampaikan Aspirasi</a>
+                <a href="?page=berita" class="hero-ultra-btn hero-ultra-btn-outline">📰 Lihat Berita</a>
             </div>
-            <div class="hero-modern-stats">
-                <div class="hero-stat">
-                    <span class="hero-stat-num">20</span>
-                    <div class="hero-stat-label">Anggota DPRK</div>
+            <div class="hero-ultra-stats">
+                <div class="hero-stat-ultra">
+                    <span class="hero-stat-num-ultra">20</span>
+                    <div class="hero-stat-label-ultra">Anggota DPRK</div>
                 </div>
-                <div class="hero-stat">
-                    <span class="hero-stat-num">4</span>
-                    <div class="hero-stat-label">Komisi</div>
+                <div class="hero-stat-ultra">
+                    <span class="hero-stat-num-ultra">4</span>
+                    <div class="hero-stat-label-ultra">Komisi</div>
                 </div>
-                <div class="hero-stat">
-                    <span class="hero-stat-num">120+</span>
-                    <div class="hero-stat-label">Produk Hukum</div>
+                <div class="hero-stat-ultra">
+                    <span class="hero-stat-num-ultra">120+</span>
+                    <div class="hero-stat-label-ultra">Produk Hukum</div>
                 </div>
-                <div class="hero-stat">
-                    <span class="hero-stat-num">{st.session_state.visitor_count:,}</span>
-                    <div class="hero-stat-label">Kunjungan</div>
+                <div class="hero-stat-ultra">
+                    <span class="hero-stat-num-ultra">{st.session_state.visitor_count:,}</span>
+                    <div class="hero-stat-label-ultra">Kunjungan</div>
                 </div>
             </div>
         </div>
@@ -1864,50 +2376,68 @@ if st.session_state.page == "Beranda":
             st.session_state.slide_index = (st.session_state.slide_index + 1) % len(HERO_SLIDES)
             st.rerun()
 
-    # QUICK ACCESS CARDS
-    st.markdown('<div class="quick-access"><div class="quick-access-inner">', unsafe_allow_html=True)
+    # MITRA MARQUEE
+    mitra_html = "".join([f'<div class="mitra-item">{m}</div>' for m in MITRA * 2])
+    st.markdown(
+        f"""
+    <div class="mitra-section">
+        <div class="mitra-label">DIDUKUNG OLEH INSTANSI & MITRA STRATEGIS</div>
+        <div class="mitra-track">
+            {mitra_html}
+        </div>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    # QUICK ACCESS GLASS
+    st.markdown('<div class="quick-access-glass"><div class="quick-access-inner">', unsafe_allow_html=True)
     quick_cols = st.columns(4)
-    for i, item in enumerate(QUICK_LINKS):
+    quick_data = [
+        ("📢", "Pengaduan", "Lapor Online", "layanan"),
+        ("📜", "JDIH", "Produk Hukum", "jdih"),
+        ("📅", "Agenda", "Jadwal Rapat", "berita"),
+        ("📊", "Transparansi", "Info Publik", "jdih"),
+    ]
+    for i, (icon, title, desc, target) in enumerate(quick_data):
         with quick_cols[i]:
             st.markdown(
                 f"""
-            <a href="?page={item['page']}" class="quick-card">
-                <div class="quick-icon" style="background: linear-gradient(135deg, {item['color']}22, {item['color']}44); color: {item['color']};">{item['icon']}</div>
-                <div class="quick-content">
-                    <div class="quick-title">{item['title']}</div>
-                    <div class="quick-desc">{item['desc']}</div>
-                </div>
+            <a href="?page={target}" class="quick-card-glass">
+                <div class="quick-icon-glass">{icon}</div>
+                <div class="quick-title-glass">{title}</div>
+                <div class="quick-desc-glass">{desc}</div>
             </a>
             """,
                 unsafe_allow_html=True,
             )
     st.markdown("</div></div>", unsafe_allow_html=True)
 
-    # SAMBUTAN PIMPINAN (Mayor's Remarks Style)
+    # SAMBUTAN PIMPINAN ULTRA
     st.markdown(
         f"""
-    <section class="sambutan-section">
-        <div class="sambutan-inner">
-            <div class="sambutan-photo-wrap">
-                <div class="sambutan-photo-frame"></div>
-                <img class="sambutan-photo" src="{SAMBUTAN['foto']}" alt="{SAMBUTAN['nama']}">
-                <div class="sambutan-photo-info">
-                    <div class="sambutan-nama">{SAMBUTAN['nama']}</div>
-                    <div class="sambutan-jabatan">{SAMBUTAN['jabatan']}</div>
+    <section class="sambutan-section-ultra">
+        <div class="sambutan-inner-ultra">
+            <div class="sambutan-photo-wrap-ultra">
+                <div class="sambutan-photo-frame-ultra"></div>
+                <img class="sambutan-photo-ultra" src="{SAMBUTAN['foto']}" alt="{SAMBUTAN['nama']}">
+                <div class="sambutan-photo-info-ultra">
+                    <div class="sambutan-nama-ultra">{SAMBUTAN['nama']}</div>
+                    <div class="sambutan-jabatan-ultra">{SAMBUTAN['jabatan']}</div>
                 </div>
             </div>
-            <div class="sambutan-content">
+            <div class="sambutan-content-ultra">
                 <div class="section-kicker-modern" style="text-align:left; padding:0;">SAMBUTAN PIMPINAN</div>
-                <h2 class="section-title-modern" style="text-align:left; margin-top:8px;">Membangun Aceh Jaya yang Lebih Baik</h2>
-                <div class="sambutan-assalam">{SAMBUTAN['assalamualaikum']}</div>
-                <p class="sambutan-text">{SAMBUTAN['pembuka']}</p>
-                <div class="sambutan-quote">{SAMBUTAN['quote']}</div>
-                <p class="sambutan-text">{SAMBUTAN['paragraf2']}</p>
-                <p class="sambutan-text">{SAMBUTAN['penutup']}</p>
-                <div class="sambutan-salam">
-                    <p class="sambutan-salam-line">{SAMBUTAN['salam']}</p>
-                    <div class="sambutan-salam-nama">{SAMBUTAN['nama']}</div>
-                    <div class="sambutan-salam-jabatan">{SAMBUTAN['jabatan']}</div>
+                <h2 class="section-title-modern" style="text-align:left; margin-top:10px;">Membangun Aceh Jaya yang Lebih Baik</h2>
+                <div class="sambutan-assalam-ultra">{SAMBUTAN['assalamualaikum']}</div>
+                <p class="sambutan-text-ultra">{SAMBUTAN['pembuka']}</p>
+                <div class="sambutan-quote-ultra">{SAMBUTAN['quote']}</div>
+                <p class="sambutan-text-ultra">{SAMBUTAN['paragraf2']}</p>
+                <p class="sambutan-text-ultra">{SAMBUTAN['penutup']}</p>
+                <div class="sambutan-salam-ultra">
+                    <p class="sambutan-salam-line-ultra">Salam hangat,</p>
+                    <div class="sambutan-salam-nama-ultra">{SAMBUTAN['nama']}</div>
+                    <div class="sambutan-salam-jabatan-ultra">{SAMBUTAN['jabatan']}</div>
                 </div>
             </div>
         </div>
@@ -1916,7 +2446,7 @@ if st.session_state.page == "Beranda":
         unsafe_allow_html=True,
     )
 
-    # LAYANAN PUBLIK
+    # LAYANAN PUBLIK ULTRA
     st.markdown('<div class="page-container">', unsafe_allow_html=True)
     st.markdown(
         """
@@ -1944,10 +2474,10 @@ if st.session_state.page == "Beranda":
             tgt = 'target="_blank" rel="noopener"' if is_ext else ""
             st.markdown(
                 f"""
-            <a href="{href}" {tgt} class="layanan-card-modern">
-                <div class="layanan-icon-modern">{icon}</div>
-                <div class="layanan-title-modern">{title}</div>
-                <div class="layanan-desc-modern">{desc}</div>
+            <a href="{href}" {tgt} class="layanan-card-ultra">
+                <div class="layanan-icon-ultra">{icon}</div>
+                <div class="layanan-title-ultra">{title}</div>
+                <div class="layanan-desc-ultra">{desc}</div>
             </a>
             """,
                 unsafe_allow_html=True,
@@ -1955,96 +2485,129 @@ if st.session_state.page == "Beranda":
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # STATS SECTION
-    st.markdown(
-        f"""
-    <section class="stats-section-modern">
-        <div class="stats-inner">
-            <div class="section-header-modern" style="margin-bottom: 32px;">
-                <div class="section-kicker-modern" style="color: #e6c458;">DALAM ANGKA</div>
-                <h2 class="section-title-modern" style="color: #ffffff;">DPRK Aceh Jaya</h2>
-            </div>
-            <div class="stats-grid-modern">
-                <div class="stat-item-modern">
-                    <div class="stat-num-modern">20</div>
-                    <div class="stat-label-modern">Anggota DPRK</div>
-                </div>
-                <div class="stat-item-modern">
-                    <div class="stat-num-modern">4</div>
-                    <div class="stat-label-modern">Komisi DPRK</div>
-                </div>
-                <div class="stat-item-modern">
-                    <div class="stat-num-modern">120+</div>
-                    <div class="stat-label-modern">Produk Hukum</div>
-                </div>
-                <div class="stat-item-modern">
-                    <div class="stat-num-modern">{st.session_state.visitor_count:,}</div>
-                    <div class="stat-label-modern">Total Kunjungan</div>
-                </div>
-            </div>
-        </div>
-    </section>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    # WARTA + AGENDA (2 COLUMN)
+    # TRENDING + SIDEBAR
     st.markdown('<div class="page-container">', unsafe_allow_html=True)
     st.markdown(
         """
     <div class="section-header-modern">
-        <div class="section-kicker-modern">INFORMASI TERBARU</div>
-        <h2 class="section-title-modern">Warta DPRK</h2>
-        <p class="section-desc-modern">Informasi kegiatan, rapat, agenda, dan aktivitas DPRK Aceh Jaya.</p>
+        <div class="section-kicker-modern">TRENDING HARI INI</div>
+        <h2 class="section-title-modern">Warta Terpopuler</h2>
+        <p class="section-desc-modern">Berita dan agenda terhangat dari DPRK Aceh Jaya.</p>
     </div>
     """,
         unsafe_allow_html=True,
     )
 
-    main_col, side_col = st.columns([2, 1])
+    # Trending layout: 1 utama + 3 list
+    trending_main = WARTA_DPRK[0]
+    trending_side = WARTA_DPRK[1:4]
 
-    with main_col:
-        for item in WARTA_DPRK[:3]:
-            st.markdown(
-                f"""
-            <div class="warta-card-modern" style="margin-bottom: 16px;">
-                <div class="warta-card-modern-img">
-                    <span class="warta-card-modern-cat">{item['kategori']}</span>
-                    <img src="{item['image']}">
-                </div>
-                <div class="warta-card-modern-body">
-                    <div class="warta-card-modern-date">📅 {item['date']}</div>
-                    <h3 class="warta-card-modern-title">{item['title']}</h3>
-                    <p class="warta-card-modern-desc">{item['desc'][:180]}...</p>
-                    <a href="?page=berita" class="warta-card-modern-more">Baca Selengkapnya →</a>
+    tr_col1, tr_col2 = st.columns([2, 1])
+    with tr_col1:
+        st.markdown(
+            f"""
+        <div class="trending-main">
+            <div class="trending-main-img">
+                <div class="trending-badge">🔥 TRENDING #1</div>
+                <img src="{trending_main['image']}">
+            </div>
+            <div class="trending-main-content">
+                <span class="trending-main-cat">{trending_main['kategori']}</span>
+                <h3 class="trending-main-title">{trending_main['title']}</h3>
+                <p class="trending-main-desc">{trending_main['desc'][:200]}...</p>
+                <div class="trending-main-meta">
+                    <span>📅 {trending_main['date']}</span>
+                    <span>👁️ {trending_main['views']:,} views</span>
                 </div>
             </div>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+    with tr_col2:
+        st.markdown('<div class="trending-list">', unsafe_allow_html=True)
+        for i, item in enumerate(trending_side, start=2):
+            st.markdown(
+                f"""
+            <a href="?page=berita" class="trending-item">
+                <div class="trending-rank">{i}</div>
+                <img class="trending-thumb" src="{item['image']}">
+                <div class="trending-info">
+                    <div class="trending-info-cat">{item['kategori']}</div>
+                    <div class="trending-info-title">{item['title']}</div>
+                    <div class="trending-info-meta">👁️ {item['views']:,} • 📅 {item['date'][:10]}</div>
+                </div>
+            </a>
             """,
                 unsafe_allow_html=True,
             )
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # WARTA + AGENDA 2 COLUMN
+    st.markdown('<div class="page-container">', unsafe_allow_html=True)
+    main_col, side_col = st.columns([2, 1])
+
+    with main_col:
+        st.markdown(
+            """
+        <div class="section-header-modern" style="text-align:left; margin-bottom:28px;">
+            <div class="section-kicker-modern" style="text-align:left; padding:0;">WARTA DPRK</div>
+            <h2 class="section-title-modern" style="text-align:left;">Berita Terbaru</h2>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+        # Grid 2 kolom
+        for i in range(0, min(4, len(WARTA_DPRK)), 2):
+            wcols = st.columns(2)
+            for j in range(2):
+                if i + j < len(WARTA_DPRK):
+                    item = WARTA_DPRK[i + j]
+                    with wcols[j]:
+                        st.markdown(
+                            f"""
+                        <div class="warta-card-ultra" style="margin-bottom: 18px;">
+                            <div class="warta-card-ultra-img">
+                                <span class="warta-card-ultra-cat">{item['kategori']}</span>
+                                <span class="warta-card-ultra-views">👁️ {item['views']:,}</span>
+                                <img src="{item['image']}">
+                            </div>
+                            <div class="warta-card-ultra-body">
+                                <div class="warta-card-ultra-date">📅 {item['date']}</div>
+                                <h3 class="warta-card-ultra-title">{item['title']}</h3>
+                                <p class="warta-card-ultra-desc">{item['desc'][:110]}...</p>
+                                <a href="?page=berita" class="warta-card-ultra-more">Baca Selengkapnya →</a>
+                            </div>
+                        </div>
+                        """,
+                            unsafe_allow_html=True,
+                        )
 
     with side_col:
         # Widget Agenda
         st.markdown(
             """
-        <div class="widget-modern">
-            <div class="widget-modern-head">📅 Agenda Terkini</div>
-            <div class="widget-modern-body">
+        <div class="widget-ultra">
+            <div class="widget-ultra-head">📅 Agenda Terkini</div>
+            <div class="widget-ultra-body">
         """,
             unsafe_allow_html=True,
         )
         for item in AGENDA_TERKINI:
             st.markdown(
                 f"""
-            <div class="agenda-item-modern">
-                <div class="agenda-date-modern">
-                    <div class="agenda-day-modern">{item['hari']}</div>
-                    <div class="agenda-month-modern">{item['bulan_tahun']}</div>
+            <div class="agenda-item-ultra">
+                <div class="agenda-date-ultra">
+                    <div class="agenda-day-ultra">{item['hari']}</div>
+                    <div class="agenda-month-ultra">{item['bulan_tahun']}</div>
                 </div>
-                <div class="agenda-content-modern">
-                    <div class="agenda-title-modern">{item['judul']}</div>
-                    <p class="agenda-desc-modern">{item['desc']}</p>
-                    <div class="agenda-footer-modern">📅 {item['tanggal_full']}</div>
+                <div class="agenda-content-ultra">
+                    <div class="agenda-title-ultra">{item['judul']}</div>
+                    <p class="agenda-desc-ultra">{item['desc']}</p>
+                    <div class="agenda-footer-ultra">📅 {item['tanggal_full']}</div>
                 </div>
             </div>
             """,
@@ -2055,20 +2618,20 @@ if st.session_state.page == "Beranda":
         # Widget Kesekretariatan
         st.markdown(
             """
-        <div class="widget-modern">
-            <div class="widget-modern-head">📰 Kesekretariatan</div>
-            <div class="widget-modern-body">
+        <div class="widget-ultra">
+            <div class="widget-ultra-head">📰 Kesekretariatan</div>
+            <div class="widget-ultra-body">
         """,
             unsafe_allow_html=True,
         )
         for item in KESEKRETARIATAN:
             st.markdown(
                 f"""
-            <div class="kesekret-item-modern">
-                <div class="kesekret-icon-modern">📋</div>
+            <div class="kesekret-item-ultra">
+                <div class="kesekret-icon-ultra">📋</div>
                 <div>
-                    <div class="kesekret-title-modern">{item['title']}</div>
-                    <div class="kesekret-date-modern">📅 {item['date']}</div>
+                    <div class="kesekret-title-ultra">{item['title']}</div>
+                    <div class="kesekret-date-ultra">📅 {item['date']}</div>
                 </div>
             </div>
             """,
@@ -2077,6 +2640,44 @@ if st.session_state.page == "Beranda":
         st.markdown("</div></div>", unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
+
+    # STATS SECTION ULTRA
+    st.markdown(
+        f"""
+    <section class="stats-section-ultra">
+        <div class="stats-inner-ultra">
+            <div class="section-header-modern" style="margin-bottom: 44px;">
+                <div class="section-kicker-modern" style="color: #e6c458;">DALAM ANGKA</div>
+                <h2 class="section-title-modern" style="color: #ffffff;">DPRK Aceh Jaya</h2>
+                <p class="section-desc-modern" style="color: rgba(255,255,255,0.75);">Data dan statistik terkini kinerja DPRK Aceh Jaya.</p>
+            </div>
+            <div class="stats-grid-ultra">
+                <div class="stat-item-ultra">
+                    <span class="stat-icon-ultra">👥</span>
+                    <div class="stat-num-ultra">20</div>
+                    <div class="stat-label-ultra">Anggota DPRK</div>
+                </div>
+                <div class="stat-item-ultra">
+                    <span class="stat-icon-ultra">🏛️</span>
+                    <div class="stat-num-ultra">4</div>
+                    <div class="stat-label-ultra">Komisi DPRK</div>
+                </div>
+                <div class="stat-item-ultra">
+                    <span class="stat-icon-ultra">📜</span>
+                    <div class="stat-num-ultra">120+</div>
+                    <div class="stat-label-ultra">Produk Hukum</div>
+                </div>
+                <div class="stat-item-ultra">
+                    <span class="stat-icon-ultra">👁️</span>
+                    <div class="stat-num-ultra">{st.session_state.visitor_count:,}</div>
+                    <div class="stat-label-ultra">Total Kunjungan</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    """,
+        unsafe_allow_html=True,
+    )
 
     # STATISTIK CHART
     st.markdown('<div class="page-container">', unsafe_allow_html=True)
@@ -2152,9 +2753,9 @@ elif st.session_state.page == "Profil":
             with cols[i % 2]:
                 st.markdown(
                     f"""
-                <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 12px; padding: 16px; text-align: center; border-top: 3px solid #0d5e3a; margin-bottom: 12px; transition: all 0.3s;">
-                    <div style="font-weight: 800; color: #083d26; font-size: 12.5px; margin-bottom: 4px; font-family: 'Plus Jakarta Sans';">{nama}</div>
-                    <div style="color: #c9a227; font-size: 10.5px; font-weight: 700; text-transform: uppercase;">{jabatan}</div>
+                <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 16px; padding: 20px; text-align: center; border-top: 3px solid #0d5e3a; margin-bottom: 14px; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                    <div style="font-weight: 800; color: #083d26; font-size: 13px; margin-bottom: 5px; font-family: 'Plus Jakarta Sans';">{nama}</div>
+                    <div style="color: #c9a227; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">{jabatan}</div>
                 </div>
                 """,
                     unsafe_allow_html=True,
@@ -2166,9 +2767,9 @@ elif st.session_state.page == "Profil":
             with cols[i % 2]:
                 st.markdown(
                     f"""
-                <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 12px; padding: 16px; text-align: center; border-top: 3px solid #c9a227; margin-bottom: 12px;">
-                    <div style="font-weight: 800; color: #083d26; font-size: 12.5px; margin-bottom: 4px; font-family: 'Plus Jakarta Sans';">{nama}</div>
-                    <div style="color: #4a5a55; font-size: 10.5px; font-weight: 600;">{jabatan}</div>
+                <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 16px; padding: 20px; text-align: center; border-top: 3px solid #c9a227; margin-bottom: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                    <div style="font-weight: 800; color: #083d26; font-size: 13px; margin-bottom: 5px; font-family: 'Plus Jakarta Sans';">{nama}</div>
+                    <div style="color: #4a5a55; font-size: 11px; font-weight: 600;">{jabatan}</div>
                 </div>
                 """,
                     unsafe_allow_html=True,
@@ -2205,7 +2806,6 @@ elif st.session_state.page == "Berita":
     if search:
         filtered = [i for i in filtered if search.lower() in i["title"].lower() or search.lower() in i["desc"].lower()]
 
-    # Grid 3 kolom
     for i in range(0, len(filtered), 3):
         cols = st.columns(3)
         for j in range(3):
@@ -2214,16 +2814,17 @@ elif st.session_state.page == "Berita":
                 with cols[j]:
                     st.markdown(
                         f"""
-                    <div class="warta-card-modern" style="margin-bottom: 16px;">
-                        <div class="warta-card-modern-img">
-                            <span class="warta-card-modern-cat">{item['kategori']}</span>
+                    <div class="warta-card-ultra" style="margin-bottom: 18px;">
+                        <div class="warta-card-ultra-img">
+                            <span class="warta-card-ultra-cat">{item['kategori']}</span>
+                            <span class="warta-card-ultra-views">👁️ {item['views']:,}</span>
                             <img src="{item['image']}">
                         </div>
-                        <div class="warta-card-modern-body">
-                            <div class="warta-card-modern-date">📅 {item['date']}</div>
-                            <h3 class="warta-card-modern-title">{item['title']}</h3>
-                            <p class="warta-card-modern-desc">{item['desc'][:130]}...</p>
-                            <a href="#" class="warta-card-modern-more">Baca →</a>
+                        <div class="warta-card-ultra-body">
+                            <div class="warta-card-ultra-date">📅 {item['date']}</div>
+                            <h3 class="warta-card-ultra-title">{item['title']}</h3>
+                            <p class="warta-card-ultra-desc">{item['desc'][:130]}...</p>
+                            <a href="#" class="warta-card-ultra-more">Baca →</a>
                         </div>
                     </div>
                     """,
@@ -2268,12 +2869,12 @@ elif st.session_state.page == "Galeri":
                 with cols[j]:
                     st.markdown(
                         f"""
-                    <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 12px; overflow: hidden; margin-bottom: 12px; transition: all 0.3s;">
+                    <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 16px; overflow: hidden; margin-bottom: 14px; transition: all 0.4s; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
                         <div style="overflow: hidden;">
-                            <img src="{img}" style="width: 100%; height: 180px; object-fit: cover;">
+                            <img src="{img}" style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.6s;">
                         </div>
-                        <div style="padding: 14px; text-align: center;">
-                            <div style="font-family: 'Plus Jakarta Sans'; font-weight: 700; color: #083d26; font-size: 12.5px;">{title}</div>
+                        <div style="padding: 16px; text-align: center;">
+                            <div style="font-family: 'Plus Jakarta Sans'; font-weight: 800; color: #083d26; font-size: 13px;">{title}</div>
                         </div>
                     </div>
                     """,
@@ -2322,16 +2923,16 @@ elif st.session_state.page == "Layanan":
 
     st.markdown(
         """
-    <div class="widget-modern" style="margin-top: 24px;">
-        <div class="widget-modern-head">📞 Kontak Kami</div>
-        <div class="widget-modern-body" style="padding: 20px;">
-            <p style="font-size: 13px; color: #083d26; line-height: 1.9; margin: 0 0 12px;">
+    <div class="widget-ultra" style="margin-top: 24px;">
+        <div class="widget-ultra-head">📞 Kontak Kami</div>
+        <div class="widget-ultra-body" style="padding: 22px;">
+            <p style="font-size: 13px; color: #083d26; line-height: 1.9; margin: 0 0 14px;">
                 <strong style="color: #0d5e3a;">📞 Telepon</strong><br>(0655) 12345
             </p>
-            <p style="font-size: 13px; color: #083d26; line-height: 1.9; margin: 0 0 12px;">
+            <p style="font-size: 13px; color: #083d26; line-height: 1.9; margin: 0 0 14px;">
                 <strong style="color: #0d5e3a;">✉️ Email</strong><br>sekretariat@dprk.acehjaya.go.id
             </p>
-            <p style="font-size: 13px; color: #083d26; line-height: 1.9; margin: 0 0 12px;">
+            <p style="font-size: 13px; color: #083d26; line-height: 1.9; margin: 0 0 14px;">
                 <strong style="color: #0d5e3a;">📍 Alamat</strong><br>Jl. Merdeka No. 01, Calang, Aceh Jaya
             </p>
             <p style="font-size: 13px; color: #083d26; line-height: 1.9; margin: 0;">
@@ -2390,10 +2991,10 @@ else:
         with cols[i]:
             st.markdown(
                 f"""
-            <div class="layanan-card-modern">
-                <div class="layanan-icon-modern">{icon}</div>
-                <div class="layanan-title-modern">{title}</div>
-                <div class="layanan-desc-modern">{value}</div>
+            <div class="layanan-card-ultra">
+                <div class="layanan-icon-ultra">{icon}</div>
+                <div class="layanan-title-ultra">{title}</div>
+                <div class="layanan-desc-ultra">{value}</div>
             </div>
             """,
                 unsafe_allow_html=True,
@@ -2401,11 +3002,11 @@ else:
 
     st.markdown(
         """
-    <div style="margin-top: 30px; background: #fff; border: 1px solid #e5ebe7; border-radius: 16px; padding: 24px;">
-        <div class="section-header-modern" style="margin-bottom: 20px;">
-            <h2 class="section-title-modern" style="font-size: 20px;">Peta Lokasi Kantor</h2>
+    <div style="margin-top: 30px; background: #fff; border: 1px solid #e5ebe7; border-radius: 20px; padding: 28px; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
+        <div class="section-header-modern" style="margin-bottom: 22px;">
+            <h2 class="section-title-modern" style="font-size: 22px;">Peta Lokasi Kantor</h2>
         </div>
-        <div style="width: 100%; height: 340px; border-radius: 12px; overflow: hidden; border: 1px solid #e5ebe7;">
+        <div style="width: 100%; height: 360px; border-radius: 16px; overflow: hidden; border: 1px solid #e5ebe7;">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.5!2d95.39!3d4.71!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30403e5f3a0b0b0b%3A0x0!2sCalang%2C%20Aceh%20Jaya%20Regency%2C%20Aceh!5e0!3m2!1sen!2sid!4v1600000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
@@ -2415,51 +3016,51 @@ else:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# CHAT WIDGET "SAVIRA"
+# CHAT WIDGET
 # =========================================================
 st.markdown(
     """
 <div class="chat-widget">
-    <a href="?page=layanan" class="chat-btn" title="Chat dengan SAVIRA">💬</a>
     <div class="chat-label">💬 Chat SAVIRA!</div>
+    <a href="?page=layanan" class="chat-btn" title="Chat dengan SAVIRA">💬</a>
 </div>
 """,
     unsafe_allow_html=True,
 )
 
 # =========================================================
-# FOOTER
+# FOOTER ULTRA
 # =========================================================
 st.markdown(
     f"""
-<footer class="footer-modern">
-<div class="footer-inner-modern">
-<div class="footer-grid-modern">
+<footer class="footer-ultra">
+<div class="footer-inner-ultra">
+<div class="footer-grid-ultra">
 
-<div class="footer-col-modern">
-<div class="footer-brand-modern">
-<div class="footer-logo-modern">
+<div class="footer-col-ultra">
+<div class="footer-brand-ultra">
+<div class="footer-logo-ultra">
     <img src="{LOGO_URL}" alt="Logo DPRK Aceh Jaya"
          onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>'">
 </div>
 <div>
-<div class="footer-brand-title-modern">DPRK ACEH JAYA</div>
-<div class="footer-brand-sub-modern">SEKRETARIAT DPRK</div>
+<div class="footer-brand-title-ultra">DPRK ACEH JAYA</div>
+<div class="footer-brand-sub-ultra">SEKRETARIAT DPRK</div>
 </div>
 </div>
-<p style="color: rgba(255,255,255,0.7); font-size: 12.5px; line-height: 1.85; margin: 0 0 8px;">
+<p style="color: rgba(255,255,255,0.7); font-size: 12.5px; line-height: 1.9; margin: 0 0 8px;">
 Portal resmi Sekretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Menyediakan informasi kelembagaan, berita, agenda, produk hukum, dan layanan aspirasi masyarakat.
 </p>
-<div class="footer-social-modern">
-<a href="#" class="footer-social-item-modern">f</a>
-<a href="#" class="footer-social-item-modern">𝕏</a>
-<a href="#" class="footer-social-item-modern">▶</a>
-<a href="#" class="footer-social-item-modern">◎</a>
-<a href="#" class="footer-social-item-modern">in</a>
+<div class="footer-social-ultra">
+<a href="#" class="footer-social-item-ultra">f</a>
+<a href="#" class="footer-social-item-ultra">𝕏</a>
+<a href="#" class="footer-social-item-ultra">▶</a>
+<a href="#" class="footer-social-item-ultra">◎</a>
+<a href="#" class="footer-social-item-ultra">in</a>
 </div>
 </div>
 
-<div class="footer-col-modern">
+<div class="footer-col-ultra">
 <h4>Navigasi</h4>
 <a href="?page=beranda">Beranda</a>
 <a href="?page=profil">Profil DPRK</a>
@@ -2468,7 +3069,7 @@ Portal resmi Sekretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Menyediaka
 <a href="?page=kontak">Kontak</a>
 </div>
 
-<div class="footer-col-modern">
+<div class="footer-col-ultra">
 <h4>Layanan Publik</h4>
 <a href="?page=layanan">Pengaduan Masyarakat</a>
 <a href="?page=kontak">Informasi Publik</a>
@@ -2477,7 +3078,7 @@ Portal resmi Sekretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Menyediaka
 <a href="https://elhpkpn.kpk.go.id/" target="_blank">E-LHKPN</a>
 </div>
 
-<div class="footer-col-modern">
+<div class="footer-col-ultra">
 <h4>Hubungi Kami</h4>
 <p>📍 Jl. Merdeka No. 01</p>
 <p>Calang, Kabupaten Aceh Jaya</p>
@@ -2488,7 +3089,7 @@ Portal resmi Sekretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Menyediaka
 
 </div>
 
-<div class="footer-bottom-modern">
+<div class="footer-bottom-ultra">
 <div>© {datetime.now().year} Sekretariat DPRK Kabupaten Aceh Jaya. Seluruh hak cipta dilindungi.</div>
 <div>Portal Informasi Publik • Kabupaten Aceh Jaya</div>
 </div>
