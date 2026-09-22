@@ -2,7 +2,6 @@ import streamlit as st
 from datetime import datetime
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 import random
 
 # =========================================================
@@ -26,8 +25,6 @@ if "slide_index" not in st.session_state:
     st.session_state.slide_index = 0
 if "visitor_count" not in st.session_state:
     st.session_state.visitor_count = random.randint(25000, 45000)
-if "form_step" not in st.session_state:
-    st.session_state.form_step = 1
 
 # =========================================================
 # DATA
@@ -189,14 +186,13 @@ ANGGARAN_DATA = pd.DataFrame({
     "Anggaran": [45, 25, 15, 8, 7],
 })
 
-# MITRA LOGOS (untuk marquee)
 MITRA = [
     "🏛️ KPK", "⚖️ Kejaksaan", "🚔 Polri", "🏦 BPK", "📊 BPS",
     "🎓 Universitas", "🏥 RSUD", "📚 Dinas Pendidikan", "🌾 Dinas Pertanian", "🛣️ PUPR"
 ]
 
 # =========================================================
-# CSS STYLE - ULTRA PREMIUM v5.0
+# CSS STYLE - ULTRA PREMIUM COMPACT MOBILE v6.0
 # =========================================================
 st.markdown(
     """
@@ -216,7 +212,6 @@ st.markdown(
     --border: #e5ebe7;
     --text: #0a1f18;
     --muted: #4a5a55;
-    --glass: rgba(255, 255, 255, 0.7);
 }
 
 * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -234,13 +229,12 @@ div[data-testid="stMarkdownContainer"] { margin: 0 !important; padding: 0 !impor
 div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
 .stMarkdown { margin: 0 !important; }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: #e8f5ef; }
 ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #0d5e3a, #c9a227); border-radius: 10px; }
 
 /* ============================================
-   TOP BAR - ANNOUNCEMENT & TICKER
+   TOP BAR
    ============================================ */
 .topbar { 
     background: linear-gradient(90deg, #062b1b 0%, #083d26 50%, #062b1b 100%);
@@ -268,16 +262,9 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     100% { left: 100%; }
 }
 .topbar * { color: #ffffff !important; }
-.topbar-left, .topbar-right { 
-    display: flex; 
-    gap: 16px; 
-    align-items: center; 
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 2;
-}
+.topbar-left, .topbar-right { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; position: relative; z-index: 2; }
 .topbar-item { display: flex; align-items: center; gap: 6px; }
-.topbar a { color: #ffffff !important; text-decoration: none; transition: color 0.2s; }
+.topbar a { color: #ffffff !important; text-decoration: none; }
 .topbar a:hover { color: #e6c458 !important; }
 .topbar-badge {
     display: inline-flex;
@@ -311,12 +298,11 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     border-radius: 4px;
     font-size: 10.5px;
     font-weight: 700;
-    cursor: pointer;
     text-decoration: none;
 }
 
 /* ============================================
-   HEADER MODERN
+   HEADER
    ============================================ */
 .header-wrap {
     background: #ffffff;
@@ -348,10 +334,7 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     box-shadow: 0 4px 12px rgba(13,94,58,0.08);
     transition: all 0.3s ease;
 }
-.header-logo:hover {
-    transform: scale(1.05) rotate(-3deg);
-    box-shadow: 0 8px 24px rgba(13,94,58,0.2);
-}
+.header-logo:hover { transform: scale(1.05) rotate(-3deg); box-shadow: 0 8px 24px rgba(13,94,58,0.2); }
 .header-logo img { width: 100%; height: 100%; object-fit: contain; }
 .header-text-title {
     color: #083d26 !important;
@@ -383,7 +366,6 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-weight: 700;
     text-decoration: none;
     transition: all 0.25s;
-    position: relative;
 }
 .header-action-btn:hover {
     background: #0d5e3a;
@@ -404,50 +386,8 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     box-shadow: 0 8px 24px rgba(13,94,58,0.35);
 }
 
-/* Notification bell */
-.notif-btn {
-    position: relative;
-    background: #f8faf9;
-    border: 1px solid #e5ebe7;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.25s;
-}
-.notif-btn:hover {
-    background: #0d5e3a;
-    border-color: #0d5e3a;
-}
-.notif-badge {
-    position: absolute;
-    top: -4px;
-    right: -4px;
-    background: #ef4444;
-    color: #ffffff !important;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    font-size: 9px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #ffffff;
-    animation: notifPulse 2s infinite;
-}
-@keyframes notifPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-}
-
 /* ============================================
-   NAVBAR - ULTRA PREMIUM
+   NAVBAR
    ============================================ */
 .navbar {
     background: linear-gradient(180deg, #ffffff 0%, #fbfcfb 100%) !important;
@@ -497,14 +437,9 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     transition: width 0.3s ease;
     border-radius: 2px;
 }
-.nav-link:hover {
-    color: #0d5e3a !important;
-}
+.nav-link:hover { color: #0d5e3a !important; }
 .nav-link:hover::after { width: 60%; }
-.nav-link-active {
-    color: #0d5e3a !important;
-    font-weight: 800;
-}
+.nav-link-active { color: #0d5e3a !important; font-weight: 800; }
 .nav-link-active::after { width: 80%; }
 
 /* ============================================
@@ -546,12 +481,7 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     0%, 100% { opacity: 1; }
     50% { opacity: 0.4; }
 }
-.running-scroll-wrap {
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    min-width: 0;
-}
+.running-scroll-wrap { flex: 1; overflow: hidden; white-space: nowrap; min-width: 0; }
 .running-scroll {
     display: inline-block;
     padding-left: 100%;
@@ -566,7 +496,7 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
 }
 
 /* ============================================
-   HERO ULTRA PREMIUM
+   HERO
    ============================================ */
 .hero-ultra {
     position: relative;
@@ -585,7 +515,7 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     animation: heroZoomUltra 25s ease-in-out infinite;
 }
 @keyframes heroZoomUltra {
-    0%, 100% { transform: scale(1) translate(0, 0); }
+    0%, 100% { transform: scale(1); }
     50% { transform: scale(1.1) translate(-1%, -1%); }
 }
 .hero-ultra-overlay {
@@ -632,7 +562,6 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     text-transform: uppercase;
     margin-bottom: 28px;
     backdrop-filter: blur(20px);
-    box-shadow: 0 8px 32px rgba(230,196,88,0.15);
 }
 .hero-ultra-kicker::before {
     content: '';
@@ -676,7 +605,6 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     color: rgba(255,255,255,0.92) !important;
     max-width: 720px;
     margin-bottom: 40px;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
 }
 .hero-ultra-buttons { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 56px; }
 .hero-ultra-btn {
@@ -707,10 +635,7 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     transition: left 0.6s ease;
 }
 .hero-ultra-btn:hover::before { left: 100%; }
-.hero-ultra-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(201,162,39,0.6);
-}
+.hero-ultra-btn:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(201,162,39,0.6); }
 .hero-ultra-btn-outline {
     background: rgba(255,255,255,0.08);
     color: #ffffff !important;
@@ -718,19 +643,9 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     backdrop-filter: blur(15px);
     box-shadow: none;
 }
-.hero-ultra-btn-outline:hover {
-    background: rgba(255,255,255,0.2);
-    border-color: #e6c458;
-    transform: translateY(-4px);
-}
+.hero-ultra-btn-outline:hover { background: rgba(255,255,255,0.2); border-color: #e6c458; transform: translateY(-4px); }
 
-/* Hero Stats Ultra */
-.hero-ultra-stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    max-width: 900px;
-}
+.hero-ultra-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 900px; }
 .hero-stat-ultra {
     background: rgba(255,255,255,0.06);
     backdrop-filter: blur(20px);
@@ -751,11 +666,7 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     transition: transform 0.6s ease;
 }
 .hero-stat-ultra:hover::before { transform: translateX(100%); }
-.hero-stat-ultra:hover {
-    background: rgba(230,196,88,0.12);
-    border-color: rgba(230,196,88,0.4);
-    transform: translateY(-4px);
-}
+.hero-stat-ultra:hover { background: rgba(230,196,88,0.12); border-color: rgba(230,196,88,0.4); transform: translateY(-4px); }
 .hero-stat-num-ultra {
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #e6c458 !important;
@@ -763,7 +674,6 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-weight: 900;
     line-height: 1;
     display: block;
-    letter-spacing: -0.5px;
 }
 .hero-stat-label-ultra {
     color: rgba(255,255,255,0.85) !important;
@@ -818,18 +728,10 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
 }
 
 /* ============================================
-   SECTION STYLES
+   SECTIONS
    ============================================ */
-.page-container {
-    width: 92%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 60px 0;
-}
-.section-header-modern {
-    text-align: center;
-    margin-bottom: 50px;
-}
+.page-container { width: 92%; max-width: 1400px; margin: 0 auto; padding: 60px 0; }
+.section-header-modern { text-align: center; margin-bottom: 50px; }
 .section-kicker-modern {
     display: inline-block;
     color: #c9a227 !important;
@@ -861,41 +763,17 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     line-height: 1.15;
     margin: 0 0 14px;
 }
-.section-desc-modern {
-    color: #4a5a55 !important;
-    font-size: 14.5px;
-    line-height: 1.75;
-    max-width: 720px;
-    margin: 0 auto;
-}
+.section-desc-modern { color: #4a5a55 !important; font-size: 14.5px; line-height: 1.75; max-width: 720px; margin: 0 auto; }
 
 /* ============================================
-   GLASSMORPHISM QUICK ACCESS
+   QUICK ACCESS
    ============================================ */
 .quick-access-glass {
     background: linear-gradient(135deg, #f8faf9 0%, #ffffff 100%);
     padding: 40px 16px;
     border-bottom: 1px solid #e5ebe7;
-    position: relative;
 }
-.quick-access-glass::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 200px;
-    background: radial-gradient(ellipse at 50% 0%, rgba(13,94,58,0.05) 0%, transparent 70%);
-}
-.quick-access-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-.quick-grid-glass {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
+.quick-access-inner { max-width: 1400px; margin: 0 auto; }
 .quick-card-glass {
     display: flex;
     flex-direction: column;
@@ -912,36 +790,15 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     overflow: hidden;
     box-shadow: 0 4px 16px rgba(0,0,0,0.03);
 }
-.quick-card-glass::before {
-    content: '';
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(230,196,88,0.15) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-}
-.quick-card-glass:hover::before { opacity: 1; }
-.quick-card-glass:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 30px 60px rgba(13,94,58,0.18);
-    border-color: #c9a227;
-}
+.quick-card-glass:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(13,94,58,0.18); border-color: #c9a227; }
 .quick-icon-glass {
-    width: 72px;
-    height: 72px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    margin-bottom: 18px;
+    width: 72px; height: 72px; border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; margin-bottom: 18px;
     background: linear-gradient(135deg, #e8f5ef, #d1e8dd);
     color: #0d5e3a !important;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 8px 24px rgba(13,94,58,0.1);
-    position: relative;
 }
 .quick-card-glass:hover .quick-icon-glass {
     background: linear-gradient(135deg, #c9a227, #e6c458);
@@ -949,22 +806,11 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     transform: scale(1.1) rotate(-10deg);
     box-shadow: 0 12px 32px rgba(201,162,39,0.4);
 }
-.quick-title-glass {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 800;
-    color: #083d26 !important;
-    margin: 0 0 6px;
-    letter-spacing: -0.2px;
-}
-.quick-desc-glass {
-    font-size: 12px;
-    color: #4a5a55 !important;
-    font-weight: 500;
-}
+.quick-title-glass { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; color: #083d26 !important; margin: 0 0 6px; }
+.quick-desc-glass { font-size: 12px; color: #4a5a55 !important; font-weight: 500; }
 
 /* ============================================
-   SAMBUTAN PIMPINAN
+   SAMBUTAN
    ============================================ */
 .sambutan-section-ultra {
     background: linear-gradient(135deg, #ffffff 0%, #f8faf9 50%, #faf6e8 100%);
@@ -979,20 +825,6 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     width: 800px; height: 800px;
     background: radial-gradient(circle, rgba(13,94,58,0.06) 0%, transparent 60%);
     border-radius: 50%;
-    animation: floatOrb 15s ease-in-out infinite;
-}
-.sambutan-section-ultra::after {
-    content: '';
-    position: absolute;
-    bottom: -50%; left: -20%;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(201,162,39,0.08) 0%, transparent 60%);
-    border-radius: 50%;
-    animation: floatOrb 20s ease-in-out infinite reverse;
-}
-@keyframes floatOrb {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(30px, -30px) scale(1.1); }
 }
 .sambutan-inner-ultra {
     max-width: 1400px;
@@ -1004,10 +836,7 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     position: relative;
     z-index: 2;
 }
-.sambutan-photo-wrap-ultra {
-    position: relative;
-    text-align: center;
-}
+.sambutan-photo-wrap-ultra { position: relative; text-align: center; }
 .sambutan-photo-ultra {
     width: 100%;
     max-width: 340px;
@@ -1018,33 +847,6 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     border: 5px solid #ffffff;
     position: relative;
     z-index: 3;
-    transition: transform 0.5s ease;
-}
-.sambutan-photo-ultra:hover {
-    transform: scale(1.02) rotate(-1deg);
-}
-.sambutan-photo-frame-ultra {
-    position: absolute;
-    top: 20px; left: 20px;
-    width: 100%;
-    max-width: 340px;
-    aspect-ratio: 3/4;
-    border: 3px solid #c9a227;
-    border-radius: 20px;
-    z-index: 1;
-}
-.sambutan-photo-frame-ultra::before {
-    content: '';
-    position: absolute;
-    top: -10px; left: -10px;
-    right: -10px; bottom: -10px;
-    border: 2px dashed rgba(201,162,39,0.3);
-    border-radius: 24px;
-    animation: rotateDash 30s linear infinite;
-}
-@keyframes rotateDash {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
 }
 .sambutan-photo-info-ultra {
     margin-top: 28px;
@@ -1053,8 +855,6 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     border-radius: 16px;
     padding: 20px;
     box-shadow: 0 12px 32px rgba(0,0,0,0.06);
-    position: relative;
-    z-index: 2;
 }
 .sambutan-nama-ultra {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -1062,16 +862,9 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-weight: 900;
     color: #083d26 !important;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
     margin: 0 0 5px;
 }
-.sambutan-jabatan-ultra {
-    color: #c9a227 !important;
-    font-size: 12px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-}
+.sambutan-jabatan-ultra { color: #c9a227 !important; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; }
 .sambutan-content-ultra { padding-top: 24px; }
 .sambutan-assalam-ultra {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -1084,12 +877,7 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     border-radius: 12px;
     border-left: 4px solid #0d5e3a;
 }
-.sambutan-text-ultra {
-    color: #0a1f18 !important;
-    font-size: 14.5px;
-    line-height: 1.95;
-    margin-bottom: 20px;
-}
+.sambutan-text-ultra { color: #0a1f18 !important; font-size: 14.5px; line-height: 1.95; margin-bottom: 20px; }
 .sambutan-quote-ultra {
     border-left: 5px solid #c9a227;
     background: linear-gradient(90deg, #faf6e8, #ffffff 60%);
@@ -1102,78 +890,25 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-style: italic;
     color: #083d26 !important;
     line-height: 1.7;
-    position: relative;
-    box-shadow: 0 8px 24px rgba(201,162,39,0.08);
 }
-.sambutan-quote-ultra::before {
-    content: '"';
-    position: absolute;
-    top: -10px; left: 16px;
-    font-size: 80px;
-    color: rgba(201,162,39,0.2);
-    font-family: Georgia, serif;
-    line-height: 1;
-}
-.sambutan-salam-ultra {
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 2px dashed #e5ebe7;
-}
-.sambutan-salam-line-ultra {
-    color: #4a5a55 !important;
-    font-size: 13.5px;
-    margin: 0 0 6px;
-}
-.sambutan-salam-nama-ultra {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 16px;
-    font-weight: 900;
-    color: #083d26 !important;
-    text-transform: uppercase;
-    margin: 10px 0 4px;
-}
-.sambutan-salam-jabatan-ultra {
-    color: #c9a227 !important;
-    font-size: 12.5px;
-    font-weight: 700;
-}
+.sambutan-salam-ultra { margin-top: 32px; padding-top: 24px; border-top: 2px dashed #e5ebe7; }
+.sambutan-salam-line-ultra { color: #4a5a55 !important; font-size: 13.5px; margin: 0 0 6px; }
+.sambutan-salam-nama-ultra { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 900; color: #083d26 !important; text-transform: uppercase; margin: 10px 0 4px; }
+.sambutan-salam-jabatan-ultra { color: #c9a227 !important; font-size: 12.5px; font-weight: 700; }
 
 /* ============================================
-   TRENDING NEWS
+   TRENDING
    ============================================ */
-.trending-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 24px;
-}
 .trending-main {
     background: #ffffff;
     border: 1px solid #e5ebe7;
     border-radius: 20px;
     overflow: hidden;
-    position: relative;
     transition: all 0.4s ease;
 }
-.trending-main:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 30px 60px rgba(13,94,58,0.18);
-    border-color: #c9a227;
-}
-.trending-main-img {
-    position: relative;
-    width: 100%;
-    height: 380px;
-    overflow: hidden;
-}
-.trending-main-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.8s ease;
-}
-.trending-main:hover .trending-main-img img {
-    transform: scale(1.08);
-}
+.trending-main:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(13,94,58,0.18); border-color: #c9a227; }
+.trending-main-img { position: relative; width: 100%; height: 380px; overflow: hidden; }
+.trending-main-img img { width: 100%; height: 100%; object-fit: cover; }
 .trending-main-img::after {
     content: '';
     position: absolute;
@@ -1191,18 +926,10 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
     z-index: 2;
     box-shadow: 0 4px 16px rgba(239,68,68,0.4);
-    animation: trendingPulse 2s infinite;
 }
-@keyframes trendingPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-.trending-main-content {
-    padding: 28px;
-}
+.trending-main-content { padding: 28px; }
 .trending-main-cat {
     display: inline-block;
     background: linear-gradient(135deg, #c9a227, #e6c458);
@@ -1212,7 +939,6 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-size: 10.5px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.6px;
     margin-bottom: 14px;
 }
 .trending-main-title {
@@ -1222,28 +948,10 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     color: #083d26 !important;
     line-height: 1.35;
     margin: 0 0 12px;
-    letter-spacing: -0.5px;
 }
-.trending-main-desc {
-    color: #4a5a55 !important;
-    font-size: 14px;
-    line-height: 1.75;
-    margin: 0 0 18px;
-}
-.trending-main-meta {
-    display: flex;
-    gap: 20px;
-    color: #c9a227 !important;
-    font-size: 11.5px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.trending-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
+.trending-main-desc { color: #4a5a55 !important; font-size: 14px; line-height: 1.75; margin: 0 0 18px; }
+.trending-main-meta { display: flex; gap: 20px; color: #c9a227 !important; font-size: 11.5px; font-weight: 800; text-transform: uppercase; }
+.trending-list { display: flex; flex-direction: column; gap: 16px; }
 .trending-item {
     display: flex;
     gap: 14px;
@@ -1256,16 +964,11 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     transition: all 0.3s ease;
     position: relative;
 }
-.trending-item:hover {
-    border-color: #c9a227;
-    transform: translateX(6px);
-    box-shadow: 0 12px 32px rgba(13,94,58,0.12);
-}
+.trending-item:hover { border-color: #c9a227; transform: translateX(6px); box-shadow: 0 12px 32px rgba(13,94,58,0.12); }
 .trending-rank {
     position: absolute;
     top: -8px; left: -8px;
-    width: 32px;
-    height: 32px;
+    width: 32px; height: 32px;
     background: linear-gradient(135deg, #0d5e3a, #14734a);
     color: #ffffff !important;
     border-radius: 50%;
@@ -1277,27 +980,13 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-weight: 900;
     border: 3px solid #ffffff;
     box-shadow: 0 4px 12px rgba(13,94,58,0.3);
-    z-index: 2;
 }
 .trending-item:nth-child(1) .trending-rank { background: linear-gradient(135deg, #ef4444, #dc2626); }
 .trending-item:nth-child(2) .trending-rank { background: linear-gradient(135deg, #f59e0b, #d97706); }
 .trending-item:nth-child(3) .trending-rank { background: linear-gradient(135deg, #c9a227, #e6c458); }
-.trending-thumb {
-    width: 80px;
-    height: 80px;
-    border-radius: 12px;
-    object-fit: cover;
-    flex-shrink: 0;
-}
+.trending-thumb { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
 .trending-info { flex: 1; min-width: 0; }
-.trending-info-cat {
-    color: #c9a227 !important;
-    font-size: 10px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 6px;
-}
+.trending-info-cat { color: #c9a227 !important; font-size: 10px; font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
 .trending-info-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 13px;
@@ -1310,20 +999,11 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.trending-info-meta {
-    color: #4a5a55 !important;
-    font-size: 10.5px;
-    font-weight: 600;
-}
+.trending-info-meta { color: #4a5a55 !important; font-size: 10.5px; font-weight: 600; }
 
 /* ============================================
-   WARTA GRID ULTRA
+   WARTA CARD
    ============================================ */
-.warta-grid-ultra {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-}
 .warta-card-ultra {
     background: #ffffff;
     border: 1px solid #e5ebe7;
@@ -1336,45 +1016,10 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     flex-direction: column;
     position: relative;
 }
-.warta-card-ultra::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #0d5e3a, #c9a227, #e6c458);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.5s ease;
-    z-index: 2;
-}
-.warta-card-ultra:hover::before { transform: scaleX(1); }
-.warta-card-ultra:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 30px 70px rgba(13,94,58,0.2);
-    border-color: rgba(201,162,39,0.4);
-}
-.warta-card-ultra-img {
-    position: relative;
-    width: 100%;
-    height: 220px;
-    overflow: hidden;
-}
-.warta-card-ultra-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.8s ease;
-}
-.warta-card-ultra:hover .warta-card-ultra-img img {
-    transform: scale(1.12);
-}
-.warta-card-ultra-img::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 50%;
-    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.5));
-}
+.warta-card-ultra:hover { transform: translateY(-10px); box-shadow: 0 30px 70px rgba(13,94,58,0.2); border-color: rgba(201,162,39,0.4); }
+.warta-card-ultra-img { position: relative; width: 100%; height: 220px; overflow: hidden; }
+.warta-card-ultra-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+.warta-card-ultra:hover .warta-card-ultra-img img { transform: scale(1.12); }
 .warta-card-ultra-cat {
     position: absolute;
     top: 14px; left: 14px;
@@ -1385,7 +1030,6 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-size: 10.5px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.6px;
     z-index: 2;
     box-shadow: 0 4px 12px rgba(201,162,39,0.4);
 }
@@ -1400,27 +1044,9 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-weight: 800;
     z-index: 2;
     backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    gap: 4px;
 }
-.warta-card-ultra-body {
-    padding: 24px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-.warta-card-ultra-date {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: #c9a227 !important;
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 12px;
-}
+.warta-card-ultra-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.warta-card-ultra-date { display: inline-flex; align-items: center; gap: 6px; color: #c9a227 !important; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; }
 .warta-card-ultra-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 16.5px;
@@ -1428,37 +1054,12 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     color: #083d26 !important;
     line-height: 1.4;
     margin: 0 0 12px;
-    letter-spacing: -0.3px;
-    transition: color 0.25s;
 }
-.warta-card-ultra:hover .warta-card-ultra-title {
-    color: #0d5e3a !important;
-}
-.warta-card-ultra-desc {
-    color: #4a5a55 !important;
-    font-size: 13px;
-    line-height: 1.65;
-    margin: 0 0 16px;
-    flex: 1;
-}
-.warta-card-ultra-more {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: #0d5e3a !important;
-    font-size: 12px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    transition: gap 0.25s;
-}
-.warta-card-ultra:hover .warta-card-ultra-more {
-    gap: 12px;
-    color: #c9a227 !important;
-}
+.warta-card-ultra-desc { color: #4a5a55 !important; font-size: 13px; line-height: 1.65; margin: 0 0 16px; flex: 1; }
+.warta-card-ultra-more { display: inline-flex; align-items: center; gap: 6px; color: #0d5e3a !important; font-size: 12px; font-weight: 800; text-transform: uppercase; }
 
 /* ============================================
-   WIDGET MODERN
+   WIDGET
    ============================================ */
 .widget-ultra {
     background: #ffffff;
@@ -1467,10 +1068,6 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     overflow: hidden;
     margin-bottom: 24px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-    transition: box-shadow 0.3s;
-}
-.widget-ultra:hover {
-    box-shadow: 0 12px 40px rgba(13,94,58,0.1);
 }
 .widget-ultra-head {
     background: linear-gradient(135deg, #0d5e3a, #14734a);
@@ -1480,43 +1077,13 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-size: 13.5px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     border-bottom: 3px solid #c9a227;
-    position: relative;
-    overflow: hidden;
 }
-.widget-ultra-head::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    animation: widgetShine 5s infinite;
-}
-@keyframes widgetShine {
-    0% { left: -100%; }
-    100% { left: 100%; }
-}
-.widget-ultra-body { padding: 0; }
-
-.agenda-item-ultra {
-    display: flex;
-    gap: 16px;
-    padding: 18px 22px;
-    border-bottom: 1px solid #e5ebe7;
-    transition: all 0.25s ease;
-}
+.agenda-item-ultra { display: flex; gap: 16px; padding: 18px 22px; border-bottom: 1px solid #e5ebe7; transition: all 0.25s ease; }
 .agenda-item-ultra:last-child { border-bottom: none; }
-.agenda-item-ultra:hover { 
-    background: #f8faf9; 
-    padding-left: 26px;
-}
+.agenda-item-ultra:hover { background: #f8faf9; padding-left: 26px; }
 .agenda-date-ultra {
-    width: 64px;
-    height: 72px;
+    width: 64px; height: 72px;
     background: linear-gradient(135deg, #0d5e3a, #14734a);
     color: #ffffff !important;
     border-radius: 12px;
@@ -1536,68 +1103,18 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     background: #c9a227;
     border-radius: 12px 12px 0 0;
 }
-.agenda-day-ultra {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 26px;
-    font-weight: 900;
-    line-height: 1;
-    color: #ffffff !important;
-}
-.agenda-month-ultra {
-    font-size: 9.5px;
-    font-weight: 800;
-    color: #ffffff !important;
-    margin-top: 4px;
-    letter-spacing: 0.6px;
-}
+.agenda-day-ultra { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 900; line-height: 1; color: #ffffff !important; }
+.agenda-month-ultra { font-size: 9.5px; font-weight: 800; color: #ffffff !important; margin-top: 4px; }
 .agenda-content-ultra { flex: 1; min-width: 0; }
-.agenda-title-ultra {
-    color: #083d26 !important;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13.5px;
-    font-weight: 800;
-    line-height: 1.4;
-    margin: 0 0 6px;
-}
-.agenda-desc-ultra {
-    color: #4a5a55 !important;
-    font-size: 11.5px;
-    line-height: 1.55;
-    margin: 0 0 8px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-.agenda-footer-ultra {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: #c9a227 !important;
-    font-size: 10.5px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 4px 10px;
-    background: #faf6e8;
-    border-radius: 8px;
-}
+.agenda-title-ultra { color: #083d26 !important; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13.5px; font-weight: 800; line-height: 1.4; margin: 0 0 6px; }
+.agenda-desc-ultra { color: #4a5a55 !important; font-size: 11.5px; line-height: 1.55; margin: 0 0 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.agenda-footer-ultra { display: inline-flex; align-items: center; gap: 6px; color: #c9a227 !important; font-size: 10.5px; font-weight: 800; text-transform: uppercase; padding: 4px 10px; background: #faf6e8; border-radius: 8px; }
 
-.kesekret-item-ultra {
-    display: flex;
-    gap: 14px;
-    padding: 16px 22px;
-    border-bottom: 1px solid #e5ebe7;
-    transition: all 0.25s ease;
-}
+.kesekret-item-ultra { display: flex; gap: 14px; padding: 16px 22px; border-bottom: 1px solid #e5ebe7; transition: all 0.25s ease; }
 .kesekret-item-ultra:last-child { border-bottom: none; }
-.kesekret-item-ultra:hover { 
-    background: #f8faf9;
-    padding-left: 26px;
-}
+.kesekret-item-ultra:hover { background: #f8faf9; padding-left: 26px; }
 .kesekret-icon-ultra {
-    width: 44px;
-    height: 44px;
+    width: 44px; height: 44px;
     border-radius: 12px;
     background: linear-gradient(135deg, #e8f5ef, #d1e8dd);
     color: #0d5e3a !important;
@@ -1606,65 +1123,21 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     justify-content: center;
     font-size: 20px;
     flex-shrink: 0;
-    transition: all 0.3s;
 }
-.kesekret-item-ultra:hover .kesekret-icon-ultra {
-    background: linear-gradient(135deg, #c9a227, #e6c458);
-    color: #ffffff !important;
-    transform: rotate(-10deg) scale(1.1);
-}
-.kesekret-title-ultra {
-    color: #083d26 !important;
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 1.45;
-    margin: 0 0 5px;
-}
-.kesekret-date-ultra {
-    color: #c9a227 !important;
-    font-size: 10.5px;
-    font-weight: 800;
-}
+.kesekret-title-ultra { color: #083d26 !important; font-size: 13px; font-weight: 700; line-height: 1.45; margin: 0 0 5px; }
+.kesekret-date-ultra { color: #c9a227 !important; font-size: 10.5px; font-weight: 800; }
 
 /* ============================================
-   STATS SECTION - PREMIUM
+   STATS SECTION
    ============================================ */
 .stats-section-ultra {
-    background: 
-        linear-gradient(135deg, #062b1b 0%, #0d5e3a 50%, #062b1b 100%);
+    background: linear-gradient(135deg, #062b1b 0%, #0d5e3a 50%, #062b1b 100%);
     padding: 80px 16px;
     position: relative;
     overflow: hidden;
 }
-.stats-section-ultra::before {
-    content: '';
-    position: absolute;
-    top: -50%; right: -20%;
-    width: 800px; height: 800px;
-    background: radial-gradient(circle, rgba(230,196,88,0.15) 0%, transparent 60%);
-    border-radius: 50%;
-    animation: floatOrb 12s ease-in-out infinite;
-}
-.stats-section-ultra::after {
-    content: '';
-    position: absolute;
-    bottom: -50%; left: -20%;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(13,94,58,0.3) 0%, transparent 60%);
-    border-radius: 50%;
-    animation: floatOrb 15s ease-in-out infinite reverse;
-}
-.stats-inner-ultra {
-    max-width: 1400px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-.stats-grid-ultra {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-}
+.stats-inner-ultra { max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
+.stats-grid-ultra { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 .stat-item-ultra {
     text-align: center;
     padding: 36px 24px;
@@ -1673,57 +1146,15 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 20px;
     transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
 }
-.stat-item-ultra::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #e6c458, transparent);
-    opacity: 0;
-    transition: opacity 0.4s;
-}
-.stat-item-ultra:hover::before { opacity: 1; }
-.stat-item-ultra:hover {
-    background: rgba(230,196,88,0.12);
-    border-color: rgba(230,196,88,0.4);
-    transform: translateY(-8px);
-    box-shadow: 0 20px 50px rgba(230,196,88,0.15);
-}
-.stat-icon-ultra {
-    font-size: 32px;
-    margin-bottom: 12px;
-    display: block;
-    opacity: 0.9;
-}
-.stat-num-ultra {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    color: #e6c458 !important;
-    font-size: 44px;
-    font-weight: 900;
-    line-height: 1;
-    margin-bottom: 10px;
-    letter-spacing: -1px;
-    text-shadow: 0 4px 24px rgba(230,196,88,0.4);
-}
-.stat-label-ultra {
-    color: #ffffff !important;
-    font-size: 12.5px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-}
+.stat-item-ultra:hover { background: rgba(230,196,88,0.12); border-color: rgba(230,196,88,0.4); transform: translateY(-8px); }
+.stat-icon-ultra { font-size: 32px; margin-bottom: 12px; display: block; }
+.stat-num-ultra { font-family: 'Plus Jakarta Sans', sans-serif; color: #e6c458 !important; font-size: 44px; font-weight: 900; line-height: 1; margin-bottom: 10px; }
+.stat-label-ultra { color: #ffffff !important; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; }
 
 /* ============================================
-   LAYANAN GRID ULTRA
+   LAYANAN CARD
    ============================================ */
-.layanan-grid-ultra {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
 .layanan-card-ultra {
     background: #ffffff;
     border: 1px solid #e5ebe7;
@@ -1736,25 +1167,9 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     position: relative;
     overflow: hidden;
 }
-.layanan-card-ultra::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #0d5e3a, #c9a227, #e6c458);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.5s ease;
-}
-.layanan-card-ultra:hover::before { transform: scaleX(1); }
-.layanan-card-ultra:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 30px 60px rgba(13,94,58,0.18);
-    border-color: rgba(201,162,39,0.3);
-}
+.layanan-card-ultra:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(13,94,58,0.18); border-color: rgba(201,162,39,0.3); }
 .layanan-icon-ultra {
-    width: 80px;
-    height: 80px;
+    width: 80px; height: 80px;
     margin: 0 auto 20px;
     border-radius: 24px;
     background: linear-gradient(135deg, #e8f5ef, #d1e8dd);
@@ -1764,30 +1179,17 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     justify-content: center;
     font-size: 36px;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 24px rgba(13,94,58,0.1);
 }
 .layanan-card-ultra:hover .layanan-icon-ultra {
     background: linear-gradient(135deg, #c9a227, #e6c458);
     color: #ffffff !important;
     transform: scale(1.1) rotate(-8deg);
-    box-shadow: 0 12px 32px rgba(201,162,39,0.4);
 }
-.layanan-title-ultra {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 800;
-    color: #083d26 !important;
-    margin: 0 0 8px;
-    letter-spacing: -0.2px;
-}
-.layanan-desc-ultra {
-    color: #4a5a55 !important;
-    font-size: 12px;
-    line-height: 1.55;
-}
+.layanan-title-ultra { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; color: #083d26 !important; margin: 0 0 8px; }
+.layanan-desc-ultra { color: #4a5a55 !important; font-size: 12px; line-height: 1.55; }
 
 /* ============================================
-   FOOTER ULTRA PREMIUM
+   FOOTER
    ============================================ */
 .footer-ultra {
     background: linear-gradient(180deg, #062b1b 0%, #041f13 100%);
@@ -1806,18 +1208,8 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     animation: gradientShift 5s linear infinite;
 }
 .footer-ultra * { color: #ffffff !important; }
-.footer-inner-ultra {
-    max-width: 1400px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-.footer-grid-ultra {
-    display: grid;
-    grid-template-columns: 1.8fr 1fr 1fr 1.2fr;
-    gap: 44px;
-    padding-bottom: 44px;
-}
+.footer-inner-ultra { max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
+.footer-grid-ultra { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.2fr; gap: 44px; padding-bottom: 44px; }
 .footer-col-ultra h4 {
     color: #ffffff !important;
     font-size: 13.5px;
@@ -1835,35 +1227,13 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     width: 36px;
     height: 3px;
     background: linear-gradient(90deg, #c9a227, #e6c458);
-    border-radius: 2px;
 }
-.footer-col-ultra p {
-    color: rgba(255,255,255,0.7) !important;
-    font-size: 12.5px;
-    line-height: 1.9;
-    margin: 0 0 8px;
-}
-.footer-col-ultra a {
-    display: block;
-    color: rgba(255,255,255,0.7) !important;
-    font-size: 12.5px;
-    line-height: 2.15;
-    text-decoration: none;
-    transition: all 0.25s ease;
-}
-.footer-col-ultra a:hover { 
-    color: #e6c458 !important; 
-    padding-left: 8px;
-}
-.footer-brand-ultra {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 22px;
-}
+.footer-col-ultra p { color: rgba(255,255,255,0.7) !important; font-size: 12.5px; line-height: 1.9; margin: 0 0 8px; }
+.footer-col-ultra a { display: block; color: rgba(255,255,255,0.7) !important; font-size: 12.5px; line-height: 2.15; text-decoration: none; transition: all 0.25s ease; }
+.footer-col-ultra a:hover { color: #e6c458 !important; padding-left: 8px; }
+.footer-brand-ultra { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
 .footer-logo-ultra {
-    width: 60px;
-    height: 60px;
+    width: 60px; height: 60px;
     background: #ffffff;
     border-radius: 14px;
     display: flex;
@@ -1874,29 +1244,11 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 .footer-logo-ultra img { width: 100%; height: 100%; object-fit: contain; }
-.footer-brand-title-ultra {
-    color: #ffffff !important;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-}
-.footer-brand-sub-ultra {
-    color: #e6c458 !important;
-    font-size: 10px;
-    letter-spacing: 1.2px;
-    margin-top: 4px;
-    font-weight: 800;
-}
-.footer-social-ultra {
-    display: flex;
-    gap: 10px;
-    margin-top: 22px;
-}
+.footer-brand-title-ultra { color: #ffffff !important; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; text-transform: uppercase; }
+.footer-brand-sub-ultra { color: #e6c458 !important; font-size: 10px; letter-spacing: 1.2px; margin-top: 4px; font-weight: 800; }
+.footer-social-ultra { display: flex; gap: 10px; margin-top: 22px; }
 .footer-social-item-ultra {
-    width: 42px;
-    height: 42px;
+    width: 42px; height: 42px;
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.15);
     border-radius: 12px;
@@ -1908,24 +1260,8 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     text-decoration: none;
     transition: all 0.3s;
 }
-.footer-social-item-ultra:hover {
-    background: linear-gradient(135deg, #c9a227, #e6c458);
-    border-color: #c9a227;
-    color: #083d26 !important;
-    transform: translateY(-5px) rotate(-5deg);
-    box-shadow: 0 10px 24px rgba(201,162,39,0.4);
-}
-.footer-bottom-ultra {
-    border-top: 1px solid rgba(255,255,255,0.08);
-    padding: 26px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 14px;
-    font-size: 11.5px;
-    color: rgba(255,255,255,0.5) !important;
-}
+.footer-social-item-ultra:hover { background: linear-gradient(135deg, #c9a227, #e6c458); color: #083d26 !important; transform: translateY(-5px); }
+.footer-bottom-ultra { border-top: 1px solid rgba(255,255,255,0.08); padding: 26px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; font-size: 11.5px; color: rgba(255,255,255,0.5) !important; }
 .footer-bottom-ultra * { color: rgba(255,255,255,0.5) !important; }
 
 /* ============================================
@@ -1933,8 +1269,7 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
    ============================================ */
 .chat-widget {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
+    bottom: 24px; right: 24px;
     z-index: 9999;
     display: flex;
     flex-direction: column;
@@ -1942,8 +1277,7 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     gap: 12px;
 }
 .chat-btn {
-    width: 68px;
-    height: 68px;
+    width: 68px; height: 68px;
     border-radius: 50%;
     background: linear-gradient(135deg, #0d5e3a, #14734a);
     color: #ffffff !important;
@@ -1955,18 +1289,13 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     box-shadow: 0 14px 40px rgba(13,94,58,0.45);
     border: 4px solid #ffffff;
     transition: all 0.3s ease;
-    position: relative;
     animation: chatPulse 2.5s infinite;
 }
 @keyframes chatPulse {
     0%, 100% { box-shadow: 0 14px 40px rgba(13,94,58,0.45), 0 0 0 0 rgba(13,94,58,0.5); }
     50% { box-shadow: 0 14px 40px rgba(13,94,58,0.45), 0 0 0 18px rgba(13,94,58,0); }
 }
-.chat-btn:hover {
-    transform: scale(1.1) rotate(-10deg);
-    background: linear-gradient(135deg, #c9a227, #e6c458);
-    color: #083d26 !important;
-}
+.chat-btn:hover { transform: scale(1.1) rotate(-10deg); background: linear-gradient(135deg, #c9a227, #e6c458); color: #083d26 !important; }
 .chat-label {
     background: #ffffff;
     color: #083d26 !important;
@@ -1976,18 +1305,10 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     font-weight: 800;
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     border: 2px solid #c9a227;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    animation: chatLabelBounce 2s infinite;
-}
-@keyframes chatLabelBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
 }
 
 /* ============================================
-   FORM & INPUTS
+   FORM
    ============================================ */
 .stButton > button {
     background: linear-gradient(135deg, #0d5e3a, #14734a) !important;
@@ -1996,53 +1317,17 @@ div[data-testid="stMarkdownContainer"] > p { margin: 0 !important; }
     border-radius: 10px !important;
     font-weight: 700 !important;
     box-shadow: 0 6px 16px rgba(13,94,58,0.25) !important;
-    transition: all 0.3s ease !important;
 }
-.stButton > button:hover {
-    background: linear-gradient(135deg, #14734a, #c9a227) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(13,94,58,0.35) !important;
-}
-div[data-testid="stForm"] {
-    background: #ffffff;
-    border: 1px solid #e5ebe7;
-    border-radius: 20px;
-    padding: 28px !important;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.04);
-}
-.stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div {
-    border-radius: 10px !important;
-    border-color: #e5ebe7 !important;
-    color: #000000 !important;
-}
-.stTextInput input:focus, .stTextArea textarea:focus {
-    border-color: #c9a227 !important;
-    box-shadow: 0 0 0 4px rgba(201,162,39,0.15) !important;
-}
+.stButton > button:hover { background: linear-gradient(135deg, #14734a, #c9a227) !important; transform: translateY(-2px); }
+div[data-testid="stForm"] { background: #ffffff; border: 1px solid #e5ebe7; border-radius: 20px; padding: 28px !important; }
+.stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { border-radius: 10px !important; border-color: #e5ebe7 !important; color: #000000 !important; }
 
-/* Tabs */
-.stTabs [data-baseweb="tab-list"] {
-    gap: 4px;
-    background: transparent;
-    border-bottom: 2px solid #e5ebe7;
-}
-.stTabs [data-baseweb="tab"] {
-    background: transparent;
-    border-radius: 10px 10px 0 0;
-    padding: 14px 22px;
-    color: #4a5a55 !important;
-    font-weight: 700;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13px;
-}
-.stTabs [aria-selected="true"] {
-    background: linear-gradient(180deg, #f0f6f2, transparent) !important;
-    color: #0d5e3a !important;
-    border-bottom: 3px solid #0d5e3a;
-}
+.stTabs [data-baseweb="tab-list"] { gap: 4px; background: transparent; border-bottom: 2px solid #e5ebe7; }
+.stTabs [data-baseweb="tab"] { background: transparent; border-radius: 10px 10px 0 0; padding: 14px 22px; color: #4a5a55 !important; font-weight: 700; font-size: 13px; }
+.stTabs [aria-selected="true"] { background: linear-gradient(180deg, #f0f6f2, transparent) !important; color: #0d5e3a !important; border-bottom: 3px solid #0d5e3a; }
 
 /* ============================================
-   RESPONSIVE TABLET
+   TABLET
    ============================================ */
 @media (max-width: 1100px) {
     .quick-grid-glass { grid-template-columns: repeat(2, 1fr); }
@@ -2050,156 +1335,294 @@ div[data-testid="stForm"] {
     .stats-grid-ultra { grid-template-columns: repeat(2, 1fr); }
     .layanan-grid-ultra { grid-template-columns: repeat(2, 1fr); }
     .trending-grid { grid-template-columns: 1fr; }
-    .content-grid-2col { grid-template-columns: 1fr; }
     .footer-grid-ultra { grid-template-columns: 1fr 1fr; gap: 32px; }
     .sambutan-inner-ultra { grid-template-columns: 280px 1fr; gap: 40px; }
     .hero-ultra-stats { grid-template-columns: repeat(2, 1fr); max-width: 600px; }
 }
 
 /* ============================================
-   RESPONSIVE MOBILE
+   MOBILE (≤ 768px)
    ============================================ */
 @media (max-width: 768px) {
-    .topbar { 
-        flex-direction: column; 
-        gap: 8px; 
-        text-align: center; 
-        padding: 10px 12px;
-    }
-    .topbar-left, .topbar-right { 
-        justify-content: center; 
-        gap: 10px; 
-        font-size: 10.5px;
-    }
-    .topbar-item { font-size: 10.5px; }
+    .topbar { flex-direction: column; gap: 6px; text-align: center; padding: 8px 12px; }
+    .topbar-left, .topbar-right { justify-content: center; gap: 8px; font-size: 10.5px; }
     
-    .header-wrap { padding: 14px 12px; }
-    .header-inner { gap: 12px; }
-    .header-logo { width: 52px; height: 52px; border-radius: 12px; }
-    .header-text-title { font-size: 13.5px; }
-    .header-text-sub { font-size: 9.5px; }
-    .header-actions { 
-        width: 100%; 
-        justify-content: center; 
-        margin-top: 12px; 
-        padding-top: 12px;
-        border-top: 1px solid #e5ebe7;
-    }
-    .header-action-btn { font-size: 11px; padding: 8px 14px; }
+    .header-wrap { padding: 12px 12px; }
+    .header-logo { width: 50px; height: 50px; border-radius: 10px; }
+    .header-text-title { font-size: 13px; }
+    .header-text-sub { font-size: 9px; }
+    .header-actions { width: 100%; justify-content: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e5ebe7; gap: 6px; }
+    .header-action-btn { font-size: 10.5px; padding: 7px 12px; }
     
     .navbar { padding: 0 8px; }
     .navbar-inner { gap: 0; padding: 2px 0; }
-    .nav-link {
-        font-size: 10px !important;
-        padding: 12px 8px !important;
-        flex: 1 1 calc(25% - 2px);
-        max-width: calc(25% - 2px);
-        text-align: center;
-        letter-spacing: 0 !important;
-        min-width: 0;
-    }
+    .nav-link { font-size: 10px !important; padding: 12px 8px !important; flex: 1 1 calc(25% - 2px); max-width: calc(25% - 2px); text-align: center; letter-spacing: 0 !important; min-width: 0; }
     
     .running-text-bar { padding: 10px 12px; gap: 10px; }
     .running-label { font-size: 9.5px; padding: 5px 10px; }
     .running-scroll { font-size: 11.5px; }
     
-    .hero-ultra { min-height: 520px; }
-    .hero-ultra-content { padding: 44px 0; }
-    .hero-ultra-kicker { font-size: 10px; padding: 7px 14px; letter-spacing: 1.2px; margin-bottom: 18px; }
-    .hero-ultra-title { font-size: 26px; margin-bottom: 16px; letter-spacing: -0.8px; }
-    .hero-ultra-sub { font-size: 13px; margin-bottom: 26px; line-height: 1.6; }
-    .hero-ultra-buttons { gap: 8px; margin-bottom: 32px; }
-    .hero-ultra-btn { padding: 12px 22px; font-size: 11.5px; }
-    .hero-ultra-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .hero-stat-ultra { padding: 14px 16px; border-radius: 12px; }
-    .hero-stat-num-ultra { font-size: 22px; }
-    .hero-stat-label-ultra { font-size: 9px; }
+    .hero-ultra { min-height: 480px; }
+    .hero-ultra-content { padding: 40px 0; }
+    .hero-ultra-kicker { font-size: 9.5px; padding: 6px 12px; letter-spacing: 1.2px; margin-bottom: 16px; }
+    .hero-ultra-title { font-size: 24px; margin-bottom: 14px; letter-spacing: -0.6px; }
+    .hero-ultra-sub { font-size: 12.5px; margin-bottom: 22px; line-height: 1.6; }
+    .hero-ultra-buttons { gap: 6px; margin-bottom: 28px; }
+    .hero-ultra-btn { padding: 11px 20px; font-size: 11px; }
+    .hero-ultra-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .hero-stat-ultra { padding: 12px 14px; }
+    .hero-stat-num-ultra { font-size: 20px; }
+    .hero-stat-label-ultra { font-size: 8.5px; }
     
-    .quick-access-glass { padding: 28px 12px; }
-    .quick-grid-glass { grid-template-columns: 1fr 1fr; gap: 12px; }
-    .quick-card-glass { padding: 20px 14px; border-radius: 16px; }
-    .quick-icon-glass { width: 56px; height: 56px; font-size: 24px; border-radius: 16px; margin-bottom: 12px; }
-    .quick-title-glass { font-size: 12.5px; }
-    .quick-desc-glass { font-size: 10.5px; }
+    .quick-access-glass { padding: 24px 12px; }
+    .quick-grid-glass { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .quick-card-glass { padding: 18px 12px; }
+    .quick-icon-glass { width: 52px; height: 52px; font-size: 22px; margin-bottom: 12px; }
+    .quick-title-glass { font-size: 12px; }
+    .quick-desc-glass { font-size: 10px; }
     
-    .page-container { width: 95%; padding: 40px 0; }
-    
-    .section-header-modern { margin-bottom: 32px; }
-    .section-kicker-modern { font-size: 10.5px; letter-spacing: 2px; padding: 0 30px; }
-    .section-title-modern { font-size: 22px; }
+    .page-container { width: 95%; padding: 36px 0; }
+    .section-header-modern { margin-bottom: 28px; }
+    .section-kicker-modern { font-size: 10px; letter-spacing: 2px; padding: 0 30px; }
+    .section-title-modern { font-size: 20px; }
     .section-desc-modern { font-size: 12.5px; }
     
-    .sambutan-section-ultra { padding: 44px 12px; }
-    .sambutan-inner-ultra { grid-template-columns: 1fr; gap: 32px; }
-    .sambutan-photo-wrap-ultra { max-width: 260px; margin: 0 auto; }
-    .sambutan-photo-frame-ultra { display: none; }
-    .sambutan-assalam-ultra { font-size: 15px; padding: 12px 16px; }
-    .sambutan-text-ultra { font-size: 13.5px; line-height: 1.8; }
-    .sambutan-quote-ultra { font-size: 14px; padding: 18px 20px; }
-    .sambutan-salam-nama-ultra { font-size: 14px; }
+    .sambutan-section-ultra { padding: 40px 12px; }
+    .sambutan-inner-ultra { grid-template-columns: 1fr; gap: 28px; }
+    .sambutan-photo-wrap-ultra { max-width: 240px; margin: 0 auto; }
+    .sambutan-assalam-ultra { font-size: 14px; padding: 12px 16px; }
+    .sambutan-text-ultra { font-size: 13px; line-height: 1.75; }
+    .sambutan-quote-ultra { font-size: 13.5px; padding: 16px 20px; }
     
-    .trending-grid { grid-template-columns: 1fr; gap: 20px; }
-    .trending-main-img { height: 240px; }
-    .trending-main-content { padding: 20px; }
-    .trending-main-title { font-size: 18px; }
-    .trending-main-desc { font-size: 12.5px; }
+    .trending-main-img { height: 220px; }
+    .trending-main-content { padding: 18px; }
+    .trending-main-title { font-size: 17px; }
+    .trending-main-desc { font-size: 12px; }
     .trending-thumb { width: 64px; height: 64px; }
-    .trending-info-title { font-size: 12px; }
-    .trending-rank { width: 26px; height: 26px; font-size: 12px; }
+    .trending-info-title { font-size: 11.5px; }
     
-    .warta-grid-ultra { grid-template-columns: 1fr; gap: 16px; }
-    .warta-card-ultra-img { height: 200px; }
-    .warta-card-ultra-body { padding: 20px; }
-    .warta-card-ultra-title { font-size: 15px; }
-    .warta-card-ultra-desc { font-size: 12.5px; }
+    .warta-card-ultra-img { height: 180px; }
+    .warta-card-ultra-body { padding: 18px; }
+    .warta-card-ultra-title { font-size: 14.5px; }
+    .warta-card-ultra-desc { font-size: 12px; }
     
-    .widget-ultra { margin-bottom: 16px; border-radius: 16px; }
-    .widget-ultra-head { padding: 14px 18px; font-size: 12.5px; }
-    .agenda-item-ultra { padding: 14px 18px; gap: 14px; }
-    .agenda-date-ultra { width: 56px; height: 64px; border-radius: 10px; }
-    .agenda-day-ultra { font-size: 22px; }
-    .agenda-title-ultra { font-size: 12.5px; }
-    .agenda-desc-ultra { font-size: 11px; }
-    .kesekret-item-ultra { padding: 14px 18px; }
-    .kesekret-icon-ultra { width: 38px; height: 38px; font-size: 17px; }
-    .kesekret-title-ultra { font-size: 11.5px; }
+    .widget-ultra { margin-bottom: 16px; }
+    .widget-ultra-head { padding: 14px 16px; font-size: 12px; }
+    .agenda-item-ultra { padding: 14px 16px; gap: 12px; }
+    .agenda-date-ultra { width: 52px; height: 60px; }
+    .agenda-day-ultra { font-size: 20px; }
+    .agenda-title-ultra { font-size: 12px; }
+    .agenda-desc-ultra { font-size: 10.5px; }
     
-    .stats-section-ultra { padding: 48px 12px; }
-    .stats-grid-ultra { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .stat-item-ultra { padding: 24px 14px; border-radius: 16px; }
-    .stat-icon-ultra { font-size: 24px; }
-    .stat-num-ultra { font-size: 30px; }
-    .stat-label-ultra { font-size: 10.5px; }
+    .stats-section-ultra { padding: 44px 12px; }
+    .stats-grid-ultra { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat-item-ultra { padding: 20px 12px; }
+    .stat-num-ultra { font-size: 26px; }
+    .stat-label-ultra { font-size: 10px; }
     
-    .layanan-grid-ultra { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .layanan-card-ultra { padding: 22px 14px; border-radius: 16px; }
-    .layanan-icon-ultra { width: 60px; height: 60px; font-size: 26px; border-radius: 16px; margin-bottom: 14px; }
-    .layanan-title-ultra { font-size: 12.5px; }
-    .layanan-desc-ultra { font-size: 10.5px; }
+    .layanan-card-ultra { padding: 20px 12px; }
+    .layanan-icon-ultra { width: 56px; height: 56px; font-size: 24px; margin-bottom: 14px; }
+    .layanan-title-ultra { font-size: 12px; }
+    .layanan-desc-ultra { font-size: 10px; }
     
-    .footer-ultra { padding: 44px 14px 0; }
-    .footer-grid-ultra { grid-template-columns: 1fr; gap: 30px; padding-bottom: 30px; }
-    .footer-col-ultra h4 { font-size: 12.5px; margin-bottom: 14px; padding-bottom: 10px; }
-    .footer-col-ultra p, .footer-col-ultra a { font-size: 12px; }
-    .footer-logo-ultra { width: 52px; height: 52px; }
-    .footer-brand-title-ultra { font-size: 13.5px; }
-    .footer-social-item-ultra { width: 36px; height: 36px; font-size: 14px; }
-    .footer-bottom-ultra { flex-direction: column; text-align: center; padding: 20px 0; font-size: 11px; }
+    .footer-ultra { padding: 40px 14px 0; }
+    .footer-grid-ultra { grid-template-columns: 1fr; gap: 26px; padding-bottom: 26px; }
+    .footer-col-ultra h4 { font-size: 12px; margin-bottom: 12px; padding-bottom: 8px; }
+    .footer-col-ultra p, .footer-col-ultra a { font-size: 11.5px; }
+    .footer-logo-ultra { width: 48px; height: 48px; }
+    .footer-brand-title-ultra { font-size: 13px; }
+    .footer-social-item-ultra { width: 36px; height: 36px; font-size: 13px; }
+    .footer-bottom-ultra { flex-direction: column; text-align: center; padding: 18px 0; font-size: 10.5px; }
     
-    .chat-widget { bottom: 16px; right: 16px; gap: 8px; }
-    .chat-btn { width: 58px; height: 58px; font-size: 24px; }
+    .chat-widget { bottom: 14px; right: 14px; gap: 8px; }
+    .chat-btn { width: 56px; height: 56px; font-size: 22px; }
     .chat-label { font-size: 11px; padding: 8px 14px; }
     
-    .stTabs [data-baseweb="tab"] { padding: 10px 14px; font-size: 12px; }
+    .stTabs [data-baseweb="tab"] { padding: 10px 14px; font-size: 11px; }
 }
 
-@media (max-width: 400px) {
-    .nav-link { font-size: 9.5px !important; padding: 10px 4px !important; }
-    .hero-ultra-title { font-size: 22px; }
-    .hero-ultra-sub { font-size: 12px; }
-    .quick-icon-glass { width: 48px; height: 48px; font-size: 20px; }
-    .stat-num-ultra { font-size: 26px; }
-    .layanan-icon-ultra { width: 52px; height: 52px; font-size: 22px; }
+/* ============================================
+   EXTRA SMALL PHONES (≤ 480px) - COMPACT
+   ============================================ */
+@media (max-width: 480px) {
+    html { font-size: 13px; }
+    
+    /* Topbar */
+    .topbar { padding: 6px 10px !important; gap: 4px !important; }
+    .topbar-left, .topbar-right { gap: 6px !important; }
+    .topbar-item { font-size: 9.5px !important; gap: 4px !important; }
+    .topbar-badge { padding: 2px 8px !important; font-size: 8.5px !important; }
+    .topbar-lang { padding: 2px 7px !important; font-size: 8.5px !important; }
+    
+    /* Header compact */
+    .header-wrap { padding: 10px 10px !important; }
+    .header-inner { gap: 8px !important; }
+    .header-logo { width: 42px !important; height: 42px !important; border-radius: 10px !important; padding: 4px !important; }
+    .header-text-title { font-size: 11.5px !important; line-height: 1.2 !important; }
+    .header-text-sub { font-size: 8px !important; margin-top: 2px !important; }
+    .header-actions { 
+        justify-content: space-between !important;
+        margin-top: 8px !important;
+        padding-top: 8px !important;
+        gap: 4px !important;
+    }
+    .header-action-btn { 
+        font-size: 10px !important; 
+        padding: 6px 10px !important; 
+        border-radius: 6px !important;
+        flex: 1;
+        justify-content: center;
+    }
+    
+    /* Navbar grid 4 kolom */
+    .navbar { padding: 0 6px !important; }
+    .navbar-inner { 
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 2px !important;
+        padding: 4px 0 !important;
+    }
+    .nav-link {
+        font-size: 9px !important;
+        padding: 8px 2px !important;
+        letter-spacing: 0 !important;
+        text-align: center;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: none !important;
+        border-radius: 4px;
+    }
+    .nav-link::after { height: 2px !important; }
+    
+    /* Running */
+    .running-text-bar { padding: 8px 10px !important; gap: 6px !important; }
+    .running-label { font-size: 8.5px !important; padding: 4px 8px !important; }
+    .running-scroll { font-size: 10.5px !important; }
+    
+    /* Hero */
+    .hero-ultra { min-height: 420px !important; }
+    .hero-ultra-content { padding: 30px 0 !important; width: 94% !important; }
+    .hero-ultra-kicker { font-size: 8.5px !important; padding: 5px 10px !important; margin-bottom: 12px !important; }
+    .hero-ultra-title { font-size: 22px !important; margin-bottom: 12px !important; letter-spacing: -0.6px !important; }
+    .hero-ultra-sub { font-size: 11.5px !important; margin-bottom: 20px !important; }
+    .hero-ultra-buttons { gap: 6px !important; margin-bottom: 24px !important; }
+    .hero-ultra-btn { padding: 10px 16px !important; font-size: 10.5px !important; }
+    .hero-ultra-stats { gap: 8px !important; }
+    .hero-stat-ultra { padding: 10px 12px !important; }
+    .hero-stat-num-ultra { font-size: 18px !important; }
+    .hero-stat-label-ultra { font-size: 8px !important; }
+    
+    /* Mitra */
+    .mitra-section { padding: 14px 0 !important; }
+    .mitra-label { font-size: 8.5px !important; margin-bottom: 10px !important; }
+    .mitra-track { gap: 20px !important; }
+    .mitra-item { font-size: 10px !important; padding: 5px 10px !important; }
+    
+    /* Quick access */
+    .quick-access-glass { padding: 20px 10px !important; }
+    .quick-card-glass { padding: 14px 8px !important; border-radius: 12px !important; }
+    .quick-icon-glass { width: 42px !important; height: 42px !important; font-size: 18px !important; margin-bottom: 8px !important; }
+    .quick-title-glass { font-size: 11px !important; }
+    .quick-desc-glass { font-size: 9px !important; }
+    
+    /* Section */
+    .page-container { padding: 24px 0 !important; }
+    .section-header-modern { margin-bottom: 22px !important; }
+    .section-kicker-modern { font-size: 9px !important; padding: 0 24px !important; }
+    .section-title-modern { font-size: 18px !important; }
+    .section-desc-modern { font-size: 11.5px !important; }
+    
+    /* Sambutan */
+    .sambutan-section-ultra { padding: 30px 10px !important; }
+    .sambutan-photo-wrap-ultra { max-width: 200px !important; }
+    .sambutan-photo-info-ultra { padding: 12px !important; margin-top: 16px !important; }
+    .sambutan-nama-ultra { font-size: 12.5px !important; }
+    .sambutan-jabatan-ultra { font-size: 9.5px !important; }
+    .sambutan-assalam-ultra { font-size: 13px !important; padding: 10px 14px !important; margin-bottom: 16px !important; }
+    .sambutan-text-ultra { font-size: 12px !important; line-height: 1.7 !important; margin-bottom: 14px !important; }
+    .sambutan-quote-ultra { font-size: 12.5px !important; padding: 14px 16px !important; }
+    
+    /* Trending */
+    .trending-main-img { height: 180px !important; }
+    .trending-main-content { padding: 16px !important; }
+    .trending-main-title { font-size: 15px !important; }
+    .trending-main-desc { font-size: 11.5px !important; }
+    .trending-thumb { width: 56px !important; height: 56px !important; }
+    .trending-info-title { font-size: 11px !important; }
+    
+    /* Warta */
+    .warta-card-ultra-img { height: 150px !important; }
+    .warta-card-ultra-body { padding: 14px !important; }
+    .warta-card-ultra-title { font-size: 13px !important; }
+    .warta-card-ultra-desc { font-size: 11px !important; }
+    
+    /* Widget */
+    .widget-ultra-head { padding: 12px 14px !important; font-size: 11px !important; }
+    .agenda-item-ultra { padding: 12px 14px !important; gap: 10px !important; }
+    .agenda-date-ultra { width: 46px !important; height: 52px !important; border-radius: 8px !important; }
+    .agenda-day-ultra { font-size: 18px !important; }
+    .agenda-title-ultra { font-size: 11px !important; }
+    .agenda-desc-ultra { font-size: 9.5px !important; }
+    
+    /* Stats */
+    .stats-section-ultra { padding: 30px 10px !important; }
+    .stats-grid-ultra { gap: 8px !important; }
+    .stat-item-ultra { padding: 16px 10px !important; }
+    .stat-icon-ultra { font-size: 20px !important; margin-bottom: 6px !important; }
+    .stat-num-ultra { font-size: 22px !important; margin-bottom: 6px !important; }
+    .stat-label-ultra { font-size: 9px !important; }
+    
+    /* Layanan */
+    .layanan-card-ultra { padding: 16px 10px !important; }
+    .layanan-icon-ultra { width: 44px !important; height: 44px !important; font-size: 18px !important; margin-bottom: 10px !important; }
+    .layanan-title-ultra { font-size: 10.5px !important; }
+    .layanan-desc-ultra { font-size: 9px !important; }
+    
+    /* Footer */
+    .footer-ultra { padding: 30px 12px 0 !important; }
+    .footer-grid-ultra { gap: 20px !important; padding-bottom: 20px !important; }
+    .footer-col-ultra h4 { font-size: 11px !important; margin-bottom: 10px !important; padding-bottom: 8px !important; }
+    .footer-col-ultra p, .footer-col-ultra a { font-size: 11px !important; }
+    .footer-logo-ultra { width: 42px !important; height: 42px !important; padding: 5px !important; }
+    .footer-brand-title-ultra { font-size: 12px !important; }
+    .footer-social-item-ultra { width: 32px !important; height: 32px !important; font-size: 12px !important; }
+    .footer-bottom-ultra { font-size: 10px !important; }
+    
+    /* Chat */
+    .chat-widget { bottom: 12px !important; right: 12px !important; }
+    .chat-btn { width: 48px !important; height: 48px !important; font-size: 20px !important; border-width: 3px !important; }
+    .chat-label { font-size: 10px !important; padding: 6px 12px !important; }
+    
+    /* Columns stack */
+    div[data-testid="column"] {
+        min-width: 100% !important;
+        flex: 1 1 100% !important;
+    }
+    
+    /* Streamlit buttons */
+    .stButton > button { font-size: 12px !important; padding: 8px 14px !important; }
+    
+    /* Tabs */
+    .stTabs [data-baseweb="tab"] { padding: 8px 12px !important; font-size: 10.5px !important; }
+    
+    /* Plotly charts */
+    .js-plotly-plot { font-size: 9px !important; }
+}
+
+/* ============================================
+   NARROW PHONES (≤ 380px)
+   ============================================ */
+@media (max-width: 380px) {
+    html { font-size: 12px; }
+    .nav-link { font-size: 8.5px !important; padding: 7px 2px !important; }
+    .hero-ultra-title { font-size: 20px !important; }
+    .hero-ultra-sub { font-size: 11px !important; }
+    .hero-stat-num-ultra { font-size: 16px !important; }
+    .hero-stat-label-ultra { font-size: 7.5px !important; }
+    .quick-icon-glass { width: 38px !important; height: 38px !important; font-size: 16px !important; }
+    .stat-num-ultra { font-size: 20px !important; }
+    .layanan-icon-ultra { width: 40px !important; height: 40px !important; font-size: 16px !important; }
+    .section-title-modern { font-size: 16px !important; }
 }
 </style>
 """,
@@ -2228,21 +1651,12 @@ st.markdown(
     f"""
 <div class="topbar">
     <div class="topbar-left">
-        <div class="topbar-item">
-            <span>📞</span>
-            <span>(0655) 12345</span>
-        </div>
-        <div class="topbar-item">
-            <span>✉️</span>
-            <span>sekretariat@dprk.acehjaya.go.id</span>
-        </div>
+        <div class="topbar-item"><span>📞</span><span>(0655) 12345</span></div>
+        <div class="topbar-item"><span>✉️</span><span>sekretariat@dprk.acehjaya.go.id</span></div>
     </div>
     <div class="topbar-right">
         <span class="topbar-badge">ONLINE</span>
-        <div class="topbar-item">
-            <span>🕐</span>
-            <span>{now.strftime('%H:%M WIB')}</span>
-        </div>
+        <div class="topbar-item"><span>🕐</span><span>{now.strftime('%H:%M WIB')}</span></div>
         <a href="#" class="topbar-lang">🇮🇩 ID</a>
     </div>
 </div>
@@ -2305,13 +1719,12 @@ st.markdown(
 st.markdown(
     """
 <div class="running-text-bar">
-    <span class="running-label">INFO TERKINI</span>
+    <span class="running-label">INFO</span>
     <div class="running-scroll-wrap">
         <div class="running-scroll">
             Selamat Datang di Portal Resmi DPRK Kabupaten Aceh Jaya &nbsp;&nbsp;★&nbsp;&nbsp;
             Rapat Paripurna Pembahasan KUA-PPAS 2027 akan dilaksanakan pada 18 September 2026 &nbsp;&nbsp;★&nbsp;&nbsp;
             Layanan Pengaduan Masyarakat kini dapat diakses melalui menu Layanan &nbsp;&nbsp;★&nbsp;&nbsp;
-            DPRK Aceh Jaya Raih Penghargaan Keterbukaan Informasi Publik 2026 &nbsp;&nbsp;★&nbsp;&nbsp;
             Mari wujudkan transparansi dan akuntabilitas pemerintahan daerah bersama DPRK Aceh Jaya.
         </div>
     </div>
@@ -2365,7 +1778,6 @@ if st.session_state.page == "Beranda":
         unsafe_allow_html=True,
     )
 
-    # Navigasi slide
     nav_slide_cols = st.columns([1, 4, 1])
     with nav_slide_cols[0]:
         if st.button("◀ Prev", key="slide_prev", use_container_width=True):
@@ -2376,7 +1788,6 @@ if st.session_state.page == "Beranda":
             st.session_state.slide_index = (st.session_state.slide_index + 1) % len(HERO_SLIDES)
             st.rerun()
 
-    # MITRA MARQUEE
     mitra_html = "".join([f'<div class="mitra-item">{m}</div>' for m in MITRA * 2])
     st.markdown(
         f"""
@@ -2390,7 +1801,7 @@ if st.session_state.page == "Beranda":
         unsafe_allow_html=True,
     )
 
-    # QUICK ACCESS GLASS
+    # QUICK ACCESS
     st.markdown('<div class="quick-access-glass"><div class="quick-access-inner">', unsafe_allow_html=True)
     quick_cols = st.columns(4)
     quick_data = [
@@ -2413,14 +1824,14 @@ if st.session_state.page == "Beranda":
             )
     st.markdown("</div></div>", unsafe_allow_html=True)
 
-    # SAMBUTAN PIMPINAN ULTRA
+    # SAMBUTAN
     st.markdown(
         f"""
     <section class="sambutan-section-ultra">
         <div class="sambutan-inner-ultra">
             <div class="sambutan-photo-wrap-ultra">
-                <div class="sambutan-photo-frame-ultra"></div>
-                <img class="sambutan-photo-ultra" src="{SAMBUTAN['foto']}" alt="{SAMBUTAN['nama']}">
+                <img class="sambutan-photo-ultra" src="{SAMBUTAN['foto']}" alt="{SAMBUTAN['nama']}"
+                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80'">
                 <div class="sambutan-photo-info-ultra">
                     <div class="sambutan-nama-ultra">{SAMBUTAN['nama']}</div>
                     <div class="sambutan-jabatan-ultra">{SAMBUTAN['jabatan']}</div>
@@ -2446,7 +1857,7 @@ if st.session_state.page == "Beranda":
         unsafe_allow_html=True,
     )
 
-    # LAYANAN PUBLIK ULTRA
+    # LAYANAN
     st.markdown('<div class="page-container">', unsafe_allow_html=True)
     st.markdown(
         """
@@ -2469,12 +1880,9 @@ if st.session_state.page == "Beranda":
     lay_cols = st.columns(4)
     for i, (icon, title, desc, target) in enumerate(layanan_items):
         with lay_cols[i]:
-            is_ext = target.startswith("http")
-            href = target if is_ext else f"?page={target}"
-            tgt = 'target="_blank" rel="noopener"' if is_ext else ""
             st.markdown(
                 f"""
-            <a href="{href}" {tgt} class="layanan-card-ultra">
+            <a href="?page={target}" class="layanan-card-ultra">
                 <div class="layanan-icon-ultra">{icon}</div>
                 <div class="layanan-title-ultra">{title}</div>
                 <div class="layanan-desc-ultra">{desc}</div>
@@ -2498,7 +1906,6 @@ if st.session_state.page == "Beranda":
         unsafe_allow_html=True,
     )
 
-    # Trending layout: 1 utama + 3 list
     trending_main = WARTA_DPRK[0]
     trending_side = WARTA_DPRK[1:4]
 
@@ -2536,7 +1943,7 @@ if st.session_state.page == "Beranda":
                 <div class="trending-info">
                     <div class="trending-info-cat">{item['kategori']}</div>
                     <div class="trending-info-title">{item['title']}</div>
-                    <div class="trending-info-meta">👁️ {item['views']:,} • 📅 {item['date'][:10]}</div>
+                    <div class="trending-info-meta">👁️ {item['views']:,}</div>
                 </div>
             </a>
             """,
@@ -2546,7 +1953,7 @@ if st.session_state.page == "Beranda":
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # WARTA + AGENDA 2 COLUMN
+    # WARTA + WIDGET
     st.markdown('<div class="page-container">', unsafe_allow_html=True)
     main_col, side_col = st.columns([2, 1])
 
@@ -2560,7 +1967,6 @@ if st.session_state.page == "Beranda":
         """,
             unsafe_allow_html=True,
         )
-        # Grid 2 kolom
         for i in range(0, min(4, len(WARTA_DPRK)), 2):
             wcols = st.columns(2)
             for j in range(2):
@@ -2587,7 +1993,6 @@ if st.session_state.page == "Beranda":
                         )
 
     with side_col:
-        # Widget Agenda
         st.markdown(
             """
         <div class="widget-ultra">
@@ -2615,7 +2020,6 @@ if st.session_state.page == "Beranda":
             )
         st.markdown("</div></div>", unsafe_allow_html=True)
 
-        # Widget Kesekretariatan
         st.markdown(
             """
         <div class="widget-ultra">
@@ -2641,15 +2045,14 @@ if st.session_state.page == "Beranda":
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # STATS SECTION ULTRA
+    # STATS
     st.markdown(
         f"""
     <section class="stats-section-ultra">
         <div class="stats-inner-ultra">
-            <div class="section-header-modern" style="margin-bottom: 44px;">
+            <div class="section-header-modern" style="margin-bottom: 40px;">
                 <div class="section-kicker-modern" style="color: #e6c458;">DALAM ANGKA</div>
                 <h2 class="section-title-modern" style="color: #ffffff;">DPRK Aceh Jaya</h2>
-                <p class="section-desc-modern" style="color: rgba(255,255,255,0.75);">Data dan statistik terkini kinerja DPRK Aceh Jaya.</p>
             </div>
             <div class="stats-grid-ultra">
                 <div class="stat-item-ultra">
@@ -2679,14 +2082,13 @@ if st.session_state.page == "Beranda":
         unsafe_allow_html=True,
     )
 
-    # STATISTIK CHART
+    # CHART
     st.markdown('<div class="page-container">', unsafe_allow_html=True)
     st.markdown(
         """
     <div class="section-header-modern">
         <div class="section-kicker-modern">DATA & STATISTIK</div>
         <h2 class="section-title-modern">Dashboard Kinerja</h2>
-        <p class="section-desc-modern">Visualisasi data kegiatan dan kinerja DPRK Aceh Jaya periode 2026.</p>
     </div>
     """,
         unsafe_allow_html=True,
@@ -2694,37 +2096,22 @@ if st.session_state.page == "Beranda":
 
     stat_col1, stat_col2 = st.columns(2)
     with stat_col1:
-        fig1 = px.line(
-            STATS_DATA, x="Bulan", y="Rapat", markers=True,
-            title="Jumlah Rapat per Bulan 2026",
-            color_discrete_sequence=["#0d5e3a"],
-        )
-        fig1.update_layout(
-            plot_bgcolor="rgba(0,0,0,0)",
-            paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(family="Inter", size=11, color="#000000"),
-            title_font=dict(size=14, family="Plus Jakarta Sans", color="#000000"),
-            margin=dict(l=10, r=10, t=50, b=10),
-            height=320,
-        )
-        fig1.update_traces(line=dict(width=3), marker=dict(size=10, line=dict(width=2, color="#fff")))
+        fig1 = px.line(STATS_DATA, x="Bulan", y="Rapat", markers=True,
+                       title="Jumlah Rapat per Bulan 2026",
+                       color_discrete_sequence=["#0d5e3a"])
+        fig1.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+                          font=dict(family="Inter", size=10, color="#000000"),
+                          margin=dict(l=10, r=10, t=40, b=10), height=280)
         st.plotly_chart(fig1, use_container_width=True)
 
     with stat_col2:
-        fig2 = px.pie(
-            ANGGARAN_DATA, values="Anggaran", names="Kategori",
-            title="Alokasi Anggaran 2026 (%)",
-            color_discrete_sequence=["#0d5e3a", "#c9a227", "#14734a", "#e6c458", "#6b7a75"],
-            hole=0.5,
-        )
-        fig2.update_layout(
-            plot_bgcolor="rgba(0,0,0,0)",
-            paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(family="Inter", size=11, color="#000000"),
-            title_font=dict(size=14, family="Plus Jakarta Sans", color="#000000"),
-            margin=dict(l=10, r=10, t=50, b=10),
-            height=320,
-        )
+        fig2 = px.pie(ANGGARAN_DATA, values="Anggaran", names="Kategori",
+                     title="Alokasi Anggaran 2026",
+                     color_discrete_sequence=["#0d5e3a", "#c9a227", "#14734a", "#e6c458", "#6b7a75"],
+                     hole=0.5)
+        fig2.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+                          font=dict(family="Inter", size=10, color="#000000"),
+                          margin=dict(l=10, r=10, t=40, b=10), height=280)
         st.plotly_chart(fig2, use_container_width=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
@@ -2739,7 +2126,7 @@ elif st.session_state.page == "Profil":
     <div class="section-header-modern">
         <div class="section-kicker-modern">TENTANG DPRK</div>
         <h2 class="section-title-modern">Profil DPRK Aceh Jaya</h2>
-        <p class="section-desc-modern">Dewan Perwakilan Rakyat Kabupaten Aceh Jaya sebagai unsur penyelenggara pemerintahan daerah bersama pemerintah daerah menjalankan fungsi legislasi, anggaran, dan pengawasan.</p>
+        <p class="section-desc-modern">DPRK Aceh Jaya menjalankan fungsi legislasi, anggaran, dan pengawasan.</p>
     </div>
     """,
         unsafe_allow_html=True,
@@ -2753,9 +2140,9 @@ elif st.session_state.page == "Profil":
             with cols[i % 2]:
                 st.markdown(
                     f"""
-                <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 16px; padding: 20px; text-align: center; border-top: 3px solid #0d5e3a; margin-bottom: 14px; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-                    <div style="font-weight: 800; color: #083d26; font-size: 13px; margin-bottom: 5px; font-family: 'Plus Jakarta Sans';">{nama}</div>
-                    <div style="color: #c9a227; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">{jabatan}</div>
+                <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 12px; padding: 14px; text-align: center; border-top: 3px solid #0d5e3a; margin-bottom: 10px;">
+                    <div style="font-weight: 800; color: #083d26; font-size: 11.5px; margin-bottom: 4px;">{nama}</div>
+                    <div style="color: #c9a227; font-size: 9.5px; font-weight: 800;">{jabatan}</div>
                 </div>
                 """,
                     unsafe_allow_html=True,
@@ -2767,9 +2154,9 @@ elif st.session_state.page == "Profil":
             with cols[i % 2]:
                 st.markdown(
                     f"""
-                <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 16px; padding: 20px; text-align: center; border-top: 3px solid #c9a227; margin-bottom: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-                    <div style="font-weight: 800; color: #083d26; font-size: 13px; margin-bottom: 5px; font-family: 'Plus Jakarta Sans';">{nama}</div>
-                    <div style="color: #4a5a55; font-size: 11px; font-weight: 600;">{jabatan}</div>
+                <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 12px; padding: 14px; text-align: center; border-top: 3px solid #c9a227; margin-bottom: 10px;">
+                    <div style="font-weight: 800; color: #083d26; font-size: 11.5px; margin-bottom: 4px;">{nama}</div>
+                    <div style="color: #4a5a55; font-size: 9.5px;">{jabatan}</div>
                 </div>
                 """,
                     unsafe_allow_html=True,
@@ -2787,7 +2174,6 @@ elif st.session_state.page == "Berita":
     <div class="section-header-modern">
         <div class="section-kicker-modern">PUBLIKASI</div>
         <h2 class="section-title-modern">Warta DPRK</h2>
-        <p class="section-desc-modern">Informasi kegiatan, rapat, agenda, dan aktivitas DPRK Aceh Jaya.</p>
     </div>
     """,
         unsafe_allow_html=True,
@@ -2804,7 +2190,7 @@ elif st.session_state.page == "Berita":
     if selected != "Semua":
         filtered = [i for i in filtered if i["kategori"] == selected]
     if search:
-        filtered = [i for i in filtered if search.lower() in i["title"].lower() or search.lower() in i["desc"].lower()]
+        filtered = [i for i in filtered if search.lower() in i["title"].lower()]
 
     for i in range(0, len(filtered), 3):
         cols = st.columns(3)
@@ -2814,7 +2200,7 @@ elif st.session_state.page == "Berita":
                 with cols[j]:
                     st.markdown(
                         f"""
-                    <div class="warta-card-ultra" style="margin-bottom: 18px;">
+                    <div class="warta-card-ultra" style="margin-bottom: 14px;">
                         <div class="warta-card-ultra-img">
                             <span class="warta-card-ultra-cat">{item['kategori']}</span>
                             <span class="warta-card-ultra-views">👁️ {item['views']:,}</span>
@@ -2823,16 +2209,12 @@ elif st.session_state.page == "Berita":
                         <div class="warta-card-ultra-body">
                             <div class="warta-card-ultra-date">📅 {item['date']}</div>
                             <h3 class="warta-card-ultra-title">{item['title']}</h3>
-                            <p class="warta-card-ultra-desc">{item['desc'][:130]}...</p>
-                            <a href="#" class="warta-card-ultra-more">Baca →</a>
+                            <p class="warta-card-ultra-desc">{item['desc'][:100]}...</p>
                         </div>
                     </div>
                     """,
                         unsafe_allow_html=True,
                     )
-
-    if not filtered:
-        st.info("Tidak ada berita yang sesuai pencarian.")
 
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -2846,7 +2228,6 @@ elif st.session_state.page == "Galeri":
     <div class="section-header-modern">
         <div class="section-kicker-modern">DOKUMENTASI</div>
         <h2 class="section-title-modern">Galeri Foto & Video</h2>
-        <p class="section-desc-modern">Dokumentasi kegiatan, rapat, dan aktivitas DPRK Aceh Jaya.</p>
     </div>
     """,
         unsafe_allow_html=True,
@@ -2861,21 +2242,17 @@ elif st.session_state.page == "Galeri":
         ("Bimbingan Teknis", "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80"),
     ]
 
-    for i in range(0, len(gallery), 3):
-        cols = st.columns(3)
-        for j in range(3):
+    for i in range(0, len(gallery), 2):
+        cols = st.columns(2)
+        for j in range(2):
             if i + j < len(gallery):
                 title, img = gallery[i + j]
                 with cols[j]:
                     st.markdown(
                         f"""
-                    <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 16px; overflow: hidden; margin-bottom: 14px; transition: all 0.4s; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
-                        <div style="overflow: hidden;">
-                            <img src="{img}" style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.6s;">
-                        </div>
-                        <div style="padding: 16px; text-align: center;">
-                            <div style="font-family: 'Plus Jakarta Sans'; font-weight: 800; color: #083d26; font-size: 13px;">{title}</div>
-                        </div>
+                    <div style="background: #fff; border: 1px solid #e5ebe7; border-radius: 12px; overflow: hidden; margin-bottom: 10px;">
+                        <img src="{img}" style="width: 100%; height: 140px; object-fit: cover;">
+                        <div style="padding: 10px; text-align: center; font-weight: 700; color: #083d26; font-size: 11px;">{title}</div>
                     </div>
                     """,
                         unsafe_allow_html=True,
@@ -2891,9 +2268,8 @@ elif st.session_state.page == "Layanan":
     st.markdown(
         """
     <div class="section-header-modern">
-        <div class="section-kicker-modern">PELAYANAN MASYARAKAT</div>
+        <div class="section-kicker-modern">PELAYANAN</div>
         <h2 class="section-title-modern">Layanan Aspirasi & Pengaduan</h2>
-        <p class="section-desc-modern">Sampaikan aspirasi, laporan, atau pengaduan Anda kepada DPRK Aceh Jaya.</p>
     </div>
     """,
         unsafe_allow_html=True,
@@ -2905,11 +2281,10 @@ elif st.session_state.page == "Layanan":
             nama = st.text_input("Nama Lengkap *", placeholder="Nama lengkap")
             nik = st.text_input("NIK (Opsional)", placeholder="16 digit NIK")
         with c2:
-            kategori = st.selectbox("Kategori *", ["Pengaduan Masyarakat", "Infrastruktur & Jalan", "Pelayanan Publik", "Legislasi & Qanun", "Lingkungan & Bencana", "Lainnya"])
+            kategori = st.selectbox("Kategori *", ["Pengaduan Masyarakat", "Infrastruktur & Jalan", "Pelayanan Publik", "Legislasi & Qanun", "Lainnya"])
             prioritas = st.selectbox("Prioritas", ["Normal", "Penting", "Mendesak"])
         lokasi = st.text_input("Lokasi Kejadian", placeholder="Desa / Kecamatan")
-        isi = st.text_area("Isi Laporan *", height=140, placeholder="Jelaskan laporan Anda...")
-        lampiran = st.file_uploader("📎 Lampiran", type=["jpg", "jpeg", "png", "pdf"])
+        isi = st.text_area("Isi Laporan *", height=120, placeholder="Jelaskan laporan Anda...")
 
         submitted = st.form_submit_button("🚀 Kirim Laporan", type="primary", use_container_width=True)
 
@@ -2917,32 +2292,9 @@ elif st.session_state.page == "Layanan":
             if nama.strip() and isi.strip():
                 nomor = datetime.now().strftime("%Y%m%d%H%M%S")
                 st.success(f"✅ Laporan diterima! Nomor tiket: **ADU-{nomor}**")
-                st.info(f"📋 Kategori: {kategori} | Prioritas: {prioritas}")
             else:
-                st.error("⚠️ Mohon lengkapi Nama dan Isi Laporan.")
+                st.error("⚠️ Mohon lengkapi data.")
 
-    st.markdown(
-        """
-    <div class="widget-ultra" style="margin-top: 24px;">
-        <div class="widget-ultra-head">📞 Kontak Kami</div>
-        <div class="widget-ultra-body" style="padding: 22px;">
-            <p style="font-size: 13px; color: #083d26; line-height: 1.9; margin: 0 0 14px;">
-                <strong style="color: #0d5e3a;">📞 Telepon</strong><br>(0655) 12345
-            </p>
-            <p style="font-size: 13px; color: #083d26; line-height: 1.9; margin: 0 0 14px;">
-                <strong style="color: #0d5e3a;">✉️ Email</strong><br>sekretariat@dprk.acehjaya.go.id
-            </p>
-            <p style="font-size: 13px; color: #083d26; line-height: 1.9; margin: 0 0 14px;">
-                <strong style="color: #0d5e3a;">📍 Alamat</strong><br>Jl. Merdeka No. 01, Calang, Aceh Jaya
-            </p>
-            <p style="font-size: 13px; color: #083d26; line-height: 1.9; margin: 0;">
-                <strong style="color: #0d5e3a;">🕐 Jam Layanan</strong><br>Senin–Jumat, 08.00–16.00 WIB
-            </p>
-        </div>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
@@ -2955,7 +2307,6 @@ elif st.session_state.page == "JDIH":
     <div class="section-header-modern">
         <div class="section-kicker-modern">DOKUMENTASI HUKUM</div>
         <h2 class="section-title-modern">JDIH & Transparansi</h2>
-        <p class="section-desc-modern">Akses daftar produk hukum dan informasi publik DPRK Aceh Jaya.</p>
     </div>
     """,
         unsafe_allow_html=True,
@@ -2975,7 +2326,6 @@ else:
     <div class="section-header-modern">
         <div class="section-kicker-modern">INFORMASI KONTAK</div>
         <h2 class="section-title-modern">Hubungi Kami</h2>
-        <p class="section-desc-modern">Gunakan informasi berikut untuk mendapatkan layanan dari Sekretariat DPRK Aceh Jaya.</p>
     </div>
     """,
         unsafe_allow_html=True,
@@ -2983,7 +2333,7 @@ else:
 
     cols = st.columns(3)
     contacts = [
-        ("📍", "Alamat", "Jl. Merdeka No. 01, Calang, Aceh Jaya"),
+        ("📍", "Alamat", "Jl. Merdeka No. 01, Calang"),
         ("📞", "Telepon", "(0655) 12345"),
         ("✉️", "Email", "sekretariat@dprk.acehjaya.go.id"),
     ]
@@ -3002,11 +2352,8 @@ else:
 
     st.markdown(
         """
-    <div style="margin-top: 30px; background: #fff; border: 1px solid #e5ebe7; border-radius: 20px; padding: 28px; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
-        <div class="section-header-modern" style="margin-bottom: 22px;">
-            <h2 class="section-title-modern" style="font-size: 22px;">Peta Lokasi Kantor</h2>
-        </div>
-        <div style="width: 100%; height: 360px; border-radius: 16px; overflow: hidden; border: 1px solid #e5ebe7;">
+    <div style="margin-top: 20px; background: #fff; border: 1px solid #e5ebe7; border-radius: 16px; padding: 16px;">
+        <div style="width: 100%; height: 260px; border-radius: 12px; overflow: hidden;">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.5!2d95.39!3d4.71!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30403e5f3a0b0b0b%3A0x0!2sCalang%2C%20Aceh%20Jaya%20Regency%2C%20Aceh!5e0!3m2!1sen!2sid!4v1600000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
@@ -3022,14 +2369,14 @@ st.markdown(
     """
 <div class="chat-widget">
     <div class="chat-label">💬 Chat SAVIRA!</div>
-    <a href="?page=layanan" class="chat-btn" title="Chat dengan SAVIRA">💬</a>
+    <a href="?page=layanan" class="chat-btn" title="Chat SAVIRA">💬</a>
 </div>
 """,
     unsafe_allow_html=True,
 )
 
 # =========================================================
-# FOOTER ULTRA
+# FOOTER
 # =========================================================
 st.markdown(
     f"""
@@ -3040,7 +2387,7 @@ st.markdown(
 <div class="footer-col-ultra">
 <div class="footer-brand-ultra">
 <div class="footer-logo-ultra">
-    <img src="{LOGO_URL}" alt="Logo DPRK Aceh Jaya"
+    <img src="{LOGO_URL}" alt="Logo"
          onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>'">
 </div>
 <div>
@@ -3048,15 +2395,14 @@ st.markdown(
 <div class="footer-brand-sub-ultra">SEKRETARIAT DPRK</div>
 </div>
 </div>
-<p style="color: rgba(255,255,255,0.7); font-size: 12.5px; line-height: 1.9; margin: 0 0 8px;">
-Portal resmi Sekretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Menyediakan informasi kelembagaan, berita, agenda, produk hukum, dan layanan aspirasi masyarakat.
+<p style="color: rgba(255,255,255,0.7); font-size: 11.5px; line-height: 1.8; margin: 0 0 8px;">
+Portal resmi Sekretariat DPRK Kabupaten Aceh Jaya.
 </p>
 <div class="footer-social-ultra">
 <a href="#" class="footer-social-item-ultra">f</a>
 <a href="#" class="footer-social-item-ultra">𝕏</a>
 <a href="#" class="footer-social-item-ultra">▶</a>
 <a href="#" class="footer-social-item-ultra">◎</a>
-<a href="#" class="footer-social-item-ultra">in</a>
 </div>
 </div>
 
@@ -3064,15 +2410,14 @@ Portal resmi Sekretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Menyediaka
 <h4>Navigasi</h4>
 <a href="?page=beranda">Beranda</a>
 <a href="?page=profil">Profil DPRK</a>
-<a href="?page=berita">Berita & Agenda</a>
+<a href="?page=berita">Berita</a>
 <a href="?page=galeri">Galeri</a>
 <a href="?page=kontak">Kontak</a>
 </div>
 
 <div class="footer-col-ultra">
-<h4>Layanan Publik</h4>
-<a href="?page=layanan">Pengaduan Masyarakat</a>
-<a href="?page=kontak">Informasi Publik</a>
+<h4>Layanan</h4>
+<a href="?page=layanan">Pengaduan</a>
 <a href="?page=jdih">JDIH</a>
 <a href="?page=jdih">Transparansi</a>
 <a href="https://elhpkpn.kpk.go.id/" target="_blank">E-LHKPN</a>
@@ -3081,17 +2426,15 @@ Portal resmi Sekretariat Dewan Perwakilan Rakyat Kabupaten Aceh Jaya. Menyediaka
 <div class="footer-col-ultra">
 <h4>Hubungi Kami</h4>
 <p>📍 Jl. Merdeka No. 01</p>
-<p>Calang, Kabupaten Aceh Jaya</p>
+<p>Calang, Aceh Jaya</p>
 <p>📞 (0655) 12345</p>
 <p>✉️ sekretariat@dprk.acehjaya.go.id</p>
-<p>🕐 Senin–Jumat, 08.00–16.00 WIB</p>
 </div>
 
 </div>
 
 <div class="footer-bottom-ultra">
-<div>© {datetime.now().year} Sekretariat DPRK Kabupaten Aceh Jaya. Seluruh hak cipta dilindungi.</div>
-<div>Portal Informasi Publik • Kabupaten Aceh Jaya</div>
+<div>© {datetime.now().year} Sekretariat DPRK Aceh Jaya. Seluruh hak cipta dilindungi.</div>
 </div>
 
 </div>
