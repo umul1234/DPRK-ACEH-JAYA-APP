@@ -492,4 +492,196 @@ def render_pengaduan_tab():
 def render_pimpinan_tab():
     st.subheader("👥 Pimpinan & Anggota DPRK")
     
-    with st.expander("➕ **Tambah Pimpinan/Angg
+    with st.expander("➕ **Tambah Pimpinan/Anggota**", expanded=False):
+        with st.form("form_pimpinan", clear_on_submit=True):
+            c1, c2 = st.columns(2)
+            with c1:
+                nama = st.text_input("Nama Lengkap *")
+                urutan = st.number_input("Urutan", min_value=1, value=1)
+            with c2:
+                jabatan = st.text_input("Jabatan *", placeholder="Contoh: KETUA DPRK")
+                foto = st.file_uploader("Foto (opsional)", type=["jpg", "png", "jpeg"])
+            
+            if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
+                if nama and jabatan:
+                    foto_url = upload_image(foto, folder="pimpinan") if foto else None
+                    create_pimpinan(nama, jabatan, urutan, foto_url)
+                    st.success("✅ Ditambahkan!")
+                    st.rerun()
+    
+    st.markdown("### 📋 Daftar")
+    for item in get_all_pimpinan():
+        c1, c2, c3 = st.columns([1, 5, 1])
+        with c1:
+            if item.get("foto_url"):
+                try: st.image(item["foto_url"], width=60)
+                except: st.write("👤")
+            else:
+                st.write("👤")
+        with c2:
+            st.markdown(f"**{item['nama']}**")
+            st.caption(item["jabatan"])
+        with c3:
+            if st.button("🗑️", key=f"del_pim_{item['id']}", use_container_width=True):
+                delete_pimpinan(item["id"])
+                st.rerun()
+        st.divider()
+
+# =========================================================
+# TAB: PEJABAT
+# =========================================================
+def render_pejabat_tab():
+    st.subheader("🏢 Pejabat Sekretariat")
+    
+    with st.form("form_pejabat", clear_on_submit=True):
+        c1, c2 = st.columns(2)
+        with c1:
+            nama = st.text_input("Nama *")
+        with c2:
+            jabatan = st.text_input("Jabatan *")
+        urutan = st.number_input("Urutan", min_value=1, value=1)
+        
+        if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
+            if nama and jabatan:
+                create_pejabat(nama, jabatan, urutan)
+                st.success("✅ Ditambahkan!")
+                st.rerun()
+    
+    st.markdown("### 📋 Daftar")
+    for item in get_all_pejabat():
+        c1, c2 = st.columns([5, 1])
+        with c1:
+            st.markdown(f"**{item['nama']}** — {item['jabatan']}")
+        with c2:
+            if st.button("🗑️", key=f"del_pej_{item['id']}", use_container_width=True):
+                delete_pejabat(item["id"])
+                st.rerun()
+        st.divider()
+
+# =========================================================
+# TAB: JDIH
+# =========================================================
+def render_jdih_tab():
+    st.subheader("📜 Kelola Produk Hukum (JDIH)")
+    
+    with st.expander("➕ **Tambah Produk Hukum**", expanded=False):
+        with st.form("form_jdih", clear_on_submit=True):
+            c1, c2 = st.columns(2)
+            with c1:
+                nomor = st.text_input("Nomor & Tahun *", placeholder="Qanun No. 5/2025")
+                status = st.selectbox("Status", ["Berlaku", "Dicabut", "Diubah"])
+            with c2:
+                tentang = st.text_input("Tentang *")
+            file_up = st.file_uploader("Upload PDF (opsional)", type=["pdf"])
+            file_url_manual = st.text_input("Atau URL File (opsional)")
+            
+            if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
+                if nomor and tentang:
+                    file_url = file_url_manual
+                    if file_up:
+                        with st.spinner("Upload..."):
+                            file_url = upload_image(file_up, folder="jdih")
+                    create_jdih(nomor, tentang, status, file_url)
+                    st.success("✅ Ditambahkan!")
+                    st.rerun()
+    
+    st.markdown("### 📋 Daftar Produk Hukum")
+    for item in get_all_jdih():
+        c1, c2 = st.columns([5, 1])
+        with c1:
+            st.markdown(f"**{item['nomor']}** — {item['tentang']}")
+            st.caption(f"Status: {item.get('status', '-')}")
+        with c2:
+            if st.button("🗑️", key=f"del_jdih_{item['id']}", use_container_width=True):
+                delete_jdih(item["id"])
+                st.rerun()
+        st.divider()
+
+# =========================================================
+# TAB: ADMIN USERS
+# =========================================================
+def render_admin_users_tab():
+    st.subheader("👤 Manajemen Admin")
+    
+    with st.form("form_add_admin", clear_on_submit=True):
+        c1, c2, c3 = st.columns([2, 2, 1])
+        with c1:
+            new_user = st.text_input("Username Baru")
+        with c2:
+            new_pass = st.text_input("Password", type="password")
+        with c3:
+            st.write("")
+            st.write("")
+            submit = st.form_submit_button("➕ Tambah", use_container_width=True)
+        
+        if submit:
+            if new_user and new_pass:
+                try:
+                    create_admin(new_user, new_pass)
+                    st.success("✅ Admin ditambahkan!")
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"Gagal: {e}")
+            else:
+                st.error("Isi semua field")
+    
+    st.markdown("### 📋 Daftar Admin")
+    current = st.session_state.admin_user
+    for adm in get_all_admins():
+        c1, c2 = st.columns([5, 1])
+        with c1:
+            st.markdown(f"**👤 {adm['username']}** {'_(Anda)_' if adm['id'] == current['id'] else ''}")
+            st.caption(f"Dibuat: {adm.get('created_at', '')[:10]}")
+        with c2:
+            if adm["id"] != current["id"]:
+                if st.button("🗑️", key=f"del_adm_{adm['id']}", use_container_width=True):
+                    delete_admin(adm["id"])
+                    st.rerun()
+            else:
+                st.caption("—")
+
+# =========================================================
+# TAB: PENGATURAN
+# =========================================================
+def render_pengaturan_tab():
+    st.subheader("⚙️ Pengaturan")
+    
+    st.markdown("### 🔒 Ganti Password")
+    with st.form("form_ganti_password"):
+        p1 = st.text_input("Password Lama", type="password")
+        p2 = st.text_input("Password Baru", type="password")
+        p3 = st.text_input("Konfirmasi Password Baru", type="password")
+        
+        if st.form_submit_button("💾 Ganti Password", type="primary", use_container_width=True):
+            user = login_admin(st.session_state.admin_user["username"], p1)
+            if not user:
+                st.error("Password lama salah")
+            elif p2 != p3:
+                st.error("Password baru tidak sama")
+            elif len(p2) < 6:
+                st.error("Password minimal 6 karakter")
+            else:
+                change_password(st.session_state.admin_user["id"], p2)
+                st.success("✅ Password berhasil diubah!")
+                st.balloons()
+    
+    st.divider()
+    st.markdown("### ℹ️ Info Sistem")
+    st.markdown(f"""
+    - **User Login:** {st.session_state.admin_user['username']}
+    - **Waktu Server:** {datetime.now().strftime('%A, %d %B %Y · %H:%M:%S')}
+    - **Database:** Supabase Cloud
+    - **Storage:** Supabase Storage (bucket: `dprk-images`)
+    """)
+
+# =========================================================
+# MAIN
+# =========================================================
+def render_admin():
+    if "admin_logged_in" not in st.session_state:
+        st.session_state.admin_logged_in = False
+    
+    if not st.session_state.admin_logged_in:
+        admin_login()
+    else:
+        admin_dashboard()
