@@ -31,22 +31,11 @@ ADMIN_CSS = """
     padding: 24px 32px;
     border-radius: 16px;
     margin-bottom: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     box-shadow: 0 10px 30px rgba(13,94,58,0.2);
 }
 .admin-header h1 { margin: 0; font-size: 24px; font-weight: 800; }
 .admin-header p { margin: 4px 0 0; opacity: 0.85; font-size: 13px; }
-.admin-badge {
-    background: rgba(230,196,88,0.2);
-    color: #e6c458;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
-    border: 1px solid rgba(230,196,88,0.4);
-}
+
 .stat-box {
     background: white;
     border-radius: 12px;
@@ -96,7 +85,7 @@ div[data-testid="stForm"] {
 # =========================================================
 def admin_login():
     st.markdown(ADMIN_CSS, unsafe_allow_html=True)
-    
+
     col1, col2, col3 = st.columns([1, 1.2, 1])
     with col2:
         st.markdown("""
@@ -106,12 +95,12 @@ def admin_login():
             <p style="color: #4a5a55; margin-top: 6px; font-size: 13px;">DPRK Kabupaten Aceh Jaya</p>
         </div>
         """, unsafe_allow_html=True)
-        
+
         with st.form("login_form"):
             username = st.text_input("👤 Username", placeholder="Masukkan username")
             password = st.text_input("🔒 Password", type="password", placeholder="Masukkan password")
             submit = st.form_submit_button("🔐 Login", use_container_width=True, type="primary")
-            
+
             if submit:
                 if not username or not password:
                     st.error("Username dan password wajib diisi")
@@ -130,18 +119,15 @@ def admin_login():
 # =========================================================
 def admin_dashboard():
     st.markdown(ADMIN_CSS, unsafe_allow_html=True)
-    
+
     user = st.session_state.admin_user
-    
-    # HEADER
+
     col_h1, col_h2 = st.columns([4, 1])
     with col_h1:
         st.markdown(f"""
         <div class="admin-header">
-            <div>
-                <h1>🏛️ Admin Panel DPRK</h1>
-                <p>Selamat datang, <b>{user['username']}</b> · Kelola konten website</p>
-            </div>
+            <h1>🏛️ Admin Panel DPRK</h1>
+            <p>Selamat datang, <b>{user['username']}</b> · Kelola konten website</p>
         </div>
         """, unsafe_allow_html=True)
     with col_h2:
@@ -150,15 +136,14 @@ def admin_dashboard():
             st.session_state.admin_logged_in = False
             st.session_state.admin_user = None
             st.rerun()
-        if st.button("🌐 Lihat Website", use_container_width=True):
+        if st.button("🌐 Website", use_container_width=True):
             st.markdown('<meta http-equiv="refresh" content="0; url=./">', unsafe_allow_html=True)
-    
-    # STATS
+
     berita_count = len(get_all_berita())
     pengaduan_count = len(get_all_pengaduan())
     galeri_count = len(get_all_galeri())
     agenda_count = len(get_all_agenda())
-    
+
     s1, s2, s3, s4 = st.columns(4)
     for col, label, value, icon in [
         (s1, "Berita", berita_count, "📰"),
@@ -173,16 +158,15 @@ def admin_dashboard():
                 <div class="value">{value}</div>
             </div>
             """, unsafe_allow_html=True)
-    
+
     st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
-    
-    # TABS
+
     tabs = st.tabs([
         "📰 Berita", "📅 Agenda", "🖼️ Galeri", "📢 Running Text",
         "📋 Kesekretariatan", "📥 Pengaduan", "👥 Pimpinan",
         "🏢 Pejabat", "📜 JDIH", "👤 Admin", "⚙️ Pengaturan"
     ])
-    
+
     with tabs[0]: render_berita_tab()
     with tabs[1]: render_agenda_tab()
     with tabs[2]: render_galeri_tab()
@@ -200,7 +184,7 @@ def admin_dashboard():
 # =========================================================
 def render_berita_tab():
     st.subheader("📰 Kelola Berita")
-    
+
     with st.expander("➕ **Tambah Berita Baru**", expanded=False):
         with st.form("form_tambah_berita", clear_on_submit=True):
             c1, c2 = st.columns(2)
@@ -209,20 +193,19 @@ def render_berita_tab():
                 date = st.text_input("Tanggal", value=datetime.now().strftime("%A, %d %B %Y"))
             with c2:
                 kategori = st.selectbox("Kategori", ["Paripurna", "Lingkungan", "Hukum", "Legislasi", "Kunjungan", "Sosial", "Ekonomi", "Lainnya"])
-                prioritas = st.selectbox("Prioritas", ["Normal", "Penting", "Utama"])
-            
+
             desc_text = st.text_area("Deskripsi Berita *", height=100, placeholder="Isi berita...")
-            
+
             st.markdown("**📷 Foto Berita**")
             up_method = st.radio("Sumber Foto", ["Upload File", "URL Manual"], horizontal=True, key="foto_berita_method")
-            
+
             uploaded = None
             image_url_manual = ""
             if up_method == "Upload File":
                 uploaded = st.file_uploader("Pilih foto", type=["jpg", "jpeg", "png", "webp"], key="berita_file")
             else:
                 image_url_manual = st.text_input("URL Foto", placeholder="https://...")
-            
+
             if st.form_submit_button("💾 Simpan Berita", type="primary", use_container_width=True):
                 if not title or not desc_text:
                     st.error("⚠️ Judul dan deskripsi wajib diisi")
@@ -231,19 +214,19 @@ def render_berita_tab():
                     if uploaded:
                         with st.spinner("Mengunggah foto..."):
                             image_url = upload_image(uploaded, folder="berita")
-                    
+
                     create_berita(title, date, desc_text, image_url, kategori)
                     st.success("✅ Berita berhasil ditambahkan!")
                     st.balloons()
                     st.rerun()
-    
+
     st.markdown("### 📋 Daftar Berita")
     berita_list = get_all_berita()
-    
+
     if not berita_list:
         st.info("Belum ada berita. Tambahkan berita baru di atas.")
         return
-    
+
     for item in berita_list:
         with st.container():
             c_img, c_info, c_act = st.columns([1, 4, 2])
@@ -263,11 +246,11 @@ def render_berita_tab():
                             nd = st.text_input("Tanggal", value=item.get("date", ""))
                             nk = st.text_input("Kategori", value=item.get("kategori", ""))
                             ndesc = st.text_area("Deskripsi", value=item.get("desc_text", ""), height=100)
-                            
+
                             st.markdown("**Ganti Foto (opsional)**")
                             nup = st.file_uploader("Upload Foto Baru", type=["jpg", "png", "jpeg", "webp"], key=f"up_{item['id']}")
                             nurl = st.text_input("Atau URL Baru", value=item.get("image_url", ""), key=f"url_{item['id']}")
-                            
+
                             if st.form_submit_button("✅ Update", use_container_width=True):
                                 new_img = nurl
                                 if nup:
@@ -278,7 +261,7 @@ def render_berita_tab():
                 with cb:
                     if st.button("🗑️ Hapus", key=f"del_b_{item['id']}", use_container_width=True):
                         st.session_state[f"confirm_del_b_{item['id']}"] = True
-                    
+
                     if st.session_state.get(f"confirm_del_b_{item['id']}"):
                         st.warning("Yakin hapus?")
                         cc, cd = st.columns(2)
@@ -298,7 +281,7 @@ def render_berita_tab():
 # =========================================================
 def render_agenda_tab():
     st.subheader("📅 Kelola Agenda")
-    
+
     with st.expander("➕ **Tambah Agenda**", expanded=False):
         with st.form("form_agenda", clear_on_submit=True):
             c1, c2 = st.columns(2)
@@ -309,7 +292,7 @@ def render_agenda_tab():
                 tanggal_full = st.text_input("Tanggal Lengkap", value=datetime.now().strftime("%A, %d %B %Y"))
             judul = st.text_input("Judul Agenda *")
             deskripsi = st.text_area("Deskripsi", height=80)
-            
+
             if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
                 if not judul:
                     st.error("Judul wajib diisi")
@@ -317,13 +300,13 @@ def render_agenda_tab():
                     create_agenda(hari, bulan_tahun, tanggal_full, judul, deskripsi)
                     st.success("✅ Agenda ditambahkan!")
                     st.rerun()
-    
+
     st.markdown("### 📋 Daftar Agenda")
     agenda_list = get_all_agenda()
     if not agenda_list:
         st.info("Belum ada agenda.")
         return
-    
+
     for item in agenda_list:
         c1, c2 = st.columns([5, 1])
         with c1:
@@ -340,12 +323,12 @@ def render_agenda_tab():
 # =========================================================
 def render_galeri_tab():
     st.subheader("🖼️ Kelola Galeri")
-    
+
     with st.expander("➕ **Upload Foto Galeri**", expanded=False):
         with st.form("form_galeri", clear_on_submit=True):
             gtitle = st.text_input("Judul Foto *", placeholder="Contoh: Rapat Paripurna")
             gfile = st.file_uploader("Pilih Foto *", type=["jpg", "jpeg", "png", "webp"])
-            
+
             if st.form_submit_button("💾 Upload", type="primary", use_container_width=True):
                 if not gfile or not gtitle:
                     st.error("Judul dan file wajib diisi")
@@ -356,13 +339,13 @@ def render_galeri_tab():
                         create_galeri(gtitle, url)
                         st.success("✅ Foto ditambahkan!")
                         st.rerun()
-    
+
     st.markdown("### 📋 Galeri Foto")
     galeri_list = get_all_galeri()
     if not galeri_list:
         st.info("Belum ada foto galeri.")
         return
-    
+
     cols = st.columns(3)
     for i, item in enumerate(galeri_list):
         with cols[i % 3]:
@@ -377,7 +360,7 @@ def render_galeri_tab():
 # =========================================================
 def render_running_text_tab():
     st.subheader("📢 Kelola Running Text")
-    
+
     with st.form("form_rt", clear_on_submit=True):
         content = st.text_area("Isi Running Text *", height=80, placeholder="Teks yang akan berjalan...")
         if st.form_submit_button("💾 Tambah", type="primary", use_container_width=True):
@@ -387,13 +370,13 @@ def render_running_text_tab():
                 st.rerun()
             else:
                 st.error("Isi tidak boleh kosong")
-    
+
     st.markdown("### 📋 Daftar Running Text Aktif")
     items = get_running_text_active()
     if not items:
         st.info("Belum ada running text.")
         return
-    
+
     for item in items:
         c1, c2 = st.columns([6, 1])
         with c1:
@@ -408,20 +391,20 @@ def render_running_text_tab():
 # =========================================================
 def render_kesekretariatan_tab():
     st.subheader("📋 Kelola Kesekretariatan")
-    
+
     with st.form("form_kes", clear_on_submit=True):
         c1, c2 = st.columns(2)
         with c1:
             title = st.text_input("Judul *")
         with c2:
             date = st.text_input("Tanggal", value=datetime.now().strftime("%A, %d %B %Y"))
-        
+
         if st.form_submit_button("💾 Tambah", type="primary", use_container_width=True):
             if title:
                 create_kesekretariatan(title, date)
                 st.success("✅ Ditambahkan!")
                 st.rerun()
-    
+
     st.markdown("### 📋 Daftar")
     for item in get_all_kesekretariatan():
         c1, c2 = st.columns([6, 1])
@@ -439,20 +422,20 @@ def render_kesekretariatan_tab():
 # =========================================================
 def render_pengaduan_tab():
     st.subheader("📥 Pengaduan Masyarakat")
-    
+
     pengaduan_list = get_all_pengaduan()
     if not pengaduan_list:
         st.info("Belum ada pengaduan masuk.")
         return
-    
+
     status_filter = st.selectbox("Filter Status", ["Semua", "Baru", "Diproses", "Selesai", "Ditolak"])
     if status_filter != "Semua":
         pengaduan_list = [p for p in pengaduan_list if p.get("status") == status_filter]
-    
+
     for p in pengaduan_list:
         status = p.get("status", "Baru")
         emoji = {"Baru": "🆕", "Diproses": "⏳", "Selesai": "✅", "Ditolak": "❌"}.get(status, "📌")
-        
+
         with st.expander(f"{emoji} **{p['tiket']}** — {p['nama']} ({status})"):
             c1, c2 = st.columns(2)
             with c1:
@@ -463,10 +446,10 @@ def render_pengaduan_tab():
             with c2:
                 st.write(f"**Tanggal:** {p.get('created_at', '')[:10]}")
                 st.write(f"**Status:** {status}")
-            
+
             st.markdown("**Isi Laporan:**")
             st.info(p["isi"])
-            
+
             c3, c4 = st.columns(2)
             with c3:
                 new_status = st.selectbox(
@@ -491,7 +474,7 @@ def render_pengaduan_tab():
 # =========================================================
 def render_pimpinan_tab():
     st.subheader("👥 Pimpinan & Anggota DPRK")
-    
+
     with st.expander("➕ **Tambah Pimpinan/Anggota**", expanded=False):
         with st.form("form_pimpinan", clear_on_submit=True):
             c1, c2 = st.columns(2)
@@ -501,14 +484,14 @@ def render_pimpinan_tab():
             with c2:
                 jabatan = st.text_input("Jabatan *", placeholder="Contoh: KETUA DPRK")
                 foto = st.file_uploader("Foto (opsional)", type=["jpg", "png", "jpeg"])
-            
+
             if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
                 if nama and jabatan:
                     foto_url = upload_image(foto, folder="pimpinan") if foto else None
                     create_pimpinan(nama, jabatan, urutan, foto_url)
                     st.success("✅ Ditambahkan!")
                     st.rerun()
-    
+
     st.markdown("### 📋 Daftar")
     for item in get_all_pimpinan():
         c1, c2, c3 = st.columns([1, 5, 1])
@@ -532,7 +515,7 @@ def render_pimpinan_tab():
 # =========================================================
 def render_pejabat_tab():
     st.subheader("🏢 Pejabat Sekretariat")
-    
+
     with st.form("form_pejabat", clear_on_submit=True):
         c1, c2 = st.columns(2)
         with c1:
@@ -540,13 +523,13 @@ def render_pejabat_tab():
         with c2:
             jabatan = st.text_input("Jabatan *")
         urutan = st.number_input("Urutan", min_value=1, value=1)
-        
+
         if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
             if nama and jabatan:
                 create_pejabat(nama, jabatan, urutan)
                 st.success("✅ Ditambahkan!")
                 st.rerun()
-    
+
     st.markdown("### 📋 Daftar")
     for item in get_all_pejabat():
         c1, c2 = st.columns([5, 1])
@@ -563,7 +546,7 @@ def render_pejabat_tab():
 # =========================================================
 def render_jdih_tab():
     st.subheader("📜 Kelola Produk Hukum (JDIH)")
-    
+
     with st.expander("➕ **Tambah Produk Hukum**", expanded=False):
         with st.form("form_jdih", clear_on_submit=True):
             c1, c2 = st.columns(2)
@@ -574,7 +557,7 @@ def render_jdih_tab():
                 tentang = st.text_input("Tentang *")
             file_up = st.file_uploader("Upload PDF (opsional)", type=["pdf"])
             file_url_manual = st.text_input("Atau URL File (opsional)")
-            
+
             if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
                 if nomor and tentang:
                     file_url = file_url_manual
@@ -584,7 +567,7 @@ def render_jdih_tab():
                     create_jdih(nomor, tentang, status, file_url)
                     st.success("✅ Ditambahkan!")
                     st.rerun()
-    
+
     st.markdown("### 📋 Daftar Produk Hukum")
     for item in get_all_jdih():
         c1, c2 = st.columns([5, 1])
@@ -602,7 +585,7 @@ def render_jdih_tab():
 # =========================================================
 def render_admin_users_tab():
     st.subheader("👤 Manajemen Admin")
-    
+
     with st.form("form_add_admin", clear_on_submit=True):
         c1, c2, c3 = st.columns([2, 2, 1])
         with c1:
@@ -613,7 +596,7 @@ def render_admin_users_tab():
             st.write("")
             st.write("")
             submit = st.form_submit_button("➕ Tambah", use_container_width=True)
-        
+
         if submit:
             if new_user and new_pass:
                 try:
@@ -624,7 +607,7 @@ def render_admin_users_tab():
                     st.error(f"Gagal: {e}")
             else:
                 st.error("Isi semua field")
-    
+
     st.markdown("### 📋 Daftar Admin")
     current = st.session_state.admin_user
     for adm in get_all_admins():
@@ -645,13 +628,13 @@ def render_admin_users_tab():
 # =========================================================
 def render_pengaturan_tab():
     st.subheader("⚙️ Pengaturan")
-    
+
     st.markdown("### 🔒 Ganti Password")
     with st.form("form_ganti_password"):
         p1 = st.text_input("Password Lama", type="password")
         p2 = st.text_input("Password Baru", type="password")
         p3 = st.text_input("Konfirmasi Password Baru", type="password")
-        
+
         if st.form_submit_button("💾 Ganti Password", type="primary", use_container_width=True):
             user = login_admin(st.session_state.admin_user["username"], p1)
             if not user:
@@ -664,7 +647,7 @@ def render_pengaturan_tab():
                 change_password(st.session_state.admin_user["id"], p2)
                 st.success("✅ Password berhasil diubah!")
                 st.balloons()
-    
+
     st.divider()
     st.markdown("### ℹ️ Info Sistem")
     st.markdown(f"""
@@ -680,7 +663,7 @@ def render_pengaturan_tab():
 def render_admin():
     if "admin_logged_in" not in st.session_state:
         st.session_state.admin_logged_in = False
-    
+
     if not st.session_state.admin_logged_in:
         admin_login()
     else:
