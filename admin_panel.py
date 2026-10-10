@@ -15,125 +15,109 @@ from database import (
 )
 
 # =========================================================
-# CSS ADMIN — MODERN
+# CSS ADMIN — LIGHT MODE FORCE, TEKS JELAS
 # =========================================================
 ADMIN_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
 
-* { font-family: 'Inter', sans-serif; }
+/* ============================================
+   FORCE LIGHT MODE — WAJIB DI ATAS
+   ============================================ */
+html, body, [class*="css"], .stApp {
+    background: #f4f7f5 !important;
+    color: #0f172a !important;
+}
+
+* { font-family: 'Inter', sans-serif !important; box-sizing: border-box; }
 #MainMenu, footer, header { visibility: hidden; }
-.stApp { background: #f4f7f5; }
 .block-container { padding-top: 1.5rem !important; max-width: 1400px; }
 
-/* LOGIN PAGE */
-.login-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 90vh;
-    background: white;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.08);
-    margin-top: 1rem;
+/* ============================================
+   GLOBAL TEXT COLORS
+   ============================================ */
+.stApp p, .stApp span, .stApp label, .stApp div, .stApp li {
+    color: #0f172a;
 }
-.login-left {
+.stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6 {
+    color: #083d26 !important;
+}
+
+/* Markdown container */
+div[data-testid="stMarkdownContainer"] p,
+div[data-testid="stMarkdownContainer"] span,
+div[data-testid="stMarkdownContainer"] div {
+    color: #0f172a !important;
+}
+
+/* ============================================
+   LOGIN PAGE
+   ============================================ */
+.login-brand {
     background: linear-gradient(135deg, #fef2f2 0%, #fff5f5 50%, #ffffff 100%);
-    padding: 60px 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
+    padding: 50px 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+    min-height: 520px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    border: 1px solid #fee2e2;
 }
-.login-left::before {
-    content: '';
-    position: absolute;
-    top: -100px; right: -100px;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(220,38,38,0.08) 0%, transparent 70%);
-    border-radius: 50%;
-}
-.login-left-logo {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 90px; height: 90px;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(220,38,38,0.15);
-    border: 2px solid #fee2e2;
-    margin-bottom: 28px;
+.login-brand-logo {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 90px; height: 90px; background: white;
+    border-radius: 20px; box-shadow: 0 10px 30px rgba(220,38,38,0.15);
+    border: 2px solid #fee2e2; margin-bottom: 28px;
     font-size: 44px;
 }
-.login-left h1 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    color: #991b1b;
-    font-size: 34px;
-    font-weight: 900;
-    letter-spacing: 1px;
-    margin: 0 0 12px;
-    line-height: 1.1;
+.login-brand h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    color: #991b1b !important;
+    font-size: 34px !important; font-weight: 900 !important;
+    letter-spacing: 1px !important; margin: 0 0 12px !important; line-height: 1.1 !important;
 }
-.login-left-sub {
-    color: #0f172a;
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 20px;
+.login-brand-sub {
+    color: #0f172a !important; font-size: 15px !important;
+    font-weight: 700 !important; margin-bottom: 20px !important;
 }
-.login-left-desc {
-    color: #64748b;
-    font-size: 14px;
-    line-height: 1.7;
-    max-width: 400px;
+.login-brand-desc {
+    color: #64748b !important; font-size: 14px !important;
+    line-height: 1.7 !important; max-width: 400px !important;
 }
-.login-left-footer {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #94a3b8;
-    font-size: 12px;
-    font-weight: 600;
-    padding-top: 20px;
-    border-top: 1px solid #f1f5f9;
+.login-brand-footer {
+    display: flex; align-items: center; gap: 10px;
+    color: #94a3b8 !important; font-size: 12px !important;
+    font-weight: 600 !important;
+    padding-top: 20px !important; border-top: 1px solid #fecaca !important;
 }
 
-.login-right {
-    padding: 60px 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: white;
+.login-title {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    color: #0f172a !important;
+    font-size: 28px !important; font-weight: 800 !important;
+    margin: 0 0 8px !important;
 }
-.login-right h2 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    color: #0f172a;
-    font-size: 28px;
-    font-weight: 800;
-    margin: 0 0 8px;
-}
-.login-right-sub {
-    color: #64748b;
-    font-size: 14px;
-    margin-bottom: 32px;
+.login-subtitle {
+    color: #64748b !important; font-size: 14px !important;
+    margin-bottom: 32px !important;
 }
 
-/* Form styling untuk login */
-.login-right div[data-testid="stForm"] {
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    box-shadow: none !important;
+/* Form login */
+div[data-testid="stForm"] {
+    background: white !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    border: 1px solid #e5ebe7 !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
 }
-.login-right label {
+
+.stApp label {
     font-size: 12px !important;
     font-weight: 800 !important;
     color: #dc2626 !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
-    margin-bottom: 6px !important;
 }
-.login-right input {
+.stApp input, .stApp textarea {
     background: #f8fafc !important;
     border: 2px solid #e2e8f0 !important;
     border-radius: 10px !important;
@@ -141,185 +125,238 @@ ADMIN_CSS = """
     font-size: 14px !important;
     color: #0f172a !important;
 }
-.login-right input:focus {
+.stApp input:focus, .stApp textarea:focus {
     border-color: #dc2626 !important;
     box-shadow: 0 0 0 3px rgba(220,38,38,0.1) !important;
+    color: #0f172a !important;
 }
-.login-right .stButton > button {
-    background: linear-gradient(135deg, #dc2626, #991b1b) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 10px !important;
-    padding: 14px !important;
-    font-size: 15px !important;
-    font-weight: 800 !important;
-    box-shadow: 0 10px 25px rgba(220,38,38,0.3) !important;
-    transition: all 0.3s !important;
-    margin-top: 8px !important;
-}
-.login-right .stButton > button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 15px 35px rgba(220,38,38,0.4) !important;
+.stApp input::placeholder, .stApp textarea::placeholder {
+    color: #94a3b8 !important;
 }
 
-/* DASHBOARD */
-.admin-header {
-    background: linear-gradient(135deg, #062b1b 0%, #0d5e3a 100%);
-    color: white;
-    padding: 26px 32px;
-    border-radius: 18px;
-    margin-bottom: 24px;
-    box-shadow: 0 12px 40px rgba(13,94,58,0.25);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
+/* Select box */
+div[data-baseweb="select"] > div {
+    background: #f8fafc !important;
+    border: 2px solid #e2e8f0 !important;
+    color: #0f172a !important;
 }
-.admin-header h1 { margin: 0; font-size: 24px; font-weight: 800; color: white !important; }
-.admin-header p { margin: 6px 0 0; opacity: 0.9; font-size: 13px; color: white !important; }
-
-.stat-box {
+div[data-baseweb="select"] * {
+    color: #0f172a !important;
+}
+div[data-baseweb="popover"] * {
+    color: #0f172a !important;
     background: white;
-    border-radius: 14px;
-    padding: 20px;
-    border-left: 4px solid #0d5e3a;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-}
-.stat-box:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(13,94,58,0.12);
-}
-.stat-box .label {
-    color: #4a5a55; font-size: 11px; font-weight: 800;
-    text-transform: uppercase; letter-spacing: 0.8px;
-    display: flex; align-items: center; gap: 6px;
-}
-.stat-box .value {
-    color: #083d26; font-size: 32px; font-weight: 900;
-    margin-top: 8px; line-height: 1;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-.stat-box .sub {
-    color: #94a3b8; font-size: 11px;
-    margin-top: 4px; font-weight: 600;
 }
 
-/* Tab */
-.stTabs [data-baseweb="tab-list"] {
-    gap: 4px;
-    background: white;
-    padding: 6px;
-    border-radius: 14px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-.stTabs [data-baseweb="tab"] {
-    background: transparent;
-    border-radius: 10px;
-    padding: 10px 16px;
-    font-weight: 700;
-    font-size: 12.5px;
-    color: #64748b;
-    border: none !important;
-}
-.stTabs [aria-selected="true"] {
+/* ============================================
+   BUTTONS
+   ============================================ */
+.stApp .stButton > button {
     background: linear-gradient(135deg, #0d5e3a, #14734a) !important;
-    color: white !important;
-}
-
-/* Form */
-div[data-testid="stForm"] {
-    background: white;
-    border-radius: 16px;
-    padding: 24px;
-    border: 1px solid #e5ebe7;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-}
-
-/* Buttons */
-.stButton > button {
-    background: linear-gradient(135deg, #0d5e3a, #14734a) !important;
-    color: white !important;
+    color: #ffffff !important;
     border: none !important;
     border-radius: 10px !important;
     font-weight: 700 !important;
     padding: 10px 16px !important;
     transition: all 0.25s !important;
     box-shadow: 0 4px 12px rgba(13,94,58,0.15) !important;
+    font-size: 14px !important;
 }
-.stButton > button:hover {
+.stApp .stButton > button:hover {
     background: linear-gradient(135deg, #14734a, #c9a227) !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 8px 20px rgba(13,94,58,0.25) !important;
 }
+.stApp .stButton > button p,
+.stApp .stButton > button span,
+.stApp .stButton > button div {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
 
-/* Card item untuk list CRUD */
-.crud-card {
-    background: white;
+/* Login button (merah) — pakai wrapper */
+.login-btn-wrap .stButton > button,
+.login-btn-wrap button[kind="primary"] {
+    background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+    color: white !important;
+    padding: 14px !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 10px 25px rgba(220,38,38,0.3) !important;
+    border-radius: 12px !important;
+}
+.login-btn-wrap .stButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 15px 35px rgba(220,38,38,0.4) !important;
+}
+.login-btn-wrap .stButton > button p,
+.login-btn-wrap .stButton > button span,
+.login-btn-wrap .stButton > button div {
+    color: white !important;
+    font-weight: 800 !important;
+}
+
+/* ============================================
+   HEADER DASHBOARD
+   ============================================ */
+.admin-header {
+    background: linear-gradient(135deg, #062b1b 0%, #0d5e3a 100%);
+    color: white !important;
+    padding: 26px 32px;
+    border-radius: 18px;
+    margin-bottom: 24px;
+    box-shadow: 0 12px 40px rgba(13,94,58,0.25);
+}
+.admin-header h1 {
+    margin: 0 !important; font-size: 24px !important;
+    font-weight: 800 !important; color: white !important;
+}
+.admin-header p {
+    margin: 6px 0 0 !important; opacity: 0.95 !important;
+    font-size: 13px !important; color: white !important;
+}
+.admin-header * { color: white !important; }
+
+/* ============================================
+   STAT BOXES
+   ============================================ */
+.stat-box {
+    background: white !important;
     border-radius: 14px;
-    padding: 16px 20px;
-    border: 1px solid #e5ebe7;
-    margin-bottom: 12px;
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    transition: all 0.25s;
+    padding: 20px;
+    border-left: 4px solid #0d5e3a;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    transition: all 0.3s;
+    height: 100%;
+    min-height: 110px;
 }
-.crud-card:hover {
-    border-color: #0d5e3a;
-    box-shadow: 0 8px 24px rgba(13,94,58,0.1);
-    transform: translateX(4px);
+.stat-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(13,94,58,0.12);
 }
-.crud-thumb {
-    width: 72px; height: 72px;
-    border-radius: 12px;
-    object-fit: cover;
-    flex-shrink: 0;
-    background: #f1f5f9;
+.stat-box .label {
+    color: #4a5a55 !important;
+    font-size: 11px !important; font-weight: 800 !important;
+    text-transform: uppercase !important; letter-spacing: 0.8px !important;
+    display: flex !important; align-items: center !important; gap: 6px !important;
 }
-.crud-content { flex: 1; min-width: 0; }
-.crud-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px; font-weight: 800;
-    color: #083d26; margin: 0 0 4px;
-    line-height: 1.4;
+.stat-box .value {
+    color: #083d26 !important;
+    font-size: 32px !important; font-weight: 900 !important;
+    margin-top: 8px !important; line-height: 1 !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
-.crud-meta {
-    font-size: 11.5px; color: #64748b;
-    font-weight: 600;
-    display: flex; gap: 10px; flex-wrap: wrap;
-    margin-top: 4px;
+.stat-box .sub {
+    color: #94a3b8 !important;
+    font-size: 11px !important;
+    margin-top: 4px !important; font-weight: 600 !important;
 }
-.crud-badge {
-    display: inline-block;
-    background: #f0fdf4;
-    color: #166534;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 10.5px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-}
-.crud-badge-gold { background: #fef9c3; color: #854d0e; }
-.crud-badge-red { background: #fee2e2; color: #991b1b; }
-.crud-badge-blue { background: #dbeafe; color: #1e40af; }
 
-/* Section header */
+/* ============================================
+   TABS — FORCE JELAS
+   ============================================ */
+div[data-testid="stTabs"] {
+    background: transparent !important;
+}
+div[data-testid="stTabs"] [data-baseweb="tab-list"] {
+    background: white !important;
+    padding: 6px !important;
+    border-radius: 14px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04) !important;
+    gap: 4px !important;
+    flex-wrap: wrap !important;
+    border-bottom: none !important;
+}
+div[data-testid="stTabs"] button[role="tab"] {
+    background: transparent !important;
+    color: #4a5a55 !important;
+    border-radius: 10px !important;
+    padding: 10px 16px !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    border: none !important;
+    margin: 0 !important;
+    height: auto !important;
+}
+div[data-testid="stTabs"] button[role="tab"] p,
+div[data-testid="stTabs"] button[role="tab"] span,
+div[data-testid="stTabs"] button[role="tab"] div,
+div[data-testid="stTabs"] button[role="tab"] * {
+    color: #4a5a55 !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    background: transparent !important;
+}
+div[data-testid="stTabs"] button[role="tab"]:hover {
+    background: #f0fdf4 !important;
+}
+div[data-testid="stTabs"] button[role="tab"]:hover * {
+    color: #0d5e3a !important;
+}
+div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+    background: linear-gradient(135deg, #0d5e3a, #14734a) !important;
+    box-shadow: 0 4px 12px rgba(13,94,58,0.25) !important;
+}
+div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] p,
+div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] span,
+div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] div,
+div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] * {
+    color: white !important;
+    font-weight: 800 !important;
+}
+
+/* ============================================
+   EXPANDER — FORCE JELAS
+   ============================================ */
+div[data-testid="stExpander"] {
+    background: white !important;
+    border: 1px solid #e5ebe7 !important;
+    border-radius: 12px !important;
+    margin-bottom: 12px !important;
+    overflow: hidden !important;
+}
+div[data-testid="stExpander"] details {
+    background: white !important;
+    border: none !important;
+}
+div[data-testid="stExpander"] summary {
+    background: white !important;
+    padding: 14px 18px !important;
+    cursor: pointer !important;
+    border-bottom: 1px solid transparent !important;
+}
+div[data-testid="stExpander"] summary:hover {
+    background: #f0fdf4 !important;
+}
+div[data-testid="stExpander"] summary p,
+div[data-testid="stExpander"] summary span,
+div[data-testid="stExpander"] summary div,
+div[data-testid="stExpander"] summary * {
+    color: #083d26 !important;
+    font-weight: 800 !important;
+    font-size: 14px !important;
+}
+div[data-testid="stExpander"] summary svg {
+    fill: #0d5e3a !important;
+}
+div[data-testid="stExpander"] > details > div {
+    background: white !important;
+    color: #0f172a !important;
+    padding: 16px 18px !important;
+}
+
+/* ============================================
+   SECTION TITLE
+   ============================================ */
 .section-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    color: #083d26;
-    font-size: 20px;
-    font-weight: 800;
-    margin: 24px 0 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    color: #083d26 !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    margin: 24px 0 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
 }
 .section-title::before {
     content: '';
@@ -328,73 +365,154 @@ div[data-testid="stForm"] {
     border-radius: 4px;
 }
 
-/* Empty state */
+/* ============================================
+   CRUD CARDS
+   ============================================ */
+.crud-content { flex: 1; min-width: 0; }
+.crud-title {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 14px !important; font-weight: 800 !important;
+    color: #083d26 !important;
+    margin: 0 0 4px !important; line-height: 1.4 !important;
+}
+.crud-meta {
+    font-size: 11.5px !important; color: #64748b !important;
+    font-weight: 600 !important;
+    display: flex !important; gap: 10px !important; flex-wrap: wrap !important;
+    margin-top: 4px !important;
+}
+.crud-meta span { color: #64748b !important; }
+.crud-badge {
+    display: inline-block !important;
+    background: #f0fdf4 !important; color: #166534 !important;
+    padding: 3px 10px !important; border-radius: 20px !important;
+    font-size: 10.5px !important; font-weight: 800 !important;
+    text-transform: uppercase !important; letter-spacing: 0.4px !important;
+}
+.crud-badge-gold { background: #fef9c3 !important; color: #854d0e !important; }
+.crud-badge-red { background: #fee2e2 !important; color: #991b1b !important; }
+.crud-badge-blue { background: #dbeafe !important; color: #1e40af !important; }
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
 .empty-state {
     text-align: center;
     padding: 48px 20px;
-    background: white;
+    background: white !important;
     border-radius: 16px;
     border: 2px dashed #e5ebe7;
 }
 .empty-state-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
-.empty-state-text { color: #94a3b8; font-size: 14px; font-weight: 600; }
+.empty-state-text { color: #94a3b8 !important; font-size: 14px !important; font-weight: 600 !important; }
 
-/* Login error */
-.login-error {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #991b1b;
-    padding: 12px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 700;
-    margin-top: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+/* ============================================
+   ALERTS
+   ============================================ */
+div[data-testid="stAlert"] {
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
 }
-
-/* Sidebar nav */
-.admin-nav {
-    background: white;
-    border-radius: 14px;
-    padding: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    flex-wrap: wrap;
-}
-.admin-nav-item {
-    padding: 10px 16px;
-    border-radius: 10px;
-    font-size: 12.5px;
-    font-weight: 700;
-    color: #64748b;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: all 0.2s;
-    cursor: pointer;
-    border: none;
-    background: transparent;
-}
-.admin-nav-item:hover {
-    background: #f0fdf4;
-    color: #0d5e3a;
-}
-.admin-nav-item.active {
-    background: linear-gradient(135deg, #0d5e3a, #14734a);
-    color: white;
+div[data-testid="stAlert"] p,
+div[data-testid="stAlert"] span,
+div[data-testid="stAlert"] div {
+    color: #0f172a !important;
+    font-weight: 600 !important;
 }
 
+/* ============================================
+   POPOVER (edit)
+   ============================================ */
+div[data-testid="stPopover"] > button,
+div[data-testid="stPopover"] button {
+    background: white !important;
+    border: 1px solid #e5ebe7 !important;
+    color: #083d26 !important;
+    font-weight: 700 !important;
+}
+div[data-testid="stPopover"] button p,
+div[data-testid="stPopover"] button span,
+div[data-testid="stPopover"] button div {
+    color: #083d26 !important;
+    font-weight: 700 !important;
+}
+
+/* ============================================
+   DATAFRAME
+   ============================================ */
+div[data-testid="stDataFrame"] {
+    background: white !important;
+    border-radius: 12px !important;
+    border: 1px solid #e5ebe7 !important;
+}
+div[data-testid="stDataFrame"] * {
+    color: #0f172a !important;
+}
+
+/* ============================================
+   FILE UPLOADER
+   ============================================ */
+div[data-testid="stFileUploader"] {
+    background: #f8fafc !important;
+    border: 2px dashed #cbd5e1 !important;
+    border-radius: 12px !important;
+    padding: 12px !important;
+}
+div[data-testid="stFileUploader"] * {
+    color: #0f172a !important;
+}
+div[data-testid="stFileUploader"] section button,
+div[data-testid="stFileUploader"] button {
+    background: white !important;
+    border: 1px solid #0d5e3a !important;
+    color: #0d5e3a !important;
+    font-weight: 700 !important;
+}
+div[data-testid="stFileUploader"] section button *,
+div[data-testid="stFileUploader"] button * {
+    color: #0d5e3a !important;
+}
+
+/* ============================================
+   FORM LABEL UMUM (non-login)
+   ============================================ */
+div[data-testid="stForm"] label {
+    color: #083d26 !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-size: 13px !important;
+}
+div[data-testid="stForm"] p,
+div[data-testid="stForm"] span,
+div[data-testid="stForm"] label {
+    color: #083d26 !important;
+}
+div[data-testid="stForm"] input,
+div[data-testid="stForm"] textarea,
+div[data-testid="stForm"] select {
+    color: #0f172a !important;
+}
+
+/* ============================================
+   SPINNER
+   ============================================ */
+div[data-testid="stSpinner"] * {
+    color: #0d5e3a !important;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 @media (max-width: 768px) {
-    .login-wrap { grid-template-columns: 1fr; min-height: auto; }
-    .login-left { padding: 40px 30px; }
-    .login-right { padding: 40px 30px; }
-    .login-left h1 { font-size: 26px; }
-    .stat-box .value { font-size: 26px; }
-    .crud-card { flex-direction: column; align-items: flex-start; }
+    .login-brand { padding: 40px 30px; min-height: auto; }
+    .login-brand h1 { font-size: 26px !important; }
+    .stat-box .value { font-size: 26px !important; }
+    .stat-box { min-height: auto; }
+    div[data-testid="stTabs"] button[role="tab"] {
+        font-size: 11px !important;
+        padding: 8px 10px !important;
+    }
 }
 </style>
 """
@@ -410,35 +528,16 @@ def admin_login():
     # KIRI — branding
     with col1:
         st.markdown("""
-        <div style="background: linear-gradient(135deg, #fef2f2 0%, #fff5f5 50%, #ffffff 100%);
-                    padding: 50px 40px; border-radius: 24px;
-                    box-shadow: 0 20px 60px rgba(0,0,0,0.06);
-                    min-height: 500px;
-                    display: flex; flex-direction: column; justify-content: space-between;
-                    border: 1px solid #fee2e2;">
+        <div class="login-brand">
             <div>
-                <div style="display: inline-flex; align-items: center; justify-content: center;
-                            width: 90px; height: 90px; background: white;
-                            border-radius: 20px; box-shadow: 0 10px 30px rgba(220,38,38,0.15);
-                            border: 2px solid #fee2e2; margin-bottom: 28px;
-                            font-size: 44px;">
-                    🏛️
-                </div>
-                <h1 style="font-family: 'Plus Jakarta Sans', sans-serif;
-                          color: #991b1b; font-size: 34px; font-weight: 900;
-                          letter-spacing: 1px; margin: 0 0 12px; line-height: 1.1;">
-                    DPRK ACEH JAYA
-                </h1>
-                <div style="color: #0f172a; font-size: 15px; font-weight: 700; margin-bottom: 20px;">
-                    Dewan Perwakilan Rakyat Kabupaten
-                </div>
-                <div style="color: #64748b; font-size: 14px; line-height: 1.7; max-width: 400px;">
+                <div class="login-brand-logo">🏛️</div>
+                <h1>DPRK ACEH JAYA</h1>
+                <div class="login-brand-sub">Dewan Perwakilan Rakyat Kabupaten</div>
+                <div class="login-brand-desc">
                     Panel admin untuk mengelola konten website DPRK Aceh Jaya — berita, agenda, galeri, pengaduan, dan lainnya.
                 </div>
             </div>
-            <div style="display: flex; align-items: center; gap: 10px;
-                        color: #94a3b8; font-size: 12px; font-weight: 600;
-                        padding-top: 20px; border-top: 1px solid #fecaca;">
+            <div class="login-brand-footer">
                 🔒 Sistem Autentikasi Aman & Terenkripsi
             </div>
         </div>
@@ -447,17 +546,14 @@ def admin_login():
     # KANAN — form login
     with col2:
         st.markdown("""
-        <div style="padding: 50px 20px 20px;">
-            <h2 style="font-family: 'Plus Jakarta Sans', sans-serif;
-                       color: #0f172a; font-size: 28px; font-weight: 800;
-                       margin: 0 0 8px;">
-                Login Administrator
-            </h2>
-            <div style="color: #64748b; font-size: 14px; margin-bottom: 32px;">
-                Masukkan kredensial akun Anda untuk melanjutkan.
-            </div>
+        <div style="padding: 40px 0 20px;">
+            <div class="login-title">Login Administrator</div>
+            <div class="login-subtitle">Masukkan kredensial akun Anda untuk melanjutkan.</div>
         </div>
         """, unsafe_allow_html=True)
+
+        # Wrapper untuk tombol login merah
+        st.markdown('<div class="login-btn-wrap">', unsafe_allow_html=True)
 
         with st.form("login_form", clear_on_submit=False):
             username = st.text_input("USERNAME", placeholder="Masukkan username", key="login_username")
@@ -466,25 +562,22 @@ def admin_login():
 
             if submit:
                 if not username or not password:
-                    st.markdown("""
-                    <div class="login-error">⚠️ Username dan password wajib diisi</div>
-                    """, unsafe_allow_html=True)
+                    st.error("⚠️ Username dan password wajib diisi")
                 else:
                     user = login_admin(username, password)
                     if user:
                         st.session_state.admin_logged_in = True
                         st.session_state.admin_user = user
-                        st.success("✅ Login berhasil! Mengalihkan...")
+                        st.success("✅ Login berhasil!")
                         st.rerun()
                     else:
-                        st.markdown("""
-                        <div class="login-error">❌ Username atau password salah</div>
-                        """, unsafe_allow_html=True)
+                        st.error("❌ Username atau password salah")
+
+        st.markdown('</div>', unsafe_allow_html=True)
 
         st.markdown("""
-        <div style="text-align: center; padding: 20px;
-                    color: #94a3b8; font-size: 12px;">
-            <a href="/" style="color: #64748b; text-decoration: none; font-weight: 700;">
+        <div style="text-align: center; padding: 20px 0;">
+            <a href="/" style="color: #64748b !important; text-decoration: none; font-weight: 700; font-size: 13px;">
                 ← Kembali ke Website Utama
             </a>
         </div>
@@ -497,15 +590,12 @@ def admin_dashboard():
     st.markdown(ADMIN_CSS, unsafe_allow_html=True)
     user = st.session_state.admin_user
 
-    # Header
     col_h1, col_h2 = st.columns([4, 1])
     with col_h1:
         st.markdown(f"""
         <div class="admin-header">
-            <div>
-                <h1>🏛️ Admin Panel DPRK</h1>
-                <p>Selamat datang, <b>{user['username']}</b> · Kelola konten website DPRK Aceh Jaya</p>
-            </div>
+            <h1>🏛️ Admin Panel DPRK</h1>
+            <p>Selamat datang, <b>{user['username']}</b> · Kelola konten website DPRK Aceh Jaya</p>
         </div>
         """, unsafe_allow_html=True)
     with col_h2:
@@ -527,7 +617,7 @@ def admin_dashboard():
     s1, s2, s3, s4 = st.columns(4)
     stats = [
         (s1, "Berita", berita_count, "📰", "Total artikel dipublikasikan", "#0d5e3a"),
-        (s2, "Pengaduan", pengaduan_list.__len__(), "📥", f"{pengaduan_baru} baru masuk", "#dc2626"),
+        (s2, "Pengaduan", len(pengaduan_list), "📥", f"{pengaduan_baru} baru masuk", "#dc2626"),
         (s3, "Galeri", galeri_count, "🖼️", "Foto dokumentasi", "#c9a227"),
         (s4, "Agenda", agenda_count, "📅", "Jadwal rapat", "#14734a"),
     ]
@@ -563,7 +653,7 @@ def admin_dashboard():
     with tabs[10]: render_pengaturan_tab()
 
 # =========================================================
-# HELPER — Empty State
+# HELPER
 # =========================================================
 def show_empty_state(icon, text):
     st.markdown(f"""
@@ -616,8 +706,6 @@ def render_berita_tab():
                     st.rerun()
 
     st.markdown('<div class="section-title">📋 Daftar Berita</div>', unsafe_allow_html=True)
-
-    # Search
     search = st.text_input("🔎 Cari berita", placeholder="Ketik judul...", key="search_berita")
 
     berita_list = get_all_berita()
@@ -685,8 +773,7 @@ def render_berita_tab():
         st.markdown('<div style="height:1px;background:#e5ebe7;margin:10px 0;"></div>', unsafe_allow_html=True)
 
 # =========================================================
-# TAB: AGENDA
-# =========================================================
+# TAB: AGENDA# =========================================================
 def render_agenda_tab():
     st.markdown('<div class="section-title">📅 Kelola Agenda</div>', unsafe_allow_html=True)
 
@@ -850,7 +937,6 @@ def render_pengaduan_tab():
         show_empty_state("📥", "Belum ada pengaduan masuk.")
         return
 
-    # Stats
     col1, col2, col3, col4 = st.columns(4)
     counts = {
         "Baru": len([p for p in pengaduan_list if p.get("status") == "Baru"]),
