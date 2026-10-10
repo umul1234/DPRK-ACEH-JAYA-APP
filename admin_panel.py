@@ -15,44 +15,26 @@ from database import (
 )
 
 # =========================================================
-# CSS ADMIN — LIGHT MODE FORCE, TEKS JELAS
+# CSS ADMIN
 # =========================================================
 ADMIN_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
 
-/* ============================================
-   FORCE LIGHT MODE — WAJIB DI ATAS
-   ============================================ */
+/* FORCE LIGHT MODE */
 html, body, [class*="css"], .stApp {
     background: #f4f7f5 !important;
     color: #0f172a !important;
 }
-
-* { font-family: 'Inter', sans-serif !important; box-sizing: border-box; }
+* { font-family: 'Inter', sans-serif !important; }
 #MainMenu, footer, header { visibility: hidden; }
 .block-container { padding-top: 1.5rem !important; max-width: 1400px; }
 
-/* ============================================
-   GLOBAL TEXT COLORS
-   ============================================ */
-.stApp p, .stApp span, .stApp label, .stApp div, .stApp li {
-    color: #0f172a;
-}
-.stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6 {
-    color: #083d26 !important;
-}
+/* Global text */
+.stApp p, .stApp span, .stApp label, .stApp div, .stApp li { color: #0f172a; }
+.stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6 { color: #083d26 !important; }
 
-/* Markdown container */
-div[data-testid="stMarkdownContainer"] p,
-div[data-testid="stMarkdownContainer"] span,
-div[data-testid="stMarkdownContainer"] div {
-    color: #0f172a !important;
-}
-
-/* ============================================
-   LOGIN PAGE
-   ============================================ */
+/* LOGIN PAGE */
 .login-brand {
     background: linear-gradient(135deg, #fef2f2 0%, #fff5f5 50%, #ffffff 100%);
     padding: 50px 40px;
@@ -75,33 +57,23 @@ div[data-testid="stMarkdownContainer"] div {
     font-size: 34px !important; font-weight: 900 !important;
     letter-spacing: 1px !important; margin: 0 0 12px !important; line-height: 1.1 !important;
 }
-.login-brand-sub {
-    color: #0f172a !important; font-size: 15px !important;
-    font-weight: 700 !important; margin-bottom: 20px !important;
-}
-.login-brand-desc {
-    color: #64748b !important; font-size: 14px !important;
-    line-height: 1.7 !important; max-width: 400px !important;
-}
+.login-brand-sub { color: #0f172a !important; font-size: 15px !important; font-weight: 700 !important; margin-bottom: 20px !important; }
+.login-brand-desc { color: #64748b !important; font-size: 14px !important; line-height: 1.7 !important; max-width: 400px !important; }
 .login-brand-footer {
     display: flex; align-items: center; gap: 10px;
     color: #94a3b8 !important; font-size: 12px !important;
     font-weight: 600 !important;
     padding-top: 20px !important; border-top: 1px solid #fecaca !important;
 }
-
 .login-title {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
     color: #0f172a !important;
     font-size: 28px !important; font-weight: 800 !important;
     margin: 0 0 8px !important;
 }
-.login-subtitle {
-    color: #64748b !important; font-size: 14px !important;
-    margin-bottom: 32px !important;
-}
+.login-subtitle { color: #64748b !important; font-size: 14px !important; margin-bottom: 32px !important; }
 
-/* Form login */
+/* FORMS */
 div[data-testid="stForm"] {
     background: white !important;
     border-radius: 16px !important;
@@ -109,7 +81,6 @@ div[data-testid="stForm"] {
     border: 1px solid #e5ebe7 !important;
     box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
 }
-
 .stApp label {
     font-size: 12px !important;
     font-weight: 800 !important;
@@ -128,29 +99,18 @@ div[data-testid="stForm"] {
 .stApp input:focus, .stApp textarea:focus {
     border-color: #dc2626 !important;
     box-shadow: 0 0 0 3px rgba(220,38,38,0.1) !important;
-    color: #0f172a !important;
 }
-.stApp input::placeholder, .stApp textarea::placeholder {
-    color: #94a3b8 !important;
-}
+.stApp input::placeholder, .stApp textarea::placeholder { color: #94a3b8 !important; }
 
-/* Select box */
+/* Select */
 div[data-baseweb="select"] > div {
     background: #f8fafc !important;
     border: 2px solid #e2e8f0 !important;
     color: #0f172a !important;
 }
-div[data-baseweb="select"] * {
-    color: #0f172a !important;
-}
-div[data-baseweb="popover"] * {
-    color: #0f172a !important;
-    background: white;
-}
+div[data-baseweb="select"] * { color: #0f172a !important; }
 
-/* ============================================
-   BUTTONS
-   ============================================ */
+/* BUTTONS */
 .stApp .stButton > button {
     background: linear-gradient(135deg, #0d5e3a, #14734a) !important;
     color: #ffffff !important;
@@ -158,47 +118,28 @@ div[data-baseweb="popover"] * {
     border-radius: 10px !important;
     font-weight: 700 !important;
     padding: 10px 16px !important;
-    transition: all 0.25s !important;
     box-shadow: 0 4px 12px rgba(13,94,58,0.15) !important;
     font-size: 14px !important;
 }
 .stApp .stButton > button:hover {
     background: linear-gradient(135deg, #14734a, #c9a227) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 8px 20px rgba(13,94,58,0.25) !important;
 }
 .stApp .stButton > button p,
 .stApp .stButton > button span,
-.stApp .stButton > button div {
-    color: #ffffff !important;
-    font-weight: 700 !important;
-}
+.stApp .stButton > button div { color: #ffffff !important; font-weight: 700 !important; }
 
-/* Login button (merah) — pakai wrapper */
-.login-btn-wrap .stButton > button,
-.login-btn-wrap button[kind="primary"] {
+/* Login button */
+.login-btn-wrap .stButton > button {
     background: linear-gradient(135deg, #dc2626, #991b1b) !important;
-    color: white !important;
     padding: 14px !important;
     font-size: 15px !important;
     font-weight: 800 !important;
     box-shadow: 0 10px 25px rgba(220,38,38,0.3) !important;
     border-radius: 12px !important;
 }
-.login-btn-wrap .stButton > button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 15px 35px rgba(220,38,38,0.4) !important;
-}
-.login-btn-wrap .stButton > button p,
-.login-btn-wrap .stButton > button span,
-.login-btn-wrap .stButton > button div {
-    color: white !important;
-    font-weight: 800 !important;
-}
 
-/* ============================================
-   HEADER DASHBOARD
-   ============================================ */
+/* HEADER DASHBOARD */
 .admin-header {
     background: linear-gradient(135deg, #062b1b 0%, #0d5e3a 100%);
     color: white !important;
@@ -207,38 +148,24 @@ div[data-baseweb="popover"] * {
     margin-bottom: 24px;
     box-shadow: 0 12px 40px rgba(13,94,58,0.25);
 }
-.admin-header h1 {
-    margin: 0 !important; font-size: 24px !important;
-    font-weight: 800 !important; color: white !important;
-}
-.admin-header p {
-    margin: 6px 0 0 !important; opacity: 0.95 !important;
-    font-size: 13px !important; color: white !important;
-}
+.admin-header h1 { margin: 0 !important; font-size: 24px !important; font-weight: 800 !important; color: white !important; }
+.admin-header p { margin: 6px 0 0 !important; opacity: 0.95 !important; font-size: 13px !important; color: white !important; }
 .admin-header * { color: white !important; }
 
-/* ============================================
-   STAT BOXES
-   ============================================ */
+/* STAT BOXES */
 .stat-box {
     background: white !important;
     border-radius: 14px;
     padding: 20px;
     border-left: 4px solid #0d5e3a;
     box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-    transition: all 0.3s;
     height: 100%;
     min-height: 110px;
-}
-.stat-box:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(13,94,58,0.12);
 }
 .stat-box .label {
     color: #4a5a55 !important;
     font-size: 11px !important; font-weight: 800 !important;
     text-transform: uppercase !important; letter-spacing: 0.8px !important;
-    display: flex !important; align-items: center !important; gap: 6px !important;
 }
 .stat-box .value {
     color: #083d26 !important;
@@ -246,18 +173,9 @@ div[data-baseweb="popover"] * {
     margin-top: 8px !important; line-height: 1 !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
-.stat-box .sub {
-    color: #94a3b8 !important;
-    font-size: 11px !important;
-    margin-top: 4px !important; font-weight: 600 !important;
-}
+.stat-box .sub { color: #94a3b8 !important; font-size: 11px !important; margin-top: 4px !important; font-weight: 600 !important; }
 
-/* ============================================
-   TABS — FORCE JELAS
-   ============================================ */
-div[data-testid="stTabs"] {
-    background: transparent !important;
-}
+/* TABS */
 div[data-testid="stTabs"] [data-baseweb="tab-list"] {
     background: white !important;
     padding: 6px !important;
@@ -276,44 +194,33 @@ div[data-testid="stTabs"] button[role="tab"] {
     font-size: 13px !important;
     border: none !important;
     margin: 0 !important;
-    height: auto !important;
 }
 div[data-testid="stTabs"] button[role="tab"] p,
 div[data-testid="stTabs"] button[role="tab"] span,
-div[data-testid="stTabs"] button[role="tab"] div,
-div[data-testid="stTabs"] button[role="tab"] * {
+div[data-testid="stTabs"] button[role="tab"] div {
     color: #4a5a55 !important;
     font-weight: 700 !important;
     font-size: 13px !important;
-    background: transparent !important;
 }
-div[data-testid="stTabs"] button[role="tab"]:hover {
-    background: #f0fdf4 !important;
-}
-div[data-testid="stTabs"] button[role="tab"]:hover * {
-    color: #0d5e3a !important;
-}
+div[data-testid="stTabs"] button[role="tab"]:hover { background: #f0fdf4 !important; }
+div[data-testid="stTabs"] button[role="tab"]:hover * { color: #0d5e3a !important; }
 div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
     background: linear-gradient(135deg, #0d5e3a, #14734a) !important;
     box-shadow: 0 4px 12px rgba(13,94,58,0.25) !important;
 }
 div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] p,
 div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] span,
-div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] div,
-div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] * {
+div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] div {
     color: white !important;
     font-weight: 800 !important;
 }
 
-/* ============================================
-   EXPANDER — FORCE JELAS
-   ============================================ */
+/* EXPANDER — HANYA WARNA, TANPA UBAH STRUKTUR */
 div[data-testid="stExpander"] {
     background: white !important;
     border: 1px solid #e5ebe7 !important;
     border-radius: 12px !important;
     margin-bottom: 12px !important;
-    overflow: hidden !important;
 }
 div[data-testid="stExpander"] details {
     background: white !important;
@@ -322,21 +229,23 @@ div[data-testid="stExpander"] details {
 div[data-testid="stExpander"] summary {
     background: white !important;
     padding: 14px 18px !important;
-    cursor: pointer !important;
-    border-bottom: 1px solid transparent !important;
 }
 div[data-testid="stExpander"] summary:hover {
     background: #f0fdf4 !important;
 }
-div[data-testid="stExpander"] summary p,
-div[data-testid="stExpander"] summary span,
-div[data-testid="stExpander"] summary div,
-div[data-testid="stExpander"] summary * {
+/* Hanya ubah warna teks, JANGAN ubah display/posisi */
+div[data-testid="stExpander"] summary p {
     color: #083d26 !important;
     font-weight: 800 !important;
     font-size: 14px !important;
+    margin: 0 !important;
 }
+div[data-testid="stExpander"] summary span {
+    color: #083d26 !important;
+}
+/* Arrow tetap di kiri, tapi warnanya hijau */
 div[data-testid="stExpander"] summary svg {
+    color: #0d5e3a !important;
     fill: #0d5e3a !important;
 }
 div[data-testid="stExpander"] > details > div {
@@ -345,9 +254,7 @@ div[data-testid="stExpander"] > details > div {
     padding: 16px 18px !important;
 }
 
-/* ============================================
-   SECTION TITLE
-   ============================================ */
+/* SECTION TITLE */
 .section-title {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
     color: #083d26 !important;
@@ -365,9 +272,7 @@ div[data-testid="stExpander"] > details > div {
     border-radius: 4px;
 }
 
-/* ============================================
-   CRUD CARDS
-   ============================================ */
+/* CRUD CARDS */
 .crud-content { flex: 1; min-width: 0; }
 .crud-title {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
@@ -381,7 +286,6 @@ div[data-testid="stExpander"] > details > div {
     display: flex !important; gap: 10px !important; flex-wrap: wrap !important;
     margin-top: 4px !important;
 }
-.crud-meta span { color: #64748b !important; }
 .crud-badge {
     display: inline-block !important;
     background: #f0fdf4 !important; color: #166534 !important;
@@ -393,9 +297,7 @@ div[data-testid="stExpander"] > details > div {
 .crud-badge-red { background: #fee2e2 !important; color: #991b1b !important; }
 .crud-badge-blue { background: #dbeafe !important; color: #1e40af !important; }
 
-/* ============================================
-   EMPTY STATE
-   ============================================ */
+/* EMPTY STATE */
 .empty-state {
     text-align: center;
     padding: 48px 20px;
@@ -406,23 +308,16 @@ div[data-testid="stExpander"] > details > div {
 .empty-state-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
 .empty-state-text { color: #94a3b8 !important; font-size: 14px !important; font-weight: 600 !important; }
 
-/* ============================================
-   ALERTS
-   ============================================ */
+/* ALERTS */
 div[data-testid="stAlert"] {
     border-radius: 12px !important;
     padding: 12px 16px !important;
 }
 div[data-testid="stAlert"] p,
 div[data-testid="stAlert"] span,
-div[data-testid="stAlert"] div {
-    color: #0f172a !important;
-    font-weight: 600 !important;
-}
+div[data-testid="stAlert"] div { color: #0f172a !important; font-weight: 600 !important; }
 
-/* ============================================
-   POPOVER (edit)
-   ============================================ */
+/* POPOVER */
 div[data-testid="stPopover"] > button,
 div[data-testid="stPopover"] button {
     background: white !important;
@@ -431,51 +326,33 @@ div[data-testid="stPopover"] button {
     font-weight: 700 !important;
 }
 div[data-testid="stPopover"] button p,
-div[data-testid="stPopover"] button span,
-div[data-testid="stPopover"] button div {
-    color: #083d26 !important;
-    font-weight: 700 !important;
-}
+div[data-testid="stPopover"] button span { color: #083d26 !important; font-weight: 700 !important; }
 
-/* ============================================
-   DATAFRAME
-   ============================================ */
+/* DATAFRAME */
 div[data-testid="stDataFrame"] {
     background: white !important;
     border-radius: 12px !important;
     border: 1px solid #e5ebe7 !important;
 }
-div[data-testid="stDataFrame"] * {
-    color: #0f172a !important;
-}
+div[data-testid="stDataFrame"] * { color: #0f172a !important; }
 
-/* ============================================
-   FILE UPLOADER
-   ============================================ */
+/* FILE UPLOADER */
 div[data-testid="stFileUploader"] {
     background: #f8fafc !important;
     border: 2px dashed #cbd5e1 !important;
     border-radius: 12px !important;
     padding: 12px !important;
 }
-div[data-testid="stFileUploader"] * {
-    color: #0f172a !important;
-}
-div[data-testid="stFileUploader"] section button,
+div[data-testid="stFileUploader"] * { color: #0f172a !important; }
 div[data-testid="stFileUploader"] button {
     background: white !important;
     border: 1px solid #0d5e3a !important;
     color: #0d5e3a !important;
     font-weight: 700 !important;
 }
-div[data-testid="stFileUploader"] section button *,
-div[data-testid="stFileUploader"] button * {
-    color: #0d5e3a !important;
-}
+div[data-testid="stFileUploader"] button * { color: #0d5e3a !important; }
 
-/* ============================================
-   FORM LABEL UMUM (non-login)
-   ============================================ */
+/* FORM LABELS NON-LOGIN */
 div[data-testid="stForm"] label {
     color: #083d26 !important;
     font-weight: 700 !important;
@@ -483,36 +360,17 @@ div[data-testid="stForm"] label {
     letter-spacing: 0 !important;
     font-size: 13px !important;
 }
-div[data-testid="stForm"] p,
-div[data-testid="stForm"] span,
-div[data-testid="stForm"] label {
-    color: #083d26 !important;
-}
 div[data-testid="stForm"] input,
-div[data-testid="stForm"] textarea,
-div[data-testid="stForm"] select {
+div[data-testid="stForm"] textarea {
     color: #0f172a !important;
 }
 
-/* ============================================
-   SPINNER
-   ============================================ */
-div[data-testid="stSpinner"] * {
-    color: #0d5e3a !important;
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .login-brand { padding: 40px 30px; min-height: auto; }
     .login-brand h1 { font-size: 26px !important; }
     .stat-box .value { font-size: 26px !important; }
-    .stat-box { min-height: auto; }
-    div[data-testid="stTabs"] button[role="tab"] {
-        font-size: 11px !important;
-        padding: 8px 10px !important;
-    }
+    div[data-testid="stTabs"] button[role="tab"] { font-size: 11px !important; padding: 8px 10px !important; }
 }
 </style>
 """
@@ -522,10 +380,8 @@ div[data-testid="stSpinner"] * {
 # =========================================================
 def admin_login():
     st.markdown(ADMIN_CSS, unsafe_allow_html=True)
-
     col1, col2 = st.columns(2, gap="large")
 
-    # KIRI — branding
     with col1:
         st.markdown("""
         <div class="login-brand">
@@ -543,7 +399,6 @@ def admin_login():
         </div>
         """, unsafe_allow_html=True)
 
-    # KANAN — form login
     with col2:
         st.markdown("""
         <div style="padding: 40px 0 20px;">
@@ -552,14 +407,11 @@ def admin_login():
         </div>
         """, unsafe_allow_html=True)
 
-        # Wrapper untuk tombol login merah
         st.markdown('<div class="login-btn-wrap">', unsafe_allow_html=True)
-
         with st.form("login_form", clear_on_submit=False):
             username = st.text_input("USERNAME", placeholder="Masukkan username", key="login_username")
             password = st.text_input("PASSWORD", type="password", placeholder="Masukkan password", key="login_password")
             submit = st.form_submit_button("Masuk ke Panel  →", use_container_width=True, type="primary")
-
             if submit:
                 if not username or not password:
                     st.error("⚠️ Username dan password wajib diisi")
@@ -572,7 +424,6 @@ def admin_login():
                         st.rerun()
                     else:
                         st.error("❌ Username atau password salah")
-
         st.markdown('</div>', unsafe_allow_html=True)
 
         st.markdown("""
@@ -607,7 +458,6 @@ def admin_dashboard():
             st.session_state.admin_user = None
             st.rerun()
 
-    # Statistik
     berita_count = len(get_all_berita())
     pengaduan_list = get_all_pengaduan()
     pengaduan_baru = len([p for p in pengaduan_list if p.get("status") == "Baru"])
@@ -633,13 +483,11 @@ def admin_dashboard():
 
     st.markdown("<div style='height:24px'></div>", unsafe_allow_html=True)
 
-    # Tabs
     tabs = st.tabs([
         "📰 Berita", "📅 Agenda", "🖼️ Galeri", "📢 Running Text",
         "📋 Kesekretariatan", "📥 Pengaduan", "👥 Pimpinan",
         "🏢 Pejabat", "📜 JDIH", "👤 Admin", "⚙️ Pengaturan"
     ])
-
     with tabs[0]: render_berita_tab()
     with tabs[1]: render_agenda_tab()
     with tabs[2]: render_galeri_tab()
@@ -669,7 +517,7 @@ def show_empty_state(icon, text):
 def render_berita_tab():
     st.markdown('<div class="section-title">📰 Kelola Berita</div>', unsafe_allow_html=True)
 
-    with st.expander("➕ **Tambah Berita Baru**", expanded=False):
+    with st.expander("➕ Tambah Berita Baru", expanded=False):
         with st.form("form_tambah_berita", clear_on_submit=True):
             c1, c2 = st.columns(2)
             with c1:
@@ -773,11 +621,12 @@ def render_berita_tab():
         st.markdown('<div style="height:1px;background:#e5ebe7;margin:10px 0;"></div>', unsafe_allow_html=True)
 
 # =========================================================
-# TAB: AGENDA# =========================================================
+# TAB: AGENDA
+# =========================================================
 def render_agenda_tab():
     st.markdown('<div class="section-title">📅 Kelola Agenda</div>', unsafe_allow_html=True)
 
-    with st.expander("➕ **Tambah Agenda**", expanded=False):
+    with st.expander("➕ Tambah Agenda", expanded=False):
         with st.form("form_agenda", clear_on_submit=True):
             c1, c2 = st.columns(2)
             with c1:
@@ -825,7 +674,7 @@ def render_agenda_tab():
 def render_galeri_tab():
     st.markdown('<div class="section-title">🖼️ Kelola Galeri</div>', unsafe_allow_html=True)
 
-    with st.expander("➕ **Upload Foto Galeri**", expanded=False):
+    with st.expander("➕ Upload Foto Galeri", expanded=False):
         with st.form("form_galeri", clear_on_submit=True):
             gtitle = st.text_input("Judul Foto *", placeholder="Contoh: Rapat Paripurna")
             gfile = st.file_uploader("Pilih Foto *", type=["jpg", "jpeg", "png", "webp"])
@@ -962,7 +811,7 @@ def render_pengaduan_tab():
     for p in pengaduan_list:
         status = p.get("status", "Baru")
         emoji = {"Baru": "🆕", "Diproses": "⏳", "Selesai": "✅", "Ditolak": "❌"}.get(status, "📌")
-        with st.expander(f"{emoji} **{p['tiket']}** — {p['nama']} ({status})"):
+        with st.expander(f"{emoji} {p['tiket']} — {p['nama']} ({status})"):
             c1, c2 = st.columns(2)
             with c1:
                 st.write(f"**Kategori:** {p['kategori']}")
@@ -995,7 +844,7 @@ def render_pengaduan_tab():
 def render_pimpinan_tab():
     st.markdown('<div class="section-title">👥 Pimpinan & Anggota DPRK</div>', unsafe_allow_html=True)
 
-    with st.expander("➕ **Tambah Pimpinan/Anggota**", expanded=False):
+    with st.expander("➕ Tambah Pimpinan/Anggota", expanded=False):
         with st.form("form_pimpinan", clear_on_submit=True):
             c1, c2 = st.columns(2)
             with c1:
@@ -1084,7 +933,7 @@ def render_pejabat_tab():
 def render_jdih_tab():
     st.markdown('<div class="section-title">📜 Kelola Produk Hukum (JDIH)</div>', unsafe_allow_html=True)
 
-    with st.expander("➕ **Tambah Produk Hukum**", expanded=False):
+    with st.expander("➕ Tambah Produk Hukum", expanded=False):
         with st.form("form_jdih", clear_on_submit=True):
             c1, c2 = st.columns(2)
             with c1:
