@@ -28,7 +28,35 @@ try:
     seed_default_admin()
 except Exception:
     pass
+import streamlit as st
 
+st.write("### 🔍 DEBUG SECRETS")
+try:
+    url = st.secrets["supabase"]["url"]
+    key = st.secrets["supabase"]["key"]
+    
+    st.write(f"**URL:** `{url}`")
+    st.write(f"**Panjang URL:** {len(url)}")
+    st.write(f"**Panjang Key:** {len(key)}")
+    st.write(f"**Key start:** `{key[:40]}...`")
+    st.write(f"**Key end:** `...{key[-30:]}`")
+    st.write(f"**Jumlah titik (harus 2):** {key.count('.')}")
+    st.write(f"**Ada spasi?:** {' ' in key}")
+    st.write(f"**Mulai eyJ?:** {key.startswith('eyJ')}")
+    st.write(f"**URL benar?:** {url == 'https://loctnibhqtlixbnabnku.supabase.co'}")
+    
+    # Test koneksi
+    from supabase import create_client
+    client = create_client(url, key)
+    res = client.table("admin_users").select("*").execute()
+    st.success(f"✅ Koneksi BERHASIL! {len(res.data)} user ditemukan")
+    if res.data:
+        st.write(f"Users: {[u['username'] for u in res.data]}")
+except Exception as e:
+    st.error(f"❌ ERROR: {e}")
+    st.error(f"❌ Tipe: {type(e).__name__}")
+
+st.stop()  # Stop sementara agar halaman lain tidak render
 # =========================================================
 # KONFIGURASI
 # =========================================================
