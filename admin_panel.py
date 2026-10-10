@@ -15,6 +15,11 @@ from database import (
 )
 
 # =========================================================
+# LOGO (SAMA SEPERTI APP.PY)
+# =========================================================
+LOGO_URL = "https://i.imgur.com/bTNXnLF.png"
+
+# =========================================================
 # CSS ADMIN
 # =========================================================
 ADMIN_CSS = """
@@ -36,24 +41,27 @@ html, body, [class*="css"], .stApp {
 
 /* LOGIN PAGE */
 .login-brand {
-    background: linear-gradient(135deg, #fef2f2 0%, #fff5f5 50%, #ffffff 100%);
+    background: linear-gradient(135deg, #f0fdf4 0%, #f7fef9 50%, #ffffff 100%);
     padding: 50px 40px;
     border-radius: 24px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.06);
     min-height: 520px;
     display: flex; flex-direction: column; justify-content: space-between;
-    border: 1px solid #fee2e2;
+    border: 1px solid #d1fae5;
 }
 .login-brand-logo {
     display: inline-flex; align-items: center; justify-content: center;
     width: 90px; height: 90px; background: white;
-    border-radius: 20px; box-shadow: 0 10px 30px rgba(220,38,38,0.15);
-    border: 2px solid #fee2e2; margin-bottom: 28px;
-    font-size: 44px;
+    border-radius: 20px; box-shadow: 0 10px 30px rgba(13,94,58,0.15);
+    border: 2px solid #d1fae5; margin-bottom: 28px;
+    overflow: hidden; padding: 10px;
+}
+.login-brand-logo img {
+    width: 100%; height: 100%; object-fit: contain;
 }
 .login-brand h1 {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    color: #991b1b !important;
+    color: #0d5e3a !important;
     font-size: 34px !important; font-weight: 900 !important;
     letter-spacing: 1px !important; margin: 0 0 12px !important; line-height: 1.1 !important;
 }
@@ -63,7 +71,7 @@ html, body, [class*="css"], .stApp {
     display: flex; align-items: center; gap: 10px;
     color: #94a3b8 !important; font-size: 12px !important;
     font-weight: 600 !important;
-    padding-top: 20px !important; border-top: 1px solid #fecaca !important;
+    padding-top: 20px !important; border-top: 1px solid #bbf7d0 !important;
 }
 .login-title {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
@@ -84,7 +92,7 @@ div[data-testid="stForm"] {
 .stApp label {
     font-size: 12px !important;
     font-weight: 800 !important;
-    color: #dc2626 !important;
+    color: #0d5e3a !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
 }
@@ -97,8 +105,8 @@ div[data-testid="stForm"] {
     color: #0f172a !important;
 }
 .stApp input:focus, .stApp textarea:focus {
-    border-color: #dc2626 !important;
-    box-shadow: 0 0 0 3px rgba(220,38,38,0.1) !important;
+    border-color: #0d5e3a !important;
+    box-shadow: 0 0 0 3px rgba(13,94,58,0.1) !important;
 }
 .stApp input::placeholder, .stApp textarea::placeholder { color: #94a3b8 !important; }
 
@@ -131,11 +139,11 @@ div[data-baseweb="select"] * { color: #0f172a !important; }
 
 /* Login button */
 .login-btn-wrap .stButton > button {
-    background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+    background: linear-gradient(135deg, #0d5e3a, #14734a) !important;
     padding: 14px !important;
     font-size: 15px !important;
     font-weight: 800 !important;
-    box-shadow: 0 10px 25px rgba(220,38,38,0.3) !important;
+    box-shadow: 0 10px 25px rgba(13,94,58,0.3) !important;
     border-radius: 12px !important;
 }
 
@@ -215,12 +223,15 @@ div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] div {
     font-weight: 800 !important;
 }
 
-/* EXPANDER — HANYA WARNA, TANPA UBAH STRUKTUR */
+/* ============================================================
+   EXPANDER — FIX: SEMBUNYIKAN TEKS "_arrow" & ICON PANAH DEFAULT
+   ============================================================ */
 div[data-testid="stExpander"] {
     background: white !important;
     border: 1px solid #e5ebe7 !important;
     border-radius: 12px !important;
     margin-bottom: 12px !important;
+    overflow: hidden !important;
 }
 div[data-testid="stExpander"] details {
     background: white !important;
@@ -229,11 +240,50 @@ div[data-testid="stExpander"] details {
 div[data-testid="stExpander"] summary {
     background: white !important;
     padding: 14px 18px !important;
+    list-style: none !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
 }
+/* HAPUS marker default browser */
+div[data-testid="stExpander"] summary::-webkit-details-marker {
+    display: none !important;
+}
+div[data-testid="stExpander"] summary::marker {
+    display: none !important;
+    content: "" !important;
+}
+/* HAPUS teks "_arrow" yang muncul sebagai pseudo-element */
+div[data-testid="stExpander"] summary::before {
+    content: "▶" !important;
+    color: #0d5e3a !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    transition: transform 0.2s ease !important;
+    display: inline-block !important;
+    margin-right: 8px !important;
+    flex-shrink: 0 !important;
+}
+div[data-testid="stExpander"] details[open] > summary::before {
+    transform: rotate(90deg) !important;
+}
+/* Sembunyikan SVG bawaan Streamlit (jika ada) */
+div[data-testid="stExpander"] summary svg {
+    display: none !important;
+}
+/* Sembunyikan span/div yang berisi teks "_arrow" */
+div[data-testid="stExpander"] summary > span[data-testid="stExpanderToggleIcon"] {
+    display: none !important;
+}
+div[data-testid="stExpander"] summary > div:first-child > span:first-child {
+    display: none !important;
+}
+/* Hover effect */
 div[data-testid="stExpander"] summary:hover {
     background: #f0fdf4 !important;
 }
-/* Hanya ubah warna teks, JANGAN ubah display/posisi */
+/* Teks judul expander */
 div[data-testid="stExpander"] summary p {
     color: #083d26 !important;
     font-weight: 800 !important;
@@ -242,11 +292,6 @@ div[data-testid="stExpander"] summary p {
 }
 div[data-testid="stExpander"] summary span {
     color: #083d26 !important;
-}
-/* Arrow tetap di kiri, tapi warnanya hijau */
-div[data-testid="stExpander"] summary svg {
-    color: #0d5e3a !important;
-    fill: #0d5e3a !important;
 }
 div[data-testid="stExpander"] > details > div {
     background: white !important;
@@ -383,10 +428,13 @@ def admin_login():
     col1, col2 = st.columns(2, gap="large")
 
     with col1:
-        st.markdown("""
+        st.markdown(f"""
         <div class="login-brand">
             <div>
-                <div class="login-brand-logo">🏛️</div>
+                <div class="login-brand-logo">
+                    <img src="{LOGO_URL}" alt="Logo DPRK Aceh Jaya"
+                         onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>'">
+                </div>
                 <h1>DPRK ACEH JAYA</h1>
                 <div class="login-brand-sub">Dewan Perwakilan Rakyat Kabupaten</div>
                 <div class="login-brand-desc">
