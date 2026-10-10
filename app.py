@@ -13,50 +13,7 @@ if st.query_params.get("admin") == "true":
     render_admin()
     st.stop()
 
-# =========================================================
-# IMPORT DATABASE
-# =========================================================
-from database import (
-    get_all_berita, get_all_agenda, get_all_galeri,
-    get_running_text_active, create_pengaduan,
-    get_all_kesekretariatan, get_all_jdih,
-    get_all_pimpinan, get_all_pejabat,
-    seed_default_admin,
-)
 
-try:
-    seed_default_admin()
-except Exception:
-    pass
-import streamlit as st
-
-st.write("### 🔍 DEBUG SECRETS")
-try:
-    url = st.secrets["supabase"]["url"]
-    key = st.secrets["supabase"]["key"]
-    
-    st.write(f"**URL:** `{url}`")
-    st.write(f"**Panjang URL:** {len(url)}")
-    st.write(f"**Panjang Key:** {len(key)}")
-    st.write(f"**Key start:** `{key[:40]}...`")
-    st.write(f"**Key end:** `...{key[-30:]}`")
-    st.write(f"**Jumlah titik (harus 2):** {key.count('.')}")
-    st.write(f"**Ada spasi?:** {' ' in key}")
-    st.write(f"**Mulai eyJ?:** {key.startswith('eyJ')}")
-    st.write(f"**URL benar?:** {url == 'https://loctnibhqtlixbnabnku.supabase.co'}")
-    
-    # Test koneksi
-    from supabase import create_client
-    client = create_client(url, key)
-    res = client.table("admin_users").select("*").execute()
-    st.success(f"✅ Koneksi BERHASIL! {len(res.data)} user ditemukan")
-    if res.data:
-        st.write(f"Users: {[u['username'] for u in res.data]}")
-except Exception as e:
-    st.error(f"❌ ERROR: {e}")
-    st.error(f"❌ Tipe: {type(e).__name__}")
-
-st.stop()  # Stop sementara agar halaman lain tidak render
 # =========================================================
 # KONFIGURASI
 # =========================================================
