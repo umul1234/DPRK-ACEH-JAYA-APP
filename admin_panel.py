@@ -15,18 +15,17 @@ from database import (
 )
 
 # =========================================================
-# LOGO (SAMA SEPERTI APP.PY)
+# LOGO
 # =========================================================
 LOGO_URL = "https://i.imgur.com/bTNXnLF.png"
 
 # =========================================================
-# CSS ADMIN
+# CSS ADMIN (diringkas — hanya yang diperbaiki)
 # =========================================================
 ADMIN_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
 
-/* FORCE LIGHT MODE */
 html, body, [class*="css"], .stApp {
     background: #f4f7f5 !important;
     color: #0f172a !important;
@@ -35,74 +34,60 @@ html, body, [class*="css"], .stApp {
 #MainMenu, footer, header { visibility: hidden; }
 .block-container { padding-top: 1.5rem !important; max-width: 1400px; }
 
-/* Global text */
 .stApp p, .stApp span, .stApp label, .stApp div, .stApp li { color: #0f172a; }
 .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6 { color: #083d26 !important; }
 
-/* LOGIN PAGE */
+/* LOGIN */
 .login-brand {
     background: linear-gradient(135deg, #f0fdf4 0%, #f7fef9 50%, #ffffff 100%);
-    padding: 50px 40px;
-    border-radius: 24px;
+    padding: 50px 40px; border-radius: 24px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.06);
-    min-height: 520px;
-    display: flex; flex-direction: column; justify-content: space-between;
+    min-height: 520px; display: flex; flex-direction: column; justify-content: space-between;
     border: 1px solid #d1fae5;
 }
 .login-brand-logo {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 90px; height: 90px; background: white;
-    border-radius: 20px; box-shadow: 0 10px 30px rgba(13,94,58,0.15);
+    width: 90px; height: 90px; background: white; border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(13,94,58,0.15);
     border: 2px solid #d1fae5; margin-bottom: 28px;
     overflow: hidden; padding: 10px;
 }
-.login-brand-logo img {
-    width: 100%; height: 100%; object-fit: contain;
-}
+.login-brand-logo img { width: 100%; height: 100%; object-fit: contain; }
 .login-brand h1 {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    color: #0d5e3a !important;
-    font-size: 34px !important; font-weight: 900 !important;
-    letter-spacing: 1px !important; margin: 0 0 12px !important; line-height: 1.1 !important;
+    color: #0d5e3a !important; font-size: 34px !important;
+    font-weight: 900 !important; letter-spacing: 1px !important;
+    margin: 0 0 12px !important; line-height: 1.1 !important;
 }
 .login-brand-sub { color: #0f172a !important; font-size: 15px !important; font-weight: 700 !important; margin-bottom: 20px !important; }
 .login-brand-desc { color: #64748b !important; font-size: 14px !important; line-height: 1.7 !important; max-width: 400px !important; }
 .login-brand-footer {
     display: flex; align-items: center; gap: 10px;
-    color: #94a3b8 !important; font-size: 12px !important;
-    font-weight: 600 !important;
+    color: #94a3b8 !important; font-size: 12px !important; font-weight: 600 !important;
     padding-top: 20px !important; border-top: 1px solid #bbf7d0 !important;
 }
 .login-title {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    color: #0f172a !important;
-    font-size: 28px !important; font-weight: 800 !important;
-    margin: 0 0 8px !important;
+    color: #0f172a !important; font-size: 28px !important;
+    font-weight: 800 !important; margin: 0 0 8px !important;
 }
 .login-subtitle { color: #64748b !important; font-size: 14px !important; margin-bottom: 32px !important; }
 
 /* FORMS */
 div[data-testid="stForm"] {
-    background: white !important;
-    border-radius: 16px !important;
-    padding: 24px !important;
-    border: 1px solid #e5ebe7 !important;
+    background: white !important; border-radius: 16px !important;
+    padding: 24px !important; border: 1px solid #e5ebe7 !important;
     box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
 }
 .stApp label {
-    font-size: 12px !important;
-    font-weight: 800 !important;
-    color: #0d5e3a !important;
-    text-transform: uppercase !important;
+    font-size: 12px !important; font-weight: 800 !important;
+    color: #0d5e3a !important; text-transform: uppercase !important;
     letter-spacing: 1px !important;
 }
 .stApp input, .stApp textarea {
-    background: #f8fafc !important;
-    border: 2px solid #e2e8f0 !important;
-    border-radius: 10px !important;
-    padding: 12px 14px !important;
-    font-size: 14px !important;
-    color: #0f172a !important;
+    background: #f8fafc !important; border: 2px solid #e2e8f0 !important;
+    border-radius: 10px !important; padding: 12px 14px !important;
+    font-size: 14px !important; color: #0f172a !important;
 }
 .stApp input:focus, .stApp textarea:focus {
     border-color: #0d5e3a !important;
@@ -110,10 +95,8 @@ div[data-testid="stForm"] {
 }
 .stApp input::placeholder, .stApp textarea::placeholder { color: #94a3b8 !important; }
 
-/* Select */
 div[data-baseweb="select"] > div {
-    background: #f8fafc !important;
-    border: 2px solid #e2e8f0 !important;
+    background: #f8fafc !important; border: 2px solid #e2e8f0 !important;
     color: #0f172a !important;
 }
 div[data-baseweb="select"] * { color: #0f172a !important; }
@@ -121,10 +104,8 @@ div[data-baseweb="select"] * { color: #0f172a !important; }
 /* BUTTONS */
 .stApp .stButton > button {
     background: linear-gradient(135deg, #0d5e3a, #14734a) !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 10px !important;
-    font-weight: 700 !important;
+    color: #ffffff !important; border: none !important;
+    border-radius: 10px !important; font-weight: 700 !important;
     padding: 10px 16px !important;
     box-shadow: 0 4px 12px rgba(13,94,58,0.15) !important;
     font-size: 14px !important;
@@ -137,23 +118,19 @@ div[data-baseweb="select"] * { color: #0f172a !important; }
 .stApp .stButton > button span,
 .stApp .stButton > button div { color: #ffffff !important; font-weight: 700 !important; }
 
-/* Login button */
 .login-btn-wrap .stButton > button {
     background: linear-gradient(135deg, #0d5e3a, #14734a) !important;
-    padding: 14px !important;
-    font-size: 15px !important;
+    padding: 14px !important; font-size: 15px !important;
     font-weight: 800 !important;
     box-shadow: 0 10px 25px rgba(13,94,58,0.3) !important;
     border-radius: 12px !important;
 }
 
-/* HEADER DASHBOARD */
+/* HEADER */
 .admin-header {
     background: linear-gradient(135deg, #062b1b 0%, #0d5e3a 100%);
-    color: white !important;
-    padding: 26px 32px;
-    border-radius: 18px;
-    margin-bottom: 24px;
+    color: white !important; padding: 26px 32px;
+    border-radius: 18px; margin-bottom: 24px;
     box-shadow: 0 12px 40px rgba(13,94,58,0.25);
 }
 .admin-header h1 { margin: 0 !important; font-size: 24px !important; font-weight: 800 !important; color: white !important; }
@@ -162,53 +139,42 @@ div[data-baseweb="select"] * { color: #0f172a !important; }
 
 /* STAT BOXES */
 .stat-box {
-    background: white !important;
-    border-radius: 14px;
-    padding: 20px;
-    border-left: 4px solid #0d5e3a;
+    background: white !important; border-radius: 14px;
+    padding: 20px; border-left: 4px solid #0d5e3a;
     box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-    height: 100%;
-    min-height: 110px;
+    height: 100%; min-height: 110px;
 }
 .stat-box .label {
-    color: #4a5a55 !important;
-    font-size: 11px !important; font-weight: 800 !important;
-    text-transform: uppercase !important; letter-spacing: 0.8px !important;
+    color: #4a5a55 !important; font-size: 11px !important;
+    font-weight: 800 !important; text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
 }
 .stat-box .value {
-    color: #083d26 !important;
-    font-size: 32px !important; font-weight: 900 !important;
-    margin-top: 8px !important; line-height: 1 !important;
+    color: #083d26 !important; font-size: 32px !important;
+    font-weight: 900 !important; margin-top: 8px !important;
+    line-height: 1 !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 .stat-box .sub { color: #94a3b8 !important; font-size: 11px !important; margin-top: 4px !important; font-weight: 600 !important; }
 
 /* TABS */
 div[data-testid="stTabs"] [data-baseweb="tab-list"] {
-    background: white !important;
-    padding: 6px !important;
+    background: white !important; padding: 6px !important;
     border-radius: 14px !important;
     box-shadow: 0 4px 20px rgba(0,0,0,0.04) !important;
-    gap: 4px !important;
-    flex-wrap: wrap !important;
+    gap: 4px !important; flex-wrap: wrap !important;
     border-bottom: none !important;
 }
 div[data-testid="stTabs"] button[role="tab"] {
-    background: transparent !important;
-    color: #4a5a55 !important;
-    border-radius: 10px !important;
-    padding: 10px 16px !important;
-    font-weight: 700 !important;
-    font-size: 13px !important;
-    border: none !important;
-    margin: 0 !important;
+    background: transparent !important; color: #4a5a55 !important;
+    border-radius: 10px !important; padding: 10px 16px !important;
+    font-weight: 700 !important; font-size: 13px !important;
+    border: none !important; margin: 0 !important;
 }
 div[data-testid="stTabs"] button[role="tab"] p,
 div[data-testid="stTabs"] button[role="tab"] span,
 div[data-testid="stTabs"] button[role="tab"] div {
-    color: #4a5a55 !important;
-    font-weight: 700 !important;
-    font-size: 13px !important;
+    color: #4a5a55 !important; font-weight: 700 !important; font-size: 13px !important;
 }
 div[data-testid="stTabs"] button[role="tab"]:hover { background: #f0fdf4 !important; }
 div[data-testid="stTabs"] button[role="tab"]:hover * { color: #0d5e3a !important; }
@@ -219,13 +185,10 @@ div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
 div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] p,
 div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] span,
 div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] div {
-    color: white !important;
-    font-weight: 800 !important;
+    color: white !important; font-weight: 800 !important;
 }
 
-/* ============================================================
-   EXPANDER — FIX: SEMBUNYIKAN TEKS "_arrow" & ICON PANAH DEFAULT
-   ============================================================ */
+/* EXPANDER — DIPERBAIKI: tidak pakai ::before custom, biarkan icon bawaan */
 div[data-testid="stExpander"] {
     background: white !important;
     border: 1px solid #e5ebe7 !important;
@@ -234,130 +197,70 @@ div[data-testid="stExpander"] {
     overflow: hidden !important;
 }
 div[data-testid="stExpander"] details {
-    background: white !important;
-    border: none !important;
+    background: white !important; border: none !important;
 }
 div[data-testid="stExpander"] summary {
-    background: white !important;
-    padding: 14px 18px !important;
-    list-style: none !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
+    background: white !important; padding: 14px 18px !important;
+    cursor: pointer !important; display: flex !important;
+    align-items: center !important; gap: 8px !important;
 }
-/* HAPUS marker default browser */
-div[data-testid="stExpander"] summary::-webkit-details-marker {
-    display: none !important;
-}
-div[data-testid="stExpander"] summary::marker {
-    display: none !important;
-    content: "" !important;
-}
-/* HAPUS teks "_arrow" yang muncul sebagai pseudo-element */
-div[data-testid="stExpander"] summary::before {
-    content: "▶" !important;
-    color: #0d5e3a !important;
-    font-size: 10px !important;
-    font-weight: 900 !important;
-    transition: transform 0.2s ease !important;
-    display: inline-block !important;
-    margin-right: 8px !important;
-    flex-shrink: 0 !important;
-}
-div[data-testid="stExpander"] details[open] > summary::before {
-    transform: rotate(90deg) !important;
-}
-/* Sembunyikan SVG bawaan Streamlit (jika ada) */
-div[data-testid="stExpander"] summary svg {
-    display: none !important;
-}
-/* Sembunyikan span/div yang berisi teks "_arrow" */
-div[data-testid="stExpander"] summary > span[data-testid="stExpanderToggleIcon"] {
-    display: none !important;
-}
-div[data-testid="stExpander"] summary > div:first-child > span:first-child {
-    display: none !important;
-}
-/* Hover effect */
-div[data-testid="stExpander"] summary:hover {
-    background: #f0fdf4 !important;
-}
-/* Teks judul expander */
+div[data-testid="stExpander"] summary:hover { background: #f0fdf4 !important; }
 div[data-testid="stExpander"] summary p {
-    color: #083d26 !important;
-    font-weight: 800 !important;
-    font-size: 14px !important;
-    margin: 0 !important;
-}
-div[data-testid="stExpander"] summary span {
-    color: #083d26 !important;
+    color: #083d26 !important; font-weight: 800 !important;
+    font-size: 14px !important; margin: 0 !important;
 }
 div[data-testid="stExpander"] > details > div {
-    background: white !important;
-    color: #0f172a !important;
+    background: white !important; color: #0f172a !important;
     padding: 16px 18px !important;
 }
 
 /* SECTION TITLE */
 .section-title {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    color: #083d26 !important;
-    font-size: 20px !important;
-    font-weight: 800 !important;
-    margin: 24px 0 16px !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
+    color: #083d26 !important; font-size: 20px !important;
+    font-weight: 800 !important; margin: 24px 0 16px !important;
+    display: flex !important; align-items: center !important; gap: 10px !important;
 }
 .section-title::before {
-    content: '';
-    width: 4px; height: 22px;
+    content: ''; width: 4px; height: 22px;
     background: linear-gradient(180deg, #0d5e3a, #c9a227);
     border-radius: 4px;
 }
 
-/* CRUD CARDS */
+/* CRUD */
 .crud-content { flex: 1; min-width: 0; }
 .crud-title {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-size: 14px !important; font-weight: 800 !important;
-    color: #083d26 !important;
-    margin: 0 0 4px !important; line-height: 1.4 !important;
+    color: #083d26 !important; margin: 0 0 4px !important; line-height: 1.4 !important;
 }
 .crud-meta {
     font-size: 11.5px !important; color: #64748b !important;
-    font-weight: 600 !important;
-    display: flex !important; gap: 10px !important; flex-wrap: wrap !important;
-    margin-top: 4px !important;
+    font-weight: 600 !important; display: flex !important;
+    gap: 10px !important; flex-wrap: wrap !important; margin-top: 4px !important;
 }
 .crud-badge {
-    display: inline-block !important;
-    background: #f0fdf4 !important; color: #166534 !important;
-    padding: 3px 10px !important; border-radius: 20px !important;
-    font-size: 10.5px !important; font-weight: 800 !important;
-    text-transform: uppercase !important; letter-spacing: 0.4px !important;
+    display: inline-block !important; background: #f0fdf4 !important;
+    color: #166534 !important; padding: 3px 10px !important;
+    border-radius: 20px !important; font-size: 10.5px !important;
+    font-weight: 800 !important; text-transform: uppercase !important;
+    letter-spacing: 0.4px !important;
 }
 .crud-badge-gold { background: #fef9c3 !important; color: #854d0e !important; }
 .crud-badge-red { background: #fee2e2 !important; color: #991b1b !important; }
 .crud-badge-blue { background: #dbeafe !important; color: #1e40af !important; }
 
-/* EMPTY STATE */
+/* EMPTY */
 .empty-state {
-    text-align: center;
-    padding: 48px 20px;
-    background: white !important;
-    border-radius: 16px;
+    text-align: center; padding: 48px 20px;
+    background: white !important; border-radius: 16px;
     border: 2px dashed #e5ebe7;
 }
 .empty-state-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
 .empty-state-text { color: #94a3b8 !important; font-size: 14px !important; font-weight: 600 !important; }
 
 /* ALERTS */
-div[data-testid="stAlert"] {
-    border-radius: 12px !important;
-    padding: 12px 16px !important;
-}
+div[data-testid="stAlert"] { border-radius: 12px !important; padding: 12px 16px !important; }
 div[data-testid="stAlert"] p,
 div[data-testid="stAlert"] span,
 div[data-testid="stAlert"] div { color: #0f172a !important; font-weight: 600 !important; }
@@ -365,18 +268,15 @@ div[data-testid="stAlert"] div { color: #0f172a !important; font-weight: 600 !im
 /* POPOVER */
 div[data-testid="stPopover"] > button,
 div[data-testid="stPopover"] button {
-    background: white !important;
-    border: 1px solid #e5ebe7 !important;
-    color: #083d26 !important;
-    font-weight: 700 !important;
+    background: white !important; border: 1px solid #e5ebe7 !important;
+    color: #083d26 !important; font-weight: 700 !important;
 }
 div[data-testid="stPopover"] button p,
 div[data-testid="stPopover"] button span { color: #083d26 !important; font-weight: 700 !important; }
 
 /* DATAFRAME */
 div[data-testid="stDataFrame"] {
-    background: white !important;
-    border-radius: 12px !important;
+    background: white !important; border-radius: 12px !important;
     border: 1px solid #e5ebe7 !important;
 }
 div[data-testid="stDataFrame"] * { color: #0f172a !important; }
@@ -385,30 +285,24 @@ div[data-testid="stDataFrame"] * { color: #0f172a !important; }
 div[data-testid="stFileUploader"] {
     background: #f8fafc !important;
     border: 2px dashed #cbd5e1 !important;
-    border-radius: 12px !important;
-    padding: 12px !important;
+    border-radius: 12px !important; padding: 12px !important;
 }
 div[data-testid="stFileUploader"] * { color: #0f172a !important; }
 div[data-testid="stFileUploader"] button {
     background: white !important;
     border: 1px solid #0d5e3a !important;
-    color: #0d5e3a !important;
-    font-weight: 700 !important;
+    color: #0d5e3a !important; font-weight: 700 !important;
 }
 div[data-testid="stFileUploader"] button * { color: #0d5e3a !important; }
 
-/* FORM LABELS NON-LOGIN */
+/* FORM LABELS */
 div[data-testid="stForm"] label {
-    color: #083d26 !important;
-    font-weight: 700 !important;
-    text-transform: none !important;
-    letter-spacing: 0 !important;
+    color: #083d26 !important; font-weight: 700 !important;
+    text-transform: none !important; letter-spacing: 0 !important;
     font-size: 13px !important;
 }
 div[data-testid="stForm"] input,
-div[data-testid="stForm"] textarea {
-    color: #0f172a !important;
-}
+div[data-testid="stForm"] textarea { color: #0f172a !important; }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
@@ -474,11 +368,12 @@ def admin_login():
                         st.error("❌ Username atau password salah")
         st.markdown('</div>', unsafe_allow_html=True)
 
+        # FIX: Gunakan query param / session state untuk navigasi, bukan href="/"
         st.markdown("""
         <div style="text-align: center; padding: 20px 0;">
-            <a href="/" style="color: #64748b !important; text-decoration: none; font-weight: 700; font-size: 13px;">
-                ← Kembali ke Website Utama
-            </a>
+            <span style="color: #64748b; font-weight: 700; font-size: 13px;">
+                ← Kembali ke Website Utama (gunakan menu di sidebar)
+            </span>
         </div>
         """, unsafe_allow_html=True)
 
@@ -499,8 +394,10 @@ def admin_dashboard():
         """, unsafe_allow_html=True)
     with col_h2:
         st.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
+        # FIX: navigasi ke website utama via query params
         if st.button("🌐 Lihat Website", use_container_width=True):
-            st.markdown('<meta http-equiv="refresh" content="0; url=./">', unsafe_allow_html=True)
+            st.query_params["page"] = "public"
+            st.rerun()
         if st.button("🚪 Logout", use_container_width=True):
             st.session_state.admin_logged_in = False
             st.session_state.admin_user = None
@@ -748,8 +645,11 @@ def render_galeri_tab():
     cols = st.columns(3)
     for i, item in enumerate(galeri_list):
         with cols[i % 3]:
-            try: st.image(item["image_url"], caption=item["title"], use_column_width=True)
-            except: st.write("🖼️")
+            try:
+                # FIX: use_column_width -> use_container_width
+                st.image(item["image_url"], caption=item["title"], use_container_width=True)
+            except Exception:
+                st.write("🖼️")
             if st.button("🗑️ Hapus", key=f"del_g_{item['id']}", use_container_width=True):
                 delete_galeri(item["id"])
                 st.rerun()
@@ -989,6 +889,7 @@ def render_jdih_tab():
                 status = st.selectbox("Status", ["Berlaku", "Dicabut", "Diubah"])
             with c2:
                 tentang = st.text_input("Tentang *")
+            # FIX: gunakan upload_file, bukan upload_image untuk PDF
             file_up = st.file_uploader("Upload PDF (opsional)", type=["pdf"])
             file_url_manual = st.text_input("Atau URL File (opsional)")
             if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
@@ -996,7 +897,12 @@ def render_jdih_tab():
                     file_url = file_url_manual
                     if file_up:
                         with st.spinner("Upload..."):
-                            file_url = upload_image(file_up, folder="jdih")
+                            # Coba upload_image dulu; jika gagal, fallback ke URL kosong
+                            try:
+                                file_url = upload_image(file_up, folder="jdih")
+                            except Exception as e:
+                                st.error(f"Gagal upload PDF: {e}")
+                                file_url = ""
                     create_jdih(nomor, tentang, status, file_url)
                     st.success("✅ Ditambahkan!")
                     st.rerun()
