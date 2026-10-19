@@ -51,18 +51,7 @@ def get_all_berita():
         res = supabase.table("berita").select("*").order("created_at", desc=True).execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load berita: {e}")
         st.error(f"⚠️ Gagal memuat berita: {e}")
-        return []
-
-def get_berita_by_kategori(kategori):
-    if kategori == "Semua":
-        return get_all_berita()
-    try:
-        res = supabase.table("berita").select("*").eq("kategori", kategori).order("created_at", desc=True).execute()
-        return res.data or []
-    except Exception as e:
-        print(f"[DB ERROR] get_berita_by_kategori: {e}")
         return []
 
 def create_berita(title, date, desc_text, image_url, kategori):
@@ -81,15 +70,6 @@ def update_berita(id, **kwargs):
 def delete_berita(id):
     supabase.table("berita").delete().eq("id", id).execute()
 
-def increment_berita_views(id):
-    try:
-        res = supabase.table("berita").select("views").eq("id", id).execute()
-        if res.data:
-            current = res.data[0].get("views", 0) or 0
-            supabase.table("berita").update({"views": current + 1}).eq("id", id).execute()
-    except Exception:
-        pass
-
 # =========================================================
 # AGENDA
 # =========================================================
@@ -98,7 +78,6 @@ def get_all_agenda():
         res = supabase.table("agenda").select("*").order("created_at", desc=True).execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load agenda: {e}")
         st.error(f"⚠️ Gagal memuat agenda: {e}")
         return []
 
@@ -108,10 +87,6 @@ def create_agenda(hari, bulan_tahun, tanggal_full, judul, deskripsi):
         "tanggal_full": tanggal_full, "judul": judul, "deskripsi": deskripsi
     }
     res = supabase.table("agenda").insert(data).execute()
-    return res.data
-
-def update_agenda(id, **kwargs):
-    res = supabase.table("agenda").update(kwargs).eq("id", id).execute()
     return res.data
 
 def delete_agenda(id):
@@ -125,7 +100,6 @@ def get_all_galeri():
         res = supabase.table("galeri").select("*").order("created_at", desc=True).execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load galeri: {e}")
         st.error(f"⚠️ Gagal memuat galeri: {e}")
         return []
 
@@ -144,7 +118,6 @@ def get_running_text_active():
         res = supabase.table("running_text").select("*").eq("is_active", True).execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load running text: {e}")
         return []
 
 def create_running_text(content):
@@ -162,7 +135,6 @@ def get_all_kesekretariatan():
         res = supabase.table("kesekretariatan").select("*").order("created_at", desc=True).execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load kesekretariatan: {e}")
         st.error(f"⚠️ Gagal memuat kesekretariatan: {e}")
         return []
 
@@ -190,7 +162,6 @@ def get_all_pengaduan():
         res = supabase.table("pengaduan").select("*").order("created_at", desc=True).execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load pengaduan: {e}")
         st.error(f"⚠️ Gagal memuat pengaduan: {e}")
         return []
 
@@ -230,7 +201,6 @@ def get_all_admins():
         res = supabase.table("admin_users").select("id, username, created_at").execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load admin: {e}")
         return []
 
 def delete_admin(user_id):
@@ -244,17 +214,12 @@ def get_all_pimpinan():
         res = supabase.table("pimpinan").select("*").order("urutan").execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load pimpinan: {e}")
         st.error(f"⚠️ Gagal memuat pimpinan: {e}")
         return []
 
 def create_pimpinan(nama, jabatan, urutan, foto_url=None):
     data = {"nama": nama, "jabatan": jabatan, "urutan": urutan, "foto_url": foto_url}
     res = supabase.table("pimpinan").insert(data).execute()
-    return res.data
-
-def update_pimpinan(id, **kwargs):
-    res = supabase.table("pimpinan").update(kwargs).eq("id", id).execute()
     return res.data
 
 def delete_pimpinan(id):
@@ -265,7 +230,6 @@ def get_all_pejabat():
         res = supabase.table("pejabat_sekretariat").select("*").order("urutan").execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load pejabat: {e}")
         st.error(f"⚠️ Gagal memuat pejabat: {e}")
         return []
 
@@ -285,7 +249,6 @@ def get_all_jdih():
         res = supabase.table("jdih").select("*").order("nomor").execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load jdih: {e}")
         st.error(f"⚠️ Gagal memuat JDIH: {e}")
         return []
 
@@ -305,7 +268,6 @@ def get_all_anggota():
         res = supabase.table("anggota").select("*").order("urutan").execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load anggota: {e}")
         st.error(f"⚠️ Gagal memuat anggota: {e}")
         return []
 
@@ -332,7 +294,6 @@ def get_all_fraksi():
         res = supabase.table("fraksi").select("*").order("urutan").execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load fraksi: {e}")
         st.error(f"⚠️ Gagal memuat fraksi: {e}")
         return []
 
@@ -356,7 +317,6 @@ def get_all_komisi():
         res = supabase.table("komisi").select("*").order("urutan").execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load komisi: {e}")
         st.error(f"⚠️ Gagal memuat komisi: {e}")
         return []
 
@@ -380,7 +340,6 @@ def get_all_faq():
         res = supabase.table("faq").select("*").order("urutan").execute()
         return res.data or []
     except Exception as e:
-        print(f"[DB ERROR] Gagal load faq: {e}")
         st.error(f"⚠️ Gagal memuat FAQ: {e}")
         return []
 
