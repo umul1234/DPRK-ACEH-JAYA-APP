@@ -39,6 +39,7 @@ def upload_image(file, folder="berita"):
         public_url = supabase.storage.from_("dprk-images").get_public_url(filename)
         return public_url
     except Exception as e:
+        print(f"[STORAGE ERROR] {e}")
         st.error(f"Upload error: {e}")
         return None
 
@@ -50,7 +51,8 @@ def get_all_berita():
         res = supabase.table("berita").select("*").order("created_at", desc=True).execute()
         return res.data or []
     except Exception as e:
-        st.warning(f"Gagal load berita: {e}")
+        print(f"[DB ERROR] Gagal load berita: {e}")
+        st.error(f"⚠️ Gagal memuat berita: {e}")
         return []
 
 def get_berita_by_kategori(kategori):
@@ -59,7 +61,8 @@ def get_berita_by_kategori(kategori):
     try:
         res = supabase.table("berita").select("*").eq("kategori", kategori).order("created_at", desc=True).execute()
         return res.data or []
-    except Exception:
+    except Exception as e:
+        print(f"[DB ERROR] get_berita_by_kategori: {e}")
         return []
 
 def create_berita(title, date, desc_text, image_url, kategori):
@@ -94,7 +97,9 @@ def get_all_agenda():
     try:
         res = supabase.table("agenda").select("*").order("created_at", desc=True).execute()
         return res.data or []
-    except Exception:
+    except Exception as e:
+        print(f"[DB ERROR] Gagal load agenda: {e}")
+        st.error(f"⚠️ Gagal memuat agenda: {e}")
         return []
 
 def create_agenda(hari, bulan_tahun, tanggal_full, judul, deskripsi):
@@ -119,7 +124,9 @@ def get_all_galeri():
     try:
         res = supabase.table("galeri").select("*").order("created_at", desc=True).execute()
         return res.data or []
-    except Exception:
+    except Exception as e:
+        print(f"[DB ERROR] Gagal load galeri: {e}")
+        st.error(f"⚠️ Gagal memuat galeri: {e}")
         return []
 
 def create_galeri(title, image_url):
@@ -136,7 +143,8 @@ def get_running_text_active():
     try:
         res = supabase.table("running_text").select("*").eq("is_active", True).execute()
         return res.data or []
-    except Exception:
+    except Exception as e:
+        print(f"[DB ERROR] Gagal load running text: {e}")
         return []
 
 def create_running_text(content):
@@ -153,7 +161,9 @@ def get_all_kesekretariatan():
     try:
         res = supabase.table("kesekretariatan").select("*").order("created_at", desc=True).execute()
         return res.data or []
-    except Exception:
+    except Exception as e:
+        print(f"[DB ERROR] Gagal load kesekretariatan: {e}")
+        st.error(f"⚠️ Gagal memuat kesekretariatan: {e}")
         return []
 
 def create_kesekretariatan(title, date):
@@ -179,7 +189,9 @@ def get_all_pengaduan():
     try:
         res = supabase.table("pengaduan").select("*").order("created_at", desc=True).execute()
         return res.data or []
-    except Exception:
+    except Exception as e:
+        print(f"[DB ERROR] Gagal load pengaduan: {e}")
+        st.error(f"⚠️ Gagal memuat pengaduan: {e}")
         return []
 
 def update_status_pengaduan(id, status):
@@ -214,8 +226,12 @@ def change_password(user_id, new_password):
     ).eq("id", user_id).execute()
 
 def get_all_admins():
-    res = supabase.table("admin_users").select("id, username, created_at").execute()
-    return res.data or []
+    try:
+        res = supabase.table("admin_users").select("id, username, created_at").execute()
+        return res.data or []
+    except Exception as e:
+        print(f"[DB ERROR] Gagal load admin: {e}")
+        return []
 
 def delete_admin(user_id):
     supabase.table("admin_users").delete().eq("id", user_id).execute()
@@ -227,7 +243,9 @@ def get_all_pimpinan():
     try:
         res = supabase.table("pimpinan").select("*").order("urutan").execute()
         return res.data or []
-    except Exception:
+    except Exception as e:
+        print(f"[DB ERROR] Gagal load pimpinan: {e}")
+        st.error(f"⚠️ Gagal memuat pimpinan: {e}")
         return []
 
 def create_pimpinan(nama, jabatan, urutan, foto_url=None):
@@ -246,7 +264,9 @@ def get_all_pejabat():
     try:
         res = supabase.table("pejabat_sekretariat").select("*").order("urutan").execute()
         return res.data or []
-    except Exception:
+    except Exception as e:
+        print(f"[DB ERROR] Gagal load pejabat: {e}")
+        st.error(f"⚠️ Gagal memuat pejabat: {e}")
         return []
 
 def create_pejabat(nama, jabatan, urutan):
@@ -264,7 +284,9 @@ def get_all_jdih():
     try:
         res = supabase.table("jdih").select("*").order("nomor").execute()
         return res.data or []
-    except Exception:
+    except Exception as e:
+        print(f"[DB ERROR] Gagal load jdih: {e}")
+        st.error(f"⚠️ Gagal memuat JDIH: {e}")
         return []
 
 def create_jdih(nomor, tentang, status, file_url=None):
@@ -283,18 +305,14 @@ def get_all_anggota():
         res = supabase.table("anggota").select("*").order("urutan").execute()
         return res.data or []
     except Exception as e:
-        st.warning(f"Gagal load anggota: {e}")
+        print(f"[DB ERROR] Gagal load anggota: {e}")
+        st.error(f"⚠️ Gagal memuat anggota: {e}")
         return []
 
 def create_anggota(nama, jabatan, komisi, dapil, fraksi, urutan=1, foto_url=None):
     data = {
-        "nama": nama,
-        "jabatan": jabatan,
-        "komisi": komisi,
-        "dapil": dapil,
-        "fraksi": fraksi,
-        "urutan": urutan,
-        "foto_url": foto_url,
+        "nama": nama, "jabatan": jabatan, "komisi": komisi,
+        "dapil": dapil, "fraksi": fraksi, "urutan": urutan, "foto_url": foto_url,
     }
     res = supabase.table("anggota").insert(data).execute()
     return res.data
@@ -314,16 +332,12 @@ def get_all_fraksi():
         res = supabase.table("fraksi").select("*").order("urutan").execute()
         return res.data or []
     except Exception as e:
-        st.warning(f"Gagal load fraksi: {e}")
+        print(f"[DB ERROR] Gagal load fraksi: {e}")
+        st.error(f"⚠️ Gagal memuat fraksi: {e}")
         return []
 
 def create_fraksi(nama, ketua, jumlah_anggota, urutan=1):
-    data = {
-        "nama": nama,
-        "ketua": ketua,
-        "jumlah_anggota": jumlah_anggota,
-        "urutan": urutan,
-    }
+    data = {"nama": nama, "ketua": ketua, "jumlah_anggota": jumlah_anggota, "urutan": urutan}
     res = supabase.table("fraksi").insert(data).execute()
     return res.data
 
@@ -342,16 +356,12 @@ def get_all_komisi():
         res = supabase.table("komisi").select("*").order("urutan").execute()
         return res.data or []
     except Exception as e:
-        st.warning(f"Gagal load komisi: {e}")
+        print(f"[DB ERROR] Gagal load komisi: {e}")
+        st.error(f"⚠️ Gagal memuat komisi: {e}")
         return []
 
 def create_komisi(nama, ketua, bidang, urutan=1):
-    data = {
-        "nama": nama,
-        "ketua": ketua,
-        "bidang": bidang,
-        "urutan": urutan,
-    }
+    data = {"nama": nama, "ketua": ketua, "bidang": bidang, "urutan": urutan}
     res = supabase.table("komisi").insert(data).execute()
     return res.data
 
@@ -370,15 +380,12 @@ def get_all_faq():
         res = supabase.table("faq").select("*").order("urutan").execute()
         return res.data or []
     except Exception as e:
-        st.warning(f"Gagal load FAQ: {e}")
+        print(f"[DB ERROR] Gagal load faq: {e}")
+        st.error(f"⚠️ Gagal memuat FAQ: {e}")
         return []
 
 def create_faq(pertanyaan, jawaban, urutan=1):
-    data = {
-        "pertanyaan": pertanyaan,
-        "jawaban": jawaban,
-        "urutan": urutan,
-    }
+    data = {"pertanyaan": pertanyaan, "jawaban": jawaban, "urutan": urutan}
     res = supabase.table("faq").insert(data).execute()
     return res.data
 
@@ -390,10 +397,9 @@ def delete_faq(id):
     supabase.table("faq").delete().eq("id", id).execute()
 
 # =========================================================
-# INISIALISASI DATA DEFAULT (jalankan sekali)
+# INISIALISASI DATA DEFAULT
 # =========================================================
 def seed_default_admin():
-    """Buat admin default jika belum ada"""
     try:
         res = supabase.table("admin_users").select("*").execute()
         if not res.data:
