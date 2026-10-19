@@ -12,7 +12,7 @@ from database import (
     get_all_pimpinan, create_pimpinan, update_pimpinan, delete_pimpinan,
     get_all_pejabat, create_pejabat, delete_pejabat,
     get_all_jdih, create_jdih, delete_jdih,
-    # === TAMBAHAN MODUL BARU ===
+    # === MODUL BARU ===
     get_all_anggota, create_anggota, update_anggota, delete_anggota,
     get_all_fraksi, create_fraksi, update_fraksi, delete_fraksi,
     get_all_komisi, create_komisi, update_komisi, delete_komisi,
@@ -641,12 +641,13 @@ def admin_dashboard():
     </div>
     """, unsafe_allow_html=True)
 
-    berita_count = len(get_all_berita())
-    pengaduan_list = get_all_pengaduan()
-    pengaduan_baru = len([p for p in pengaduan_list if p.get("status") == "Baru"])
-    galeri_count = len(get_all_galeri())
-    agenda_count = len(get_all_agenda())
-    anggota_count = len(get_all_anggota())
+    with st.spinner("Memuat ringkasan data..."):
+        berita_count = len(get_all_berita())
+        pengaduan_list = get_all_pengaduan()
+        pengaduan_baru = len([p for p in pengaduan_list if p.get("status") == "Baru"])
+        galeri_count = len(get_all_galeri())
+        agenda_count = len(get_all_agenda())
+        anggota_count = len(get_all_anggota())
 
     s1, s2, s3, s4, s5 = st.columns(5)
     stats = [
@@ -696,7 +697,7 @@ def admin_dashboard():
 
 
 # =========================================================
-# PAGE: BERITA
+# PAGE: BERITA (Dengan Debugging & Refresh)
 # =========================================================
 def page_berita():
     st.markdown('<div class="section-title">📰 Kelola Berita</div>', unsafe_allow_html=True)
@@ -739,9 +740,22 @@ def page_berita():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
-        search = st.text_input("🔎 Cari berita", placeholder="Ketik judul...", key="search_berita")
+        c_search, c_refresh = st.columns([4, 1])
+        with c_search:
+            search = st.text_input("🔎 Cari berita", placeholder="Ketik judul...", key="search_berita")
+        with c_refresh:
+            st.write("")
+            st.write("")
+            if st.button("🔄 Refresh", key="refresh_berita", use_container_width=True):
+                st.rerun()
 
-        berita_list = get_all_berita()
+        # Proses penarikan data dengan loading spinner
+        with st.spinner("Memuat berita dari database..."):
+            berita_list = get_all_berita()
+
+        # Tampilkan info jumlah data untuk memastikan data terambil
+        st.caption(f"📊 Total berita di database: **{len(berita_list)}**")
+
         if search:
             berita_list = [b for b in berita_list if search.lower() in b.get("title", "").lower()]
 
@@ -833,7 +847,8 @@ def page_agenda():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
-        agenda_list = get_all_agenda()
+        with st.spinner("Memuat agenda..."):
+            agenda_list = get_all_agenda()
         if not agenda_list:
             show_empty_state("📅", "Belum ada agenda.")
             return
@@ -884,7 +899,8 @@ def page_galeri():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
-        galeri_list = get_all_galeri()
+        with st.spinner("Memuat galeri..."):
+            galeri_list = get_all_galeri()
         if not galeri_list:
             show_empty_state("🖼️", "Belum ada foto galeri.")
             return
@@ -903,7 +919,7 @@ def page_galeri():
 
 
 # =========================================================
-# PAGE: ANGGOTA DPRK (BARU)
+# PAGE: ANGGOTA DPRK
 # =========================================================
 def page_anggota():
     st.markdown('<div class="section-title">👥 Kelola Anggota DPRK</div>', unsafe_allow_html=True)
@@ -943,7 +959,9 @@ def page_anggota():
 
     with col_list:
         search = st.text_input("🔎 Cari anggota", placeholder="Nama...", key="search_anggota")
-        items = get_all_anggota()
+        with st.spinner("Memuat anggota..."):
+            items = get_all_anggota()
+
         if search:
             items = [a for a in items if search.lower() in a.get("nama", "").lower()]
 
@@ -1018,7 +1036,7 @@ def page_anggota():
 
 
 # =========================================================
-# PAGE: FRAKSI (BARU)
+# PAGE: FRAKSI
 # =========================================================
 def page_fraksi():
     st.markdown('<div class="section-title">🏛️ Kelola Fraksi</div>', unsafe_allow_html=True)
@@ -1043,7 +1061,8 @@ def page_fraksi():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
-        items = get_all_fraksi()
+        with st.spinner("Memuat fraksi..."):
+            items = get_all_fraksi()
         if not items:
             show_empty_state("🏛️", "Belum ada fraksi.")
             return
@@ -1084,7 +1103,7 @@ def page_fraksi():
 
 
 # =========================================================
-# PAGE: KOMISI (BARU)
+# PAGE: KOMISI
 # =========================================================
 def page_komisi():
     st.markdown('<div class="section-title">📋 Kelola Komisi</div>', unsafe_allow_html=True)
@@ -1112,7 +1131,8 @@ def page_komisi():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
-        items = get_all_komisi()
+        with st.spinner("Memuat komisi..."):
+            items = get_all_komisi()
         if not items:
             show_empty_state("📋", "Belum ada komisi.")
             return
@@ -1150,7 +1170,7 @@ def page_komisi():
 
 
 # =========================================================
-# PAGE: FAQ (BARU)
+# PAGE: FAQ
 # =========================================================
 def page_faq():
     st.markdown('<div class="section-title">❓ Kelola FAQ</div>', unsafe_allow_html=True)
@@ -1174,7 +1194,8 @@ def page_faq():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
-        items = get_all_faq()
+        with st.spinner("Memuat FAQ..."):
+            items = get_all_faq()
         if not items:
             show_empty_state("❓", "Belum ada FAQ.")
             return
@@ -1232,7 +1253,8 @@ def page_running_text():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
-        items = get_running_text_active()
+        with st.spinner("Memuat running text..."):
+            items = get_running_text_active()
         if not items:
             show_empty_state("📢", "Belum ada running text.")
             return
@@ -1270,7 +1292,8 @@ def page_kesekretariatan():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
-        items = get_all_kesekretariatan()
+        with st.spinner("Memuat data kesekretariatan..."):
+            items = get_all_kesekretariatan()
         if not items:
             show_empty_state("📋", "Belum ada data.")
             return
@@ -1297,7 +1320,9 @@ def page_kesekretariatan():
 def page_pengaduan():
     st.markdown('<div class="section-title">📥 Pengaduan Masyarakat</div>', unsafe_allow_html=True)
 
-    pengaduan_list = get_all_pengaduan()
+    with st.spinner("Memuat pengaduan..."):
+        pengaduan_list = get_all_pengaduan()
+        
     if not pengaduan_list:
         show_empty_state("📥", "Belum ada pengaduan masuk.")
         return
@@ -1380,7 +1405,8 @@ def page_pimpinan():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
-        items = get_all_pimpinan()
+        with st.spinner("Memuat pimpinan..."):
+            items = get_all_pimpinan()
         if not items:
             show_empty_state("👥", "Belum ada data pimpinan.")
             return
@@ -1430,7 +1456,8 @@ def page_pejabat():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
-        items = get_all_pejabat()
+        with st.spinner("Memuat pejabat..."):
+            items = get_all_pejabat()
         if not items:
             show_empty_state("🏢", "Belum ada data pejabat.")
             return
@@ -1484,7 +1511,8 @@ def page_jdih():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
-        items = get_all_jdih()
+        with st.spinner("Memuat produk hukum..."):
+            items = get_all_jdih()
         if not items:
             show_empty_state("📜", "Belum ada produk hukum.")
             return
@@ -1535,8 +1563,11 @@ def page_admin_users():
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_list:
+        with st.spinner("Memuat daftar admin..."):
+            admins = get_all_admins()
+            
         current = st.session_state.admin_user
-        for adm in get_all_admins():
+        for adm in admins:
             st.markdown('<div class="crud-item">', unsafe_allow_html=True)
             c1, c2 = st.columns([5, 1])
             with c1:
