@@ -68,9 +68,9 @@ HERO_SLIDES = [
     },
     {
         "image": "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1800&q=85",
-        "kicker": "SUARA MASYARAKAT",
-        "title": "Aspirasi Anda Prioritas Kami",
-        "subtitle": "Sampaikan aspirasi, keluhan, dan laporan Anda melalui portal informasi publik DPRK Aceh Jaya.",
+        "kicker": "APBK 2026 TELAH DISAHKAN",
+        "title": "Total APBK 2026 Capai Rp831,6 Miliar",
+        "subtitle": "DPRK Aceh Jaya resmi mengesahkan APBK Tahun Anggaran 2026 pada 28 November 2025, dengan fokus pada belanja operasi dan transfer ke gampong.",
     },
     {
         "image": "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=1800&q=85",
@@ -97,14 +97,110 @@ STATS_DATA = pd.DataFrame({
     "Pengaduan": [12, 15, 10, 18, 14, 20, 16, 22, 19],
 })
 
+# Alokasi APBK 2026 (data aktual - miliar rupiah)
 ANGGARAN_DATA = pd.DataFrame({
-    "Kategori": ["Infrastruktur", "Pendidikan", "Kesehatan", "Sosial", "Pertanian"],
-    "Anggaran": [45, 25, 15, 8, 7],
+    "Kategori": ["Belanja Operasi", "Belanja Modal", "Transfer ke Gampong"],
+    "Anggaran": [588.29, 93.02, 149.28],
 })
 
 MITRA = [
     "🏛️ KPK", "⚖️ Kejaksaan", "🚔 Polri", "🏦 BPK", "📊 BPS",
     "🎓 Universitas", "🏥 RSUD", "📚 Dinas Pendidikan", "🌾 Dinas Pertanian", "🛣️ PUPR"
+]
+
+# =========================================================
+# DATA FALLBACK AKTUAL (jika database kosong)
+# =========================================================
+WARTA_DPRK_FALLBACK = [
+    {
+        "title": "Pemkab Aceh Jaya Bersama DPRK Bahas Realisasi APBK 2026",
+        "date": "29 September 2026",
+        "desc_text": "Rapat Paripurna Ke-V Masa Persidangan I Tahun Sidang 2026-2027 membahas pandangan fraksi-fraksi terhadap Rancangan Qanun Perubahan APBK 2026. Pendapatan daerah disesuaikan dari Rp817,80 Miliar menjadi Rp806,68 Miliar, sementara belanja meningkat menjadi Rp844,02 Miliar.",
+        "image_url": "",
+        "kategori": "Paripurna",
+        "views": 0,
+    },
+    {
+        "title": "Bupati Aceh Jaya Hadiri Rapat Paripurna Perubahan APBK 2026",
+        "date": "29 September 2026",
+        "desc_text": "Bupati Safwandi mengikuti Rapat Paripurna Ke-V DPRK Aceh Jaya yang membahas pandangan fraksi-fraksi terhadap Rancangan Qanun Perubahan APBK 2026 serta persetujuan dan penandatanganan Nota Keuangan.",
+        "image_url": "",
+        "kategori": "Paripurna",
+        "views": 0,
+    },
+    {
+        "title": "Ketua DPRK Aceh Jaya Sahuti Aspirasi Masyarakat Paya Laot",
+        "date": "24 Oktober 2025",
+        "desc_text": "Ketua DPRK Musliadi Z melaksanakan reses ke-3 tahun 2025 di Gampong Paya Laot, Kecamatan Setia Bakti. Masyarakat menyampaikan aspirasi terkait bantuan modal usaha pertanian dan UMKM.",
+        "image_url": "",
+        "kategori": "Reses",
+        "views": 0,
+    },
+    {
+        "title": "Anggota DPRK Aceh Jaya Pengganti Antar Waktu Resmi Dilantik",
+        "date": "11 Desember 2024",
+        "desc_text": "Safriyantoni dan Usman ID resmi dilantik sebagai anggota DPRK Aceh Jaya PAW menggantikan Safwandi dan Muslem D. yang mengundurkan diri untuk mengikuti Pilkada 2024.",
+        "image_url": "",
+        "kategori": "Paripurna",
+        "views": 0,
+    },
+    {
+        "title": "DPRK Aceh Jaya Sahkan APBK 2026 Senilai Rp831,6 Miliar",
+        "date": "28 November 2025",
+        "desc_text": "DPRK Aceh Jaya resmi mengesahkan APBK Tahun Anggaran 2026 dengan total Rp831.608.731.964. Pendapatan daerah ditargetkan Rp817,80 miliar, dengan PAD Rp87,15 miliar dan pendapatan transfer Rp722,08 miliar.",
+        "image_url": "",
+        "kategori": "Paripurna",
+        "views": 0,
+    },
+    {
+        "title": "Rapat Pleno DPRK Aceh Jaya Bahas Perubahan KUAPPAS APBK",
+        "date": "09 September 2026",
+        "desc_text": "DPRK Aceh Jaya menggelar Rapat Pleno terhadap Rancangan Perubahan KUAPPAS APBK Aceh Jaya Tahun Anggaran 2026 di ruang rapat paripurna DPRK.",
+        "image_url": "",
+        "kategori": "Rapat",
+        "views": 0,
+    },
+]
+
+AGENDA_TERKINI_FALLBACK = [
+    {
+        "hari": "09",
+        "bulan_tahun": "SEP 2026",
+        "tanggal_full": "Rabu, 09 September 2026",
+        "judul": "Rapat Pleno DPRK Aceh Jaya - 09 September 2026",
+        "deskripsi": "Rapat Pleno DPRK Aceh Jaya terhadap Rancangan Perubahan KUAPPAS APBK Aceh Jaya Tahun Anggaran 2026.",
+    },
+    {
+        "hari": "07",
+        "bulan_tahun": "SEP 2026",
+        "tanggal_full": "Senin, 07 September 2026",
+        "judul": "Rapat Komisi III DPRK Aceh Jaya - 07 September 2026",
+        "deskripsi": "Rapat Dengar Pendapat Komisi III DPRK Aceh Jaya terkait Realisasi Program dan Kegiatan Pembangunan Jalan dan Jembatan pada Dinas PUPR.",
+    },
+    {
+        "hari": "01",
+        "bulan_tahun": "SEP 2026",
+        "tanggal_full": "Selasa, 01 September 2026",
+        "judul": "Rapat Badan Musyawarah DPRK Aceh Jaya - 01 September 2026",
+        "deskripsi": "Rapat Badan Musyawarah DPRK Aceh Jaya tentang Penetapan Jadwal Rapat Paripurna DPRK Aceh Jaya tentang Penyampaian Rancangan KUAPPAS Perubahan APBK.",
+    },
+]
+
+JDIH_DB_FALLBACK = [
+    {"nomor": "Qanun No. 1 Tahun 2015", "tentang": "Anggaran Pendapatan dan Belanja Kabupaten Aceh Jaya Tahun Anggaran 2015", "status": "Berlaku"},
+    {"nomor": "Qanun No. 9 Tahun 2009", "tentang": "Pokok-pokok Pengelolaan Keuangan Daerah", "status": "Berlaku"},
+    {"nomor": "Qanun Tahun 2023", "tentang": "Pemberdayaan, Pengembangan dan Perlindungan Usaha Mikro", "status": "Berlaku"},
+    {"nomor": "Qanun Tahun 2023", "tentang": "Perlindungan dan Pemberdayaan Koperasi", "status": "Berlaku"},
+    {"nomor": "Qanun Tahun 2023", "tentang": "Inovasi Daerah", "status": "Berlaku"},
+    {"nomor": "Qanun Tahun 2023", "tentang": "Pajak Kabupaten dan Retribusi Kabupaten", "status": "Berlaku"},
+    {"nomor": "Qanun Tahun 2023", "tentang": "Perubahan APBK Aceh Jaya Tahun Anggaran 2023", "status": "Berlaku"},
+]
+
+# Pimpinan DPRK Aceh Jaya (Periode 2024-2029)
+PIMPINAN_FALLBACK = [
+    {"nama": "MUSLIADI Z, S.E", "jabatan": "Ketua DPRK Aceh Jaya", "urutan": 1, "foto_url": ""},
+    {"nama": "IRWANTO NP", "jabatan": "Wakil Ketua I DPRK Aceh Jaya", "urutan": 2, "foto_url": ""},
+    {"nama": "TEUKU ASRIZAL, S.H", "jabatan": "Wakil Ketua II DPRK Aceh Jaya", "urutan": 3, "foto_url": ""},
 ]
 
 # =========================================================
@@ -119,7 +215,7 @@ try:
     JDIH_DB = get_all_jdih()
     PIMPINAN_DB = get_all_pimpinan()
     PEJABAT_DB = get_all_pejabat()
-except Exception as e:
+except Exception:
     WARTA_DPRK = []
     AGENDA_TERKINI = []
     KESEKRETARIATAN = []
@@ -129,17 +225,40 @@ except Exception as e:
     PIMPINAN_DB = []
     PEJABAT_DB = []
 
-# Fallback
+# =========================================================
+# FALLBACK KE DATA AKTUAL
+# =========================================================
 if not WARTA_DPRK:
-    WARTA_DPRK = [{"title": "Belum ada berita", "date": "-", "desc_text": "-", "image_url": "", "kategori": "-", "views": 0}]
+    WARTA_DPRK = WARTA_DPRK_FALLBACK
 
-PIMPINAN_DAN_ANGGOTA = [(p["nama"], p["jabatan"]) for p in PIMPINAN_DB] or [("Belum ada data", "Tambahkan dari admin panel")]
-PEJABAT_SEKRETARIAT = [(p["nama"], p["jabatan"]) for p in PEJABAT_DB] or [("Belum ada data", "Tambahkan dari admin panel")]
-
-running_content = " ★ ".join([r["content"] for r in RUNNING_TEXTS]) if RUNNING_TEXTS else "Selamat Datang di Portal Resmi DPRK Kabupaten Aceh Jaya"
+if not AGENDA_TERKINI:
+    AGENDA_TERKINI = AGENDA_TERKINI_FALLBACK
 
 if not JDIH_DB:
-    JDIH_DB = [{"nomor": "-", "tentang": "Belum ada data", "status": "-"}]
+    JDIH_DB = JDIH_DB_FALLBACK
+
+if not PIMPINAN_DB:
+    PIMPINAN_DB = PIMPINAN_FALLBACK
+
+if not KESEKRETARIATAN:
+    KESEKRETARIATAN = [
+        {"title": "Pengesahan APBK Aceh Jaya Tahun Anggaran 2026", "date": "28 November 2025"},
+        {"title": "Pelantikan Anggota DPRK Aceh Jaya PAW", "date": "11 Desember 2024"},
+        {"title": "Rapat Kerja Badan Anggaran DPRK Aceh Jaya", "date": "15 Januari 2026"},
+    ]
+
+PIMPINAN_DAN_ANGGOTA = [(p["nama"], p["jabatan"]) for p in PIMPINAN_DB] or [
+    ("Belum ada data", "Tambahkan dari admin panel")
+]
+PEJABAT_SEKRETARIAT = [(p["nama"], p["jabatan"]) for p in PEJABAT_DB] or [
+    ("Belum ada data", "Tambahkan dari admin panel")
+]
+
+running_content = (
+    " ★ ".join([r["content"] for r in RUNNING_TEXTS])
+    if RUNNING_TEXTS
+    else "Selamat Datang di Portal Resmi DPRK Kabupaten Aceh Jaya ★ APBK 2026 Telah Disahkan Senilai Rp831,6 Miliar ★ DPRK Aceh Jaya Siap Mengawal Aspirasi Masyarakat"
+)
 
 # =========================================================
 # CSS
@@ -1035,8 +1154,8 @@ if st.session_state.page == "Beranda":
         st.plotly_chart(fig1, use_container_width=True)
     with stat_col2:
         fig2 = px.pie(ANGGARAN_DATA, values="Anggaran", names="Kategori",
-                     title="Alokasi Anggaran 2026",
-                     color_discrete_sequence=["#0d5e3a", "#c9a227", "#14734a", "#e6c458", "#6b7a75"],
+                     title="Alokasi APBK 2026 (Miliar Rp)",
+                     color_discrete_sequence=["#0d5e3a", "#c9a227", "#14734a"],
                      hole=0.5)
         fig2.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
                           font=dict(family="Inter", size=10, color="#000000"),
