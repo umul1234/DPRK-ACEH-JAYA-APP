@@ -52,7 +52,7 @@ if "visitor_count" not in st.session_state:
     st.session_state.visitor_count = random.randint(25000, 45000)
 
 # =========================================================
-# DATA STATIS
+# DATA STATIS & KONTEN (DISAMAKAN DENGAN WEB ASLI)
 # =========================================================
 PAGES = {
     "Beranda": "Beranda", "Profil": "Profil", "Berita": "Berita",
@@ -109,7 +109,7 @@ MITRA = [
 ]
 
 # =========================================================
-# DATA FALLBACK AKTUAL (jika database kosong)
+# DATA FALLBACK AKTUAL (DISAMAKAN DENGAN WEB ASLI)
 # =========================================================
 WARTA_DPRK_FALLBACK = [
     {
@@ -196,7 +196,6 @@ JDIH_DB_FALLBACK = [
     {"nomor": "Qanun Tahun 2023", "tentang": "Perubahan APBK Aceh Jaya Tahun Anggaran 2023", "status": "Berlaku"},
 ]
 
-# Pimpinan DPRK Aceh Jaya (Periode 2024-2029)
 PIMPINAN_FALLBACK = [
     {"nama": "MUSLIADI Z, S.E", "jabatan": "Ketua DPRK Aceh Jaya", "urutan": 1, "foto_url": ""},
     {"nama": "IRWANTO NP", "jabatan": "Wakil Ketua I DPRK Aceh Jaya", "urutan": 2, "foto_url": ""},
@@ -261,7 +260,7 @@ running_content = (
 )
 
 # =========================================================
-# CSS
+# CSS (TIDAK DIUBAH, TETAP PREMIUM)
 # =========================================================
 st.markdown(
     """
