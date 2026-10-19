@@ -30,7 +30,7 @@ def upload_image(file, folder="berita"):
         ext = file.name.split(".")[-1].lower()
         filename = f"{folder}/{timestamp}_{abs(hash(file.name))}.{ext}"
         file_bytes = file.getvalue()
-        
+
         supabase.storage.from_("dprk-images").upload(
             filename,
             file_bytes,
@@ -274,6 +274,120 @@ def create_jdih(nomor, tentang, status, file_url=None):
 
 def delete_jdih(id):
     supabase.table("jdih").delete().eq("id", id).execute()
+
+# =========================================================
+# ANGGOTA DPRK
+# =========================================================
+def get_all_anggota():
+    try:
+        res = supabase.table("anggota").select("*").order("urutan").execute()
+        return res.data or []
+    except Exception as e:
+        st.warning(f"Gagal load anggota: {e}")
+        return []
+
+def create_anggota(nama, jabatan, komisi, dapil, fraksi, urutan=1, foto_url=None):
+    data = {
+        "nama": nama,
+        "jabatan": jabatan,
+        "komisi": komisi,
+        "dapil": dapil,
+        "fraksi": fraksi,
+        "urutan": urutan,
+        "foto_url": foto_url,
+    }
+    res = supabase.table("anggota").insert(data).execute()
+    return res.data
+
+def update_anggota(id, **kwargs):
+    res = supabase.table("anggota").update(kwargs).eq("id", id).execute()
+    return res.data
+
+def delete_anggota(id):
+    supabase.table("anggota").delete().eq("id", id).execute()
+
+# =========================================================
+# FRAKSI
+# =========================================================
+def get_all_fraksi():
+    try:
+        res = supabase.table("fraksi").select("*").order("urutan").execute()
+        return res.data or []
+    except Exception as e:
+        st.warning(f"Gagal load fraksi: {e}")
+        return []
+
+def create_fraksi(nama, ketua, jumlah_anggota, urutan=1):
+    data = {
+        "nama": nama,
+        "ketua": ketua,
+        "jumlah_anggota": jumlah_anggota,
+        "urutan": urutan,
+    }
+    res = supabase.table("fraksi").insert(data).execute()
+    return res.data
+
+def update_fraksi(id, **kwargs):
+    res = supabase.table("fraksi").update(kwargs).eq("id", id).execute()
+    return res.data
+
+def delete_fraksi(id):
+    supabase.table("fraksi").delete().eq("id", id).execute()
+
+# =========================================================
+# KOMISI
+# =========================================================
+def get_all_komisi():
+    try:
+        res = supabase.table("komisi").select("*").order("urutan").execute()
+        return res.data or []
+    except Exception as e:
+        st.warning(f"Gagal load komisi: {e}")
+        return []
+
+def create_komisi(nama, ketua, bidang, urutan=1):
+    data = {
+        "nama": nama,
+        "ketua": ketua,
+        "bidang": bidang,
+        "urutan": urutan,
+    }
+    res = supabase.table("komisi").insert(data).execute()
+    return res.data
+
+def update_komisi(id, **kwargs):
+    res = supabase.table("komisi").update(kwargs).eq("id", id).execute()
+    return res.data
+
+def delete_komisi(id):
+    supabase.table("komisi").delete().eq("id", id).execute()
+
+# =========================================================
+# FAQ
+# =========================================================
+def get_all_faq():
+    try:
+        res = supabase.table("faq").select("*").order("urutan").execute()
+        return res.data or []
+    except Exception as e:
+        st.warning(f"Gagal load FAQ: {e}")
+        return []
+
+def create_faq(pertanyaan, jawaban, urutan=1):
+    data = {
+        "pertanyaan": pertanyaan,
+        "jawaban": jawaban,
+        "urutan": urutan,
+    }
+    res = supabase.table("faq").insert(data).execute()
+    return res.data
+
+def update_faq(id, **kwargs):
+    res = supabase.table("faq").update(kwargs).eq("id", id).execute()
+    return res.data
+
+def delete_faq(id):
+    supabase.table("faq").delete().eq("id", id).execute()
 
 # =========================================================
 # INISIALISASI DATA DEFAULT (jalankan sekali)
