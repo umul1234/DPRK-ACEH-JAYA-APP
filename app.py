@@ -52,7 +52,7 @@ if "visitor_count" not in st.session_state:
     st.session_state.visitor_count = random.randint(25000, 45000)
 
 # =========================================================
-# DATA STATIS & KONTEN (DISAMAKAN DENGAN WEB ASLI)
+# DATA STATIS
 # =========================================================
 PAGES = {
     "Beranda": "Beranda", "Profil": "Profil", "Berita": "Berita",
@@ -109,7 +109,7 @@ MITRA = [
 ]
 
 # =========================================================
-# DATA FALLBACK AKTUAL (DISAMAKAN DENGAN WEB ASLI)
+# DATA FALLBACK AKTUAL (jika database kosong)
 # =========================================================
 WARTA_DPRK_FALLBACK = [
     {
@@ -186,6 +186,45 @@ AGENDA_TERKINI_FALLBACK = [
     },
 ]
 
+# DATA GALERI AKTUAL
+GALERI_AKTUAL = [
+    {
+        "date": "Jumat, 14 Agustus 2026",
+        "desc": "Calang — Dewan Perwakilan Rakyat Kabupaten (DPRK) Aceh Jaya menggelar Rapat Paripurna Ke-IX Masa Persidangan II Tahun Sidang...",
+        "img": "https://images.unsplash.com/photo-1575320054790-2a6d15ba62b7?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        "date": "Kamis, 30 Juli 2026",
+        "desc": "Calang — Dewan Perwakilan Rakyat Kabupaten (DPRK) Aceh Jaya menggelar Rapat Paripurna ke-VIII Masa Persidangan II Tahun Sidang...",
+        "img": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        "date": "Minggu, 26 Juli 2026",
+        "desc": "Calang — Ketua DPRK Aceh Jaya Musliadi Z, SE menyampaikan dukungan terhadap kegiatan Penanaman Mangrove Serentak dalam rangka memperingati Hari Mangrove...",
+        "img": "https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        "date": "Rabu, 22 Juli 2026",
+        "desc": "Calang — Ketua DPRK Aceh Jaya Musliadi Z, SE menghadiri kegiatan Press Release Capaian Pemulihan Keuangan Negara yang diselenggarakan oleh Kejaksaan Negeri...",
+        "img": "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        "date": "Selasa, 14 Juli 2026",
+        "desc": "Calang — Ketua DPRK Aceh Jaya Musliadi Z, SE menghadiri kegiatan Penandatanganan Naskah Perjanjian Hibah Daerah (NPHD) Hibah Tanah untuk Pembangunan Sekolah...",
+        "img": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        "date": "Senin, 29 Juni 2026",
+        "desc": "Calang — Ketua DPRK Aceh Jaya Musliadi Z, SE menghadiri Rapat Koordinasi terkait aktivitas pertambangan masyarakat di lokasi PT Tunggal Perkasa Plantation...",
+        "img": "https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        "date": "Rabu, 17 Juni 2026",
+        "desc": "Calang — Badan Legislasi (Banleg) DPRK Aceh Jaya menggelar rapat pembahasan Rancangan Qanun Kabupaten Aceh Jaya Tahun tentang Perubahan atas Qanun...",
+        "img": "https://images.unsplash.com/photo-1555848962-6e79363ec58f?auto=format&fit=crop&w=800&q=80"
+    }
+]
+
 JDIH_DB_FALLBACK = [
     {"nomor": "Qanun No. 1 Tahun 2015", "tentang": "Anggaran Pendapatan dan Belanja Kabupaten Aceh Jaya Tahun Anggaran 2015", "status": "Berlaku"},
     {"nomor": "Qanun No. 9 Tahun 2009", "tentang": "Pokok-pokok Pengelolaan Keuangan Daerah", "status": "Berlaku"},
@@ -246,6 +285,10 @@ if not KESEKRETARIATAN:
         {"title": "Rapat Kerja Badan Anggaran DPRK Aceh Jaya", "date": "15 Januari 2026"},
     ]
 
+# Jika Galeri di database kosong, gunakan data galeri aktual (fallback)
+if not GALERI_DATA:
+    GALERI_DATA = GALERI_AKTUAL
+
 PIMPINAN_DAN_ANGGOTA = [(p["nama"], p["jabatan"]) for p in PIMPINAN_DB] or [
     ("Belum ada data", "Tambahkan dari admin panel")
 ]
@@ -260,7 +303,7 @@ running_content = (
 )
 
 # =========================================================
-# CSS (TIDAK DIUBAH, TETAP PREMIUM)
+# CSS
 # =========================================================
 st.markdown(
     """
@@ -1243,31 +1286,44 @@ elif st.session_state.page == "Berita":
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
-# HALAMAN: GALERI
+# HALAMAN: GALERI (SESUAI WEB ASLI)
 # =========================================================
 elif st.session_state.page == "Galeri":
     st.markdown('<div class="page-container">', unsafe_allow_html=True)
     st.markdown("""
     <div class="section-header-modern">
         <div class="section-kicker-modern">DOKUMENTASI</div>
-        <h2 class="section-title-modern">Galeri Foto</h2>
+        <h2 class="section-title-modern">Galeri Foto & Kegiatan</h2>
+        <p class="section-desc-modern">Dokumentasi kegiatan Dewan Perwakilan Rakyat Kabupaten (DPRK) Aceh Jaya.</p>
     </div>
     """, unsafe_allow_html=True)
-    if not GALERI_DATA:
-        st.info("Belum ada foto galeri")
-    else:
-        for i in range(0, len(GALERI_DATA), 2):
-            cols = st.columns(2)
-            for j in range(2):
-                if i + j < len(GALERI_DATA):
-                    item = GALERI_DATA[i + j]
-                    with cols[j]:
-                        st.markdown(f"""
-                        <div style="background:#fff;border:1px solid #e5ebe7;border-radius:12px;overflow:hidden;margin-bottom:10px;">
-                            <img src="{item['image_url']}" style="width:100%;height:200px;object-fit:cover;">
-                            <div style="padding:10px;text-align:center;font-weight:700;color:#083d26;font-size:12px;">{item['title']}</div>
+
+    for i in range(0, len(GALERI_DATA), 2):
+        cols = st.columns(2)
+        for j in range(2):
+            if i + j < len(GALERI_DATA):
+                item = GALERI_DATA[i + j]
+                # Cek apakah ini data dari database atau data fallback (punya key 'img')
+                img_url = item.get("image_url") or item.get("img") or "https://images.unsplash.com/photo-1575320054790-2a6d15ba62b7?auto=format&fit=crop&w=800&q=80"
+                title_text = item.get("title") or ""
+                desc_text = item.get("desc") or item.get("title") or ""
+                date_text = item.get("date") or ""
+
+                with cols[j]:
+                    st.markdown(f"""
+                    <div style="background:#fff; border:1px solid #e5ebe7; border-radius:16px; overflow:hidden; margin-bottom:20px; transition: all 0.3s;">
+                        <img src="{img_url}" style="width:100%; height:250px; object-fit:cover;">
+                        <div style="padding:20px;">
+                            <div style="color:#c9a227; font-size:12px; font-weight:800; text-transform:uppercase; margin-bottom:8px;">
+                                📅 {date_text}
+                            </div>
+                            <div style="color:#083d26; font-size:14px; line-height:1.7; font-weight:500;">
+                                {desc_text}
+                            </div>
                         </div>
-                        """, unsafe_allow_html=True)
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
     st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================================================
