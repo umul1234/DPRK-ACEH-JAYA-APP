@@ -12,6 +12,11 @@ from database import (
     get_all_pimpinan, create_pimpinan, update_pimpinan, delete_pimpinan,
     get_all_pejabat, create_pejabat, delete_pejabat,
     get_all_jdih, create_jdih, delete_jdih,
+    # === TAMBAHAN MODUL BARU ===
+    get_all_anggota, create_anggota, update_anggota, delete_anggota,
+    get_all_fraksi, create_fraksi, update_fraksi, delete_fraksi,
+    get_all_komisi, create_komisi, update_komisi, delete_komisi,
+    get_all_faq, create_faq, update_faq, delete_faq,
 )
 
 # =========================================================
@@ -285,7 +290,7 @@ div[data-baseweb="select"] * { color: #0f172a !important; }
 }
 .stat-box .sub { color: #94a3b8 !important; font-size: 11px !important; margin-top: 4px !important; font-weight: 600 !important; }
 
-/* ===== PANEL CARD (premium) ===== */
+/* ===== PANEL CARD ===== */
 .panel-card {
     background: white;
     border-radius: 20px;
@@ -529,7 +534,6 @@ def show_empty_state(icon, text):
 
 
 def panel_header(icon, title, subtitle=""):
-    """Header premium untuk panel form kanan."""
     st.markdown(f"""
     <div style="margin-bottom: 6px;">
         <span class="form-badge">✨ Form Input</span>
@@ -555,6 +559,10 @@ MENU_ITEMS = [
     ("berita", "📰", "Berita"),
     ("agenda", "📅", "Agenda"),
     ("galeri", "🖼️", "Galeri"),
+    ("anggota", "👥", "Anggota DPRK"),
+    ("fraksi", "🏛️", "Fraksi"),
+    ("komisi", "📋", "Komisi"),
+    ("faq", "❓", "FAQ"),
     ("running_text", "📢", "Running Text"),
     ("kesekretariatan", "📋", "Kesekretariatan"),
     ("pengaduan", "📥", "Pengaduan"),
@@ -567,11 +575,9 @@ MENU_ITEMS = [
 
 
 def render_sidebar():
-    """Render sidebar navigasi premium."""
     user = st.session_state.admin_user
 
     with st.sidebar:
-        # Brand
         st.markdown(f"""
         <div class="sidebar-brand">
             <div class="sidebar-brand-logo">
@@ -585,7 +591,6 @@ def render_sidebar():
         </div>
         """, unsafe_allow_html=True)
 
-        # User card
         st.markdown(f"""
         <div class="sidebar-user">
             <div class="sidebar-user-name">👤 {user['username']}</div>
@@ -593,14 +598,11 @@ def render_sidebar():
         </div>
         """, unsafe_allow_html=True)
 
-        # Menu label
         st.markdown('<div class="sidebar-label">Menu Utama</div>', unsafe_allow_html=True)
 
-        # Init active page
         if "admin_page" not in st.session_state:
             st.session_state.admin_page = "dashboard"
 
-        # Menu buttons
         for key, icon, label in MENU_ITEMS:
             is_active = st.session_state.admin_page == key
             btn_type = "primary" if is_active else "secondary"
@@ -613,7 +615,6 @@ def render_sidebar():
                 st.session_state.admin_page = key
                 st.rerun()
 
-        # Bottom actions
         st.markdown('<div class="sidebar-label">Aksi</div>', unsafe_allow_html=True)
 
         if st.button("🌐  Lihat Website", key="nav_website", use_container_width=True):
@@ -645,13 +646,15 @@ def admin_dashboard():
     pengaduan_baru = len([p for p in pengaduan_list if p.get("status") == "Baru"])
     galeri_count = len(get_all_galeri())
     agenda_count = len(get_all_agenda())
+    anggota_count = len(get_all_anggota())
 
-    s1, s2, s3, s4 = st.columns(4)
+    s1, s2, s3, s4, s5 = st.columns(5)
     stats = [
         (s1, "Berita", berita_count, "📰", "Total artikel dipublikasikan", "#0d5e3a"),
         (s2, "Pengaduan", len(pengaduan_list), "📥", f"{pengaduan_baru} baru masuk", "#dc2626"),
         (s3, "Galeri", galeri_count, "🖼️", "Foto dokumentasi", "#c9a227"),
         (s4, "Agenda", agenda_count, "📅", "Jadwal rapat", "#14734a"),
+        (s5, "Anggota", anggota_count, "👥", "Total anggota DPRK", "#1e40af"),
     ]
     for col, label, value, icon, sub, color in stats:
         with col:
@@ -683,6 +686,10 @@ def admin_dashboard():
                 <div style="font-weight:800;color:#1e40af;font-size:13px;">🖼️ Upload Galeri</div>
                 <div style="color:#64748b;font-size:12px;margin-top:4px;">Dokumentasi kegiatan DPRK</div>
             </div>
+            <div style="padding:14px;background:#f3e8ff;border-radius:12px;border-left:3px solid #7c3aed;">
+                <div style="font-weight:800;color:#6b21a8;font-size:13px;">👥 Kelola Anggota</div>
+                <div style="color:#64748b;font-size:12px;margin-top:4px;">Data pimpinan & anggota dewan</div>
+            </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -696,7 +703,6 @@ def page_berita():
 
     col_list, col_form = st.columns([2, 1], gap="large")
 
-    # ===== FORM TAMBAH (KANAN) =====
     with col_form:
         st.markdown('<div class="panel-card">', unsafe_allow_html=True)
         panel_header("➕", "Tambah Berita", "Isi form di bawah untuk menambah berita baru.")
@@ -704,7 +710,7 @@ def page_berita():
         with st.form("form_tambah_berita", clear_on_submit=True):
             title = st.text_input("Judul Berita *", placeholder="Judul berita...")
             date = st.text_input("Tanggal", value=datetime.now().strftime("%A, %d %B %Y"))
-            kategori = st.selectbox("Kategori", ["Paripurna", "Lingkungan", "Hukum", "Legislasi", "Kunjungan", "Sosial", "Ekonomi", "Lainnya"])
+            kategori = st.selectbox("Kategori", ["Paripurna", "Lingkungan", "Hukum", "Legislasi", "Kunjungan", "Reses", "Rapat", "Sosial", "Ekonomi", "Lainnya"])
             desc_text = st.text_area("Deskripsi Berita *", height=120, placeholder="Isi berita...")
 
             st.markdown("**📷 Foto Berita**")
@@ -732,7 +738,6 @@ def page_berita():
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # ===== DAFTAR (KIRI) =====
     with col_list:
         search = st.text_input("🔎 Cari berita", placeholder="Ketik judul...", key="search_berita")
 
@@ -765,7 +770,6 @@ def page_berita():
                 </div>
                 """, unsafe_allow_html=True)
 
-            # Action buttons
             ca, cb, _ = st.columns([1, 1, 4])
             with ca:
                 with st.popover("✏️ Edit", use_container_width=True):
@@ -896,6 +900,313 @@ def page_galeri():
                     delete_galeri(item["id"])
                     st.rerun()
                 st.markdown('</div>', unsafe_allow_html=True)
+
+
+# =========================================================
+# PAGE: ANGGOTA DPRK (BARU)
+# =========================================================
+def page_anggota():
+    st.markdown('<div class="section-title">👥 Kelola Anggota DPRK</div>', unsafe_allow_html=True)
+
+    col_list, col_form = st.columns([2, 1], gap="large")
+
+    with col_form:
+        st.markdown('<div class="panel-card">', unsafe_allow_html=True)
+        panel_header("➕", "Tambah Anggota", "Data anggota DPRK Aceh Jaya.")
+        with st.form("form_anggota", clear_on_submit=True):
+            nama = st.text_input("Nama Lengkap *", placeholder="Nama anggota")
+            jabatan = st.text_input("Jabatan", value="Anggota")
+            komisi = st.selectbox(
+                "Komisi",
+                ["Komisi I", "Komisi II", "Komisi III", "Komisi IV", "-"]
+            )
+            dapil = st.selectbox(
+                "Dapil",
+                [
+                    "Dapil 1 (Calang)", "Dapil 2 (Teunom)", "Dapil 3 (Jaya)",
+                    "Dapil 4 (Krueng Sabee)", "Dapil 5 (Sampoiniet)", "-"
+                ]
+            )
+            fraksi = st.text_input("Fraksi", placeholder="Contoh: Golkar")
+            urutan = st.number_input("Urutan", min_value=1, value=1)
+            foto = st.file_uploader("Foto (opsional)", type=["jpg", "png", "jpeg"])
+
+            if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
+                if not nama:
+                    st.error("⚠️ Nama wajib diisi")
+                else:
+                    foto_url = upload_image(foto, folder="anggota") if foto else None
+                    create_anggota(nama, jabatan, komisi, dapil, fraksi, urutan, foto_url)
+                    st.success("✅ Anggota ditambahkan!")
+                    st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with col_list:
+        search = st.text_input("🔎 Cari anggota", placeholder="Nama...", key="search_anggota")
+        items = get_all_anggota()
+        if search:
+            items = [a for a in items if search.lower() in a.get("nama", "").lower()]
+
+        if not items:
+            show_empty_state("👥", "Belum ada data anggota. Tambahkan lewat form di kanan.")
+            return
+
+        for item in items:
+            st.markdown('<div class="crud-item">', unsafe_allow_html=True)
+            c1, c2, c3 = st.columns([1, 5, 1.4])
+            with c1:
+                if item.get("foto_url"):
+                    try:
+                        st.image(item["foto_url"], width=56)
+                    except Exception:
+                        st.write("👤")
+                else:
+                    st.markdown(
+                        '<div style="width:56px;height:56px;background:#f1f5f9;border-radius:10px;'
+                        'display:flex;align-items:center;justify-content:center;font-size:22px;">👤</div>',
+                        unsafe_allow_html=True,
+                    )
+            with c2:
+                st.markdown(f"""
+                <div class="crud-content" style="padding: 4px 0;">
+                    <div class="crud-title">{item.get('nama','-')}</div>
+                    <div class="crud-meta">
+                        <span class="crud-badge crud-badge-gold">{item.get('jabatan','-')}</span>
+                        <span>🏛️ {item.get('komisi','-')}</span>
+                        <span>🗳️ {item.get('dapil','-')}</span>
+                        <span>🤝 {item.get('fraksi','-')}</span>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            with c3:
+                ca, cb = st.columns(2)
+                with ca:
+                    with st.popover("✏️", use_container_width=True):
+                        with st.form(f"edit_anggota_{item['id']}"):
+                            st.markdown("**Edit Anggota**")
+                            nn = st.text_input("Nama", value=item.get("nama", ""))
+                            nj = st.text_input("Jabatan", value=item.get("jabatan", ""))
+                            nk = st.text_input("Komisi", value=item.get("komisi", ""))
+                            nd = st.text_input("Dapil", value=item.get("dapil", ""))
+                            nf = st.text_input("Fraksi", value=item.get("fraksi", ""))
+                            nur = st.number_input(
+                                "Urutan", min_value=1,
+                                value=int(item.get("urutan", 1) or 1),
+                            )
+                            nfoto = st.file_uploader(
+                                "Ganti Foto (opsional)",
+                                type=["jpg", "png", "jpeg"],
+                                key=f"foto_ang_{item['id']}",
+                            )
+                            if st.form_submit_button("✅ Update", use_container_width=True):
+                                new_foto = item.get("foto_url")
+                                if nfoto:
+                                    new_foto = upload_image(nfoto, folder="anggota")
+                                update_anggota(
+                                    item["id"],
+                                    nama=nn, jabatan=nj, komisi=nk,
+                                    dapil=nd, fraksi=nf, urutan=nur,
+                                    foto_url=new_foto,
+                                )
+                                st.success("Berhasil diupdate!")
+                                st.rerun()
+                with cb:
+                    if st.button("🗑️", key=f"del_ang_{item['id']}", use_container_width=True):
+                        delete_anggota(item["id"])
+                        st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+
+
+# =========================================================
+# PAGE: FRAKSI (BARU)
+# =========================================================
+def page_fraksi():
+    st.markdown('<div class="section-title">🏛️ Kelola Fraksi</div>', unsafe_allow_html=True)
+
+    col_list, col_form = st.columns([2, 1], gap="large")
+
+    with col_form:
+        st.markdown('<div class="panel-card">', unsafe_allow_html=True)
+        panel_header("➕", "Tambah Fraksi", "Data fraksi DPRK.")
+        with st.form("form_fraksi", clear_on_submit=True):
+            nama = st.text_input("Nama Fraksi *", placeholder="Contoh: Fraksi Golkar")
+            ketua = st.text_input("Ketua Fraksi")
+            jumlah = st.number_input("Jumlah Anggota", min_value=0, value=0)
+            urutan = st.number_input("Urutan", min_value=1, value=1)
+            if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
+                if not nama:
+                    st.error("⚠️ Nama fraksi wajib diisi")
+                else:
+                    create_fraksi(nama, ketua, jumlah, urutan)
+                    st.success("✅ Fraksi ditambahkan!")
+                    st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with col_list:
+        items = get_all_fraksi()
+        if not items:
+            show_empty_state("🏛️", "Belum ada fraksi.")
+            return
+        for item in items:
+            st.markdown('<div class="crud-item">', unsafe_allow_html=True)
+            c1, c2 = st.columns([6, 1.4])
+            with c1:
+                st.markdown(f"""
+                <div class="crud-content" style="padding: 4px 0;">
+                    <div class="crud-title">🏛️ {item.get('nama','-')}</div>
+                    <div class="crud-meta">
+                        <span>Ketua: {item.get('ketua','-')}</span>
+                        <span class="crud-badge">{item.get('jumlah_anggota',0)} anggota</span>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            with c2:
+                ca, cb = st.columns(2)
+                with ca:
+                    with st.popover("✏️", use_container_width=True):
+                        with st.form(f"edit_fraksi_{item['id']}"):
+                            st.markdown("**Edit Fraksi**")
+                            nn = st.text_input("Nama Fraksi", value=item.get("nama", ""))
+                            nk = st.text_input("Ketua", value=item.get("ketua", ""))
+                            nj = st.number_input(
+                                "Jumlah Anggota", min_value=0,
+                                value=int(item.get("jumlah_anggota", 0) or 0),
+                            )
+                            if st.form_submit_button("✅ Update", use_container_width=True):
+                                update_fraksi(item["id"], nama=nn, ketua=nk, jumlah_anggota=nj)
+                                st.success("Berhasil!")
+                                st.rerun()
+                with cb:
+                    if st.button("🗑️", key=f"del_fr_{item['id']}", use_container_width=True):
+                        delete_fraksi(item["id"])
+                        st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+
+
+# =========================================================
+# PAGE: KOMISI (BARU)
+# =========================================================
+def page_komisi():
+    st.markdown('<div class="section-title">📋 Kelola Komisi</div>', unsafe_allow_html=True)
+
+    col_list, col_form = st.columns([2, 1], gap="large")
+
+    with col_form:
+        st.markdown('<div class="panel-card">', unsafe_allow_html=True)
+        panel_header("➕", "Tambah Komisi", "Data komisi DPRK.")
+        with st.form("form_komisi", clear_on_submit=True):
+            nama = st.text_input("Nama Komisi *", placeholder="Contoh: Komisi I")
+            ketua = st.text_input("Ketua Komisi")
+            bidang = st.text_area(
+                "Bidang Tugas", height=90,
+                placeholder="Bidang yang ditangani..."
+            )
+            urutan = st.number_input("Urutan", min_value=1, value=1)
+            if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
+                if not nama:
+                    st.error("⚠️ Nama komisi wajib diisi")
+                else:
+                    create_komisi(nama, ketua, bidang, urutan)
+                    st.success("✅ Komisi ditambahkan!")
+                    st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with col_list:
+        items = get_all_komisi()
+        if not items:
+            show_empty_state("📋", "Belum ada komisi.")
+            return
+        for item in items:
+            st.markdown('<div class="crud-item">', unsafe_allow_html=True)
+            c1, c2 = st.columns([6, 1.4])
+            with c1:
+                st.markdown(f"""
+                <div class="crud-content" style="padding: 4px 0;">
+                    <div class="crud-title">📋 {item.get('nama','-')}</div>
+                    <div class="crud-meta">
+                        <span>Ketua: {item.get('ketua','-')}</span>
+                        <span>{(item.get('bidang','') or '')[:90]}</span>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            with c2:
+                ca, cb = st.columns(2)
+                with ca:
+                    with st.popover("✏️", use_container_width=True):
+                        with st.form(f"edit_komisi_{item['id']}"):
+                            st.markdown("**Edit Komisi**")
+                            nn = st.text_input("Nama Komisi", value=item.get("nama", ""))
+                            nk = st.text_input("Ketua", value=item.get("ketua", ""))
+                            nb = st.text_area("Bidang", value=item.get("bidang", "") or "", height=90)
+                            if st.form_submit_button("✅ Update", use_container_width=True):
+                                update_komisi(item["id"], nama=nn, ketua=nk, bidang=nb)
+                                st.success("Berhasil!")
+                                st.rerun()
+                with cb:
+                    if st.button("🗑️", key=f"del_kom_{item['id']}", use_container_width=True):
+                        delete_komisi(item["id"])
+                        st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+
+
+# =========================================================
+# PAGE: FAQ (BARU)
+# =========================================================
+def page_faq():
+    st.markdown('<div class="section-title">❓ Kelola FAQ</div>', unsafe_allow_html=True)
+
+    col_list, col_form = st.columns([2, 1], gap="large")
+
+    with col_form:
+        st.markdown('<div class="panel-card">', unsafe_allow_html=True)
+        panel_header("➕", "Tambah FAQ", "Pertanyaan yang sering diajukan.")
+        with st.form("form_faq", clear_on_submit=True):
+            pertanyaan = st.text_input("Pertanyaan *", placeholder="Pertanyaan...")
+            jawaban = st.text_area("Jawaban *", height=130, placeholder="Jawaban...")
+            urutan = st.number_input("Urutan", min_value=1, value=1)
+            if st.form_submit_button("💾 Simpan", type="primary", use_container_width=True):
+                if not pertanyaan or not jawaban:
+                    st.error("⚠️ Pertanyaan dan jawaban wajib diisi")
+                else:
+                    create_faq(pertanyaan, jawaban, urutan)
+                    st.success("✅ FAQ ditambahkan!")
+                    st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with col_list:
+        items = get_all_faq()
+        if not items:
+            show_empty_state("❓", "Belum ada FAQ.")
+            return
+        for item in items:
+            st.markdown('<div class="crud-item">', unsafe_allow_html=True)
+            c1, c2 = st.columns([6, 1.4])
+            with c1:
+                st.markdown(f"""
+                <div class="crud-content" style="padding: 4px 0;">
+                    <div class="crud-title">❓ {item.get('pertanyaan','-')}</div>
+                    <div class="crud-meta">
+                        <span>{(item.get('jawaban','') or '')[:120]}...</span>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            with c2:
+                ca, cb = st.columns(2)
+                with ca:
+                    with st.popover("✏️", use_container_width=True):
+                        with st.form(f"edit_faq_{item['id']}"):
+                            st.markdown("**Edit FAQ**")
+                            np = st.text_input("Pertanyaan", value=item.get("pertanyaan", ""))
+                            njw = st.text_area("Jawaban", value=item.get("jawaban", "") or "", height=100)
+                            if st.form_submit_button("✅ Update", use_container_width=True):
+                                update_faq(item["id"], pertanyaan=np, jawaban=njw)
+                                st.success("Berhasil!")
+                                st.rerun()
+                with cb:
+                    if st.button("🗑️", key=f"del_faq_{item['id']}", use_container_width=True):
+                        delete_faq(item["id"])
+                        st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
 
 
 # =========================================================
@@ -1309,6 +1620,10 @@ PAGE_ROUTES = {
     "berita": page_berita,
     "agenda": page_agenda,
     "galeri": page_galeri,
+    "anggota": page_anggota,
+    "fraksi": page_fraksi,
+    "komisi": page_komisi,
+    "faq": page_faq,
     "running_text": page_running_text,
     "kesekretariatan": page_kesekretariatan,
     "pengaduan": page_pengaduan,
@@ -1321,7 +1636,6 @@ PAGE_ROUTES = {
 
 
 def render_admin_dashboard():
-    """Render dashboard admin lengkap dengan sidebar."""
     st.markdown(ADMIN_CSS, unsafe_allow_html=True)
     render_sidebar()
     current = st.session_state.get("admin_page", "dashboard")
